@@ -35,9 +35,9 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
     // Update is called once per frame
     void Update()
     {
-        dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
+        dir.x = Input.GetAxisRaw("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
-        dir.z = Input.GetAxis("Vertical");
+        dir.z = Input.GetAxisRaw("Vertical");
         // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
         float totalDist = dir.magnitude;
         dir.Normalize(); // 값을 항상 1로 동일하게 처리하고 대각선으로 이동하더라도 속도가 빨리지는 현상 방지
