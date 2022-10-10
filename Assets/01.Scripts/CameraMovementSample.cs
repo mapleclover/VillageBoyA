@@ -3,21 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// 수정일자 10월 10일 10시 42분
+// 수정일자 10월 10일 11시 46분
 // 전정우
 
 public class CameraMovementSample : MonoBehaviour
 {
-    public GameObject player;
-    private Vector3 pos = new Vector3(0, 4, -8);
+    [SerializeField]
+    private GameObject followTarget;
+
+    [SerializeField]
+    private float speed;
+
+    private Vector3 difValue;
+
+    // Start is called before the first frame update
     void Start()
     {
+        difValue = transform.position - followTarget.transform.position;
+        difValue = new Vector3(difValue.x, difValue.y, difValue.z);
+
+
     }
+
+    // Update is called once per frame
     void Update()
     {
-        // 메인캠이 0, 15, -10 였으니
-        // 플레이어 좌표에서 0, 15, -10 를 더해주면
-        this.gameObject.transform.position = player.transform.position + pos;
-        //카메라의 트랜스폼 = 플레이어 트랜스폼 + 더해줄포지션
+        this.transform.position = Vector3.Lerp(this.transform.position, followTarget.transform.position + difValue, speed);
+        // 러프로 카메라가 부드럽게 움직이면 좋겠어서요 ..
     }
 }

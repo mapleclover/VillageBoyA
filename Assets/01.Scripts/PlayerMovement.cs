@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 
-//마지막 수정 10월 10일 오후 10시
+//마지막 수정 10월 10일 오후 11시 51분
 //전정우
 
 public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
@@ -140,7 +140,9 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         // 얼마만큼의 거리에 레이저를 쏠건지 = 0.4f
         // = 레이저를 쏠건데 캐릭터의 발 끝보다 0.2 만큼 높은 위치에서 아래방향으로 쏠것이고 0.4 만큼만 레이저가 발사 될것이다
         // 이 길이 안에서 우리가 설정할 레이어가 검출이 되면 그 정보를 out hit 에 담아라
-        if (Physics.Raycast(transform.position + (Vector3.up * 1.2f), Vector3.down, out hit, 0.8f, layer))
+
+        // 이쪽 프로젝트로 옮기는 과정에서 원래 수치값(0.4, 0.2) 와 상이하게 해야하는 문제가 좀 있네요 
+        if (Physics.Raycast(transform.position + (Vector3.up * 1.2f), Vector3.down, out hit, 1.0f, layer))
         {
             ground = true;
         }
