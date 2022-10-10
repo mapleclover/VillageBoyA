@@ -46,11 +46,11 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
         if (totalDist > 0.0f)
         {
-            myAnim.SetBool("IsMoving", true);
+            myAnim.SetBool("IsWalking", true);
         }
         if (totalDist <= 0.0f)
         {
-            myAnim.SetBool("IsMoving", false);
+            myAnim.SetBool("IsWalking", false);
 
         }
 
