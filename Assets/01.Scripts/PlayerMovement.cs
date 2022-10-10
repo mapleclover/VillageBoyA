@@ -42,6 +42,8 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         float totalDist = dir.magnitude;
         dir.Normalize(); // 값을 항상 1로 동일하게 처리하고 대각선으로 이동하더라도 속도가 빨리지는 현상 방지
 
+        CheckGround(); // 연속점프 감지
+
         if (totalDist > 0.0f)
         {
             myAnim.SetBool("IsMoving", true);
@@ -51,9 +53,6 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             myAnim.SetBool("IsMoving", false);
 
         }
-
-        CheckGround(); // 연속점프 감지
-
 
 
         //점프
@@ -141,7 +140,7 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         // 얼마만큼의 거리에 레이저를 쏠건지 = 0.4f
         // = 레이저를 쏠건데 캐릭터의 발 끝보다 0.2 만큼 높은 위치에서 아래방향으로 쏠것이고 0.4 만큼만 레이저가 발사 될것이다
         // 이 길이 안에서 우리가 설정할 레이어가 검출이 되면 그 정보를 out hit 에 담아라
-        if (Physics.Raycast(transform.position + (Vector3.up * 0.2f), Vector3.down, out hit, 0.4f, layer))
+        if (Physics.Raycast(transform.position + (Vector3.up * 1.2f), Vector3.down, out hit, 0.8f, layer))
         {
             ground = true;
         }
