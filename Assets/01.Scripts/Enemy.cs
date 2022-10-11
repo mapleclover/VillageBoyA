@@ -21,29 +21,17 @@ public class Enemy : CharacterProperty
         switch(rnd)
         {
             case 0:
-                Jump();
+                myAnim.SetTrigger("Jump");
                 break;
             case 1:
-                Zigzag();
+                myAnim.SetTrigger("Zigzag");
                 break;
             case 2:
-                Straight();
+                myAnim.SetTrigger("Straight");
                 break;
             default:
                 break;
         }
     } 
-
-    public void Jump()
-    {
-        myAnim.SetTrigger("Jump");
-    }
-    public void Zigzag()
-    {
-        myAnim.SetTrigger("Zigzag");
-    }
-    public void Straight()
-    {
-        myAnim.SetTrigger("Straight");
-    }
+       
 }
