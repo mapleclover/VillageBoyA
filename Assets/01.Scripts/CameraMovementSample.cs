@@ -18,7 +18,7 @@ public class CameraMovementSample : MonoBehaviour
     [SerializeField] private float zoomMax = 0f;
     [SerializeField] private float zoomMIn = 0f;
 
-
+    private Vector3 followTarger2;
 
     private Vector3 difValue;
 
@@ -34,11 +34,14 @@ public class CameraMovementSample : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position, followTarget.transform.position + difValue, lerpspeed);
-        // 러프로 카메라가 부드럽게 움직이면 좋겠어서요 ..
 
         //줌
         CameraZoom();
+
+        this.transform.position = Vector3.Lerp(this.transform.position, followTarget.transform.position + difValue, lerpspeed);
+        // 러프로 카메라가 부드럽게 움직이면 좋겠어서요 ..
+
+        
 
     }
 
@@ -47,6 +50,7 @@ public class CameraMovementSample : MonoBehaviour
     {
         // 앞으로 굴리면 -1 뒤로 굴리면 1이 리턴
         float zoomDirection = Input.GetAxis("Mouse ScrollWheel");
+        
 
         if (transform.position.y <= zoomMax && zoomDirection > 0)
         {
@@ -62,9 +66,8 @@ public class CameraMovementSample : MonoBehaviour
 
 
         // 값은 유니티에서 임의로 설정합시다
-        transform.position += transform.forward * zoomDirection * zoomSpeed;
+        followTarger2 = transform.position + transform.forward * zoomDirection * zoomSpeed;
         
-
     }
 
 
