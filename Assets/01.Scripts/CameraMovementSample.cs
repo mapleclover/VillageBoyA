@@ -63,9 +63,7 @@ public class CameraMovementSample : MonoBehaviour
             //휠을 뒤로 굴릴 때 y값이 한계값보다 크다면 리턴
             return;
         }
-
-
-        // 값은 유니티에서 임의로 설정합시다
+        // 값은 유니티에서 설정
         followTarger2 = transform.position + transform.forward * zoomDirection * zoomSpeed;
         
     }

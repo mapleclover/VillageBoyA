@@ -891,9 +891,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 646344184}
+  - component: {fileID: 646344185}
   - component: {fileID: 646344183}
   - component: {fileID: 646344182}
-  - component: {fileID: 646344185}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -980,9 +980,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 679096162}
-  lerpspeed: 1
+  lerpspeed: 0.07
   zoomSpeed: 4
-  zoomMax: 0
+  zoomMax: 1
   zoomMIn: 12
 --- !u!1 &679096162
 GameObject:
