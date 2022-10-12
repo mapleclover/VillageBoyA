@@ -7,6 +7,7 @@ public class Friendly : CharacterProperty
 {
     public float myHp = 100.0f;
     public float speed = 2.0f;
+    public int Skill = 0;
     void Start()
     {
         
@@ -21,13 +22,13 @@ public class Friendly : CharacterProperty
         switch(s)
         {
             case 1:
-                myAnim.SetTrigger("Jump");
+                myAnim.SetTrigger("Attack");
                 break;
             case 2:
-                myAnim.SetTrigger("Zigzag");
+                myAnim.SetTrigger("Attack");
                 break;
             case 3:
-                myAnim.SetTrigger("Straight");
+                myAnim.SetTrigger("Attack");
                 break;
         }
     }
