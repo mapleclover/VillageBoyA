@@ -15,31 +15,39 @@ public class Friendly : CharacterProperty
     {
         
     }
-    public void ChoiceSkill(float s)
+    public void ChoiceSkill(int s)
     {
-        switch(s)
+        switch (s)
         {
             case 1:
-                Jump();
+                myAnim.SetTrigger("Jump");
                 break;
             case 2:
-                Zigzag();
+                myAnim.SetTrigger("Zigzag");
                 break;
             case 3:
-                Straight();
+                myAnim.SetTrigger("Straight");
                 break;
         }
     }
-    public void Jump()
+    public void RandomSkill()
     {
-        myAnim.SetTrigger("Jump");
+        int rnd = Random.Range(0, 3);
+        switch (rnd)
+        {
+            case 0:
+                myAnim.SetTrigger("Jump");
+                break;
+            case 1:
+                myAnim.SetTrigger("Zigzag");
+                break;
+            case 2:
+                myAnim.SetTrigger("Straight");
+                break;
+            default:
+                break;
+        }
     }
-    public void Zigzag()
-    {
-        myAnim.SetTrigger("Zigzag");
-    }
-    public void Straight()
-    {
-        myAnim.SetTrigger("Straight");
-    }
+
+
 }
