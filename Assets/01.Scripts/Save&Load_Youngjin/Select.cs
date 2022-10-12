@@ -1,0 +1,80 @@
+using System.Collections;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.IO;
+using TMPro;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using System.Data;
+
+public class Select : MonoBehaviour
+{
+    public static Select instance;
+    public GameObject create;
+    public TextMeshProUGUI[] slotText;// 슬롯 버튼 아래 텍스트
+    bool[] savefile = new bool[3];//세이브파일 존재 유무
+    bool t = false;
+    void Start()
+    {
+       
+        for(int i = 0; i < 3; i++)
+        {
+            if (File.Exists(DataController.instance.filePath + $"{i}")) //데이터 있음
+            {
+                savefile[i] = true;
+                DataController.instance.nowSlot = i;
+                DataController.instance.LoadGameData();
+                slotText[i].text="Saved Date:"+DataController.instance.gameData.savedTime;   //저장한 시간 표시
+               
+
+            }
+            else
+            {
+                slotText[i].text = "Empty";
+            }
+        }
+        DataController.instance.DataClear();//불러온 데이터 초기화(시간만 표기만 함)
+    }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && t == true)
+        {
+            t = false;
+            create.gameObject.SetActive(false);
+        }
+    }
+    public void Slot(int num)
+    {
+        DataController.instance.nowSlot = num;
+        if (savefile[num] && t==true)
+        {
+            DataController.instance.LoadGameData();
+            create.gameObject.SetActive(false);
+            Game();     //해당 슬롯에 데이터가 존재하면 게임씬으로 이동
+        }
+        else
+        {
+            Create();       //없으면 UI 활성화
+            
+        }
+
+    }
+    public void Create()
+    {
+        create.gameObject.SetActive(true);
+   
+        t = true;
+    }
+    public void Game()      
+    {
+        if (!savefile[DataController.instance.nowSlot])     //현재 슬롯에 데이터 없으면 
+        {
+            DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
+            DataController.instance.SaveGameData(); //입력한 이름 복사 후 현재 정보 저장
+        }
+        SceneManager.LoadScene(DataController.instance.nowSlot + 1);  //게임씬으로 이동
+    }
+}
+//경로: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json
