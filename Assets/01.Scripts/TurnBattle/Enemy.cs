@@ -1,3 +1,4 @@
+///¹ÚÁø
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,5 +34,10 @@ public class Enemy : CharacterProperty
                 break;
         }
     } 
+<<<<<<< Updated upstream:Assets/01.Scripts/TurnBattle/Enemy.cs
        
+=======
+
+    
+>>>>>>> Stashed changes:Assets/01.Scripts/Enemy.cs
 }

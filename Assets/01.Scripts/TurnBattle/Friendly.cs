@@ -1,3 +1,4 @@
+///¹ÚÁø
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class Friendly : CharacterProperty
     }
     public void ChoiceSkill(int s)
     {
-        switch (s)
+        switch(s)
         {
             case 1:
                 myAnim.SetTrigger("Jump");
@@ -30,24 +31,5 @@ public class Friendly : CharacterProperty
                 break;
         }
     }
-    public void RandomSkill()
-    {
-        int rnd = Random.Range(0, 3);
-        switch (rnd)
-        {
-            case 0:
-                myAnim.SetTrigger("Jump");
-                break;
-            case 1:
-                myAnim.SetTrigger("Zigzag");
-                break;
-            case 2:
-                myAnim.SetTrigger("Straight");
-                break;
-            default:
-                break;
-        }
-    }
-
-
+    
 }
