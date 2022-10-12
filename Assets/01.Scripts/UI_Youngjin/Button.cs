@@ -8,8 +8,10 @@ public class Button : MonoBehaviour
     public GameObject mySaveLoad;
    public void OnClickStart()
     {
-        myStart.SetActive(false);
-        mySaveLoad.SetActive(true);
+
+      myStart.SetActive(false);
+      mySaveLoad.SetActive(true);
+
     }
     public void OnClickSettings()
     {
