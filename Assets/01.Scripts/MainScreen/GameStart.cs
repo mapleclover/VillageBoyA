@@ -7,7 +7,7 @@ public class GameStart : MonoBehaviour
 {
     public void ClickStart()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Text");
     }
     
     // Start is called before the first frame update

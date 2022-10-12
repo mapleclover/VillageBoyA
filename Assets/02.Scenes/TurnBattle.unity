@@ -38,7 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
+<<<<<<< Updated upstream
   m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+=======
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+>>>>>>> Stashed changes
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -234,6 +238,8 @@ GameObject:
   - component: {fileID: 187573958}
   - component: {fileID: 187573957}
   - component: {fileID: 187573956}
+  - component: {fileID: 187573961}
+  - component: {fileID: 187573962}
   m_Layer: 29
   m_Name: Friendly1
   m_TagString: Untagged
@@ -248,13 +254,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187573954}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -8}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 511356926}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &187573956
 Animator:
@@ -353,70 +359,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187573954}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &511356925
-GameObject:
+--- !u!114 &187573961
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 511356926}
-  m_Layer: 0
-  m_Name: Friendly
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &511356926
-Transform:
+  m_GameObject: {fileID: 187573954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea327d85917fb34687b46ef2f2ed00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattleHandler: {fileID: 0}
+  Friendly: {fileID: 0}
+  Enemy: {fileID: 0}
+--- !u!114 &187573962
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511356925}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 187573955}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &585663156
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 585663157}
-  m_Layer: 0
-  m_Name: Enemy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &585663157
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585663156}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1098715722}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 187573954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myHp: 100
+  speed: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +491,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 844854184}
-  - component: {fileID: 844854183}
+  - component: {fileID: 844854185}
   m_Layer: 0
   m_Name: TurnBattle
   m_TagString: Untagged
@@ -528,6 +499,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< Updated upstream
 --- !u!114 &844854183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,6 +517,8 @@ MonoBehaviour:
   Active: {fileID: 0}
   Target: {fileID: 0}
   myState: 0
+=======
+>>>>>>> Stashed changes
 --- !u!4 &844854184
 Transform:
   m_ObjectHideFlags: 0
@@ -558,8 +532,24 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &844854185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844854182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e555ff53bc09440a77e2ad72d681da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCharacterBattle: {fileID: 187573961}
+  enemyCharacterBattle: {fileID: 1098715728}
+  activeCharacterBattle: {fileID: 0}
+  check: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +648,12 @@ GameObject:
   - component: {fileID: 1098715728}
   - component: {fileID: 1098715725}
   - component: {fileID: 1098715724}
+<<<<<<< Updated upstream
+=======
+  - component: {fileID: 1098715723}
+  - component: {fileID: 1098715728}
+  - component: {fileID: 1098715729}
+>>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -672,13 +668,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098715721}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 585663157}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1098715724
 Animator:
@@ -772,7 +768,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1098715721}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< Updated upstream
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
+=======
+  m_Script: {fileID: 11500000, guid: 0ea327d85917fb34687b46ef2f2ed00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattleHandler: {fileID: 0}
+  Friendly: {fileID: 0}
+  Enemy: {fileID: 0}
+--- !u!114 &1098715729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098715721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 024d628be46665b41b90dcd64e6208c2, type: 3}
+>>>>>>> Stashed changes
   m_Name: 
   m_EditorClassIdentifier: 
   myHp: 100
