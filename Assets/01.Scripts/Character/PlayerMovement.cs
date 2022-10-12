@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 
-//마지막 수정 10월 10일 오후 11시 51분
+//마지막 수정 10월 12일
 //전정우
 
 public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
@@ -66,13 +66,13 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         }
 
         // 달리기
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && totalDist > 0.0f)
         {
             run = true;
             myAnim.SetBool("IsRunning", true);
 
         }
-        else
+        else // 이동거리값이 0보다 작을 때 shift로 달리기 발동 안할 수 있도록
         {
             run = false;
             myAnim.SetBool("IsRunning", false);
