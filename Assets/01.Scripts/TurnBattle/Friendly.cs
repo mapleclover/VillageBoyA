@@ -25,10 +25,10 @@ public class Friendly : CharacterProperty
                 myAnim.SetTrigger("Attack");
                 break;
             case 2:
-                myAnim.SetTrigger("Attack");
+                myAnim.SetTrigger("Attack2");
                 break;
             case 3:
-                myAnim.SetTrigger("Attack");
+                myAnim.SetTrigger("Attack3");
                 break;
         }
     }

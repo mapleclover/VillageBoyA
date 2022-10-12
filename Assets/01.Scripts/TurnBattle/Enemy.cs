@@ -25,10 +25,10 @@ public class Enemy : CharacterProperty
                 myAnim.SetTrigger("Attack");
                 break;
             case 1:
-                myAnim.SetTrigger("Attack");
+                myAnim.SetTrigger("Attack2");
                 break;
             case 2:
-                myAnim.SetTrigger("Attack");
+                myAnim.SetTrigger("Attack3");
                 break;
             default:
                 break;
