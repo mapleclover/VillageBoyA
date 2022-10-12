@@ -17,8 +17,6 @@ public class CameraMovementSample : MonoBehaviour
     [SerializeField] private float zoomMIn = 0f;
 
     float totalDist = 0f;
-    //private Vector3 followTarger2;
-
     private Vector3 difValue;
 
     // Start is called before the first frame update

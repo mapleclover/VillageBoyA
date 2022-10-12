@@ -11,24 +11,25 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
 {
     //리지드바디를 활용하여 움직임을 구현
-    public Rigidbody rigidbody;
-    public float speed = 5f;
-    public float jumpHeight = 4f; //점프 높이
-    public float dash = 10f; // 대시 - 일단 달리기 속도 값으로 이해 해 주세요
-    public float rotSpeed = 5f; // deltatime 만 곱해주면 느리기 때문에 rotSpeed로 회전 속도를 조절 해 주자
+    // public Rigidbody rigidbody;
+    [SerializeField] private float speed = 3f;
+    [SerializeField] private float jumpHeight = 4f; //점프 높이
+    [SerializeField] private float dash = 6f; // 대시 - 일단 달리기 속도 값으로 이해 해 주세요
+    [SerializeField] private float rotSpeed = 10f; // deltatime 만 곱해주면 느리기 때문에 rotSpeed로 회전 속도를 조절 해 주자
 
     private Vector3 dir = Vector3.zero;
 
     private bool ground = false; // 연속점프방지
-    public LayerMask layer; // 연속점프방지
+    [SerializeField] private LayerMask layer; // 연속점프방지
 
     public bool run; // 달리기
-    public float finalSpeed; // 기본속도와 달리기 속도를 구분
+    //public float finalSpeed; // 기본속도와 달리기 속도를 구분
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
+        // CharacterProperty에서 myRigid 가져와 쓰는데 나중에 문제 생길지 모르니 우선 둘게요
+        // rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
         // 유니티에서 바인딩 해 줄 필요 없음
     }
 
@@ -60,7 +61,7 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         if (Input.GetButtonDown("Jump") && ground) // 연속점프 방지 = && ground 그라운드가 참일 때 
         {
             Vector3 jumpPower = Vector3.up * jumpHeight;
-            rigidbody.AddForce(jumpPower, ForceMode.VelocityChange);
+            myRigid.AddForce(jumpPower, ForceMode.VelocityChange);
             //점프를 했을 때 위로 뛸 수 있도록
 
         }
@@ -119,12 +120,12 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         }
 
         // 이동을 구현
-        rigidbody.MovePosition(this.gameObject.transform.position + dir * speed * Time.deltaTime);
+        myRigid.MovePosition(this.gameObject.transform.position + dir * speed * Time.deltaTime);
         //벡터 값 하나만 들어가는데 이동을 해야할 목적지를 넣어주자
 
         if (run) // 달리기
         {
-            rigidbody.MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
+            myRigid.MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
         }
 
 
@@ -141,8 +142,8 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         // = 레이저를 쏠건데 캐릭터의 발 끝보다 0.2 만큼 높은 위치에서 아래방향으로 쏠것이고 0.4 만큼만 레이저가 발사 될것이다
         // 이 길이 안에서 우리가 설정할 레이어가 검출이 되면 그 정보를 out hit 에 담아라
 
-        // 이쪽 프로젝트로 옮기는 과정에서 원래 수치값(0.4, 0.2) 와 상이하게 해야하는 문제가 좀 있네요 
-        if (Physics.Raycast(transform.position + (Vector3.up * 1.2f), Vector3.down, out hit, 1.0f, layer))
+        // 이쪽 프로젝트로 옮기는 과정에서 원래 수치값(0.4f, 0.2f) 와 상이하게 해야하는 문제가 좀 있네요 
+        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.4f, layer))
         {
             ground = true;
         }
