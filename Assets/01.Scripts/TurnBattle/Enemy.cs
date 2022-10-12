@@ -22,13 +22,13 @@ public class Enemy : CharacterProperty
         switch(rnd)
         {
             case 0:
-                myAnim.SetTrigger("Jump");
+                myAnim.SetTrigger("Attack");
                 break;
             case 1:
-                myAnim.SetTrigger("Zigzag");
+                myAnim.SetTrigger("Attack");
                 break;
             case 2:
-                myAnim.SetTrigger("Straight");
+                myAnim.SetTrigger("Attack");
                 break;
             default:
                 break;
