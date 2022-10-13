@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;        //폴더 안 저장된 파일 확인
+using System.Linq;
 using TMPro;
 using UnityEngine;
 public class GameData
 {
    // public string name;
     public string savedTime;
-    public int[] partyMember;
+    public bool[] partyMember=Enumerable.Repeat(false,3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함
 }
 public class DataController: MonoBehaviour
 {

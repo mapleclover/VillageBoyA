@@ -9,6 +9,8 @@ using static UnityEngine.GraphicsBuffer;
 public class CameraRotationController: MonoBehaviour
 {
 
+    
+
     public Transform target;
     //public Vector2 LookupRange = new Vector2(-60.0f, 80.0f);
 

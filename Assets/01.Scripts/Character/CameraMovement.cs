@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 
@@ -15,12 +16,13 @@ public class CameraMovement : MonoBehaviour
     // Neck을 따라가게 하는게 가장 자연스러웠습니다.
 
     [SerializeField] private float lerpspeed;
-    [SerializeField] private Vector2 ZoomRange = new Vector2(0.5f, 8.0f);
+    [SerializeField] private Vector2 ZoomRange = new Vector2(2.7f, 7.0f);
     [SerializeField] private float ZoomSpeed;
 
     Vector3 myDir = Vector3.zero;
     float targetDist = 0.0f;
     float dist = 0.0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,7 @@ public class CameraMovement : MonoBehaviour
         myDir = transform.position - myTarget.position;
         targetDist = dist = myDir.magnitude;
         myDir.Normalize();
+
     }
 
     // Update is called once per frame
@@ -40,8 +43,6 @@ public class CameraMovement : MonoBehaviour
 
         // 유니티에서 lerpspeed 값을 1 로 바꾸면 딱딱하게 따라갈 수 있도록 변경 가능
         this.transform.position = Vector3.Lerp(this.transform.position, myTarget.transform.position + myDir * dist, lerpspeed);
-
-
     }
 
 }

@@ -7,7 +7,12 @@ using static UnityEngine.GraphicsBuffer;
 public class SpringArm : MonoBehaviour
 {
 
+    // 쿼터니언과 벡터의 곱을 구해 방향벡터를 만들라
+
     public LayerMask crashMask;
+    //public Transform myTarget;
+
+    public float lerpspeed;
 
     public Transform myCam;
     public float LookupSpeed = 10.0f;
@@ -21,6 +26,9 @@ public class SpringArm : MonoBehaviour
     Vector3 camPos = Vector3.zero;
     float desireDistance = 0.0f;
 
+    Vector3 myDir = Vector3.zero;
+    float dist = 0.0f;
+
 
 
     // Start is called before the first frame update
@@ -31,11 +39,16 @@ public class SpringArm : MonoBehaviour
 
         camPos = myCam.localPosition;
         desireDistance = camPos.z;
+
+        /*myDir = transform.position - myTarget.position;
+        dist = myDir.magnitude;
+        myDir.Normalize();*/
     }
 
     // Update is called once per frame
     void Update()
     {
+        //this.transform.position = Vector3.Lerp(this.transform.position, myTarget.transform.position + myDir * dist, lerpspeed);
 
         if (Input.GetMouseButton(1))
         {
@@ -46,7 +59,9 @@ public class SpringArm : MonoBehaviour
             curRot.y += Input.GetAxisRaw("Mouse X") * LookupSpeed;
 
             transform.localRotation = Quaternion.Euler(curRot.x, 0, 0);
-            transform.localRotation = Quaternion.Euler(0, curRot.y, 0);
+            transform.parent.rotation = Quaternion.Euler(0, curRot.y, 0);
+            //transform.rotation = Quaternion.Euler(0, curRot.y, 0);
+            //myTarget.transform.rotation = Quaternion.Euler(0, curRot.y, 0);
 
         }
 
