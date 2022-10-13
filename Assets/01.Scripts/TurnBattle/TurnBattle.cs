@@ -71,7 +71,7 @@ public class TurnBattle : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 1000.0f, 1 << LayerMask.NameToLayer("Friendly")))
                 {
-                    
+                    SelectedCharacter=hit.collider.gameObject;
                 }
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
@@ -119,7 +119,7 @@ public class TurnBattle : MonoBehaviour
 
     void Start()
     {
-        ChangeState(State.Create);
+        ChangeState(State.Choice);
 
     }
 

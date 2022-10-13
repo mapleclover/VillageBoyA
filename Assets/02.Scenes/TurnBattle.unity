@@ -3176,6 +3176,7 @@ GameObject:
   - component: {fileID: 250052722}
   - component: {fileID: 250052724}
   - component: {fileID: 250052725}
+  - component: {fileID: 250052726}
   m_Layer: 30
   m_Name: Enemy (1)
   m_TagString: Untagged
@@ -3237,6 +3238,20 @@ MonoBehaviour:
   Skill: 0
   Target: {fileID: 0}
   Active5: 1
+--- !u!136 &250052726
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250052721}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &255484853
 GameObject:
   m_ObjectHideFlags: 0
@@ -6674,6 +6689,7 @@ GameObject:
   - component: {fileID: 609012799}
   - component: {fileID: 609012801}
   - component: {fileID: 609012800}
+  - component: {fileID: 609012802}
   m_Layer: 29
   m_Name: ember (1)
   m_TagString: Untagged
@@ -6735,6 +6751,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &609012802
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609012798}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &610600040
 GameObject:
   m_ObjectHideFlags: 0
@@ -8405,6 +8435,7 @@ GameObject:
   - component: {fileID: 822175416}
   - component: {fileID: 822175415}
   - component: {fileID: 822175417}
+  - component: {fileID: 822175418}
   m_Layer: 30
   m_Name: Enemy
   m_TagString: Untagged
@@ -8466,6 +8497,20 @@ MonoBehaviour:
   Skill: 0
   Target: {fileID: 0}
   Active5: 1
+--- !u!136 &822175418
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822175413}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &822497115
 GameObject:
   m_ObjectHideFlags: 0
@@ -12039,6 +12084,7 @@ GameObject:
   - component: {fileID: 1219290447}
   - component: {fileID: 1219290449}
   - component: {fileID: 1219290448}
+  - component: {fileID: 1219290450}
   m_Layer: 29
   m_Name: ember (2)
   m_TagString: Untagged
@@ -12100,6 +12146,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &1219290450
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219290446}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &1224134004
 GameObject:
   m_ObjectHideFlags: 0
@@ -13297,6 +13357,7 @@ GameObject:
   - component: {fileID: 1340737246}
   - component: {fileID: 1340737248}
   - component: {fileID: 1340737249}
+  - component: {fileID: 1340737250}
   m_Layer: 30
   m_Name: Enemy (2)
   m_TagString: Untagged
@@ -13358,6 +13419,20 @@ MonoBehaviour:
   Skill: 0
   Target: {fileID: 0}
   Active5: 1
+--- !u!136 &1340737250
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340737245}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &1343560044
 GameObject:
   m_ObjectHideFlags: 0
@@ -24597,6 +24672,7 @@ GameObject:
   - component: {fileID: 9185311942888702999}
   - component: {fileID: 2997396650138607213}
   - component: {fileID: 9185311942888703000}
+  - component: {fileID: 9185311942888703001}
   m_Layer: 29
   m_Name: ember
   m_TagString: Untagged
@@ -25051,6 +25127,20 @@ MonoBehaviour:
   Skill: 0
   Target: {fileID: 0}
   Active5: 1
+--- !u!136 &9185311942888703001
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8373062689231511213}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!4 &9212635726125773593
 Transform:
   m_ObjectHideFlags: 0
