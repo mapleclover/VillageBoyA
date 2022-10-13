@@ -2,23 +2,29 @@
 ///≈œπË∆≤
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEditor.PlayerSettings;
 
 public class TurnBattle : MonoBehaviour
 {
     public GameObject Friendly;
     public GameObject Enemy;
+    public GameObject[] Player=new GameObject[2];
+    public GameObject[] Ene = new GameObject[2];
     public GameObject Active;
     public GameObject Target;
     int Skill;
+    public GameObject[] PlayerList=new GameObject[6];
     Vector3 gos;
-    //
-    //public GameObject SelectedCharacter; 
-    //
+    Vector3 gos2;
+    public GameObject SelectedCharacter; 
+    
     public enum State
     {
-        Create, Choice, Moving, BackMoving, Battle, End
+        Create, Choice,SpeedCheck ,ActiveCheck,Moving, BackMoving, Battle, End
     }
     public State myState = State.Create;
     void ChangeState(State s)
@@ -28,11 +34,19 @@ public class TurnBattle : MonoBehaviour
         switch (myState)
         {
             case State.Create:
+                
                 break;
             case State.Choice:
                 break;
+            case State.SpeedCheck:
+                
+                break;
+            case State.ActiveCheck:
+                break;
             case State.Moving:
+                
                 StartCoroutine(moving(Target.transform.position));
+                
                 break;            
             case State.Battle:
                 StartCoroutine(Attack(Skill));
@@ -50,22 +64,35 @@ public class TurnBattle : MonoBehaviour
         switch (myState)
         {
             case State.Create:
+
                 break;
             case State.Choice:
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 1000.0f, 1 << LayerMask.NameToLayer("Friendly")))
+                {
+                    
+                }
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    //SelectedCharacter.GetComponenet<Friendly>().Skill = 1;
-                    
-                    Active.GetComponent<Friendly>().Skill = 1;
+                    SelectedCharacter.GetComponent<Friendly>().Skill = 1;
+
+                    //Active.GetComponent<Friendly>().Skill = 1;
                 }
                 if (Input.GetKeyDown(KeyCode.W))
                 {
-                    Active.GetComponent<Friendly>().Skill = 2;
+                    SelectedCharacter.GetComponent<Friendly>().Skill = 2;
+                    //Active.GetComponent<Friendly>().Skill = 2;
                 }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    Active.GetComponent<Friendly>().Skill = 3;
+                    SelectedCharacter.GetComponent<Friendly>().Skill = 3;
+                    //Active.GetComponent<Friendly>().Skill = 3;
                 }
+                break;
+            case State.SpeedCheck:
+                break;
+            case State.ActiveCheck:
                 break;
             case State.Moving:
                 break;
@@ -81,11 +108,18 @@ public class TurnBattle : MonoBehaviour
     {
         Active = Friendly;
         Target = Enemy;
+        PlayerList[0] = Player[0];
+        PlayerList[1] = Player[1];
+        PlayerList[2] = Player[2];
+        PlayerList[3] = Ene[0];
+        PlayerList[4] = Ene[1];
+        PlayerList[5] = Ene[2];
+        
     }
 
     void Start()
     {
-        ChangeState(State.Choice);
+        ChangeState(State.Create);
 
     }
 
@@ -119,7 +153,7 @@ public class TurnBattle : MonoBehaviour
         }
         else if (Active == Enemy)
         {
-            Active.GetComponent<Enemy>().RandomSkill();
+            Active.GetComponent<Friendly>().RandomSkill();
 
 
         }
@@ -128,9 +162,11 @@ public class TurnBattle : MonoBehaviour
     }
     IEnumerator moving(Vector3 pos)
     {
+        StartCoroutine(RotatingToPosition(pos));
         Active.GetComponent<Animator>().SetBool("IsWalking", true);
         gos = Active.transform.position;
         Vector3 dir = pos - Active.transform.position;
+        gos2 = dir;
         float dist = (dir.magnitude)-0.8f;
         dir.Normalize();
         while (dist > 0.0f)
@@ -149,10 +185,11 @@ public class TurnBattle : MonoBehaviour
             Active.GetComponent<Animator>().SetBool("IsWalking", false);
             ChangeState(State.Battle);
         }
-
+        
     }
     IEnumerator backmoving(Vector3 pos)
     {
+        StartCoroutine(RotatingToPosition(pos));
         Active.GetComponent<Animator>().SetBool("IsWalking", true);
         
         Vector3 dir = pos - Active.transform.position;
@@ -171,8 +208,10 @@ public class TurnBattle : MonoBehaviour
         }
         if (dist == 0.0f)
         {
+            
             Active.GetComponent<Animator>().SetBool("IsWalking", false);
-            if(Active == Enemy)
+            StartCoroutine(RotatingToPosition(gos2));
+            /*if(Active == Enemy)
             {
                 Active = Friendly;
                 Target = Enemy;
@@ -182,8 +221,33 @@ public class TurnBattle : MonoBehaviour
                 Active = Enemy;
                 Target=Friendly;
             }
-            ChangeState(State.Moving);
+            ChangeState(State.Moving);*/
+        }
+        
+
+    }
+    IEnumerator RotatingToPosition(Vector3 pos)
+    {
+        Vector3 dir = (pos - Active.transform.position).normalized;
+        float Angle = Vector3.Angle(Active.transform.forward, dir);
+        float rotDir = 1.0f;
+        if (Vector3.Dot(Active.transform.right, dir) < 0.0f)
+        {
+            rotDir = -rotDir;
         }
 
+        while (Angle > 0.0f)
+        {
+
+            float delta = 360.0f * Time.deltaTime;
+            if (delta > Angle)
+            {
+                delta = Angle;
+            }
+            Angle -= delta;
+            Active.transform.Rotate(Vector3.up * rotDir * delta, Space.World);
+
+            yield return null;
+        }
     }
 }

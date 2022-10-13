@@ -7,6 +7,7 @@ public class Enemy : CharacterProperty
 {
     public float myHp = 100.0f;
     public float speed = 2.0f;
+    public GameObject Target;
     void Start()
     {
         
@@ -16,22 +17,5 @@ public class Enemy : CharacterProperty
     {
         
     }
-    public void RandomSkill()
-    {
-        int rnd = Random.Range(0, 3);
-        switch(rnd)
-        {
-            case 0:
-                myAnim.SetTrigger("Attack");
-                break;
-            case 1:
-                myAnim.SetTrigger("Attack2");
-                break;
-            case 2:
-                myAnim.SetTrigger("Attack3");
-                break;
-            default:
-                break;
-        }
-    } 
+    
 }

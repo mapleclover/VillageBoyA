@@ -8,6 +8,7 @@ using System.IO;
 using TMPro;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 using System.Data;
+[System.Serializable]
 
 public class Select : MonoBehaviour
 {
@@ -16,7 +17,19 @@ public class Select : MonoBehaviour
     public TextMeshProUGUI[] slotText;// 슬롯 버튼 아래 텍스트
     bool[] savefile = new bool[3];//세이브파일 존재 유무
     bool t = false;
-    void Start()
+    //  public GameObject[] myParty;
+    //   public GameObject[] myMember; 
+    /*
+    [Serializable]
+    public class Party
+    {
+        public static GameObject[]myMember=new GameObject[3];
+    }
+    
+    public Party[] myParty=new Party[3];
+    */
+    public GameObject[] myMember;
+    void Start()        
     {
        
         for(int i = 0; i < 3; i++)
@@ -26,13 +39,20 @@ public class Select : MonoBehaviour
                 savefile[i] = true;
                 DataController.instance.nowSlot = i;
                 DataController.instance.LoadGameData();
-                slotText[i].text="Saved Date:"+DataController.instance.gameData.savedTime;   //저장한 시간 표시
-               
-
+                slotText[i].text="Saved Date:"+DataController.instance.gameData.savedTime;   //저장한 시간 표시                                                                           //  myParty[i].SetActive(true);
+                DataController.instance.gameData.partyMember[0] = true;
+                for(int j=0;j< DataController.instance.gameData.partyMember.Length;j++)
+                {
+                    if (DataController.instance.gameData.partyMember[j])
+                    {
+                       myMember[i*3+j].SetActive(true);     //파티원이 있으면 사진이 뜸
+                    }
+                }
             }
             else
             {
                 slotText[i].text = "Empty";
+               
             }
         }
         DataController.instance.DataClear();//불러온 데이터 초기화(시간만 표기만 함)

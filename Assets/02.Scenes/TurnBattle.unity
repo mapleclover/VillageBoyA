@@ -3175,8 +3175,8 @@ GameObject:
   m_Component:
   - component: {fileID: 250052722}
   - component: {fileID: 250052724}
-  - component: {fileID: 250052723}
-  m_Layer: 0
+  - component: {fileID: 250052725}
+  m_Layer: 30
   m_Name: Enemy (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3200,20 +3200,6 @@ Transform:
   m_Father: {fileID: 1111666016}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &250052723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250052721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 024d628be46665b41b90dcd64e6208c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myHp: 100
-  speed: 2
 --- !u!95 &250052724
 Animator:
   serializedVersion: 4
@@ -3234,6 +3220,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &250052725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250052721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myHp: 100
+  speed: 2
+  Skill: 0
+  Target: {fileID: 0}
+  Active5: 1
 --- !u!1 &255484853
 GameObject:
   m_ObjectHideFlags: 0
@@ -6671,7 +6674,7 @@ GameObject:
   - component: {fileID: 609012799}
   - component: {fileID: 609012801}
   - component: {fileID: 609012800}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: ember (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6710,6 +6713,8 @@ MonoBehaviour:
   myHp: 100
   speed: 5
   Skill: 0
+  Target: {fileID: 0}
+  Active5: 1
 --- !u!95 &609012801
 Animator:
   serializedVersion: 4
@@ -8400,7 +8405,7 @@ GameObject:
   - component: {fileID: 822175416}
   - component: {fileID: 822175415}
   - component: {fileID: 822175417}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8453,11 +8458,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 822175413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 024d628be46665b41b90dcd64e6208c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myHp: 100
   speed: 1
+  Skill: 0
+  Target: {fileID: 0}
+  Active5: 1
 --- !u!1 &822497115
 GameObject:
   m_ObjectHideFlags: 0
@@ -12031,7 +12039,7 @@ GameObject:
   - component: {fileID: 1219290447}
   - component: {fileID: 1219290449}
   - component: {fileID: 1219290448}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: ember (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12070,6 +12078,8 @@ MonoBehaviour:
   myHp: 100
   speed: 6
   Skill: 0
+  Target: {fileID: 0}
+  Active5: 1
 --- !u!95 &1219290449
 Animator:
   serializedVersion: 4
@@ -13286,8 +13296,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1340737246}
   - component: {fileID: 1340737248}
-  - component: {fileID: 1340737247}
-  m_Layer: 0
+  - component: {fileID: 1340737249}
+  m_Layer: 30
   m_Name: Enemy (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13311,20 +13321,6 @@ Transform:
   m_Father: {fileID: 1111666016}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1340737247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1340737245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 024d628be46665b41b90dcd64e6208c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myHp: 100
-  speed: 3
 --- !u!95 &1340737248
 Animator:
   serializedVersion: 4
@@ -13345,6 +13341,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1340737249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340737245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myHp: 100
+  speed: 3
+  Skill: 0
+  Target: {fileID: 0}
+  Active5: 1
 --- !u!1 &1343560044
 GameObject:
   m_ObjectHideFlags: 0
@@ -15441,9 +15454,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Friendly: {fileID: 8373062689231511213}
-  Enemy: {fileID: 822175413}
+  Enemy: {fileID: 1340737245}
+  Player:
+  - {fileID: 8373062689231511213}
+  - {fileID: 609012798}
+  - {fileID: 1219290446}
+  Ene:
+  - {fileID: 822175413}
+  - {fileID: 250052721}
+  - {fileID: 1340737245}
   Active: {fileID: 0}
   Target: {fileID: 0}
+  PlayerList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  SelectedCharacter: {fileID: 0}
   myState: 0
 --- !u!4 &1543604257
 Transform:
@@ -24568,7 +24597,7 @@ GameObject:
   - component: {fileID: 9185311942888702999}
   - component: {fileID: 2997396650138607213}
   - component: {fileID: 9185311942888703000}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25020,6 +25049,8 @@ MonoBehaviour:
   myHp: 100
   speed: 4
   Skill: 0
+  Target: {fileID: 0}
+  Active5: 1
 --- !u!4 &9212635726125773593
 Transform:
   m_ObjectHideFlags: 0
