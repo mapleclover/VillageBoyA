@@ -1,75 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class CameraRotationController: MonoBehaviour
 {
 
     public Transform target;
+    //public Vector2 LookupRange = new Vector2(-60.0f, 80.0f);
 
-    //public LayerMask crashMask;
-
-    //public Transform myCam;
-    public float LookupSpeed = 10.0f;
-    //public float ZoomSpeed = 3.0f;
-    //public float offSet = 0.5f;
-
-    Vector3 curRot = Vector3.zero;
-    public Vector2 LookupRange = new Vector2(-60.0f, 80.0f);
-    public Vector2 ZoomRange = new Vector2(-8, -1);
-
-    //Vector3 camPos = Vector3.zero;
-    //float desireDistance = 0.0f;
-
+    //Vector3 curRot = Vector3.zero;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        curRot.x = transform.localRotation.eulerAngles.x;
-        curRot.y = transform.localRotation.eulerAngles.y;
+        /*curRot.x = transform.localRotation.eulerAngles.x;
+        curRot.y = transform.localRotation.eulerAngles.y;*/
 
-        //camPos = myCam.localPosition;
-        //desireDistance = camPos.z;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        
-        
-
         if (Input.GetMouseButton(1))
         {
-            transform.RotateAround(target.position, Vector3.up, 20 * Time.deltaTime);
-            curRot.x -= Input.GetAxisRaw("Mouse Y") * LookupSpeed;
+
+            /*curRot.x -= Input.GetAxisRaw("Mouse Y") * 10f;
             curRot.x = Mathf.Clamp(curRot.x, LookupRange.x, LookupRange.y);
 
-            curRot.y += Input.GetAxisRaw("Mouse X") * LookupSpeed;
+            curRot.y += Input.GetAxisRaw("Mouse X") * 10f;
 
-            
+
             transform.localRotation = Quaternion.Euler(curRot.x, 0, 0);
-            transform.rotation = Quaternion.Euler(curRot.x, curRot.y, 0);
-            //transform.parent.rotation = Quaternion.Euler(0, curRot.y, 0);
+            transform.localRotation = Quaternion.Euler(0, curRot.y, 0);
+            //transform.parent.rotation = Quaternion.Euler(0, curRot.y, 0);*/
+
+
+          /*  if (Input.GetAxis("Mouse X") < 0)
+            {
+                transform.RotateAround(target.position, Vector3.up, 150 * Time.deltaTime);
+
+            }
+
+            if (Input.GetAxis("Mouse X") > 0)
+            {
+                transform.RotateAround(target.position, Vector3.down, 150 * Time.deltaTime);
+
+            }*/
+
 
         }
 
-        //desireDistance += Input.GetAxisRaw("Mouse ScrollWheel") * ZoomSpeed;
-        //desireDistance = Mathf.Clamp(desireDistance, ZoomRange.x, ZoomRange.y);
-
-        /*if (Physics.Raycast(transform.position, -transform.forward, out RaycastHit hit, -camPos.z + offSet + 0.01f, crashMask))
+        if (Input.GetKey(KeyCode.E))
         {
-            camPos.z = -hit.distance + offSet;
+            transform.RotateAround(target.position, Vector3.down, 150 * Time.deltaTime);
+            // 타겟 포지션에서 공전 
         }
-        else
+        if (Input.GetKey(KeyCode.Q))
         {
-            camPos.z = Mathf.Lerp(camPos.z, desireDistance, Time.deltaTime * 3.0f);
-
+            transform.RotateAround(target.position, Vector3.up, 150 * Time.deltaTime);
         }
-        myCam.localPosition = camPos;*/
+
+        
+
+
+
+
+
+
 
     }
 }

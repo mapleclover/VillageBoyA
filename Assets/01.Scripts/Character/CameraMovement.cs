@@ -34,7 +34,7 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         targetDist += Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
-        //targetDist = Mathf.Clamp(targetDist , ZoomRange.x, ZoomRange.y);
+        targetDist = Mathf.Clamp(targetDist , ZoomRange.x, ZoomRange.y);
 
         dist = Mathf.Lerp(dist, targetDist, Time.deltaTime * 5.0f);
 
@@ -42,8 +42,6 @@ public class CameraMovement : MonoBehaviour
         this.transform.position = Vector3.Lerp(this.transform.position, myTarget.transform.position + myDir * dist, lerpspeed);
 
 
-        //dist = Mathf.Lerp(dist, targetDist, Time.deltaTime * 5.0f);
-        //transform.position = myTarget.position + myDir * dist;
     }
 
 }
