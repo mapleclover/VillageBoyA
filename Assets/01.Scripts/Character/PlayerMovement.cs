@@ -10,8 +10,14 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
 {
+
+
+    // 쿼터니언과 벡터의 곱을 구해 방향벡터를 만들라
+
+    public Transform cameraRot;
+
     //리지드바디를 활용하여 움직임을 구현
-    // public Rigidbody rigidbody;
+    public Rigidbody rigidbody;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpHeight = 4f; //점프 높이
     [SerializeField] private float dash = 6f; // 대시 - 일단 달리기 속도 값으로 이해 해 주세요
@@ -29,7 +35,7 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
     void Start()
     {
         // CharacterProperty에서 myRigid 가져와 쓰는데 나중에 문제 생길지 모르니 우선 둘게요
-        // rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
+         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
         // 유니티에서 바인딩 해 줄 필요 없음
     }
 
@@ -42,6 +48,9 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
         float totalDist = dir.magnitude;
         dir.Normalize(); // 값을 항상 1로 동일하게 처리하고 대각선으로 이동하더라도 속도가 빨리지는 현상 방지
+
+
+
 
         CheckGround(); // 연속점프 감지
 
@@ -119,8 +128,28 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             //Lerp를 쓰면 원하는 방향까지 서서히 회전
         }
 
+
+
+
         // 이동을 구현
-        myRigid.MovePosition(this.gameObject.transform.position + dir * speed * Time.deltaTime);
+
+
+        this.transform.Translate(dir * speed * Time.deltaTime);
+/*
+        if (dir == Vector3.forward)
+        {
+            this.transform.Translate(dir * speed * Time.deltaTime);
+        }
+        else
+        {
+            rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
+        }*/
+
+
+
+        //myRigid.MovePosition(this.gameObject.transform.localPosition + dir * speed * Time.deltaTime);
+        //this.gameObject.transform.position = this.gameObject.transform.localPosition + dir * speed * Time.deltaTime;
+        //this.gameObject.transform.Translate(dir * speed * Time.deltaTime);
         //벡터 값 하나만 들어가는데 이동을 해야할 목적지를 넣어주자
 
         if (run) // 달리기

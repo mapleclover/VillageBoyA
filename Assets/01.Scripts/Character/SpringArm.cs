@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static Cinemachine.CinemachineTargetGroup;
 using static UnityEngine.GraphicsBuffer;
 
 public class SpringArm : MonoBehaviour
 {
 
+
+    [SerializeField] private Transform myTarget;
     // 쿼터니언과 벡터의 곱을 구해 방향벡터를 만들라
 
     public LayerMask crashMask;
@@ -40,15 +43,15 @@ public class SpringArm : MonoBehaviour
         camPos = myCam.localPosition;
         desireDistance = camPos.z;
 
-        /*myDir = transform.position - myTarget.position;
+        myDir = transform.position - myTarget.position;
         dist = myDir.magnitude;
-        myDir.Normalize();*/
+        myDir.Normalize();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //this.transform.position = Vector3.Lerp(this.transform.position, myTarget.transform.position + myDir * dist, lerpspeed);
+        this.transform.position = Vector3.Lerp(this.transform.position, myTarget.transform.position + myDir * dist, lerpspeed);
 
         if (Input.GetMouseButton(1))
         {
@@ -59,8 +62,8 @@ public class SpringArm : MonoBehaviour
             curRot.y += Input.GetAxisRaw("Mouse X") * LookupSpeed;
 
             transform.localRotation = Quaternion.Euler(curRot.x, 0, 0);
-            transform.parent.rotation = Quaternion.Euler(0, curRot.y, 0);
-            //transform.rotation = Quaternion.Euler(0, curRot.y, 0);
+            //transform.parent.rotation = Quaternion.Euler(0, curRot.y, 0);
+            transform.rotation = Quaternion.Euler(0, curRot.y, 0);
             //myTarget.transform.rotation = Quaternion.Euler(0, curRot.y, 0);
 
         }
@@ -75,7 +78,6 @@ public class SpringArm : MonoBehaviour
         else
         {
             camPos.z = Mathf.Lerp(camPos.z, desireDistance, Time.deltaTime * 3.0f);
-
         }
         myCam.localPosition = camPos;
 
