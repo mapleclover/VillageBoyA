@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
 using TMPro;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
+//using static UnityEngine.UIElements.UxmlAttributeDescription;
 using System.Data;
 [System.Serializable]
 
@@ -45,7 +45,36 @@ public class Select : MonoBehaviour
                 {
                     if (DataController.instance.gameData.partyMember[j])
                     {
-                       myMember[i*3+j].SetActive(true);     //파티원이 있으면 사진이 뜸
+                        Vector3 position = myMember[j].transform.localPosition;
+                        switch (j)
+                        {
+                            case 0:
+                                position.x = 200;
+                                break;
+                            case 1:
+                                position.x = 265;
+                                break;
+                            case 2:
+                                position.x = 330;
+                                break;
+                        }
+                        switch (i)
+                        {
+                            case 0:
+                                position.y = 124;
+                                break;
+                            case 1:
+                                position.y = 0;
+                                break;
+                            case 2:
+                                position.y = -124;
+                                break;
+                        }
+                        GameObject obj = Instantiate(myMember[j],position,Quaternion.identity);
+                        obj.transform.parent = GameObject.Find("SaveLoad").transform;
+                        obj.transform.localPosition = position;
+                        obj.SetActive(true);
+                                                //파티원이 있으면 사진이 뜸
                     }
                 }
             }
