@@ -8,8 +8,9 @@ public class Friendly : CharacterProperty
     public float myHp = 100.0f;
     public float speed = 2.0f;
     public int Skill = 0;
-    public GameObject Target;
-    public bool Active5=true;
+    public GameObject myTarget;
+    public bool Active5=false;
+    
     void Start()
     {
         

@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,18 +11,20 @@ using static UnityEditor.PlayerSettings;
 
 public class TurnBattle : MonoBehaviour
 {
-    public GameObject Friendly;
-    public GameObject Enemy;
+    
     public GameObject[] Player=new GameObject[2];
     public GameObject[] Ene = new GameObject[2];
     public GameObject Active;
-    public GameObject Target;
+    public GameObject[] PlayerList;
+    
+    public GameObject SelectedCharacter;
+    public GameObject SelectedCharacterTarget;
+    public GameObject mySelectRing;
+    public GameObject mySelectTargetRing;
+
     int Skill;
-    public GameObject[] PlayerList=new GameObject[6];
     Vector3 gos;
     Vector3 gos2;
-    public GameObject SelectedCharacter; 
-    
     public enum State
     {
         Create, Choice,SpeedCheck ,ActiveCheck,Moving, BackMoving, Battle, End
@@ -37,15 +40,30 @@ public class TurnBattle : MonoBehaviour
                 
                 break;
             case State.Choice:
+                for (int i = 0; i < PlayerList.Length; ++i)
+                {
+                    PlayerList[i].GetComponent<Friendly>().Active5 = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다
+                }
+                for (int i = 0; i < Ene.Length; ++i)
+                {
+                    for (int j = 0; j < Player.Length; ++j)
+                    {
+                        if (Ene[i].GetComponent<Friendly>().myTarget = null)
+                        {
+                            Ene[i].GetComponent<Friendly>().myTarget = Player[j];
+                        }
+                    }
+                }
                 break;
             case State.SpeedCheck:
                 
                 break;
             case State.ActiveCheck:
+                
                 break;
             case State.Moving:
                 
-                StartCoroutine(moving(Target.transform.position));
+                StartCoroutine(moving(Active.GetComponent<Friendly>().myTarget.transform.position));
                 
                 break;            
             case State.Battle:
@@ -69,26 +87,30 @@ public class TurnBattle : MonoBehaviour
             case State.Choice:
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 1000.0f, 1 << LayerMask.NameToLayer("Friendly")))
+                if (Input.GetMouseButtonDown(0))
                 {
-                    SelectedCharacter=hit.collider.gameObject;
-                }
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    SelectedCharacter.GetComponent<Friendly>().Skill = 1;
+                    if (Physics.Raycast(ray, out hit, 1000.0f, 1 << LayerMask.NameToLayer("Friendly")))
+                    {
+                        SelectedCharacter = hit.collider.gameObject;
 
-                    //Active.GetComponent<Friendly>().Skill = 1;
+                    }
                 }
-                if (Input.GetKeyDown(KeyCode.W))
+                if (SelectedCharacter != null)
                 {
-                    SelectedCharacter.GetComponent<Friendly>().Skill = 2;
-                    //Active.GetComponent<Friendly>().Skill = 2;
+                    if (Input.GetKeyDown(KeyCode.Q)) SelectedCharacter.GetComponent<Friendly>().Skill = 1;
+                    if (Input.GetKeyDown(KeyCode.W)) SelectedCharacter.GetComponent<Friendly>().Skill = 2;
+                    if (Input.GetKeyDown(KeyCode.E)) SelectedCharacter.GetComponent<Friendly>().Skill = 3;
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (Physics.Raycast(ray, out hit, 1000.0f, 1 << LayerMask.NameToLayer("Enemy")))
+                        {
+                            SelectedCharacterTarget = hit.collider.gameObject;
+                            SelectedCharacter.GetComponent<Friendly>().myTarget = SelectedCharacterTarget;
+                        }
+                    }
+
                 }
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    SelectedCharacter.GetComponent<Friendly>().Skill = 3;
-                    //Active.GetComponent<Friendly>().Skill = 3;
-                }
+                
                 break;
             case State.SpeedCheck:
                 break;
@@ -106,14 +128,16 @@ public class TurnBattle : MonoBehaviour
     }
     private void Awake()
     {
-        Active = Friendly;
-        Target = Enemy;
-        PlayerList[0] = Player[0];
-        PlayerList[1] = Player[1];
-        PlayerList[2] = Player[2];
-        PlayerList[3] = Ene[0];
-        PlayerList[4] = Ene[1];
-        PlayerList[5] = Ene[2];
+        
+        PlayerList = new GameObject[Player.Length + Ene.Length];
+        for (int i=0;i<Player.Length;++i)
+        {
+            PlayerList[i] = Player[i];
+        }
+        for(int i=0;i<Ene.Length;++i)
+        {
+            PlayerList[Player.Length + i] = Ene[i];
+        }
         
     }
 
@@ -126,12 +150,33 @@ public class TurnBattle : MonoBehaviour
 
     void Update()
     {
-
+        
+        mySelectRing.SetActive(false); //캐릭터가 선택되기전까지 링 오프
+        mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
         StateProcess();
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return))        
         {
+            SelectedCharacter = null;
             ChangeState(State.Moving);
         }
+        if(SelectedCharacter!=null) //캐릭터가 선택되어있을경우
+        {
+            mySelectRing.SetActive(true); //캐릭터가 선택되면 링온
+            mySelectRing.transform.position = SelectedCharacter.transform.position; //링을 선택캐릭터위치로
+            if (SelectedCharacter.GetComponent<Friendly>().myTarget != null) //캐릭터가 타겟으로 잡고있는게 있는지 확인
+            {
+                mySelectTargetRing.SetActive(true); // 타겟링온 
+                mySelectTargetRing.transform.position = SelectedCharacter.GetComponent<Friendly>().myTarget.transform.position; // 타겟링을 타겟위치로 
+            }
+        }
+
+        float[] sort = { PlayerList[0].GetComponent<Friendly>().speed, PlayerList[1].GetComponent<Friendly>().speed,
+            PlayerList[2].GetComponent<Friendly>().speed, PlayerList[3].GetComponent<Friendly>().speed,
+            PlayerList[4].GetComponent<Friendly>().speed, PlayerList[5].GetComponent<Friendly>().speed };
+        
+        
+
+
     }
 
     //
@@ -144,19 +189,8 @@ public class TurnBattle : MonoBehaviour
 
     IEnumerator Attack(int s)
     {
-        if (Active == Friendly)
-        {
-            Active.GetComponent<Friendly>().ChoiceSkill(Active.GetComponent<Friendly>().Skill);
-
-
-
-        }
-        else if (Active == Enemy)
-        {
-            Active.GetComponent<Friendly>().RandomSkill();
-
-
-        }
+        if (Active == Player[0] || Active == Player[1] || Active == Player[2]) Active.GetComponent<Friendly>().ChoiceSkill(Active.GetComponent<Friendly>().Skill);
+        else if (Active == Ene[0] || Active == Ene[1] || Active == Ene[2]) Active.GetComponent<Friendly>().RandomSkill();
         yield return new WaitForSeconds(3.0f);
         ChangeState(State.BackMoving);
     }
@@ -207,21 +241,10 @@ public class TurnBattle : MonoBehaviour
             yield return null;
         }
         if (dist == 0.0f)
-        {
-            
+        {            
             Active.GetComponent<Animator>().SetBool("IsWalking", false);
             StartCoroutine(RotatingToPosition(gos2));
-            /*if(Active == Enemy)
-            {
-                Active = Friendly;
-                Target = Enemy;
-            }
-            else if(Active==Friendly)
-            {
-                Active = Enemy;
-                Target=Friendly;
-            }
-            ChangeState(State.Moving);*/
+            ChangeState(State.ActiveCheck);            
         }
         
 
@@ -235,7 +258,6 @@ public class TurnBattle : MonoBehaviour
         {
             rotDir = -rotDir;
         }
-
         while (Angle > 0.0f)
         {
 
