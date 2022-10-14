@@ -16,6 +16,8 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
     public Transform cameraRot;
 
+    public Transform myCam;
+
     //리지드바디를 활용하여 움직임을 구현
     public Rigidbody rigidbody;
     [SerializeField] private float speed = 3f;
@@ -46,9 +48,27 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         // A 와 D 키를 눌렀을 때 이동방향
         dir.z = Input.GetAxisRaw("Vertical");
         // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
-        float totalDist = dir.magnitude;
-        dir.Normalize(); // 값을 항상 1로 동일하게 처리하고 대각선으로 이동하더라도 속도가 빨리지는 현상 방지
+        
+/*
+        float x = Mathf.Lerp(myAnim.GetFloat("x"), dir.x, Time.deltaTime * speed);
+        float y = Mathf.Lerp(myAnim.GetFloat("y"), dir.y, Time.deltaTime * speed);
+        myAnim.SetFloat("x", x);
+        myAnim.SetFloat("y", y);*/
 
+        float totalDist = dir.magnitude;
+        //dir.Normalize(); // 값을 항상 1로 동일하게 처리하고 대각선으로 이동하더라도 속도가 빨리지는 현상 방지
+
+        dir = myCam.rotation * dir;
+        dir.y = 0.0f;
+        dir.Normalize();
+
+        /*dir = myCam.rotation * dir;
+        dir.y = 0.0f;
+        dir.Normalize();*/
+        // 이동을 구현
+
+        this.transform.position = this.transform.position +
+            dir * speed * Time.deltaTime;
 
 
 
@@ -118,11 +138,11 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             if (Mathf.Sign(transform.forward.x) != Mathf.Sign(dir.x) || Mathf.Sign(transform.forward.z) != Mathf.Sign(dir.z))
             {
                 //우리는 이동할 때 x 와 z 밖에 사용을 안하므로
-                transform.Rotate(0, 1, 0); // 살짝만 회전
+                //transform.Rotate(0, 1, 0); // 살짝만 회전
                 //정 반대방향을 눌러도 회전안하는 버그 방지 
                 //미리 회전을 조금 시켜서 정반대인 경우를 제거
             }
-            transform.forward = Vector3.Lerp(transform.forward, dir, rotSpeed * Time.deltaTime);
+            //transform.forward = Vector3.Lerp(transform.forward, dir, rotSpeed * Time.deltaTime);
             // Slerp를 쓸지 Lerp를 쓸지 상의를 해봐야 할 것 같아용 
             // 캐릭터의 앞방향은 dir 키보드를 누른 방향으로 캐릭터 회전
             //Lerp를 쓰면 원하는 방향까지 서서히 회전
@@ -130,20 +150,16 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
 
 
-
-        // 이동을 구현
-
-
-        this.transform.Translate(dir * speed * Time.deltaTime);
-/*
-        if (dir == Vector3.forward)
-        {
-            this.transform.Translate(dir * speed * Time.deltaTime);
-        }
-        else
-        {
-            rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
-        }*/
+        //his.transform.Translate(dir * speed * Time.deltaTime);
+        /*
+                if (dir == Vector3.forward)
+                {
+                    this.transform.Translate(dir * speed * Time.deltaTime);
+                }
+                else
+                {
+                    rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
+                }*/
 
 
 
