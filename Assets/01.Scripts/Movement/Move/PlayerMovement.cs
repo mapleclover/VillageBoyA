@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
 
 
 //마지막 수정 10월 12일
@@ -20,9 +21,9 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
     //리지드바디를 활용하여 움직임을 구현
     public Rigidbody rigidbody;
-    [SerializeField] private float speed = 3f;
+    [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpHeight = 4f; //점프 높이
-    [SerializeField] private float dash = 6f; // 대시 - 일단 달리기 속도 값으로 이해 해 주세요
+    [SerializeField] private float dash = 16f; // 대시 - 일단 달리기 속도 값으로 이해 해 주세요
     [SerializeField] private float rotSpeed = 10f; // deltatime 만 곱해주면 느리기 때문에 rotSpeed로 회전 속도를 조절 해 주자
 
     private Vector3 dir = Vector3.zero;
@@ -43,32 +44,35 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         dir.x = Input.GetAxisRaw("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
         dir.z = Input.GetAxisRaw("Vertical");
-        // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
-        
-/*
-        float x = Mathf.Lerp(myAnim.GetFloat("x"), dir.x, Time.deltaTime * speed);
-        float y = Mathf.Lerp(myAnim.GetFloat("y"), dir.y, Time.deltaTime * speed);
-        myAnim.SetFloat("x", x);
-        myAnim.SetFloat("y", y);*/
+        // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음*/
+
+        dir.x = Input.GetAxis("Horizontal"); // 가로
+        dir.y = Input.GetAxis("Vertical"); // 세로
+
+        // 키보드 입력값으로 캐릭터 이동을 위함
+
+        float x = Mathf.Lerp(myAnim.GetFloat("Speed"), dir.x, Time.deltaTime * speed);
+        float y = Mathf.Lerp(myAnim.GetFloat("Speed"), dir.y, Time.deltaTime * speed);
+        myAnim.SetFloat("Speed", x);
+        myAnim.SetFloat("Speed", y);
 
         float totalDist = dir.magnitude;
         //dir.Normalize(); // 값을 항상 1로 동일하게 처리하고 대각선으로 이동하더라도 속도가 빨리지는 현상 방지
-
+/*
         dir = myCam.rotation * dir;
         dir.y = 0.0f;
-        dir.Normalize();
+        dir.Normalize();*/
 
         /*dir = myCam.rotation * dir;
         dir.y = 0.0f;
         dir.Normalize();*/
         // 이동을 구현
 
-        this.transform.position = this.transform.position +
-            dir * speed * Time.deltaTime;
+       // this.transform.position = this.transform.position +  dir * speed * Time.deltaTime;
 
 
 
@@ -150,7 +154,10 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
 
 
-        //his.transform.Translate(dir * speed * Time.deltaTime);
+
+
+
+
         /*
                 if (dir == Vector3.forward)
                 {
@@ -199,4 +206,6 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
 
     }
+
+
 }
