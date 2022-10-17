@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.XR;
-
 
 //마지막 수정 10월 17일
 //전정우
+
 
 public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
 {
 
     public Transform myCamRot; // 카메라 회전값을 받기 위해
+    
 
     //리지드바디를 활용하여 움직임을 구현
     public Rigidbody rigidbody;
