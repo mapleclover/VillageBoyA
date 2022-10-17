@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Friendly : CharacterProperty
+public class BattleCharacter : CharacterProperty
 {
     public float myHp = 100.0f;
     public float speed = 2.0f;
     public int Skill = 0;
-    public GameObject Target;
-    public bool Active5=true;
+    public GameObject myTarget;
+    public bool Active5=false;
+    
     void Start()
     {
         
@@ -23,14 +24,17 @@ public class Friendly : CharacterProperty
     {
         switch(s)
         {
-            case 1:
+            case 0:
                 myAnim.SetTrigger("Attack");
+                myTarget.GetComponent<BattleCharacter>().OnDamage(10.0f);
+                break;
+            case 1:
+                myAnim.SetTrigger("Attack2");
+                myTarget.GetComponent<BattleCharacter>().OnDamage(20.0f);
                 break;
             case 2:
-                myAnim.SetTrigger("Attack2");
-                break;
-            case 3:
                 myAnim.SetTrigger("Attack3");
+                myTarget.GetComponent<BattleCharacter>().OnDamage(30.0f);
                 break;
         }
     }
@@ -41,16 +45,34 @@ public class Friendly : CharacterProperty
         {
             case 0:
                 myAnim.SetTrigger("Attack");
+                myTarget.GetComponent<BattleCharacter>().OnDamage(10.0f);
                 break;
             case 1:
                 myAnim.SetTrigger("Attack2");
+                myTarget.GetComponent<BattleCharacter>().OnDamage(20.0f);
                 break;
             case 2:
                 myAnim.SetTrigger("Attack3");
+                myTarget.GetComponent<BattleCharacter>().OnDamage(30.0f);
                 break;
             default:
                 break;
         }
+    }
+    public void OnDamage(float dmg)
+    {
+        switch(Random.Range(0,100))
+        {
+            case 0:
+                dmg *= 2;                
+                break;
+            case 1:
+                dmg *= 0;
+                break;
+            default:                
+                break;
+        }
+        myHp -= dmg;
     }
 
 }
