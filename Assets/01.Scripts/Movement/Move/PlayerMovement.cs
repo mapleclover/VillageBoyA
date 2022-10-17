@@ -40,7 +40,7 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
     void Start()
     {
         // CharacterProperty에서 myRigid 가져와 쓰는데 나중에 문제 생길지 모르니 우선 둘게요
-         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
+        rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
         // 유니티에서 바인딩 해 줄 필요 없음
     }
 

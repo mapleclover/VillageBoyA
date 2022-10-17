@@ -3,28 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StaminaBar : MonoBehaviour
+public class StaminaBar : CharacterProperty
 {
-    //public Transform myTarget;
-    //public Slider myBar;
+    public Slider staminaBar;
+    public Animator myAnimator;
+
+    private float curST = 100f;
+    private float maxST = 100f;
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
     // Update is called once per frame
     void Update()
     {
-        /*Vector3 pos = Camera.main.WorldToScreenPoint(myTarget.position);    // 3차원 공간안의 월드 좌표값을 좌표를 2D 화면상의 위치으로 바꿔준다.
-        if (pos.z < 0.0f)
-        {
-            transform.position = new Vector3(0, 10000, 0);
+       curST = Mathf.Clamp(curST, 0.0f, maxST);
+        //if (staminaBar.value > 0)
 
-        }
-        else
-        {
-            transform.position = pos;
-        }
-        transform.position = pos;*/
+       if (myAnimator.GetBool("IsRunning") == true)
+       {
+            curST -= 10 * Time.deltaTime;
+       }
+       else
+       {
+            curST += 10 * Time.deltaTime;
+       }
+       //Debug.Log(staminaBar.value);
+   
+       HandleStamina();
+
     }
+    private void HandleStamina()
+    {
+        //바의 부드러운 감소
+        staminaBar.value = Mathf.Lerp(staminaBar.value, curST / maxST * 100f, Time.deltaTime);
+        // a 와 b 사이의 t 만큼의 값을 반환
+    }
+
+
 }
