@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.XR;
 
 
-//마지막 수정 10월 12일
+//마지막 수정 10월 17일
 //전정우
 
 public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
@@ -22,13 +22,14 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
     [SerializeField] private float rotSpeed = 10f; // deltatime 만 곱해주면 느리기 때문에 rotSpeed로 회전 속도를 조절 해 주자
 
     // 토글카메라
-    public Camera _camera;
-    public bool toggleCameraRotation; // Idle 일때 둘러보기 기능
-    private float smoothness = 10.0f;
+    //public Camera _camera;
+    //public bool toggleCameraRotation; // Idle 일때 둘러보기 기능
+    //private float smoothness = 10.0f;
 
     private Vector3 dir = Vector3.zero;//이동
 
     private bool ground = false; // 연속점프방지
+
     [SerializeField] private LayerMask layer; // 연속점프방지
 
     public bool run; // 달리기
@@ -45,31 +46,25 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
     // Update is called once per frame
     void Update()
     {
-        dir.x = Input.GetAxisRaw("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
+        dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
-        dir.z = Input.GetAxisRaw("Vertical");
+        dir.z = Input.GetAxis("Vertical");
         // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
 
         // 키보드 입력값으로 캐릭터 이동을 위함
         float totalDist = dir.magnitude;
         //dir.Normalize(); // 값을 항상 1로 동일하게 처리하고 대각선으로 이동하더라도 속도가 빨리지는 현상 방지
 
+        // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
         dir = myCamRot.rotation * dir;
         dir.y = 0.0f;
         dir.Normalize();
 
-        if (totalDist <= 0f)
-        // 배그처럼 토글 카메라 로테이션
-        {
-            toggleCameraRotation = true;
-        }
-        else // 아니라면 false
-        {
-            toggleCameraRotation = false; // 둘러보기 비활성화
-        }
 
         CheckGround(); // 연속점프 감지
 
+
+        // 걷는 애니메이션
         if (totalDist > 0.0f)
         {
             myAnim.SetBool("IsWalking", true);
@@ -77,17 +72,6 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         if (totalDist <= 0.0f)
         {
             myAnim.SetBool("IsWalking", false);
-        }
-
-
-        //점프
-        // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
-        if (Input.GetButtonDown("Jump") && ground) // 연속점프 방지 = && ground 그라운드가 참일 때
-        {
-            Vector3 jumpPower = Vector3.up * jumpHeight;
-            myRigid.AddForce(jumpPower, ForceMode.VelocityChange);
-            //점프를 했을 때 위로 뛸 수 있도록
-
         }
 
         // 달리기
@@ -103,6 +87,19 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             myAnim.SetBool("IsRunning", false);
         }
 
+        // 점프
+        // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
+        if (Input.GetButtonDown("Jump") && ground) // 연속점프 방지 = && ground 그라운드가 참일 때
+        {
+            Vector3 jumpPower = Vector3.up * jumpHeight;
+            myRigid.AddForce(jumpPower, ForceMode.VelocityChange);
+            //점프를 했을 때 위로 뛸 수 있도록
+            myAnim.SetTrigger("Jump");
+
+        }
+
+        
+
 
         /*// 대시 구현 - 사용 안할 것 같아서 주석처리 해 놓음
         if(Input.GetButtonDown("Dash"))
@@ -117,6 +114,8 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         // 점프에서 떨어지는 이유는 리지드바디 중력값에 의한 것이고 천천히 떨어지는 이유는 드래그 공기저항값 때문이므로 두개를 조합해서 점프 문제를 해결하라*/
 
     }
+
+
     //캐릭터의 부드러운 회전을 위해
     private void FixedUpdate() // 물리적인 이동이나 회전을 할 때 쓰면 좋다
     {
@@ -139,7 +138,6 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             //Lerp를 쓰면 원하는 방향까지 서서히 회전
         }
 
-
         // 이동을 구현
         rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
 
@@ -151,19 +149,10 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
     }
 
-    void LateUpdate()
-    {
-        if (toggleCameraRotation != true)
-        {
-            Vector3 playerRotate = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1));
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
-        }
-
-    }
-
 
     void CheckGround() // 연속점프 방지, 점프를 땅에 있을 때만
     {
+
         //레이캐스트를 사용
         RaycastHit hit;
 
@@ -177,10 +166,12 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.4f, layer))
         {
             ground = true;
+            myAnim.SetBool("Fall", false);
         }
         else
         {
             ground = false;
+            myAnim.SetBool("Fall", true);
         }
 
 
