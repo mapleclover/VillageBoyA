@@ -7,9 +7,12 @@ using UnityEngine.UI;
 
 public class ActionController : MonoBehaviour
 {
-    [SerializeField]
-    private float range; // raycast 범위지정
+    [SerializeField] private float range; // raycast 범위지정
+    [SerializeField] private float viewAngle; // 플레이어 시야각 (130도예정)
+    [SerializeField] private float viewDistance; // 플레이어 시야거리
+    
 
+    //대상 감지시 활성화.
     private bool pickNpcActivated = false;
     private bool pickItemActivated = false;
 
@@ -27,7 +30,8 @@ public class ActionController : MonoBehaviour
     [SerializeField]
     private Image itemTextBackground;
     [SerializeField]
-    private Transform accesssTransform;
+    private Camera theCamera;
+
 
 
 
@@ -44,32 +48,65 @@ public class ActionController : MonoBehaviour
         CheckObject();
         TryPickupAction();
     }
+
+    private Vector3 BoudaryAngle(float _angle)
+    {
+        _angle += transform.eulerAngles.y; // 플레이어의 로테이션값에따라 angle값 변화주기위함.
+        return new Vector3(Mathf.Sin(_angle * Mathf.Deg2Rad), 0f, Mathf.Cos(_angle * Mathf.Deg2Rad)); 
+        //deg2rad -> 값을 라디안값으로 변환.
+    }
+
     // 어떤종류의 tag인지 tag 확인
     private void CheckObject()
     {
-        
-        Collider[] list = Physics.OverlapSphere(accesssTransform.position, 0.7f, layerMask);
-        Vector3 colPos = Vector3.zero;
-        foreach (Collider col in list)
-        {
-            if (col.transform.tag == "Item" || col.transform.tag == "Npc")
-            {
-                colPos = col.transform.position;
-            }
-        }
+        Vector3 _leftBoundary = BoudaryAngle(-viewAngle * 0.5f); // 시야각 좌측경계선 눈으로확인용 만듬.
+        Vector3 _rightBoundary = BoudaryAngle(viewAngle * 0.5f); // 시야각 우측경계선 눈으로 확인용 만듬.
 
-        if(Physics.Raycast(transform.position, colPos - transform.position, out hitInfo, range, layerMask))
+        Debug.DrawRay(transform.position + transform.up, _leftBoundary, Color.red);
+        Debug.DrawRay(transform.position + transform.up, _rightBoundary, Color.red);
+
+        Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, layerMask); //주변반경 콜라이더수집
+
+        if (_target.Length > 0)
         {
-            if (hitInfo.transform.tag == "Npc")
+            for (int i = 0; i < _target.Length; i++)
             {
-                NpcInfoAppear();
-            }
-            else if(hitInfo.transform.tag == "Item")
-            {
-                ItemInfoAppear();
+                Transform Target = _target[i].transform;
+                if (Target.tag == "Npc" || Target.tag == "Item") // 해당태그만 if문실행.
+                {
+                    Vector3 _direction = (Target.position - transform.position).normalized; // 본인->대상으로가는 방향벡터
+                    float _angle = Vector3.Angle(_direction, transform.forward); // 정면 ~ 대상 사이의 각도 
+                    if (_angle < viewAngle * 0.5f)
+                    {
+                        // 플레이어위치에서 ovelapSphere에 감지된 대상에게로 레이저를쏨.
+                        if (Physics.Raycast(transform.position, _direction, out hitInfo, range, layerMask))
+                        {
+                            if (hitInfo.transform.tag == "Npc")
+                            {
+                                Debug.DrawRay(transform.position + transform.up, _direction, Color.blue);
+                                NpcInfoAppear();
+                            }
+                            else if (hitInfo.transform.tag == "Item")
+                            {
+                                Debug.DrawRay(transform.position + transform.up, _direction, Color.blue);
+                                ItemInfoAppear();
+                            }
+                        }
+                        else //거리안맞을떄지움.
+                        {
+                            NpcInfoDisappear();
+                            ItemInfoDisappear();
+                        }
+                    }
+                    else //각도 안맞을대 지움.
+                    {
+                        NpcInfoDisappear();
+                        ItemInfoDisappear();
+                    }
+                }
             }
         }
-        else
+        else // _target 배열안에 아무것도없을때 지움.
         {
             NpcInfoDisappear();
             ItemInfoDisappear();
@@ -89,10 +126,17 @@ public class ActionController : MonoBehaviour
     {
         if(pickItemActivated) // 아이템 횔득활성시에만 기능
         {
-            if(hitInfo.transform != null)
+            if(hitInfo.transform != null) // 한번더 체크 및 아이템획득
             {
                 Destroy(hitInfo.transform.gameObject);
                 ItemInfoDisappear();
+            }
+        }
+        else if (pickNpcActivated)
+        {
+            if(hitInfo.transform != null) // 한번 더 확인 및 // NPC와 대화.
+            {
+                //대화.
             }
         }
     }
@@ -100,34 +144,46 @@ public class ActionController : MonoBehaviour
     // npc 정보창 오픈
     private void NpcInfoAppear()
     {
-        pickNpcActivated = true;
-        npcTextBackground.gameObject.SetActive(true);
-        CheckText.gameObject.SetActive(true); // 텍스트창 활성화
-        CheckText.alignment = TMPro.TextAlignmentOptions.Right;
-        CheckText.text = "<color=blue>" + hitInfo.transform.GetComponent<Pickup>().npc.npcName + "</color>" + "와 대화하시겠습니까?" + "<color=yellow>" + " (Y) " + "</color>";
+        if (!pickNpcActivated) // false일때말실행
+        {
+            pickNpcActivated = true;
+            npcTextBackground.gameObject.SetActive(true);
+            CheckText.gameObject.SetActive(true); // 텍스트창 활성화
+            CheckText.alignment = TMPro.TextAlignmentOptions.Right;
+            CheckText.text = "<color=blue>" + hitInfo.transform.GetComponent<Pickup>().npc.npcName + "</color>" + "와 대화하시겠습니까?" + "<color=yellow>" + " (Y) " + "</color>";
+        }
     }
     // item 정보창 오픈
     private void ItemInfoAppear()
     {
-        pickItemActivated = true;
-        itemTextBackground.gameObject.SetActive(true);
-        CheckText.gameObject.SetActive(true);
-        CheckText.alignment = TMPro.TextAlignmentOptions.Center;
-        CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" + "획득" + "<color=yellow>" + " (E) " + "</color>";
+        if (!pickItemActivated)
+        {
+            pickItemActivated = true;
+            itemTextBackground.gameObject.SetActive(true);
+            CheckText.gameObject.SetActive(true);
+            CheckText.alignment = TMPro.TextAlignmentOptions.Center;
+            CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" + "획득" + "<color=yellow>" + " (E) " + "</color>";
+        }
     }
 
     // npc 정보창 클로즈
     private void NpcInfoDisappear()
     {
-        pickNpcActivated = false;
-        npcTextBackground.gameObject.SetActive(false);
-        CheckText.gameObject.SetActive(false);
+        if (pickNpcActivated) // true일때만 발동,
+        {
+            pickNpcActivated = false;
+            npcTextBackground.gameObject.SetActive(false);
+            CheckText.gameObject.SetActive(false);
+        }
     }
     // 아이템 정보창 클로즈
     private void ItemInfoDisappear()
     {
-        pickItemActivated = false;
-        itemTextBackground.gameObject.SetActive(false);
-        CheckText.gameObject.SetActive(false);
+        if (pickItemActivated) //trye 일때만발동.
+        {
+            pickItemActivated = false;
+            itemTextBackground.gameObject.SetActive(false);
+            CheckText.gameObject.SetActive(false);
+        }
     }
 }
