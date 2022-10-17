@@ -8,15 +8,16 @@ using System.IO;
 using TMPro;
 //using static UnityEngine.UIElements.UxmlAttributeDescription;
 using System.Data;
+using System.Runtime.ConstrainedExecution;
+
 [System.Serializable]
 
 public class Select : MonoBehaviour
 {
-    public static Select instance;
+    public static Select instance=null;
     public GameObject create;
     public TextMeshProUGUI[] slotText;// 슬롯 버튼 아래 텍스트
-    bool[] savefile = new bool[3];//세이브파일 존재 유무
-    bool t = false;
+    public bool[] savefile = new bool[3];//세이브파일 존재 유무
     //  public GameObject[] myParty;
     //   public GameObject[] myMember; 
     /*
@@ -65,13 +66,13 @@ public class Select : MonoBehaviour
                         switch (i)
                         {
                             case 0:
-                                position.y = 124;
+                                position.y = 153;
                                 break;
                             case 1:
                                 position.y = 0;
                                 break;
                             case 2:
-                                position.y = -124;
+                                position.y = -153;
                                 break;
                         }
                         GameObject obj = Instantiate(myMember[j],position,Quaternion.identity);
@@ -96,16 +97,20 @@ public class Select : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && t == true)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            t = false;
-            create.gameObject.SetActive(false);
+            Slot(Button.cur);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+          create.gameObject.SetActive(false);
         }
     }
     public void Slot(int num)
     {
         DataController.instance.nowSlot = num;
-        if (savefile[num] && t==true)
+        if (savefile[num])
         {
             DataController.instance.LoadGameData();
             create.gameObject.SetActive(false);
@@ -122,8 +127,7 @@ public class Select : MonoBehaviour
     {
         create.transform.SetAsLastSibling();
         create.gameObject.SetActive(true);
-   
-        t = true;
+
     }
     public void Game()      
     {
@@ -131,10 +135,10 @@ public class Select : MonoBehaviour
         {
             DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
             DataController.instance.gameData.isLeader[0] = true;    //맨 처음에 처음 나오는 파티원이 리더
-
+            savefile[DataController.instance.nowSlot] = true;
             DataController.instance.SaveGameData(); //입력한 이름 복사 후 현재 정보 저장
         }
-        SceneManager.LoadScene(DataController.instance.nowSlot + 1);  //게임씬으로 이동
+        SceneManager.LoadScene(1);  //게임씬으로 이동
     }
 }
 //경로: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json
