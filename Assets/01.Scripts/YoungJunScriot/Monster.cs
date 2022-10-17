@@ -58,6 +58,7 @@ public class Monster : CharacterMoveMent
             case STATE.ROAMING:
                 break;
             case STATE.BATTLE:
+              
                 theEnemyAI.ChaseTarget(myTarget);
                 break;
             case STATE.DEAD:

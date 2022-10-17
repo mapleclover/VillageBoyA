@@ -54,7 +54,7 @@ public class EnemyAI : MonoBehaviour
                 if (_target.Length > 0) //배열에 플레이어있을때만실행.
                 {
                     Transform Target = _target[i].transform;
-                    if (Target.name == "Player(1)") // 타겟 이름이 플레이어라면
+                    if (Target.name == "Player") // 타겟 이름이 플레이어라면
                     {
                         Vector3 _direction = Target.position - transform.position; // 자신 -> 플레이어로 가는 방향벡터
                         float _angle = Vector3.Angle(_direction, transform.forward); // 정면과 플레이어사이의 각도
@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour
                             RaycastHit _hitinfo;
                             if (Physics.Raycast(transform.position + transform.up, _direction, out _hitinfo, viewDistance, layerMask))
                             {
-                                if (_hitinfo.transform.name == "Player(1)")
+                                if (_hitinfo.transform.name == "Player")
                                 {
                                     findTarget = true; //플레이어찾앗으면 true로 불값변경.
                                     Debug.Log("플레이어가 시야내에 있습니다.");
@@ -79,26 +79,27 @@ public class EnemyAI : MonoBehaviour
     }
     public void ChaseTarget(Transform target)
     {
-         if ((target.position - transform.position).magnitude < battleDist) // 일정거리안으로 들어오면 배틀씬으로넘아가게.
-         {
-             theNav.SetDestination(transform.position);
-             //================배틀씬으로넘어감. ===================
-         }
-         else // 플레이어를 쫒아가게끔.
-         {
-             if ((target.position - transform.position).magnitude < notChaseDist) // 플레이어와의거리가 일정거리안이라면 계속쫒아옴.
-             {
-                 if (theNav.destination != target.position)
-                 {
-                     theNav.SetDestination(target.position); // 플레이어위치까지 따라가고
-                 }
-             }
-             else // 플레이어거리가 일정거리밖으로나가면 다시 Roaming - Idle 반복.
-             {
-                findTarget = false;
-                theNav.SetDestination(transform.position);
-                theMonster.LostTarget();
-             }
+        if ((target.position - transform.position).magnitude < battleDist) // 일정거리안으로 들어오면 배틀씬으로넘아가게.
+        {
+           theNav.SetDestination(transform.position);
+           theNav.ResetPath();
+           //================배틀씬으로넘어감. ===================
+        }
+        else // 플레이어를 쫒아가게끔.
+        {
+            if ((target.position - transform.position).magnitude < notChaseDist) // 플레이어와의거리가 일정거리안이라면 계속쫒아옴.
+            {
+                if (theNav.destination != target.position)
+                {
+                    theNav.SetDestination(target.position); // 플레이어위치까지 따라가고
+                }
+            }
+            else // 플레이어거리가 일정거리밖으로나가면 다시 Roaming - Idle 반복.
+            {
+               findTarget = false;
+               theNav.ResetPath();
+               theMonster.LostTarget();
+            }
         }
     }
 }
