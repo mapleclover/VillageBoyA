@@ -10,6 +10,9 @@ public class GameData
    // public string name;
     public string savedTime;
     public bool[] partyMember=Enumerable.Repeat(false,3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함
+    public string currentVillage="FirstVillage";
+    public int myProgress = 0;
+    public bool[] isLeader= Enumerable.Repeat(false, 3).ToArray();
 }
 public class DataController: MonoBehaviour
 {
@@ -66,13 +69,13 @@ public class DataController: MonoBehaviour
         gameData = new GameData();
     }
    
-  /*
-    private void OnApplicationQuit()
+  
+  /*  private void OnApplicationQuit()
     {
         SaveGameData();     
     }                           // 게임 종료 시 자동 저장
-
-    */
+  */
+    
     //다른 부분에서 저장을 해야될 경우
    // DataController.Instance.SaveGameData();
 }
