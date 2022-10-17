@@ -21,6 +21,8 @@ public class DialogueManager : MonoBehaviour
 
     public Image CharacterImage;
     public Sprite[] CharacterImages;
+    public float textSpeed = 10f;
+    public bool skip = false;
 
     public void Say(string speech, string speaker = "", int imageIndex = -1)
     {
@@ -50,14 +52,28 @@ public class DialogueManager : MonoBehaviour
         }        
         isWaitingForUserInput = false;
 
-        while(Text.text != targetSpeech)
+        if(textSpeed >= 9.9f)
         {
-            Text.text += targetSpeech[Text.text.Length];
-            yield return new WaitForEndOfFrame();
+            Text.text = targetSpeech;
         }
+        else if(textSpeed < 9.9f)
+        {
+            while (Text.text != targetSpeech)
+            {
+                Text.text += targetSpeech[Text.text.Length];
+                if (skip)
+                {
+                    Text.text = targetSpeech;
+                    skip = false;
+                    break;
+                }                
+                yield return new WaitForSeconds(0.2f/textSpeed);
+            }
+        }
+        
         isWaitingForUserInput = true;
-        while(isWaitingForUserInput)
-            yield return new WaitForEndOfFrame();
+ /*       while(isWaitingForUserInput)
+            yield return new WaitForEndOfFrame();*/
 
         StopSpeaking();
     }
@@ -70,5 +86,16 @@ public class DialogueManager : MonoBehaviour
             retVal = (speaker.ToLower().Contains("narrator")) ? "" : speaker;
         }
         return retVal;
+    }
+
+    public void CloseChatAnim()
+    {
+        DialogueBox.GetComponent<Animator>().SetTrigger("End");
+        StartCoroutine(DeactivateChatBox());
+    }
+    IEnumerator DeactivateChatBox()
+    {
+        yield return new WaitForSeconds(1.0f);
+        DialogueBox.SetActive(false);
     }
 }

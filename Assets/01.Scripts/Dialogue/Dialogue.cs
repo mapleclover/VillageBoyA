@@ -22,32 +22,42 @@ public class Dialogue : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(!dialogue.isSpeaking || dialogue.isWaitingForUserInput)
+            if(dialogue.isSpeaking)
+            {
+                dialogue.skip = true;
+            }
+            else if (!dialogue.isSpeaking || dialogue.isWaitingForUserInput)
             {
                 if (index >= s.Length)
                 {
                     return;
                 }
+                Say(s[index]);
+                index++;
             }
-            Say(s[index]);
-            index++;
         }
     }
     void Say(string s)
     {
         string[] parts = s.Split(':');
+        if (parts[0].Contains("END"))
+        {
+            dialogue.CloseChatAnim();
+            return;
+        }
         string speech = parts[0];
         string speaker = "";
         int imageIndex = -1;
+        
         if (parts.Length >= 2)
         {
             speaker = parts[1];
             if(parts[2] != null)
             {
                 imageIndex = int.Parse(parts[2]);
-            }            
+            }
         }
         //string speaker = (parts.Length >= 2) ? parts[1] : "";
 
