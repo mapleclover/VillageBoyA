@@ -19,7 +19,13 @@ public class StaminaBar : CharacterProperty
     void Update()
     {
        curST = Mathf.Clamp(curST, 0.0f, maxST);
-        //if (staminaBar.value > 0)
+        
+
+       if (staminaBar.value > 0)
+       {
+
+       }
+
 
        if (myAnimator.GetBool("IsRunning") == true)
        {
