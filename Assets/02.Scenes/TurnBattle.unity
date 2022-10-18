@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3234,11 +3234,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stat:
+    Stamina: 0
   myHp: 100
   speed: 5
   Skill: 0
   myTarget: {fileID: 0}
   Active5: 0
+  Canvas: {fileID: 0}
+  hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
 --- !u!136 &250052726
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5547,12 +5551,12 @@ GameObject:
   - component: {fileID: 454261268}
   - component: {fileID: 454261267}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: EnemyRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &454261266
 Transform:
   m_ObjectHideFlags: 0
@@ -5562,7 +5566,7 @@ Transform:
   m_GameObject: {fileID: 454261265}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.29999998, y: 0.049999997, z: 0.29999998}
+  m_LocalScale: {x: 0.29999995, y: 0.049999997, z: 0.29999995}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1111666016}
@@ -7014,11 +7018,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stat:
+    Stamina: 0
   myHp: 100
   speed: 10
   Skill: 0
   myTarget: {fileID: 0}
   Active5: 0
+  Canvas: {fileID: 0}
+  hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
 --- !u!95 &609012801
 Animator:
   serializedVersion: 4
@@ -7130,12 +7138,12 @@ GameObject:
   - component: {fileID: 632291195}
   - component: {fileID: 632291194}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: PlayerRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &632291193
 Transform:
   m_ObjectHideFlags: 0
@@ -8846,8 +8854,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 420, y: 100}
-  m_SizeDelta: {x: 210, y: 140}
+  m_AnchoredPosition: {x: 840, y: 210}
+  m_SizeDelta: {x: 420, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &808050293
 MonoBehaviour:
@@ -8999,11 +9007,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stat:
+    Stamina: 0
   myHp: 100
   speed: 6
   Skill: 0
   myTarget: {fileID: 0}
   Active5: 0
+  Canvas: {fileID: 0}
+  hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
 --- !u!136 &822175418
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12629,11 +12641,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stat:
+    Stamina: 0
   myHp: 100
   speed: 8
   Skill: 0
   myTarget: {fileID: 0}
   Active5: 0
+  Canvas: {fileID: 0}
+  hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
 --- !u!95 &1219290449
 Animator:
   serializedVersion: 4
@@ -13256,7 +13272,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -14027,11 +14043,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stat:
+    Stamina: 0
   myHp: 100
   speed: 4
   Skill: 0
   myTarget: {fileID: 0}
   Active5: 0
+  Canvas: {fileID: 0}
+  hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
 --- !u!136 &1340737250
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -19462,8 +19482,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 700, y: 100}
-  m_SizeDelta: {x: 210, y: 140}
+  m_AnchoredPosition: {x: 1400, y: 210}
+  m_SizeDelta: {x: 420, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1920392430
 MonoBehaviour:
@@ -20321,8 +20341,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 140, y: 100}
-  m_SizeDelta: {x: 210, y: 140}
+  m_AnchoredPosition: {x: 280, y: 210}
+  m_SizeDelta: {x: 420, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2028022658
 MonoBehaviour:
@@ -26093,11 +26113,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stat:
+    Stamina: 0
   myHp: 100
   speed: 9
   Skill: 0
   myTarget: {fileID: 0}
   Active5: 0
+  Canvas: {fileID: 0}
+  hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
 --- !u!136 &9185311942888703001
 CapsuleCollider:
   m_ObjectHideFlags: 0

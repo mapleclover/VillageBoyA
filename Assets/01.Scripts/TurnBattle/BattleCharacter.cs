@@ -10,10 +10,13 @@ public class BattleCharacter : CharacterProperty
     public int Skill = 0;
     public GameObject myTarget;
     public bool Active5=false;
+    public GameObject Canvas;
     
+    public GameObject hudDmgText;
+        
     void Start()
     {
-        
+        Canvas = GameObject.Find("Canvas");
     }
 
     void Update()
@@ -61,18 +64,32 @@ public class BattleCharacter : CharacterProperty
     }
     public void OnDamage(float dmg)
     {
-        switch(Random.Range(0,100))
+        StartCoroutine(OnDmg(dmg));
+    }
+    IEnumerator OnDmg(float dmg)
+    {
+        yield return new WaitForSeconds(1.0f);
+        GameObject hudText = Instantiate(hudDmgText, Canvas.transform);
+        switch (Random.Range(0, 10))
         {
             case 0:
-                dmg *= 2;                
+                dmg *= 2;
+                hudText.GetComponent<DmageText>().color = Color.red;
                 break;
             case 1:
                 dmg *= 0;
+                hudText.GetComponent<DmageText>().color = Color.gray;
                 break;
-            default:                
+            default:
+                hudText.GetComponent<DmageText>().color = Color.white;
                 break;
         }
         myHp -= dmg;
+        Vector3 pos = transform.position;
+        pos.y += 2.0f;
+        Vector3 pos2 = Camera.main.WorldToScreenPoint(pos);
+        hudText.transform.position = pos2;
+        hudText.GetComponent<DmageText>().dmg = dmg;
     }
-
 }
+
