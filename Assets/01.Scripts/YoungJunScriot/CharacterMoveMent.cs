@@ -46,7 +46,6 @@ public class CharacterMoveMent : MonoBehaviour
             }
             dist -= delta;
             transform.Translate(dir * delta, Space.World);
-            Debug.Log(dist);
             yield return null;
         }
         done?.Invoke(); // 다움직이고나면 람다식으로 IDLE 실행하도록.

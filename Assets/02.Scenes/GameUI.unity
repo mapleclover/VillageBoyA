@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.655
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.12042552, g: 0.15003543, b: 0.19877109, a: 0.655}
+  m_IndirectSpecularColor: {r: 0.120425284, g: 0.15003486, b: 0.19877061, a: 0.655}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2154,6 +2154,7 @@ RectTransform:
   m_Children:
   - {fileID: 1226260443}
   - {fileID: 861668142}
+  - {fileID: 587523591}
   - {fileID: 273661329}
   m_Father: {fileID: 1376691978}
   m_RootOrder: 0
@@ -3676,7 +3677,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 149651085}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8371,6 +8372,82 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4179945690387630, guid: 6870d7a15fee5ff40bb3841e9314d921, type: 3}
   m_PrefabInstance: {fileID: 578602578}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &587523590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 587523591}
+  - component: {fileID: 587523593}
+  - component: {fileID: 587523592}
+  m_Layer: 5
+  m_Name: enemyBackground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &587523591
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587523590}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 149651085}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 500, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &587523592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587523590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 983947278beb2fa4f992d9718ebcd26e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &587523593
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587523590}
+  m_CullTransparentMesh: 1
 --- !u!1001 &593591681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9331,7 +9408,7 @@ PrefabInstance:
       objectReference: {fileID: 1751552112}
     - target: {fileID: 8525373156227172169, guid: 9b63f455669c71f4bae878dd45a55488, type: 3}
       propertyPath: battleDist
-      value: 0.8
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8525373156227172169, guid: 9b63f455669c71f4bae878dd45a55488, type: 3}
       propertyPath: notChaseDist
@@ -13457,7 +13534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aca3fbd6c585a1441b4daee3f5480f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 30
+  walkSpeed: 10
   lookSensitivityX: 3
   lookSensitivityY: 1
   cameraRotationLimit: 45
@@ -13521,14 +13598,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 2
+  backAttackRange: 0.886
   viewAngle: 120
   viewDistance: 2
+  _backAttackAngle: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 1476395008
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 1073741824
   CheckText: {fileID: 273661330}
   npcTextBackground: {fileID: 1226260444}
   itemTextBackground: {fileID: 861668143}
+  enemyextBackground: {fileID: 587523592}
   theCamera: {fileID: 282840813}
 --- !u!1 &931059876
 GameObject:
