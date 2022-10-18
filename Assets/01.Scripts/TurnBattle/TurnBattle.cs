@@ -251,6 +251,8 @@ public class TurnBattle : MonoBehaviour
         gos = Active.transform.position;
         Vector3 dir = pos - Active.transform.position;
         gos2 = dir;
+        
+        
         float dist = (dir.magnitude)-0.8f;
         dir.Normalize();
         while (dist > 0.0f)
