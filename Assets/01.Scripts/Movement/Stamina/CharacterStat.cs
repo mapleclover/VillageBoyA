@@ -20,9 +20,9 @@ public struct CharacterStat
         get => Stamina;
         set
         {
-            //Stamina = Mathf.Clamp(value, 0.0f, maxStamina);
-            //changeStamina?.Invoke(Stamina/ maxStamina);
-            // 왜 맥스를 못받는지 확인좀 해봐 정우야
+            //Stamina = Mathf.Clamp(value, 0.0f, maxST);
+            //changeStamina?.Invoke(Stamina/ maxST);
+            
         }
     }
 }
