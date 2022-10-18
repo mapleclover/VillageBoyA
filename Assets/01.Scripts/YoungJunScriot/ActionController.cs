@@ -8,19 +8,24 @@ using UnityEngine.UI;
 public class ActionController : MonoBehaviour
 {
     [SerializeField] private float range; // raycast 범위지정
+    [SerializeField] private float backAttackRange; // 뒤치기 범위
     [SerializeField] private float viewAngle; // 플레이어 시야각 (130도예정)
     [SerializeField] private float viewDistance; // 플레이어 시야거리
+    [SerializeField] private float _backAttackAngle; // 뒤치기 기습범위 (30도 + 30도 = 60도 예정.)
     
 
     //대상 감지시 활성화.
     private bool pickNpcActivated = false;
     private bool pickItemActivated = false;
+    private bool isBackAttack = false;
 
     private RaycastHit hitInfo;
     
 
     [SerializeField]
     private LayerMask layerMask; // 해당레이어에만 반응하게끔.
+    [SerializeField]
+    private LayerMask enemyMask; // 적 레이어
 
     //필요한 컴포넌트
     [SerializeField]
@@ -29,6 +34,8 @@ public class ActionController : MonoBehaviour
     private Image npcTextBackground;
     [SerializeField]
     private Image itemTextBackground;
+    [SerializeField]
+    private Image enemyextBackground;
     [SerializeField]
     private Camera theCamera;
 
@@ -83,12 +90,10 @@ public class ActionController : MonoBehaviour
                         {
                             if (hitInfo.transform.tag == "Npc")
                             {
-                                Debug.DrawRay(transform.position + transform.up, _direction, Color.blue);
                                 NpcInfoAppear();
                             }
                             else if (hitInfo.transform.tag == "Item")
                             {
-                                Debug.DrawRay(transform.position + transform.up, _direction, Color.blue);
                                 ItemInfoAppear();
                             }
                         }
@@ -104,12 +109,54 @@ public class ActionController : MonoBehaviour
                         ItemInfoDisappear();
                     }
                 }
+                else if(Target.tag == "Enemy") // 적발견시
+                {
+                    Vector3 _direction = (Target.position - transform.position).normalized;
+
+                    //float _frontEnemy = Vector3.Dot(transform.forward, _direction); // 앞인지 뒤인지구별 양수면 적이 내앞
+                    _backAttackAngle = Vector3.Dot(transform.forward, Target.forward); // 각도확인.
+                    //Debug.Log("앵글" + _backAttackAngle);
+                    //Debug.Log("내앞에있나요?" + _frontEnemy);
+                    float _angle = Vector3.Angle(_direction, transform.forward);
+                    if (_angle < viewAngle * 0.5f)
+                    { 
+                        if (Physics.Raycast(transform.position, _direction, out hitInfo, range, enemyMask))
+                        {
+                            if (hitInfo.transform.tag == "Enemy")//한번더체크
+                            {
+
+                                if (_backAttackAngle > 0.866f) // 30도 + 30도 = 60도
+                                {
+                                    isBackAttack = true;
+                                    EnemyBackAttackInfoAppear();
+                                }
+                                else if (_backAttackAngle <= 0.866f)// _zvalue값이 0이상일때 (뒤치기아닐때)
+                                {
+                                    isBackAttack = false;
+                                    EnemyBackAttackInfoDisappear();
+                                }
+                            }
+                        }
+                        else // 거리안맞을대
+                        {
+                            isBackAttack = false;
+                            EnemyBackAttackInfoDisappear();
+                        }
+                    }
+                    else // 각도안맞을때
+                    {
+                        isBackAttack = false;
+                        EnemyBackAttackInfoDisappear();
+                    }
+                }
             }
         }
         else // _target 배열안에 아무것도없을때 지움.
         {
             NpcInfoDisappear();
             ItemInfoDisappear();
+            isBackAttack = false;
+            EnemyBackAttackInfoDisappear();
         }
     }
     // 아이템체크 후 pickup 함수활성화
@@ -130,13 +177,24 @@ public class ActionController : MonoBehaviour
             {
                 Destroy(hitInfo.transform.gameObject);
                 ItemInfoDisappear();
+                // 인벤토리창으로 아이템들어감 ///////////////////**************
             }
         }
         else if (pickNpcActivated)
         {
             if(hitInfo.transform != null) // 한번 더 확인 및 // NPC와 대화.
             {
-                //대화.
+                //대화. ////////////////////////*************
+            }
+        }
+        else if (isBackAttack)
+        {
+            if(hitInfo.transform != null)
+            {
+                //기습- 배틀씬으로넘어감.///////////////////////////////**************
+                Destroy(hitInfo.transform.gameObject);
+                isBackAttack = false;
+                EnemyBackAttackInfoDisappear();
             }
         }
     }
@@ -183,6 +241,24 @@ public class ActionController : MonoBehaviour
         {
             pickItemActivated = false;
             itemTextBackground.gameObject.SetActive(false);
+            CheckText.gameObject.SetActive(false);
+        }
+    }
+    private void EnemyBackAttackInfoAppear()
+    {
+        if(isBackAttack) // true 일때만 실행.
+        {
+            enemyextBackground.gameObject.SetActive(true);
+            CheckText.gameObject.SetActive(true);
+            CheckText.alignment = TMPro.TextAlignmentOptions.Center;
+            CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().enemy.enemyName + "</color>" + " 기습 하시겠습니까?" + "<color=yellow>" + " (E) " + "</color>";
+        }
+    }
+    private void EnemyBackAttackInfoDisappear()
+    {
+        if(!isBackAttack) // false 일때만 실행
+        {
+            enemyextBackground.gameObject.SetActive(false);
             CheckText.gameObject.SetActive(false);
         }
     }
