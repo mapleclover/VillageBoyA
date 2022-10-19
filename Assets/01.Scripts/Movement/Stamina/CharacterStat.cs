@@ -11,7 +11,7 @@ using UnityEngine.Events;
 [Serializable]
 public struct CharacterStat
 {
-    [SerializeField] float Stamina;
+   /* [SerializeField] float Stamina;
 
     public UnityAction<float> changeStamina;
 
@@ -24,5 +24,5 @@ public struct CharacterStat
             //changeStamina?.Invoke(Stamina/ maxST);
             
         }
-    }
+    }*/
 }
