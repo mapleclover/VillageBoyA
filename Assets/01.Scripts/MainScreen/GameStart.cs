@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameStart : MonoBehaviour
 {
     public void OnCilck()
+
     { 
          SceneLoad.Inst.ChangeScene(2); 
     }
@@ -19,6 +20,7 @@ public class GameStart : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+
     {
         
     }

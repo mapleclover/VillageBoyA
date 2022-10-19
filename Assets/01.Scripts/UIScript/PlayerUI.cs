@@ -15,6 +15,7 @@ public class PlayerUI : MonoBehaviour
     float maxHP = 100;
     float curHP = 100;
     // Start is called before the first frame update
+    
     void Start()
     {
         HPBar.value = (float)curHP / maxHP;
