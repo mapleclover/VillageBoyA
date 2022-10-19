@@ -10,14 +10,14 @@ using UnityEngine.InputSystem.XR;
 //전정우
 
 
-public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
+public class PlayerMovement : MonoBehaviour // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
 {
 
     public GameObject Ember;
     public GameObject Jin;
     public GameObject Xiao;
 
-
+    public Animator curAnimator;
     public enum CHARACTER
     {
         Ember, Jin, Xiao
@@ -52,21 +52,29 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
     public bool canRun = true;
 
-    void ChangeState()
+    void ChangeState(CHARACTER myCha)
     {
+        if (myCharacter == myCha) return;
+        myCharacter = myCha;
         switch (myCharacter)
         {
             case CHARACTER.Ember:
-                if (Input.GetKeyDown(KeyCode.Tab))
-                {
-                    Ember.SetActive(false);
-                    Jin.SetActive(true);
-                    myCharacter = CHARACTER.Jin;
-                }
+                Xiao.SetActive(false);
+                Ember.SetActive(true);
+                Jin.SetActive(false);
+                curAnimator = Ember.GetComponent<Animator>();
                 break;
             case CHARACTER.Jin:
+                Xiao.SetActive(false);
+                Ember.SetActive(false);
+                Jin.SetActive(true);
+                curAnimator = Jin.GetComponent<Animator>();
                 break;
             case CHARACTER.Xiao:
+                Xiao.SetActive(true);
+                Ember.SetActive(false);
+                Jin.SetActive(false);
+                curAnimator = Xiao.GetComponent<Animator>();
                 break;
         }
     }
@@ -75,44 +83,59 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         switch (myCharacter)
         {
             case CHARACTER.Ember:
-                if (Input.GetKeyDown(KeyCode.Tab))
+                /*if (Input.GetKeyDown(KeyCode.Tab))
                 {
                     Ember.SetActive(false);
                     Jin.SetActive(true);
                     myCharacter = CHARACTER.Jin;
-                }
+                    curAnimator = Jin.GetComponent<Animator>();
+                }*/
                 break;
             case CHARACTER.Jin:
-                if (Input.GetKeyDown(KeyCode.Tab))
+                /*if (Input.GetKeyDown(KeyCode.Tab))
                 {
                     Jin.SetActive(false);
                     Xiao.SetActive(true);
                     myCharacter = CHARACTER.Xiao;
-                }
+                    curAnimator = Xiao.GetComponent<Animator>();
+                }*/
                 break;
             case CHARACTER.Xiao:
-                if (Input.GetKeyDown(KeyCode.Tab))
+                /*if (Input.GetKeyDown(KeyCode.Tab))
                 {
                     Xiao.SetActive(false);
                     Ember.SetActive(true);
                     myCharacter = CHARACTER.Ember;
-                }
+                    curAnimator = Ember.GetComponent<Animator>();
+                }*/
                 break;
         }
 
     }
     void Start()
     {
+        curAnimator = GameObject.Find("Ember").GetComponent<Animator>();
         // CharacterProperty에서 myRigid 가져와 쓰는데 나중에 문제 생길지 모르니 우선 둘게요
         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
         // 유니티에서 바인딩 해 줄 필요 없음
-        ChangeState();
+        ChangeState(CHARACTER.Ember);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ChangeState(CHARACTER.Ember);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChangeState(CHARACTER.Jin);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChangeState(CHARACTER.Xiao);
+        }
         StateProcess();
         dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
@@ -136,11 +159,11 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         // 걷는 애니메이션
         if (totalDist > 0.0f)
         {
-            myAnim.SetBool("IsWalking", true);
+            curAnimator.SetBool("IsWalking", true);
         }
         if (totalDist <= 0.0f)
         {
-            myAnim.SetBool("IsWalking", false);
+            curAnimator.SetBool("IsWalking", false);
         }
 
         Dash(); // 달리기
@@ -150,9 +173,9 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         if (Input.GetButtonDown("Jump") && ground) // 연속점프 방지 = && ground 그라운드가 참일 때
         {
             Vector3 jumpPower = Vector3.up * jumpHeight;
-            myRigid.AddForce(jumpPower, ForceMode.VelocityChange);
+            rigidbody.AddForce(jumpPower, ForceMode.VelocityChange);
             //점프를 했을 때 위로 뛸 수 있도록
-            myAnim.SetTrigger("Jump");
+            curAnimator.SetTrigger("Jump");
 
         }
 
@@ -226,13 +249,13 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             canRun = false;
             if (totalDist > 0.0f)
             {
-                myAnim.SetBool("IsWalking", true);
+                curAnimator.SetBool("IsWalking", true);
             }
             else
             {
-                myAnim.SetBool("IsWalking", false);
+                curAnimator.SetBool("IsWalking", false);
             }
-            myAnim.SetBool("IsRunning", false);
+            curAnimator.SetBool("IsRunning", false);
             
             run = false;
         }
@@ -242,13 +265,13 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             if (Input.GetKey(KeyCode.LeftShift) && totalDist > 0.0f && canRun)
             {
                 run = true;
-                myAnim.SetBool("IsRunning", true);
+                curAnimator.SetBool("IsRunning", true);
 
             }
             else // 이동거리값이 0보다 작을 때 shift로 달리기 발동 안할 수 있도록
             {
                 run = false;
-                myAnim.SetBool("IsRunning", false);
+                curAnimator.SetBool("IsRunning", false);
             }
         }
 
