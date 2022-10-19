@@ -10,8 +10,7 @@ public class BattleCharacter : CharacterProperty
     public int Skill = 0;
     public GameObject myTarget;
     public bool Active5=false;
-    public GameObject Canvas;
-    
+    public GameObject Canvas;    
     public GameObject hudDmgText;
         
     void Start()

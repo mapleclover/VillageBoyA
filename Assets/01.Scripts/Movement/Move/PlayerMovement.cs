@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.XR;
 
@@ -12,14 +13,28 @@ using UnityEngine.InputSystem.XR;
 public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
 {
 
+    public GameObject Ember;
+    public GameObject Jin;
+    public GameObject Xiao;
+
+
+    public enum CHARACTER
+    {
+        Ember, Jin, Xiao
+    }
+
+    public CHARACTER myCharacter = CHARACTER.Ember;
+
+
     public Transform myCamRot; // 카메라 회전값을 받기 위해
-    
+    public Slider mySlider;
+    public GameObject myStaminaBar; // 스태미나 바의 사라짐과 재출현 구현
 
     //리지드바디를 활용하여 움직임을 구현
     public Rigidbody rigidbody;
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpHeight = 4f; //점프 높이
-    [SerializeField] private float dash = 16f; // 대시 - 일단 달리기 속도 값으로 이해 해 주세요
+    [SerializeField] private float dash = 6f; // 대시 - 일단 달리기 속도 값으로 이해 해 주세요
     [SerializeField] private float rotSpeed = 10f; // deltatime 만 곱해주면 느리기 때문에 rotSpeed로 회전 속도를 조절 해 주자
 
     // 토글카메라
@@ -28,32 +43,84 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
     //private float smoothness = 10.0f;
 
     private Vector3 dir = Vector3.zero;//이동
+    private float totalDist;
 
+    public bool run; // 달리기
     private bool ground = false; // 연속점프방지
 
     [SerializeField] private LayerMask layer; // 연속점프방지
 
-    public bool run; // 달리기
-    //public float finalSpeed; // 기본속도와 달리기 속도를 구분
+    public bool canRun = true;
 
-    // Start is called before the first frame update
+    void ChangeState()
+    {
+        switch (myCharacter)
+        {
+            case CHARACTER.Ember:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Ember.SetActive(false);
+                    Jin.SetActive(true);
+                    myCharacter = CHARACTER.Jin;
+                }
+                break;
+            case CHARACTER.Jin:
+                break;
+            case CHARACTER.Xiao:
+                break;
+        }
+    }
+    void StateProcess()
+    {
+        switch (myCharacter)
+        {
+            case CHARACTER.Ember:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Ember.SetActive(false);
+                    Jin.SetActive(true);
+                    myCharacter = CHARACTER.Jin;
+                }
+                break;
+            case CHARACTER.Jin:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Jin.SetActive(false);
+                    Xiao.SetActive(true);
+                    myCharacter = CHARACTER.Xiao;
+                }
+                break;
+            case CHARACTER.Xiao:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Xiao.SetActive(false);
+                    Ember.SetActive(true);
+                    myCharacter = CHARACTER.Ember;
+                }
+                break;
+        }
+
+    }
     void Start()
     {
         // CharacterProperty에서 myRigid 가져와 쓰는데 나중에 문제 생길지 모르니 우선 둘게요
         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
         // 유니티에서 바인딩 해 줄 필요 없음
+        ChangeState();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        StateProcess();
         dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
         dir.z = Input.GetAxis("Vertical");
         // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
 
         // 키보드 입력값으로 캐릭터 이동을 위함
-        float totalDist = dir.magnitude;
+        totalDist = dir.magnitude;
         //dir.Normalize(); // 값을 항상 1로 동일하게 처리하고 대각선으로 이동하더라도 속도가 빨리지는 현상 방지
 
         // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
@@ -62,8 +129,9 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         dir.Normalize();
 
 
-        CheckGround(); // 연속점프 감지
+        HideStaminaBar(); // 스태미나 바 숨기기
 
+        CheckGround(); // 연속점프 감지
 
         // 걷는 애니메이션
         if (totalDist > 0.0f)
@@ -75,18 +143,7 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             myAnim.SetBool("IsWalking", false);
         }
 
-        // 달리기
-        if (Input.GetKey(KeyCode.LeftShift) && totalDist > 0.0f)
-        {
-            run = true;
-            myAnim.SetBool("IsRunning", true);
-
-        }
-        else // 이동거리값이 0보다 작을 때 shift로 달리기 발동 안할 수 있도록
-        {
-            run = false;
-            myAnim.SetBool("IsRunning", false);
-        }
+        Dash(); // 달리기
 
         // 점프
         // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
@@ -98,9 +155,6 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
             myAnim.SetTrigger("Jump");
 
         }
-
-        
-
 
         /*// 대시 구현 - 사용 안할 것 같아서 주석처리 해 놓음
         if(Input.GetButtonDown("Dash"))
@@ -120,7 +174,6 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
     //캐릭터의 부드러운 회전을 위해
     private void FixedUpdate() // 물리적인 이동이나 회전을 할 때 쓰면 좋다
     {
-
         //회전
         if (dir != Vector3.zero) //벡터의 제로가 아니라면 키 입력이 됨
         {
@@ -142,18 +195,72 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         // 이동을 구현
         rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
 
+
         if (run) // 달리기
         {
-            myRigid.MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
+            rigidbody.MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
         }
 
+        
+    }
 
+    void HideStaminaBar()
+    {
+        // 100f 일 경우 스태미나 바 숨김
+        if (Mathf.Approximately(mySlider.value, 100f))
+        {
+            myStaminaBar.SetActive(false);
+        }
+        else
+        {
+            myStaminaBar.SetActive(true);
+        }
+    }
+
+
+
+    void Dash()
+    {
+        if (Mathf.Approximately(mySlider.value, 0.0f))
+        {
+            canRun = false;
+            if (totalDist > 0.0f)
+            {
+                myAnim.SetBool("IsWalking", true);
+            }
+            else
+            {
+                myAnim.SetBool("IsWalking", false);
+            }
+            myAnim.SetBool("IsRunning", false);
+            
+            run = false;
+        }
+        else
+        {
+            // 달리기
+            if (Input.GetKey(KeyCode.LeftShift) && totalDist > 0.0f && canRun)
+            {
+                run = true;
+                myAnim.SetBool("IsRunning", true);
+
+            }
+            else // 이동거리값이 0보다 작을 때 shift로 달리기 발동 안할 수 있도록
+            {
+                run = false;
+                myAnim.SetBool("IsRunning", false);
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift) && !canRun)
+        {
+            canRun = true;
+        }
     }
 
 
     void CheckGround() // 연속점프 방지, 점프를 땅에 있을 때만
     {
-
         //레이캐스트를 사용
         RaycastHit hit;
 
@@ -167,16 +274,14 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.4f, layer))
         {
             ground = true;
-            myAnim.SetBool("Fall", false);
         }
         else
         {
             ground = false;
-            myAnim.SetBool("Fall", true);
         }
-
-
     }
+
+   
 
 
 }

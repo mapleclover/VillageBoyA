@@ -16,7 +16,7 @@ public class TurnBattle : MonoBehaviour
     public GameObject[] Enemy;
     public GameObject Active;
     public List<GameObject> PlayList;
-    public List<GameObject> PlayerSpeedCheck;
+    List<GameObject> PlayerSpeedCheck;
     public GameObject SelectedCharacter;
     public GameObject SelectedCharacterTarget;
     public GameObject mySelectRing;
@@ -54,10 +54,8 @@ public class TurnBattle : MonoBehaviour
                         }
                     }
                 }
-                break;
-            
-            case State.ActiveCheck:
-                
+                break;            
+            case State.ActiveCheck:                
                 break;
             case State.Moving:
                 for (int i = 0; i < Enemy.Length; ++i)
@@ -87,14 +85,13 @@ public class TurnBattle : MonoBehaviour
             case State.Create:
                 break;
             case State.Choice:
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //메인카메라의 위치값
                 RaycastHit hit;
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (Physics.Raycast(ray, out hit, 1000.0f, 1 << LayerMask.NameToLayer("Friendly")))
                     {
                         SelectedCharacter = hit.collider.gameObject;
-
                     }
                 }
                 if (SelectedCharacter != null)
@@ -110,7 +107,6 @@ public class TurnBattle : MonoBehaviour
                             SelectedCharacter.GetComponent<BattleCharacter>().myTarget = SelectedCharacterTarget;
                         }
                     }
-
                 }
                 
                 break;
@@ -120,14 +116,12 @@ public class TurnBattle : MonoBehaviour
                 Active = PlayList[0];
                 while (!Active.GetComponent<BattleCharacter>().Active5)
                 {
-
                     Active = PlayList[Check];
                     ++Check;
                     if(Check == PlayList.Count)
                     {
                         break;
-                    }
-                    
+                    }                    
                 }
                 if(Check==PlayList.Count)
                 {
@@ -137,7 +131,6 @@ public class TurnBattle : MonoBehaviour
                 {
                     ChangeState(State.Moving);
                 }
-
                 break;
             case State.Moving:
                 break;
@@ -150,8 +143,7 @@ public class TurnBattle : MonoBehaviour
         }
     }
     private void Awake()
-    {
-        
+    {        
         for(int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);
@@ -183,31 +175,19 @@ public class TurnBattle : MonoBehaviour
                 {
                     ++i;  //제거한게없을때만 i값 증가
                 }
-
             }
         }
-        for (int i = 0; i < Player.Length; ++i)
+        for (int i = 0; i < Player.Length; ++i) // 플레이어의 기본타겟설정
         {
-            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0];
+            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0]; 
         }
-        
-        
-
-        /*PlayerList.Add(Player[0]);
-        PlayerList.Sort();*/
-
     }
-
     void Start()
     {
         ChangeState(State.Choice);
-
     }
-
-
     void Update()
-    {
-        
+    {        
         mySelectRing.SetActive(false); //캐릭터가 선택되기전까지 링 오프
         mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
         StateProcess();
@@ -226,34 +206,35 @@ public class TurnBattle : MonoBehaviour
                 mySelectTargetRing.transform.position = SelectedCharacter.GetComponent<BattleCharacter>().myTarget.transform.position; // 타겟링을 타겟위치로 
             }
         }
-        
     }
-
-    //
-    /*public void CharacterSelect(int i)
-    {
-        SelectedCharacter = Friendly[i];
-
-    }*/
-    //
-
     IEnumerator Attack(int s)
     {
-        if (Active == Player[0] || Active == Player[1] || Active == Player[2]) Active.GetComponent<BattleCharacter>().ChoiceSkill(Active.GetComponent<BattleCharacter>().Skill);
-        else if (Active == Enemy[0] || Active == Enemy[1] || Active == Enemy[2]) Active.GetComponent<BattleCharacter>().RandomSkill();
+        foreach(GameObject act in Player)
+        {
+            if(Active==act)
+            {
+                Active.GetComponent<BattleCharacter>().ChoiceSkill(Active.GetComponent<BattleCharacter>().Skill);
+            }
+        }
+        foreach (GameObject act in Enemy)
+        {
+            if (Active == act)
+            {
+                Active.GetComponent<BattleCharacter>().RandomSkill();
+            }
+        }
+        
         yield return new WaitForSeconds(3.0f);
         ChangeState(State.BackMoving);
     }
     IEnumerator Moving(Vector3 pos)
     {
-        StartCoroutine(RotatingToPosition(pos));
+        StartCoroutine(RotatingToPosition(pos,true));
         Active.GetComponent<Animator>().SetBool("IsWalking", true);
         gos = Active.transform.position;
         Vector3 dir = pos - Active.transform.position;
-        gos2 = dir;
-        
-        
-        float dist = (dir.magnitude)-0.8f;
+        gos2 = dir; 
+        float dist = (dir.magnitude)-0.8f; //캐릭터가 겹치면 안되니까 거리에서 -0.8 만큼준다
         dir.Normalize();
         while (dist > 0.0f)
         {
@@ -271,14 +252,11 @@ public class TurnBattle : MonoBehaviour
             Active.GetComponent<Animator>().SetBool("IsWalking", false);            
             ChangeState(State.Battle);
         }
-        
-
     }
     IEnumerator BackMoving(Vector3 pos)
     {
-        StartCoroutine(RotatingToPosition(pos));
-        Active.GetComponent<Animator>().SetBool("IsWalking", true);
-        
+        StartCoroutine(RotatingToPosition(pos,true));
+        Active.GetComponent<Animator>().SetBool("IsWalking", true);        
         Vector3 dir = pos - Active.transform.position;
         float dist = (dir.magnitude);
         dir.Normalize();
@@ -297,25 +275,21 @@ public class TurnBattle : MonoBehaviour
         {
             Active.GetComponent<BattleCharacter>().Active5 = false;
             Active.GetComponent<Animator>().SetBool("IsWalking", false);
-            StartCoroutine(RotatingToPosition(gos2));
+            StartCoroutine(RotatingToPosition(gos2,false));
             yield return new WaitForSeconds(0.5f);
             ChangeState(State.ActiveCheck);            
         }
-        
-
     }
-    IEnumerator RotatingToPosition(Vector3 pos)
+    IEnumerator RotatingToPosition(Vector3 pos,bool v)
     {
-        Vector3 dir = (pos - Active.transform.position).normalized;
+        Vector3 dir;
+        if (v)  dir = (pos - Active.transform.position).normalized;
+        else    dir=pos.normalized;        
         float Angle = Vector3.Angle(Active.transform.forward, dir);
         float rotDir = 1.0f;
-        if (Vector3.Dot(Active.transform.right, dir) < 0.0f)
-        {
-            rotDir = -rotDir;
-        }
+        if (Vector3.Dot(Active.transform.right, dir) < 0.0f) rotDir = -rotDir;        
         while (Angle > 0.0f)
         {
-
             float delta = 360.0f * Time.deltaTime;
             if (delta > Angle)
             {
