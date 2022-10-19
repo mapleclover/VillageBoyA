@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class GameStart : MonoBehaviour
 {
-    public void ClickStart()
-    {
-        SceneManager.LoadScene("Text");
+    public void OnCilck()
+    { 
+         SceneLoad.Inst.ChangeScene(2); 
     }
     
     // Start is called before the first frame update
