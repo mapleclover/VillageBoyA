@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterProperty : MonoBehaviour
 {
-    
+    public CharacterStat Stat;
     Animator _anim = null;
     protected Animator myAnim
     {
