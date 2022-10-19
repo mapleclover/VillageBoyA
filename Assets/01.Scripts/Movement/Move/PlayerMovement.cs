@@ -12,7 +12,18 @@ using UnityEngine.InputSystem.XR;
 
 public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서 가져왔습니다
 {
-    
+
+    public GameObject Ember;
+    public GameObject Jin;
+    public GameObject Xiao;
+
+
+    public enum CHARACTER
+    {
+        Ember, Jin, Xiao
+    }
+
+    public CHARACTER myCharacter = CHARACTER.Ember;
 
 
     public Transform myCamRot; // 카메라 회전값을 받기 위해
@@ -41,28 +52,68 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
 
     public bool canRun = true;
 
-    // 스태미나바 스크립트에 함수전달
-   /* public static Action Run;
-    private void Awake()
+    void ChangeState()
     {
-        Run = () => { Dash(); };
+        switch (myCharacter)
+        {
+            case CHARACTER.Ember:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Ember.SetActive(false);
+                    Jin.SetActive(true);
+                    myCharacter = CHARACTER.Jin;
+                }
+                break;
+            case CHARACTER.Jin:
+                break;
+            case CHARACTER.Xiao:
+                break;
+        }
+    }
+    void StateProcess()
+    {
+        switch (myCharacter)
+        {
+            case CHARACTER.Ember:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Ember.SetActive(false);
+                    Jin.SetActive(true);
+                    myCharacter = CHARACTER.Jin;
+                }
+                break;
+            case CHARACTER.Jin:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Jin.SetActive(false);
+                    Xiao.SetActive(true);
+                    myCharacter = CHARACTER.Xiao;
+                }
+                break;
+            case CHARACTER.Xiao:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Xiao.SetActive(false);
+                    Ember.SetActive(true);
+                    myCharacter = CHARACTER.Ember;
+                }
+                break;
+        }
 
-    }*/
-
-    // Start is called before the first frame update
+    }
     void Start()
     {
         // CharacterProperty에서 myRigid 가져와 쓰는데 나중에 문제 생길지 모르니 우선 둘게요
         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디를 이 객체에 연결
         // 유니티에서 바인딩 해 줄 필요 없음
+        ChangeState();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        
-
+        StateProcess();
         dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
         dir.z = Input.GetAxis("Vertical");
@@ -78,22 +129,9 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         dir.Normalize();
 
 
-
-        if (Mathf.Approximately(mySlider.value, 100f)) // 100f 일 경우 스태미나 바 숨김
-        {
-            Debug.Log("됐다!");
-            myStaminaBar.SetActive(false);
-        }
-        else
-        {
-            myStaminaBar.SetActive(true);
-        }
-
-
-
+        HideStaminaBar(); // 스태미나 바 숨기기
 
         CheckGround(); // 연속점프 감지
-
 
         // 걷는 애니메이션
         if (totalDist > 0.0f)
@@ -136,8 +174,6 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
     //캐릭터의 부드러운 회전을 위해
     private void FixedUpdate() // 물리적인 이동이나 회전을 할 때 쓰면 좋다
     {
-        
-
         //회전
         if (dir != Vector3.zero) //벡터의 제로가 아니라면 키 입력이 됨
         {
@@ -168,7 +204,18 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         
     }
 
-
+    void HideStaminaBar()
+    {
+        // 100f 일 경우 스태미나 바 숨김
+        if (Mathf.Approximately(mySlider.value, 100f))
+        {
+            myStaminaBar.SetActive(false);
+        }
+        else
+        {
+            myStaminaBar.SetActive(true);
+        }
+    }
 
 
 
@@ -209,15 +256,11 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         {
             canRun = true;
         }
-
-        
-
     }
 
 
     void CheckGround() // 연속점프 방지, 점프를 땅에 있을 때만
     {
-
         //레이캐스트를 사용
         RaycastHit hit;
 
@@ -236,8 +279,6 @@ public class PlayerMovement : CharacterProperty // 캐릭터프로퍼티 만들어져있어서
         {
             ground = false;
         }
-
-
     }
 
    
