@@ -13,17 +13,18 @@ using UnityEngine.InputSystem.XR;
 public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á®¿Ô½À´Ï´Ù
 {
 
+    public GameObject Kong;
     public GameObject Ember;
     public GameObject Jin;
-    public GameObject Xiao;
+    
 
     public Animator curAnimator;
     public enum CHARACTER
     {
-        Ember, Jin, Xiao
+        Kong, Ember, Jin
     }
 
-    public CHARACTER myCharacter = CHARACTER.Ember;
+    public CHARACTER myCharacter = CHARACTER.Kong;
 
 
     public Transform myCamRot; // Ä«¸Þ¶ó È¸Àü°ªÀ» ¹Þ±â À§ÇØ
@@ -58,23 +59,23 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
         myCharacter = myCha;
         switch (myCharacter)
         {
+            case CHARACTER.Kong:
+                Kong.SetActive(true);
+                Ember.SetActive(false);
+                Jin.SetActive(false);
+                curAnimator = Kong.GetComponent<Animator>();
+                break;
             case CHARACTER.Ember:
-                Xiao.SetActive(false);
+                Kong.SetActive(false);
                 Ember.SetActive(true);
                 Jin.SetActive(false);
                 curAnimator = Ember.GetComponent<Animator>();
                 break;
             case CHARACTER.Jin:
-                Xiao.SetActive(false);
+                Kong.SetActive(false);
                 Ember.SetActive(false);
                 Jin.SetActive(true);
                 curAnimator = Jin.GetComponent<Animator>();
-                break;
-            case CHARACTER.Xiao:
-                Xiao.SetActive(true);
-                Ember.SetActive(false);
-                Jin.SetActive(false);
-                curAnimator = Xiao.GetComponent<Animator>();
                 break;
         }
     }
@@ -82,6 +83,15 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
     {
         switch (myCharacter)
         {
+            case CHARACTER.Kong:
+                /*if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    Xiao.SetActive(false);
+                    Ember.SetActive(true);
+                    myCharacter = CHARACTER.Ember;
+                    curAnimator = Ember.GetComponent<Animator>();
+                }*/
+                break;
             case CHARACTER.Ember:
                 /*if (Input.GetKeyDown(KeyCode.Tab))
                 {
@@ -100,15 +110,7 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
                     curAnimator = Xiao.GetComponent<Animator>();
                 }*/
                 break;
-            case CHARACTER.Xiao:
-                /*if (Input.GetKeyDown(KeyCode.Tab))
-                {
-                    Xiao.SetActive(false);
-                    Ember.SetActive(true);
-                    myCharacter = CHARACTER.Ember;
-                    curAnimator = Ember.GetComponent<Animator>();
-                }*/
-                break;
+
         }
 
     }
@@ -126,7 +128,7 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            ChangeState(CHARACTER.Ember);
+            ChangeState(CHARACTER.Kong);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -134,7 +136,7 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            ChangeState(CHARACTER.Xiao);
+            ChangeState(CHARACTER.Ember);
         }
         StateProcess();
         dir.x = Input.GetAxis("Horizontal"); // Raw¸¦ ³ÖÀ»Áö ¸»Áö »óÀÇ°¡ ÇÊ¿äÇÒ °Í °°¾Æ¿ë
