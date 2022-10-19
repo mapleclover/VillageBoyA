@@ -3234,8 +3234,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat:
-    Stamina: 0
   myHp: 100
   speed: 5
   Skill: 0
@@ -4043,7 +4041,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 325777840}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1543604256}
+        m_TargetAssemblyTypeName: TurnBattle, Assembly-CSharp
+        m_MethodName: BattleStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &325777840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7139,8 +7149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat:
-    Stamina: 0
   myHp: 100
   speed: 10
   Skill: 0
@@ -8390,14 +8398,14 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
+    m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
@@ -9128,8 +9136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat:
-    Stamina: 0
   myHp: 100
   speed: 6
   Skill: 0
@@ -12762,8 +12768,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat:
-    Stamina: 0
   myHp: 100
   speed: 8
   Skill: 0
@@ -14164,8 +14168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat:
-    Stamina: 0
   myHp: 100
   speed: 4
   Skill: 0
@@ -16292,10 +16294,17 @@ MonoBehaviour:
   - {fileID: 1340737245}
   Active: {fileID: 0}
   PlayList: []
+  PlayerSpeedCheck: []
   SelectedCharacter: {fileID: 0}
   SelectedCharacterTarget: {fileID: 0}
   mySelectRing: {fileID: 632291192}
   mySelectTargetRing: {fileID: 454261265}
+  CharacterButton:
+  - {fileID: 737484746}
+  - {fileID: 365520548}
+  - {fileID: 1667729842}
+  AttackButton: {fileID: 325777837}
+  RunButton: {fileID: 2056716624}
   myState: 0
 --- !u!4 &1543604257
 Transform:
@@ -26112,8 +26121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat:
-    Stamina: 0
   myHp: 100
   speed: 9
   Skill: 0
