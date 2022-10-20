@@ -6,25 +6,34 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using static UnityEditor.PlayerSettings;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class TurnBattle : MonoBehaviour
 {
-
+    
     public GameObject[] Player;
     public GameObject[] Enemy;
     public GameObject Active;
     public List<GameObject> PlayList;
-    List<GameObject> PlayerSpeedCheck;
+    public List<GameObject> PlayerSpeedCheck;
     public GameObject SelectedCharacter;
     public GameObject SelectedCharacterTarget;
     public GameObject mySelectRing;
     public GameObject mySelectTargetRing;
+    public UnityEngine.UI.Button[] CharacterButton;
+    public GameObject AttackButton;
+    public GameObject RunButton;
+    
+    
     bool FastSpeedCheck;
     int Skill=0;
     Vector3 gos; //원래위치값
     Vector3 gos2; //원래바라보고있던위치값
+    
     public enum State
     {
         Create, Choice,ActiveCheck,Moving, BackMoving, Battle, End
@@ -37,9 +46,19 @@ public class TurnBattle : MonoBehaviour
         switch (myState)
         {
             case State.Create:
-                
+                for (int i = 0; i < CharacterButton.Length; ++i)
+                {
+                    CharacterButton[i].interactable = false;
+                }
                 break;
             case State.Choice:
+                //선택단계에서 버튼두개 보이게활성화
+                for (int i = 0; i < CharacterButton.Length; ++i)
+                {
+                    CharacterButton[i].interactable = true;
+                }
+                AttackButton.SetActive(true);
+                RunButton.SetActive(true);
                 for (int i = 0; i < PlayList.Count; ++i)
                 {
                     PlayList[i].GetComponent<BattleCharacter>().Active5 = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다
@@ -57,7 +76,9 @@ public class TurnBattle : MonoBehaviour
                 break;            
             case State.ActiveCheck:                
                 break;
-            case State.Moving:
+            case State.Moving:              
+                
+                
                 for (int i = 0; i < Enemy.Length; ++i)
                 {
                     if (Active == Enemy[i])
@@ -143,8 +164,10 @@ public class TurnBattle : MonoBehaviour
         }
     }
     private void Awake()
-    {        
-        for(int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        for (int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);
         }
@@ -187,15 +210,12 @@ public class TurnBattle : MonoBehaviour
         ChangeState(State.Choice);
     }
     void Update()
-    {        
+    {
+        
         mySelectRing.SetActive(false); //캐릭터가 선택되기전까지 링 오프
         mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
-        StateProcess();
-        if (Input.GetKeyDown(KeyCode.Return))        
-        {
-            SelectedCharacter = null;
-            ChangeState(State.ActiveCheck);
-        }
+        StateProcess();        
+        
         if(SelectedCharacter!=null) //캐릭터가 선택되어있을경우
         {
             mySelectRing.SetActive(true); //캐릭터가 선택되면 링온
@@ -207,6 +227,19 @@ public class TurnBattle : MonoBehaviour
             }
         }
     }
+    public void BattleStart() //공격버튼 클릭시 함수
+    {
+        ChangeState(State.ActiveCheck);
+        //클릭시 선택캐릭터 null값으로 변경 어택버튼 런버튼 비활성화
+        SelectedCharacter = null;
+        AttackButton.SetActive(false);
+        RunButton.SetActive(false);
+        for (int i = 0; i < CharacterButton.Length; ++i)
+        {
+            CharacterButton[i].interactable = false;
+        }
+    }
+
     IEnumerator Attack(int s)
     {
         foreach(GameObject act in Player)

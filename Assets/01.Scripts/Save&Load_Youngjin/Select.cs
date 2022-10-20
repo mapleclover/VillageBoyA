@@ -99,7 +99,7 @@ public class Select : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Slot(Button.cur);
+            Slot(Button_New.cur);
 
         }
         if (Input.GetKeyDown(KeyCode.Escape))

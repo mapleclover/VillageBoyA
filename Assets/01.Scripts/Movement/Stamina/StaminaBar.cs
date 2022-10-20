@@ -4,35 +4,32 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class StaminaBar : MonoBehaviour
 {
     public Slider staminaBar;
-    public Animator myAnimator;
-    /*
-    [SerializeField] float Stamina;
-    public UnityAction<float> changeStamina;*/
+    public GameObject Player;
 
     private float curST = 100f;
     private float maxST = 100f;
 
-
     // Start is called before the first frame update
     void Start()
     {
+
     }
+
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(staminaBar.value);
-
         HandleStamina();
     }
     void HandleStamina()
     {
         curST = Mathf.Clamp(curST, 0.0f, maxST);
 
-        if (myAnimator.GetBool("IsRunning") == true)
+        if (Player.GetComponent<PlayerMovement>().run) // PlayerMovement 스크립트 안에 bool 값을 가져옴
         {
             curST -= 20 * Time.deltaTime;
         }
@@ -40,11 +37,9 @@ public class StaminaBar : MonoBehaviour
         {
             curST += 20 * Time.deltaTime;
         }
-
         //바의 부드러운 감소
         staminaBar.value = Mathf.Lerp(staminaBar.value, curST / maxST * 100f, 10f * Time.deltaTime);
         // a 와 b 사이의 t 만큼의 값을 반환
-
     }
 
 
