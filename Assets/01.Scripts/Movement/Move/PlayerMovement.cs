@@ -6,18 +6,15 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.XR;
 
-//¸¶Áö¸· ¼öÁ¤ 10¿ù 17ÀÏ
-//ÀüÁ¤¿ì
+// ì „ì •ìš°
+// 1022
 
 
-public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á®¿Ô½À´Ï´Ù
+public class PlayerMovement : MonoBehaviour 
 {
-
     public GameObject Kong;
     public GameObject Ember;
     public GameObject Jin;
-    
-
     public Animator curAnimator;
     public enum CHARACTER
     {
@@ -27,51 +24,60 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
     public CHARACTER myCharacter = CHARACTER.Kong;
 
 
-    public Transform myCamRot; // Ä«¸Ş¶ó È¸Àü°ªÀ» ¹Ş±â À§ÇØ
+    public Transform myCamRot; // ì¹´ë©”ë¼ íšŒì „ê°’ 
     public Slider mySlider;
-    public GameObject myStaminaBar; // ½ºÅÂ¹Ì³ª ¹ÙÀÇ »ç¶óÁü°ú ÀçÃâÇö ±¸Çö
+    public GameObject myStaminaBar; // ìŠ¤íƒœë¯¸ë‚˜ ë°”ì˜ ì‚¬ë¼ì§ê³¼ ì¬ì¶œí˜„
 
-    //¸®Áöµå¹Ùµğ¸¦ È°¿ëÇÏ¿© ¿òÁ÷ÀÓÀ» ±¸Çö
-    public Rigidbody rigidbody;
+    // ìš°ë¦¬ ìŠ¤í¬ë¦½íŠ¸ëŠ” ë¦¬ì§€ë“œë°”ë””ë¥¼ í™œìš©í•œ ì›€ì§ì„
+    public Rigidbody rigidbody; // ì§€ìš°ê±°ë‚˜ ì£¼ì„í•˜ì§€ ë§ˆì„¸ìš”
     [SerializeField] private float speed = 3f;
-    [SerializeField] private float jumpHeight = 4f; //Á¡ÇÁ ³ôÀÌ
-    [SerializeField] private float dash = 6f; // ´ë½Ã - ÀÏ´Ü ´Ş¸®±â ¼Óµµ °ªÀ¸·Î ÀÌÇØ ÇØ ÁÖ¼¼¿ä
-    [SerializeField] private float rotSpeed = 10f; // deltatime ¸¸ °öÇØÁÖ¸é ´À¸®±â ¶§¹®¿¡ rotSpeed·Î È¸Àü ¼Óµµ¸¦ Á¶Àı ÇØ ÁÖÀÚ
+    [SerializeField] private float jumpHeight = 4f; //ì í”„
+    [SerializeField] private float dash = 6f; // ë‹¬ë¦¬ê¸° ì†ë„ (ëŒ€ì‹œ ê¸°ëŠ¥ ë‚˜ì¤‘ì— êµ¬í˜„í• ì§€ ëª¨ë¥´ë‹ˆ ì¼ë‹¨ ì´ë¦„ì€ ì´ëŒ€ë¡œ)
+    [SerializeField] private float rotSpeed = 10f; //deltatime ë§Œ ê³±í•´ì£¼ë©´ ëŠë¦¬ê¸° ë•Œë¬¸ì— rotSpeedë¡œ íšŒì „ ì†ë„ë¥¼ ì¡°ì ˆ í•´ ì£¼ì
 
-    // Åä±ÛÄ«¸Ş¶ó
+    // í† ê¸€ì¹´ë©”ë¼
     //public Camera _camera;
-    //public bool toggleCameraRotation; // Idle ÀÏ¶§ µÑ·¯º¸±â ±â´É
+    //public bool toggleCameraRotation; // Idle ì¼ë•Œ ë‘˜ëŸ¬ë³´ê¸° ê¸°ëŠ¥
     //private float smoothness = 10.0f;
 
-    private Vector3 dir = Vector3.zero;//ÀÌµ¿
+    private Vector3 dir = Vector3.zero;// ì´ë™
     private float totalDist;
 
-    public bool run; // ´Ş¸®±â
-    private bool ground = false; // ¿¬¼ÓÁ¡ÇÁ¹æÁö
+    public bool run; // ë‹¬ë¦¬ê¸°
+    public bool canRun = true; // ë‹¬ë¦¬ê¸°ì™€ ìŠ¤íƒœë¯¸ë„ˆë°”ì— ì—°ê´€
 
-    [SerializeField] private LayerMask layer; // ¿¬¼ÓÁ¡ÇÁ¹æÁö
-
-    public bool canRun = true;
+    // ì—°ì†ì í”„ë°©ì§€
+    private bool ground = false;
+    [SerializeField] private LayerMask layer; 
 
     void ChangeState(CHARACTER myCha)
     {
+
+        Vector3 summonPosition = new Vector3(0, 1.5f, 0);
+
         if (myCharacter == myCha) return;
         myCharacter = myCha;
         switch (myCharacter)
         {
             case CHARACTER.Kong:
+                this.transform.position = this.transform.transform.position + summonPosition;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
                 Kong.SetActive(true);
                 Ember.SetActive(false);
                 Jin.SetActive(false);
                 curAnimator = Kong.GetComponent<Animator>();
                 break;
             case CHARACTER.Ember:
+                this.transform.position = this.transform.transform.position + summonPosition;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
                 Kong.SetActive(false);
                 Ember.SetActive(true);
                 Jin.SetActive(false);
                 curAnimator = Ember.GetComponent<Animator>();
                 break;
             case CHARACTER.Jin:
+                this.transform.position = this.transform.transform.position + summonPosition;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
                 Kong.SetActive(false);
                 Ember.SetActive(false);
                 Jin.SetActive(true);
@@ -84,48 +90,26 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
         switch (myCharacter)
         {
             case CHARACTER.Kong:
-                /*if (Input.GetKeyDown(KeyCode.Tab))
-                {
-                    Xiao.SetActive(false);
-                    Ember.SetActive(true);
-                    myCharacter = CHARACTER.Ember;
-                    curAnimator = Ember.GetComponent<Animator>();
-                }*/
                 break;
             case CHARACTER.Ember:
-                /*if (Input.GetKeyDown(KeyCode.Tab))
-                {
-                    Ember.SetActive(false);
-                    Jin.SetActive(true);
-                    myCharacter = CHARACTER.Jin;
-                    curAnimator = Jin.GetComponent<Animator>();
-                }*/
                 break;
             case CHARACTER.Jin:
-                /*if (Input.GetKeyDown(KeyCode.Tab))
-                {
-                    Jin.SetActive(false);
-                    Xiao.SetActive(true);
-                    myCharacter = CHARACTER.Xiao;
-                    curAnimator = Xiao.GetComponent<Animator>();
-                }*/
                 break;
-
         }
 
     }
     void Start()
     {
-        curAnimator = GameObject.Find("Ember").GetComponent<Animator>();
-        // CharacterProperty¿¡¼­ myRigid °¡Á®¿Í ¾²´Âµ¥ ³ªÁß¿¡ ¹®Á¦ »ı±æÁö ¸ğ¸£´Ï ¿ì¼± µÑ°Ô¿ä
-        rigidbody = this.GetComponent<Rigidbody>(); // ¸®Áöµå¹Ùµğ¸¦ ÀÌ °´Ã¼¿¡ ¿¬°á
-        // À¯´ÏÆ¼¿¡¼­ ¹ÙÀÎµù ÇØ ÁÙ ÇÊ¿ä ¾øÀ½
-        ChangeState(CHARACTER.Ember);
+        curAnimator = Kong.GetComponent<Animator>(); // ê¸°ë³¸ìºë¦­í„°ëŠ” 'ê³µ'ìœ¼ë¡œ ì‹œì‘
+        ChangeState(CHARACTER.Kong);
+
+        rigidbody = this.GetComponent<Rigidbody>(); // ë¦¬ì§€ë“œë°”ë””ë¡œ ì›€ì§ì„ êµ¬í˜„ì„ ìœ„í•¨
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 1, 2, 3 í‚¤ë¡œ ìºë¦­í„° êµì²´
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangeState(CHARACTER.Kong);
@@ -138,27 +122,30 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
         {
             ChangeState(CHARACTER.Ember);
         }
-        StateProcess();
-        dir.x = Input.GetAxis("Horizontal"); // Raw¸¦ ³ÖÀ»Áö ¸»Áö »óÀÇ°¡ ÇÊ¿äÇÒ °Í °°¾Æ¿ë
-        // A ¿Í D Å°¸¦ ´­·¶À» ¶§ ÀÌµ¿¹æÇâ
-        dir.z = Input.GetAxis("Vertical");
-        // W ¿Í S ¸¦ ´­·¶À» ¶§ ¾Õ µÚ ÀÌµ¿¹æÇâ ÀÔ·Â¹ŞÀ½
+        CheckGround(); // ì—°ì†ì í”„ ê°ì§€
+        
 
-        // Å°º¸µå ÀÔ·Â°ªÀ¸·Î Ä³¸¯ÅÍ ÀÌµ¿À» À§ÇÔ
-        totalDist = dir.magnitude;
-        //dir.Normalize(); // °ªÀ» Ç×»ó 1·Î µ¿ÀÏÇÏ°Ô Ã³¸®ÇÏ°í ´ë°¢¼±À¸·Î ÀÌµ¿ÇÏ´õ¶óµµ ¼Óµµ°¡ »¡¸®Áö´Â Çö»ó ¹æÁö
+        if (ground)
+        {
+            dir.x = Input.GetAxis("Horizontal"); // Rawë¥¼ ë„£ì„ì§€ ë§ì§€ ìƒì˜ê°€ í•„ìš”í•  ê²ƒ ê°™ì•„ìš©
+                                                 // A ì™€ D í‚¤ë¥¼ ëˆŒë €ì„ ë•Œ ì´ë™ë°©í–¥
+            dir.z = Input.GetAxis("Vertical"); // W ì™€ S ë¥¼ ëˆŒë €ì„ ë•Œ ì• ë’¤ ì´ë™ë°©í–¥ ì…ë ¥ë°›ìŒ
+            totalDist = dir.magnitude;
 
-        // Ä«¸Ş¶ó È¸ÀüÀÌ Æ®·£½ºÆûÀÇ È¸Àü¿¡ ¿µÇâÀ» ÁÙ ¼ö ÀÖµµ·Ï
-        dir = myCamRot.rotation * dir;
-        dir.y = 0.0f;
-        dir.Normalize();
+            // ì¹´ë©”ë¼ íšŒì „ì´ íŠ¸ëœìŠ¤í¼ì˜ íšŒì „ì— ì˜í–¥ì„ ì¤„ ìˆ˜ ìˆë„ë¡
+            dir = myCamRot.rotation * dir;
+            dir.y = 0.0f;
+            dir.Normalize();
+
+            StateProcess(); //ìºë¦­í„° êµì²´
+            Dash(); // ë‹¬ë¦¬ê¸°
+        }
+
+        HideStaminaBar(); // ìŠ¤íƒœë¯¸ë‚˜ ë°” ìˆ¨ê¸°ê¸°
+        
 
 
-        HideStaminaBar(); // ½ºÅÂ¹Ì³ª ¹Ù ¼û±â±â
-
-        CheckGround(); // ¿¬¼ÓÁ¡ÇÁ °¨Áö
-
-        // °È´Â ¾Ö´Ï¸ŞÀÌ¼Ç
+        // ê±·ëŠ” ì• ë‹ˆë©”ì´ì…˜
         if (totalDist > 0.0f)
         {
             curAnimator.SetBool("IsWalking", true);
@@ -168,70 +155,76 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
             curAnimator.SetBool("IsWalking", false);
         }
 
-        Dash(); // ´Ş¸®±â
 
-        // Á¡ÇÁ
-        // À¯´ÏÆ¼ ±âº»¼³Á¤ Jump Å°¸¦ ºÒ·¯¿Í¼­ ½ºÆäÀÌ½º¹Ù·Î °¡´É
-        if (Input.GetButtonDown("Jump") && ground) // ¿¬¼ÓÁ¡ÇÁ ¹æÁö = && ground ±×¶ó¿îµå°¡ ÂüÀÏ ¶§
+        // ì í”„
+        // ìœ ë‹ˆí‹° ê¸°ë³¸ì„¤ì • Jump í‚¤ë¥¼ ë¶ˆëŸ¬ì™€ì„œ ìŠ¤í˜ì´ìŠ¤ë°”ë¡œ ê°€ëŠ¥
+        if (Input.GetButtonDown("Jump") && ground) // ì—°ì†ì í”„ ë°©ì§€ = && ground ê·¸ë¼ìš´ë“œê°€ ì°¸ì¼ ë•Œ
         {
             Vector3 jumpPower = Vector3.up * jumpHeight;
             rigidbody.AddForce(jumpPower, ForceMode.VelocityChange);
-            //Á¡ÇÁ¸¦ ÇßÀ» ¶§ À§·Î ¶Û ¼ö ÀÖµµ·Ï
+            //ì í”„ë¥¼ í–ˆì„ ë•Œ ìœ„ë¡œ ë›¸ ìˆ˜ ìˆë„ë¡
             curAnimator.SetTrigger("Jump");
 
         }
 
-        /*// ´ë½Ã ±¸Çö - »ç¿ë ¾ÈÇÒ °Í °°¾Æ¼­ ÁÖ¼®Ã³¸® ÇØ ³õÀ½
+        /*// ëŒ€ì‹œ êµ¬í˜„ - ì‚¬ìš© ì•ˆí•  ê²ƒ ê°™ì•„ì„œ ì£¼ì„ì²˜ë¦¬ í•´ ë†“ìŒ
         if(Input.GetButtonDown("Dash"))
         {
             Vector3 dashPower = this.transform.forward * -Mathf.Log(1/rigidbody.drag) * dash;
-            // drag °ø±âÀúÇ×°ªÀ» ¿ª¼ö·Î µÚÁı¾î¼­ ·Î±×·Î ¹Ù²Ù°í - ¸¦ ³Ö¾îÁà¼­ °ªÀ» ±¸ÇÑ ÈÄ ¿ì¸®°¡ ±¸ÇÑ ´ë½Ã¾çÀ» °öÇØÁØ´Ù < ÀÚ¿¬½º·¯¿î ´ë½Ã¸¦ À§ÇØ(¹«½¼ ¼Ò¸®ÀÎÁö ¸ğ¸£°Ú´Ù.)
+            // drag ê³µê¸°ì €í•­ê°’ì„ ì—­ìˆ˜ë¡œ ë’¤ì§‘ì–´ì„œ ë¡œê·¸ë¡œ ë°”ê¾¸ê³  - ë¥¼ ë„£ì–´ì¤˜ì„œ ê°’ì„ êµ¬í•œ í›„ ìš°ë¦¬ê°€ êµ¬í•œ ëŒ€ì‹œì–‘ì„ ê³±í•´ì¤€ë‹¤ < ìì—°ìŠ¤ëŸ¬ìš´ ëŒ€ì‹œë¥¼ ìœ„í•´(ë¬´ìŠ¨ ì†Œë¦¬ì¸ì§€ ëª¨ë¥´ê² ë‹¤.)
             rigidbody.AddForce(dashPower, ForceMode.VelocityChange);
         }
-        // ´ë½Ã Å°ÀÇ ±âº»°ªÀÌ ¾ø¾î¼­ À¯´ÏÆ¼ ÇÁ·ÎÁ§Æ® ¼¼ÆÃ¿¡¼­ Ãß°¡
-        // À¯´ÏÆ¼¿¡¼­ ¸®Áöµå¹Ùµğ Drag¸¦ 10 Á¤µµ ¼³Á¤ ÇØ ÁÖ¸é È®ÀÎ ÇÒ ¼ö ÀÖÀ½
-        // ÇÏÁö¸¸ °ø±âÀúÇ×°ªÀ» ³Ö¾îÁÖ¸é Á¡ÇÁÇÑ ÈÄ ´À¸®°Ô ¶³¾îÁö´Â ¹®Á¦°¡ ÀÖÀ¸´Ï ÀÏ´Ü ÁÖ¼®Ã³¸® ÇÏ°í ´Ş¸®±â¸¦ ±¸ÇöÇÒ ¿¹Á¤
-        // Á¡ÇÁ¿¡¼­ ¶³¾îÁö´Â ÀÌÀ¯´Â ¸®Áöµå¹Ùµğ Áß·Â°ª¿¡ ÀÇÇÑ °ÍÀÌ°í ÃµÃµÈ÷ ¶³¾îÁö´Â ÀÌÀ¯´Â µå·¡±× °ø±âÀúÇ×°ª ¶§¹®ÀÌ¹Ç·Î µÎ°³¸¦ Á¶ÇÕÇØ¼­ Á¡ÇÁ ¹®Á¦¸¦ ÇØ°áÇÏ¶ó*/
+        // ëŒ€ì‹œ í‚¤ì˜ ê¸°ë³¸ê°’ì´ ì—†ì–´ì„œ ìœ ë‹ˆí‹° í”„ë¡œì íŠ¸ ì„¸íŒ…ì—ì„œ ì¶”ê°€
+        // ìœ ë‹ˆí‹°ì—ì„œ ë¦¬ì§€ë“œë°”ë”” Dragë¥¼ 10 ì •ë„ ì„¤ì • í•´ ì£¼ë©´ í™•ì¸ í•  ìˆ˜ ìˆìŒ
+        // í•˜ì§€ë§Œ ê³µê¸°ì €í•­ê°’ì„ ë„£ì–´ì£¼ë©´ ì í”„í•œ í›„ ëŠë¦¬ê²Œ ë–¨ì–´ì§€ëŠ” ë¬¸ì œê°€ ìˆìœ¼ë‹ˆ ì¼ë‹¨ ì£¼ì„ì²˜ë¦¬ í•˜ê³  ë‹¬ë¦¬ê¸°ë¥¼ êµ¬í˜„í•  ì˜ˆì •
+        // ì í”„ì—ì„œ ë–¨ì–´ì§€ëŠ” ì´ìœ ëŠ” ë¦¬ì§€ë“œë°”ë”” ì¤‘ë ¥ê°’ì— ì˜í•œ ê²ƒì´ê³  ì²œì²œíˆ ë–¨ì–´ì§€ëŠ” ì´ìœ ëŠ” ë“œë˜ê·¸ ê³µê¸°ì €í•­ê°’ ë•Œë¬¸ì´ë¯€ë¡œ ë‘ê°œë¥¼ ì¡°í•©í•´ì„œ ì í”„ ë¬¸ì œë¥¼ í•´ê²°í•˜ë¼*/
 
     }
 
 
-    //Ä³¸¯ÅÍÀÇ ºÎµå·¯¿î È¸ÀüÀ» À§ÇØ
-    private void FixedUpdate() // ¹°¸®ÀûÀÎ ÀÌµ¿ÀÌ³ª È¸ÀüÀ» ÇÒ ¶§ ¾²¸é ÁÁ´Ù
+    
+    private void FixedUpdate()
+    //ìºë¦­í„°ì˜ ë¶€ë“œëŸ¬ìš´ íšŒì „ì„ ìœ„í•´
+    //ë¬¼ë¦¬ì ì¸ ì´ë™ì´ë‚˜ íšŒì „ì„ í•  ë•Œ ì“°ë©´ ì¢‹ë‹¤
     {
-        //È¸Àü
-        if (dir != Vector3.zero) //º¤ÅÍÀÇ Á¦·Î°¡ ¾Æ´Ï¶ó¸é Å° ÀÔ·ÂÀÌ µÊ
+        //íšŒì „
+        if (dir != Vector3.zero) //ë²¡í„°ì˜ ì œë¡œê°€ ì•„ë‹ˆë¼ë©´ í‚¤ ì…ë ¥ì´ ë¨
         {
-            // ¾ÕÀ¸·Î ³ª¾Æ°¥ ¶§ + ¹æÇâÀ¸·Î ³ª¾Æ°¡´Âµ¥ ¹İ´ë¹æÇâÀ¸·Î ³ª°¡°¡´Â Å°¸¦ ´­·¶À» ¶§ -¹æÇâÀ¸·Î È¸ÀüÇÏ¸é¼­ »ı±â´Â ¿À·ù¸¦ ¹æÁöÇÏ±âÀ§ÇØ (ºÎÈ£°¡ ¼­·Î ¹İ´ëÀÏ °æ¿ì¸¦ Ã¼Å©ÇØ¼­ »ìÂ¦¸¸ ¹Ì¸® µ¹·ÁÁÖ´Â ÄÚµå) ¾î·Æ³×¿ä... 
-            // Áö±İ ¹Ù¶óº¸´Â ¹æÇâÀÇ ºÎÈ£ != ³ª¾Æ°¥ ¹æÇâ ºÎÈ£
+            // ì•ìœ¼ë¡œ ë‚˜ì•„ê°ˆ ë•Œ + ë°©í–¥ìœ¼ë¡œ ë‚˜ì•„ê°€ëŠ”ë° ë°˜ëŒ€ë°©í–¥ìœ¼ë¡œ ë‚˜ê°€ê°€ëŠ” í‚¤ë¥¼ ëˆŒë €ì„ ë•Œ -ë°©í–¥ìœ¼ë¡œ íšŒì „í•˜ë©´ì„œ ìƒê¸°ëŠ” ì˜¤ë¥˜ë¥¼ ë°©ì§€í•˜ê¸°ìœ„í•´ (ë¶€í˜¸ê°€ ì„œë¡œ ë°˜ëŒ€ì¼ ê²½ìš°ë¥¼ ì²´í¬í•´ì„œ ì‚´ì§ë§Œ ë¯¸ë¦¬ ëŒë ¤ì£¼ëŠ” ì½”ë“œ) ì–´ë µë„¤ìš”... 
+            // ì§€ê¸ˆ ë°”ë¼ë³´ëŠ” ë°©í–¥ì˜ ë¶€í˜¸ != ë‚˜ì•„ê°ˆ ë°©í–¥ ë¶€í˜¸
             if (Mathf.Sign(transform.forward.x) != Mathf.Sign(dir.x) || Mathf.Sign(transform.forward.z) != Mathf.Sign(dir.z))
             {
-                //¿ì¸®´Â ÀÌµ¿ÇÒ ¶§ x ¿Í z ¹Û¿¡ »ç¿ëÀ» ¾ÈÇÏ¹Ç·Î
-                transform.Rotate(0, 1, 0); // »ìÂ¦¸¸ È¸Àü
-                //Á¤ ¹İ´ë¹æÇâÀ» ´­·¯µµ È¸Àü¾ÈÇÏ´Â ¹ö±× ¹æÁö
-                //¹Ì¸® È¸ÀüÀ» Á¶±İ ½ÃÄÑ¼­ Á¤¹İ´ëÀÎ °æ¿ì¸¦ Á¦°Å
+                //ìš°ë¦¬ëŠ” ì´ë™í•  ë•Œ x ì™€ z ë°–ì— ì‚¬ìš©ì„ ì•ˆí•˜ë¯€ë¡œ
+                transform.Rotate(0, 1, 0); // ì‚´ì§ë§Œ íšŒì „
+                //ì • ë°˜ëŒ€ë°©í–¥ì„ ëˆŒëŸ¬ë„ íšŒì „ì•ˆí•˜ëŠ” ë²„ê·¸ ë°©ì§€
+                //ë¯¸ë¦¬ íšŒì „ì„ ì¡°ê¸ˆ ì‹œì¼œì„œ ì •ë°˜ëŒ€ì¸ ê²½ìš°ë¥¼ ì œê±°
             }
             transform.forward = Vector3.Lerp(transform.forward, dir, rotSpeed * Time.deltaTime);
-            // Slerp¸¦ ¾µÁö Lerp¸¦ ¾µÁö »óÀÇ¸¦ ÇØºÁ¾ß ÇÒ °Í °°¾Æ¿ë 
-            // Ä³¸¯ÅÍÀÇ ¾Õ¹æÇâÀº dir Å°º¸µå¸¦ ´©¸¥ ¹æÇâÀ¸·Î Ä³¸¯ÅÍ È¸Àü
-            //Lerp¸¦ ¾²¸é ¿øÇÏ´Â ¹æÇâ±îÁö ¼­¼­È÷ È¸Àü
+            // Slerpë¥¼ ì“¸ì§€ Lerpë¥¼ ì“¸ì§€ ìƒì˜ë¥¼ í•´ë´ì•¼ í•  ê²ƒ ê°™ì•„ìš© 
+            // ìºë¦­í„°ì˜ ì•ë°©í–¥ì€ dir í‚¤ë³´ë“œë¥¼ ëˆ„ë¥¸ ë°©í–¥ìœ¼ë¡œ ìºë¦­í„° íšŒì „
+            //Lerpë¥¼ ì“°ë©´ ì›í•˜ëŠ” ë°©í–¥ê¹Œì§€ ì„œì„œíˆ íšŒì „
         }
 
-        // ÀÌµ¿À» ±¸Çö
-        rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
 
-
-        if (run) // ´Ş¸®±â
+        if(ground)
         {
-            rigidbody.MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
+            // ì´ë™ì„ êµ¬í˜„
+            GetComponent<Rigidbody>().MovePosition(this.transform.position + dir * speed * Time.deltaTime);
+
+
+            if (run) // ë‹¬ë¦¬ê¸°
+            {
+                GetComponent<Rigidbody>().MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
+            }
         }
+        
 
         
     }
 
     void HideStaminaBar()
     {
-        // 100f ÀÏ °æ¿ì ½ºÅÂ¹Ì³ª ¹Ù ¼û±è
+        // 100f ì¼ ê²½ìš° ìŠ¤íƒœë¯¸ë‚˜ ë°” ìˆ¨ê¹€
         if (Mathf.Approximately(mySlider.value, 100f))
         {
             myStaminaBar.SetActive(false);
@@ -247,9 +240,10 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
     void Dash()
     {
         if (Mathf.Approximately(mySlider.value, 0.0f))
+        //ìŠ¤íƒœë¯¸ë„ˆ ë°”ì˜ ë°¸ë¥˜ê°€ 0ì— ê·¼ì‚¬ì¹˜ì— ë‹¿ì„ ë•Œ
         {
             canRun = false;
-            if (totalDist > 0.0f)
+            if (totalDist > 0.0f) // ìºë¦­í„°ì˜ ì›€ì§ì„ì´ ì—†ë‹¤ë©´
             {
                 curAnimator.SetBool("IsWalking", true);
             }
@@ -263,14 +257,15 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
         }
         else
         {
-            // ´Ş¸®±â
+            
             if (Input.GetKey(KeyCode.LeftShift) && totalDist > 0.0f && canRun)
+            // ì‹œí”„íŠ¸ë¥¼ ëˆŒë €ê³ , ì´ë™ê±°ë¦¬ê°€ ìˆìœ¼ë©° canRun ì´ falseê°€ ì•„ë‹ ë•Œ
             {
                 run = true;
                 curAnimator.SetBool("IsRunning", true);
 
             }
-            else // ÀÌµ¿°Å¸®°ªÀÌ 0º¸´Ù ÀÛÀ» ¶§ shift·Î ´Ş¸®±â ¹ßµ¿ ¾ÈÇÒ ¼ö ÀÖµµ·Ï
+            else // ì´ë™ê±°ë¦¬ê°’ì´ 0ë³´ë‹¤ ì‘ì„ ë•Œ shiftë¡œ ë‹¬ë¦¬ê¸° ë°œë™ ì•ˆí•  ìˆ˜ ìˆë„ë¡
             {
                 run = false;
                 curAnimator.SetBool("IsRunning", false);
@@ -278,35 +273,34 @@ public class PlayerMovement : MonoBehaviour // Ä³¸¯ÅÍÇÁ·ÎÆÛÆ¼ ¸¸µé¾îÁ®ÀÖ¾î¼­ °¡Á
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift) && !canRun)
+        // ì‹œí”„íŠ¸ í‚¤ë¥¼ ë–¼ì—ˆê³ , canRun ì´ falseì¼ ë•Œ
         {
             canRun = true;
         }
     }
 
 
-    void CheckGround() // ¿¬¼ÓÁ¡ÇÁ ¹æÁö, Á¡ÇÁ¸¦ ¶¥¿¡ ÀÖÀ» ¶§¸¸
+    void CheckGround() // ì—°ì†ì í”„ ë°©ì§€, ì í”„ë¥¼ ë•…ì— ìˆì„ ë•Œë§Œ
     {
-        //·¹ÀÌÄ³½ºÆ®¸¦ »ç¿ë
+        //ë ˆì´ìºìŠ¤íŠ¸ë¥¼ ì‚¬ìš©
         RaycastHit hit;
 
-        //ÇÇº¿ À§Ä¡°¡ ¹ß³¡ÀÌ±â ¶§¹®¿¡ Ä³¸¯ÅÍ ¹ßÀÌ ¶¥¿¡ ºÙ¾î¹ö¸®¸é °ËÃâÇÒ ¼ö ¾ø±â ¶§¹®¿¡ (Vector3.up * 0.2f)·Î »ìÂ¦ ¿Ã·Á¼­ ·¹ÀÌ¸¦ ½ô
-        // Vector3.down ¾Æ·¡´Ï±î ¾Æ·¡·Î ½÷¾ß ÇÔ
-        // ¾ó¸¶¸¸Å­ÀÇ °Å¸®¿¡ ·¹ÀÌÀú¸¦ ½ò°ÇÁö = 0.4f
-        // = ·¹ÀÌÀú¸¦ ½ò°Çµ¥ Ä³¸¯ÅÍÀÇ ¹ß ³¡º¸´Ù 0.2 ¸¸Å­ ³ôÀº À§Ä¡¿¡¼­ ¾Æ·¡¹æÇâÀ¸·Î ½ò°ÍÀÌ°í 0.4 ¸¸Å­¸¸ ·¹ÀÌÀú°¡ ¹ß»ç µÉ°ÍÀÌ´Ù
-        // ÀÌ ±æÀÌ ¾È¿¡¼­ ¿ì¸®°¡ ¼³Á¤ÇÒ ·¹ÀÌ¾î°¡ °ËÃâÀÌ µÇ¸é ±× Á¤º¸¸¦ out hit ¿¡ ´ã¾Æ¶ó
+        //í”¼ë´‡ ìœ„ì¹˜ê°€ ë°œëì´ê¸° ë•Œë¬¸ì— ìºë¦­í„° ë°œì´ ë•…ì— ë¶™ì–´ë²„ë¦¬ë©´ ê²€ì¶œí•  ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— (Vector3.up * 0.2f)ë¡œ ì‚´ì§ ì˜¬ë ¤ì„œ ë ˆì´ë¥¼ ì¨
+        // Vector3.down ì•„ë˜ë‹ˆê¹Œ ì•„ë˜ë¡œ ì´ì•¼ í•¨
+        // ì–¼ë§ˆë§Œí¼ì˜ ê±°ë¦¬ì— ë ˆì´ì €ë¥¼ ì ê±´ì§€ = 0.4f
+        // = ë ˆì´ì €ë¥¼ ì ê±´ë° ìºë¦­í„°ì˜ ë°œ ëë³´ë‹¤ 0.2 ë§Œí¼ ë†’ì€ ìœ„ì¹˜ì—ì„œ ì•„ë˜ë°©í–¥ìœ¼ë¡œ ì ê²ƒì´ê³  0.4 ë§Œí¼ë§Œ ë ˆì´ì €ê°€ ë°œì‚¬ ë ê²ƒì´ë‹¤
+        // ì´ ê¸¸ì´ ì•ˆì—ì„œ ìš°ë¦¬ê°€ ì„¤ì •í•  ë ˆì´ì–´ê°€ ê²€ì¶œì´ ë˜ë©´ ê·¸ ì •ë³´ë¥¼ out hit ì— ë‹´ì•„ë¼
 
-        // ÀÌÂÊ ÇÁ·ÎÁ§Æ®·Î ¿Å±â´Â °úÁ¤¿¡¼­ ¿ø·¡ ¼öÄ¡°ª(0.4f, 0.2f) ¿Í »óÀÌÇÏ°Ô ÇØ¾ßÇÏ´Â ¹®Á¦°¡ Á» ÀÖ³×¿ä 
-        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.4f, layer))
+        // ì´ìª½ í”„ë¡œì íŠ¸ë¡œ ì˜®ê¸°ëŠ” ê³¼ì •ì—ì„œ ì›ë˜ ìˆ˜ì¹˜ê°’(0.4f, 0.2f) ì™€ ìƒì´í•˜ê²Œ í•´ì•¼í•˜ëŠ” ë¬¸ì œê°€ ì¢€ ìˆë„¤ìš” 
+        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.3f, layer))
         {
             ground = true;
+            curAnimator.SetBool("InAir", false);
         }
         else
         {
             ground = false;
+            curAnimator.SetBool("InAir", true);
         }
     }
-
-   
-
-
 }
