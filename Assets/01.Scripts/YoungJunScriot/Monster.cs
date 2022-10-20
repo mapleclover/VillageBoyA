@@ -83,7 +83,6 @@ public class Monster : CharacterMoveMent
     void Update()
     {
         StateProcess();
-        Debug.Log(myState);
         theEnemyAI.View();
     }
 

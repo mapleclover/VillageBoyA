@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private NavMeshAgent theNav;
 
-    public bool findTarget = false;
+    private bool findTarget = false;
     
 
     // Start is called before the first frame update
@@ -54,7 +54,7 @@ public class EnemyAI : MonoBehaviour
                 if (_target.Length > 0) //배열에 플레이어있을때만실행.
                 {
                     Transform Target = _target[i].transform;
-                    if (Target.name == "Player") // 타겟 이름이 플레이어라면
+                    if (Target.tag == "Player") // 타겟 이름이 플레이어라면
                     {
                         Vector3 _direction = Target.position - transform.position; // 자신 -> 플레이어로 가는 방향벡터
                         float _angle = Vector3.Angle(_direction, transform.forward); // 정면과 플레이어사이의 각도
@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour
                             RaycastHit _hitinfo;
                             if (Physics.Raycast(transform.position + transform.up, _direction, out _hitinfo, viewDistance, layerMask))
                             {
-                                if (_hitinfo.transform.name == "Player")
+                                if (_hitinfo.transform.tag == "Player")
                                 {
                                     findTarget = true; //플레이어찾앗으면 true로 불값변경.
                                     Debug.Log("플레이어가 시야내에 있습니다.");
@@ -83,7 +83,9 @@ public class EnemyAI : MonoBehaviour
         {
            theNav.SetDestination(transform.position);
            theNav.ResetPath();
-           //================배틀씬으로넘어감. ===================
+
+            SceneLoad.Inst.ChangeScene(4);
+            //================배틀씬으로넘어감. ===================
         }
         else // 플레이어를 쫒아가게끔.
         {

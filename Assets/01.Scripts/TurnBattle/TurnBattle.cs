@@ -165,7 +165,8 @@ public class TurnBattle : MonoBehaviour
     }
     private void Awake()
     {
-        
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         for (int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);

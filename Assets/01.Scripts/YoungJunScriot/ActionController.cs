@@ -36,8 +36,7 @@ public class ActionController : MonoBehaviour
     private Image itemTextBackground;
     [SerializeField]
     private Image enemyextBackground;
-    [SerializeField]
-    private Camera theCamera;
+    
 
 
 
@@ -78,7 +77,9 @@ public class ActionController : MonoBehaviour
         {
             for (int i = 0; i < _target.Length; i++)
             {
+                Debug.Log(_target[i].transform.name);
                 Transform Target = _target[i].transform;
+
                 if (Target.tag == "Npc" || Target.tag == "Item") // 해당태그만 if문실행.
                 {
                     Vector3 _direction = (Target.position - transform.position).normalized; // 본인->대상으로가는 방향벡터
@@ -109,7 +110,7 @@ public class ActionController : MonoBehaviour
                         ItemInfoDisappear();
                     }
                 }
-                else if(Target.tag == "Enemy") // 적발견시
+                else if(Target.CompareTag("Enemy")) // 적발견시
                 {
                     Vector3 _direction = (Target.position - transform.position).normalized;
 
@@ -128,25 +129,26 @@ public class ActionController : MonoBehaviour
                                 if (_backAttackAngle > 0.866f) // 30도 + 30도 = 60도
                                 {
                                     isBackAttack = true;
-                                    EnemyBackAttackInfoAppear();
+                                    //EnemyBackAttackInfoAppear();
+                                    
                                 }
                                 else if (_backAttackAngle <= 0.866f)// _zvalue값이 0이상일때 (뒤치기아닐때)
                                 {
                                     isBackAttack = false;
-                                    EnemyBackAttackInfoDisappear();
+                                    //EnemyBackAttackInfoDisappear();
                                 }
                             }
                         }
                         else // 거리안맞을대
                         {
                             isBackAttack = false;
-                            EnemyBackAttackInfoDisappear();
+                            //EnemyBackAttackInfoDisappear();
                         }
                     }
                     else // 각도안맞을때
                     {
                         isBackAttack = false;
-                        EnemyBackAttackInfoDisappear();
+                        //EnemyBackAttackInfoDisappear();
                     }
                 }
             }
@@ -156,7 +158,7 @@ public class ActionController : MonoBehaviour
             NpcInfoDisappear();
             ItemInfoDisappear();
             isBackAttack = false;
-            EnemyBackAttackInfoDisappear();
+            //EnemyBackAttackInfoDisappear();
         }
     }
     // 아이템체크 후 pickup 함수활성화
@@ -194,7 +196,9 @@ public class ActionController : MonoBehaviour
                 //기습- 배틀씬으로넘어감.///////////////////////////////**************
                 Destroy(hitInfo.transform.gameObject);
                 isBackAttack = false;
-                EnemyBackAttackInfoDisappear();
+                //EnemyBackAttackInfoDisappear();
+                //기습 할때 배틀신 넘어감 //********************************************************************************
+                SceneLoad.Inst.ChangeScene(4);
             }
         }
     }
@@ -244,22 +248,22 @@ public class ActionController : MonoBehaviour
             CheckText.gameObject.SetActive(false);
         }
     }
-    private void EnemyBackAttackInfoAppear()
-    {
-        if(isBackAttack) // true 일때만 실행.
-        {
-            enemyextBackground.gameObject.SetActive(true);
-            CheckText.gameObject.SetActive(true);
-            CheckText.alignment = TMPro.TextAlignmentOptions.Center;
-            CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().enemy.enemyName + "</color>" + " 기습 하시겠습니까?" + "<color=yellow>" + " (E) " + "</color>";
-        }
-    }
-    private void EnemyBackAttackInfoDisappear()
-    {
-        if(!isBackAttack) // false 일때만 실행
-        {
-            enemyextBackground.gameObject.SetActive(false);
-            CheckText.gameObject.SetActive(false);
-        }
-    }
+    //private void EnemyBackAttackInfoAppear()
+    //{
+    //    if(isBackAttack) // true 일때만 실행.
+    //    {
+    //        enemyextBackground.gameObject.SetActive(true);
+    //        CheckText.gameObject.SetActive(true);
+    //        CheckText.alignment = TMPro.TextAlignmentOptions.Center;
+    //        CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().enemy.enemyName + "</color>" + " 기습 하시겠습니까?" + "<color=yellow>" + " (E) " + "</color>";
+    //    }
+    //}
+    //private void EnemyBackAttackInfoDisappear()
+    //{
+    //    if(!isBackAttack) // false 일때만 실행
+    //    {
+    //        enemyextBackground.gameObject.SetActive(false);
+    //        CheckText.gameObject.SetActive(false);
+    //    }
+    //}
 }

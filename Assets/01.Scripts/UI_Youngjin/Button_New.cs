@@ -17,13 +17,13 @@ public class Button_New : MonoBehaviour
 
     bool check = false;
     bool v = false;
-    int min = 0, max = 2;
+    public int min = 0, max = 1;
     Vector2 pos = Vector2.zero;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        max = myButtons.Length - 1;
     }
 
     // Update is called once per frame
