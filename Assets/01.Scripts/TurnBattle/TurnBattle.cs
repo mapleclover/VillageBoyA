@@ -24,10 +24,10 @@ public class TurnBattle : MonoBehaviour
     public GameObject SelectedCharacterTarget;
     public GameObject mySelectRing;
     public GameObject mySelectTargetRing;
-    public UnityEngine.UI.Button[] CharacterButton;
-    public GameObject AttackButton;
-    public GameObject RunButton;
-    
+    public Button[] CharacterButton;  
+    public Button AttackStartButton;
+    public Button RunButton;
+    public static TurnBattle Inst = null;
     
     bool FastSpeedCheck;
     int Skill=0;
@@ -52,13 +52,13 @@ public class TurnBattle : MonoBehaviour
                 }
                 break;
             case State.Choice:
-                //선택단계에서 버튼두개 보이게활성화
+                //선택단계에서 버튼활성화
                 for (int i = 0; i < CharacterButton.Length; ++i)
                 {
                     CharacterButton[i].interactable = true;
                 }
-                AttackButton.SetActive(true);
-                RunButton.SetActive(true);
+                AttackStartButton.interactable = true;
+                RunButton.interactable = true;
                 for (int i = 0; i < PlayList.Count; ++i)
                 {
                     PlayList[i].GetComponent<BattleCharacter>().Active5 = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다
@@ -129,9 +129,17 @@ public class TurnBattle : MonoBehaviour
                         }
                     }
                 }
-                
-                break;
-            
+                if (SelectedCharacter != null) //캐릭터가 선택되어있을경우
+                {
+                    mySelectRing.SetActive(true); //캐릭터가 선택되면 링온
+                    mySelectRing.transform.position = SelectedCharacter.transform.position; //링을 선택캐릭터위치로
+                    if (SelectedCharacter.GetComponent<BattleCharacter>().myTarget != null) //캐릭터가 타겟으로 잡고있는게 있는지 확인
+                    {
+                        mySelectTargetRing.SetActive(true); // 타겟링온 
+                        mySelectTargetRing.transform.position = SelectedCharacter.GetComponent<BattleCharacter>().myTarget.transform.position; // 타겟링을 타겟위치로 
+                    }
+                }
+                break;            
             case State.ActiveCheck:
                 int Check = 0;
                 Active = PlayList[0];
@@ -165,6 +173,7 @@ public class TurnBattle : MonoBehaviour
     }
     private void Awake()
     {
+        Inst = this;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         for (int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
@@ -208,6 +217,10 @@ public class TurnBattle : MonoBehaviour
     void Start()
     {
         ChangeState(State.Choice);
+        for (int i = 0; i < Player.Length; ++i) //캐릭터버튼에 내캐릭터 할당
+        {
+            CharacterButton[i].gameObject.GetComponent<CharacterButton>().myCharacter = Player[i];
+        }
     }
     void Update()
     {
@@ -216,29 +229,20 @@ public class TurnBattle : MonoBehaviour
         mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
         StateProcess();        
         
-        if(SelectedCharacter!=null) //캐릭터가 선택되어있을경우
-        {
-            mySelectRing.SetActive(true); //캐릭터가 선택되면 링온
-            mySelectRing.transform.position = SelectedCharacter.transform.position; //링을 선택캐릭터위치로
-            if (SelectedCharacter.GetComponent<BattleCharacter>().myTarget != null) //캐릭터가 타겟으로 잡고있는게 있는지 확인
-            {
-                mySelectTargetRing.SetActive(true); // 타겟링온 
-                mySelectTargetRing.transform.position = SelectedCharacter.GetComponent<BattleCharacter>().myTarget.transform.position; // 타겟링을 타겟위치로 
-            }
-        }
     }
     public void BattleStart() //공격버튼 클릭시 함수
     {
         ChangeState(State.ActiveCheck);
-        //클릭시 선택캐릭터 null값으로 변경 어택버튼 런버튼 비활성화
+        //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
         SelectedCharacter = null;
-        AttackButton.SetActive(false);
-        RunButton.SetActive(false);
+        AttackStartButton.interactable = false;
+        RunButton.interactable = false;
         for (int i = 0; i < CharacterButton.Length; ++i)
         {
             CharacterButton[i].interactable = false;
         }
     }
+    
 
     IEnumerator Attack(int s)
     {
@@ -334,4 +338,7 @@ public class TurnBattle : MonoBehaviour
             yield return null;
         }
     }
+    
+
+
 }
