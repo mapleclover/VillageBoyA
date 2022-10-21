@@ -1253,6 +1253,7 @@ MonoBehaviour:
   Ember: {fileID: 1110539115}
   Jin: {fileID: 2044970239}
   curAnimator: {fileID: 1734304537}
+  myStaminaAnim: {fileID: 1829935874}
   myCharacter: 0
   myCamRot: {fileID: 927279252}
   mySlider: {fileID: 1829935873}
@@ -1601,6 +1602,7 @@ MonoBehaviour:
   Ember: {fileID: 342535492}
   Jin: {fileID: 629736008}
   curAnimator: {fileID: 0}
+  myStaminaAnim: {fileID: 0}
   myCharacter: 0
   myCamRot: {fileID: 927279252}
   mySlider: {fileID: 1603504215}
@@ -8871,6 +8873,7 @@ MonoBehaviour:
   Ember: {fileID: 0}
   Jin: {fileID: 0}
   curAnimator: {fileID: 0}
+  myStaminaAnim: {fileID: 0}
   myCharacter: 0
   myCamRot: {fileID: 927279252}
   mySlider: {fileID: 1097446777}
@@ -13624,6 +13627,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1829935872}
   - component: {fileID: 1829935873}
+  - component: {fileID: 1829935874}
   m_Layer: 0
   m_Name: StaminaBar
   m_TagString: Untagged
@@ -13705,6 +13709,26 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &1829935874
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829935871}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: baab8fbb5f3b759479e744048467e538, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1836878601
 GameObject:
   m_ObjectHideFlags: 0

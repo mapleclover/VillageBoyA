@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Ember;
     public GameObject Jin;
     public Animator curAnimator;
+    public Animator myStaminaAnim;
+
     public enum CHARACTER
     {
         Kong, Ember, Jin
@@ -231,7 +233,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            myStaminaBar.SetActive(true);
+
+            if (!myStaminaBar.activeSelf)
+            {
+                myStaminaBar.SetActive(true);
+                myStaminaAnim.SetTrigger("FadeIn");
+            }
+
         }
     }
 
@@ -239,9 +247,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
-        if (Mathf.Approximately(mySlider.value, 0.0f))
+        if (Mathf.Approximately(mySlider.value, 0f))
         //스태미너 바의 밸류가 0에 근사치에 닿을 때
         {
+            
             canRun = false;
             if (totalDist > 0.0f) // 캐릭터의 움직임이 없다면
             {
@@ -263,7 +272,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 run = true;
                 curAnimator.SetBool("IsRunning", true);
-
             }
             else // 이동거리값이 0보다 작을 때 shift로 달리기 발동 안할 수 있도록
             {
@@ -275,7 +283,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift) && !canRun)
         // 시프트 키를 떼었고, canRun 이 false일 때
         {
-            canRun = true;
+             
+                canRun = true;
+            
         }
     }
 
@@ -292,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
         // 이 길이 안에서 우리가 설정할 레이어가 검출이 되면 그 정보를 out hit 에 담아라
 
         // 이쪽 프로젝트로 옮기는 과정에서 원래 수치값(0.4f, 0.2f) 와 상이하게 해야하는 문제가 좀 있네요 
-        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.3f, layer))
+        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.2f, layer))
         {
             ground = true;
             curAnimator.SetBool("InAir", false);
