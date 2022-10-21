@@ -247,7 +247,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
-        if (Mathf.Approximately(mySlider.value, 0.0f))
+        if (Mathf.Approximately(mySlider.value, 0f))
         //스태미너 바의 밸류가 0에 근사치에 닿을 때
         {
             
