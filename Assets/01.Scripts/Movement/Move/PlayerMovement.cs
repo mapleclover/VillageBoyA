@@ -13,8 +13,11 @@ using UnityEngine.InputSystem.XR;
 public class PlayerMovement : MonoBehaviour 
 {
     public GameObject Kong;
-    public GameObject Ember;
     public GameObject Jin;
+    public GameObject Ember;
+    public GameObject KongUI;
+    public GameObject JinUI;
+    public GameObject EmberUI;
     public Animator curAnimator;
     public Animator myStaminaAnim;
 
@@ -68,15 +71,12 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(false);
                 Jin.SetActive(false);
                 curAnimator = Kong.GetComponent<Animator>();
+                //UI
+                KongUI.SetActive(true);
+                EmberUI.SetActive(false);
+                JinUI.SetActive(false);
                 break;
-            case CHARACTER.Ember:
-                this.transform.position = this.transform.transform.position + summonPosition;
-                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
-                Kong.SetActive(false);
-                Ember.SetActive(true);
-                Jin.SetActive(false);
-                curAnimator = Ember.GetComponent<Animator>();
-                break;
+            
             case CHARACTER.Jin:
                 this.transform.position = this.transform.transform.position + summonPosition;
                 Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
@@ -84,6 +84,23 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(false);
                 Jin.SetActive(true);
                 curAnimator = Jin.GetComponent<Animator>();
+                //UI
+                KongUI.SetActive(false);
+                EmberUI.SetActive(false);
+                JinUI.SetActive(true);
+                break;
+
+            case CHARACTER.Ember:
+                this.transform.position = this.transform.transform.position + summonPosition;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
+                Kong.SetActive(false);
+                Ember.SetActive(true);
+                Jin.SetActive(false);
+                curAnimator = Ember.GetComponent<Animator>();
+                //UI
+                KongUI.SetActive(false);
+                EmberUI.SetActive(true);
+                JinUI.SetActive(false);
                 break;
         }
     }
@@ -93,9 +110,9 @@ public class PlayerMovement : MonoBehaviour
         {
             case CHARACTER.Kong:
                 break;
-            case CHARACTER.Ember:
-                break;
             case CHARACTER.Jin:
+                break;
+            case CHARACTER.Ember:
                 break;
         }
 
