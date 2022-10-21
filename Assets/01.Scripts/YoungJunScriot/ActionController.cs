@@ -198,7 +198,7 @@ public class ActionController : MonoBehaviour
                 isBackAttack = false;
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************
-                SceneLoad.Inst.ChangeScene(4);
+                SceneLoad.Instance.ChangeScene(4);
             }
         }
     }

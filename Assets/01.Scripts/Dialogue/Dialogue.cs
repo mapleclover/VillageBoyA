@@ -46,7 +46,7 @@ public class Dialogue : MonoBehaviour
         {
             Debug.Log("이동화면으로 이동한다");
             dialogue.CloseChatAnim();
-            SceneLoad.Inst.ChangeScene(3);
+            SceneLoad.Instance.ChangeScene(3);
             return;
         }
         string speech = parts[0];
