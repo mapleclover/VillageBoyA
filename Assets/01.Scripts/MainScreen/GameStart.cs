@@ -9,7 +9,7 @@ public class GameStart : MonoBehaviour
     public void OnCilck()
 
     { 
-         SceneLoad.Inst.ChangeScene(2); 
+         SceneLoad.Instance.ChangeScene(2); 
     }
     
     // Start is called before the first frame update

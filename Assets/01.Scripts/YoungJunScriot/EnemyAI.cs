@@ -84,7 +84,7 @@ public class EnemyAI : MonoBehaviour
            theNav.SetDestination(transform.position);
            theNav.ResetPath();
 
-            SceneLoad.Inst.ChangeScene(4);
+            SceneLoad.Instance.ChangeScene(4);
             //================배틀씬으로넘어감. ===================
         }
         else // 플레이어를 쫒아가게끔.
