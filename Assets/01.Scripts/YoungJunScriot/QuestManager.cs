@@ -6,7 +6,7 @@ public class QuestManager : MonoBehaviour
 {
     public int questId;
     public int questActionIndex; // 퀘스트npc대화순서 변수
-    public GameObject[] questObhect;
+    public GameObject[] questObject;
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
 
@@ -62,11 +62,11 @@ public class QuestManager : MonoBehaviour
         {
             case 10:
                 if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
-                    questObhect[0].SetActive(true); // 사과.
+                    questObject[0].SetActive(true); // 사과.
                 break;
             case 20:
                 if (questActionIndex == 1)
-                    Destroy(questObhect[0]); // 사과
+                    Destroy(questObject[0]); // 사과
                 break;
         }
     }

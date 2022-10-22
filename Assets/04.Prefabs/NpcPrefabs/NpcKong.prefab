@@ -1927,6 +1927,7 @@ GameObject:
   - component: {fileID: 3880256933928509353}
   - component: {fileID: 2098761505431587826}
   - component: {fileID: 2892436504570678378}
+  - component: {fileID: 669791851281040168}
   m_Layer: 28
   m_Name: NpcKong
   m_TagString: Npc
@@ -1961,7 +1962,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 1.8
+  m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &2098761505431587826
@@ -1976,7 +1977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdf88948f1b98e4ebf1342ad52efa47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npc: {fileID: 0}
+  npc: {fileID: 11400000, guid: 1452cd2531194914a95b13d6a0a68d21, type: 2}
   item: {fileID: 0}
   enemy: {fileID: 0}
 --- !u!114 &2892436504570678378
@@ -1991,8 +1992,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d231f842188144c41aabe70c27a8dfca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  isNpc: 0
+  id: 2000
+  isNpc: 1
+--- !u!54 &669791851281040168
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754144197712892000}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &8803548012525309641
 GameObject:
   m_ObjectHideFlags: 0
