@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.XR;
+using Unity.VisualScripting;
 
 // 전정우
-// 1022
+// 1023
 
 
 public class PlayerMovement : MonoBehaviour 
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Kong;
     public GameObject Jin;
     public GameObject Ember;
+    //UI
     public GameObject KongUI;
     public GameObject JinUI;
     public GameObject EmberUI;
@@ -53,11 +55,13 @@ public class PlayerMovement : MonoBehaviour
 
     // 연속점프방지
     private bool ground = false;
-    [SerializeField] private LayerMask layer; 
+    [SerializeField] private LayerMask layer;
+
+    //딜레이
+    bool giveDelay = false;
 
     void ChangeState(CHARACTER myCha)
     {
-
         Vector3 summonPosition = new Vector3(0, 1.5f, 0);
 
         if (myCharacter == myCha) return;
@@ -128,24 +132,32 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 1, 2, 3 키로 캐릭터 교체
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeState(CHARACTER.Kong);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeState(CHARACTER.Jin);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeState(CHARACTER.Ember);
-        }
-        CheckGround(); // 연속점프 감지
-        
+        Debug.Log(KongUI.GetComponentInChildren<Image>().fillAmount);
+        Debug.Log(giveDelay);
 
+        CheckGround(); // 연속점프 감지
+      
         if (ground)
         {
+            // 1, 2, 3 키로 캐릭터 교체
+            if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false)
+            {
+                ChangeState(CHARACTER.Kong);
+                StartCoroutine(CoolTime(5f));
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false)
+            {
+                ChangeState(CHARACTER.Jin);
+                StartCoroutine(CoolTime(5f));
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false)
+            {
+                ChangeState(CHARACTER.Ember);
+                StartCoroutine(CoolTime(5f));
+            }
+
             dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
                                                  // A 와 D 키를 눌렀을 때 이동방향
             dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
@@ -158,6 +170,22 @@ public class PlayerMovement : MonoBehaviour
 
             StateProcess(); //캐릭터 교체
             Dash(); // 달리기
+        }
+
+
+        if (!ground && Input.GetKey(KeyCode.Space))
+        {
+            dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
+                                                 // A 와 D 키를 눌렀을 때 이동방향
+            dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
+            totalDist = dir.magnitude;
+
+            // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
+            dir = myCamRot.rotation * dir;
+            dir.y = 0.0f;
+            dir.Normalize();
+
+            StateProcess(); //캐릭터 교체
         }
 
         HideStaminaBar(); // 스태미나 바 숨기기
@@ -330,4 +358,32 @@ public class PlayerMovement : MonoBehaviour
             curAnimator.SetBool("InAir", true);
         }
     }
+
+
+    IEnumerator CoolTime(float cool)
+    {
+        print("실행");
+        float coolTime = cool;
+        while (cool > 0.0f)
+        {
+            giveDelay = true;
+            cool -= Time.deltaTime;
+
+            KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            KongUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+
+            JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);  
+            JinUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+
+            EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            EmberUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+
+            yield return null;
+        }
+        giveDelay = false;
+        print("끝");
+    }
+
+
+
 }
