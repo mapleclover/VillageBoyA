@@ -82,9 +82,9 @@ public class PlayerMovement : MonoBehaviour
                 Jin.SetActive(false);
                 curAnimator = Kong.GetComponent<Animator>();
                 //UI
-                KongUI.SetActive(true);
-                EmberUI.SetActive(false);
-                JinUI.SetActive(false);
+                //KongUI.SetActive(true);
+                //EmberUI.SetActive(false);
+                //JinUI.SetActive(false);
                 break;
             
             case CHARACTER.Jin:
@@ -95,9 +95,9 @@ public class PlayerMovement : MonoBehaviour
                 Jin.SetActive(true);
                 curAnimator = Jin.GetComponent<Animator>();
                 //UI
-                KongUI.SetActive(false);
-                EmberUI.SetActive(false);
-                JinUI.SetActive(true);
+                //KongUI.SetActive(false);
+                //EmberUI.SetActive(false);
+                //JinUI.SetActive(true);
                 break;
 
             case CHARACTER.Ember:
@@ -108,9 +108,9 @@ public class PlayerMovement : MonoBehaviour
                 Jin.SetActive(false);
                 curAnimator = Ember.GetComponent<Animator>();
                 //UI
-                KongUI.SetActive(false);
-                EmberUI.SetActive(true);
-                JinUI.SetActive(false);
+                //KongUI.SetActive(false);
+                //EmberUI.SetActive(true);
+                //JinUI.SetActive(false);
                 break;
         }
     }
@@ -139,8 +139,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(KongUI.GetComponentInChildren<Image>().fillAmount);
-        Debug.Log(giveDelay);
 
         CheckGround(); // 연속점프 감지
 
@@ -156,6 +154,9 @@ public class PlayerMovement : MonoBehaviour
                 KongTheSame = true;
                 JinTheSame = false;
                 EmberTheSame = false;
+                KongUI.GetComponent<Animator>().SetTrigger("Expansion");
+                JinUI.GetComponent<Animator>().SetTrigger("Reduction");
+                EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
 
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false && JinTheSame == false)
@@ -165,6 +166,9 @@ public class PlayerMovement : MonoBehaviour
                 KongTheSame = false;
                 JinTheSame = true;
                 EmberTheSame = false;
+                JinUI.GetComponent<Animator>().SetTrigger("Expansion");
+                KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+                EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
 
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false && EmberTheSame == false)
@@ -174,6 +178,9 @@ public class PlayerMovement : MonoBehaviour
                 KongTheSame = false;
                 JinTheSame = false;
                 EmberTheSame = true;
+                EmberUI.GetComponent<Animator>().SetTrigger("Expansion");
+                JinUI.GetComponent<Animator>().SetTrigger("ReductionFromEmber");
+                KongUI.GetComponent<Animator>().SetTrigger("Reduction");
             }
 
             dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
@@ -220,6 +227,7 @@ public class PlayerMovement : MonoBehaviour
             curAnimator.SetBool("IsWalking", false);
         }
 
+        
 
         // 점프
         // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
@@ -386,7 +394,7 @@ public class PlayerMovement : MonoBehaviour
         {
             giveDelay = true;
             cool -= Time.deltaTime;
-
+/*
             KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
             KongUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
 
@@ -394,7 +402,7 @@ public class PlayerMovement : MonoBehaviour
             JinUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
 
             EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
-            EmberUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+            EmberUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);*/
 
             yield return null;
         }
