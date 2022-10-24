@@ -22,7 +22,6 @@ public class DialogueManager : MonoBehaviour
     public Image CharacterImage;
     public Sprite[] CharacterImages;
     public float textSpeed = 10f;
-    public bool skip = false;
 
     public void Say(string speech, string speaker = "", int imageIndex = -1)
     {
@@ -39,7 +38,8 @@ public class DialogueManager : MonoBehaviour
         speaking = null;
     }
     public bool isSpeaking { get { return speaking != null; } }
-    public bool isWaitingForUserInput = false;
+    [HideInInspector]public bool isWaitingForUserInput = false;
+    [HideInInspector]public bool skip = false;
     Coroutine speaking = null;
     IEnumerator Speaking(string targetSpeech, string speaker = "", int imageIndex = -1)
     {
