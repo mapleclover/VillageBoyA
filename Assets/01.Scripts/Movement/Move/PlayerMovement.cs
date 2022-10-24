@@ -5,242 +5,385 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.XR;
+using Unity.VisualScripting;
 
-//∏∂¡ˆ∏∑ ºˆ¡§ 10ø˘ 17¿œ
-//¿¸¡§øÏ
+// Ï†ÑÏ†ïÏö∞
+// 1023
 
 
-public class PlayerMovement : CharacterProperty // ƒ≥∏Ø≈Õ«¡∑Œ∆€∆º ∏∏µÈæÓ¡Æ¿÷æÓº≠ ∞°¡Æø‘Ω¿¥œ¥Ÿ
+public class PlayerMovement : MonoBehaviour 
 {
-    
+    public GameObject Kong;
+    public GameObject Jin;
+    public GameObject Ember;
+    //UI
+    public GameObject KongUI;
+    public GameObject JinUI;
+    public GameObject EmberUI;
+    public Animator curAnimator;
+    public Animator myStaminaAnim;
+
+    public enum CHARACTER
+    {
+        Kong, Ember, Jin
+    }
+
+    public CHARACTER myCharacter = CHARACTER.Kong;
 
 
-    public Transform myCamRot; // ƒ´∏ﬁ∂Û »∏¿¸∞™¿ª πﬁ±‚ ¿ß«ÿ
+    public Transform myCamRot; // Ïπ¥Î©îÎùº ÌöåÏ†ÑÍ∞í 
     public Slider mySlider;
-    public GameObject myStaminaBar; // Ω∫≈¬πÃ≥™ πŸ¿« ªÁ∂Û¡¸∞˙ ¿Á√‚«ˆ ±∏«ˆ
+    public GameObject myStaminaBar; // Ïä§ÌÉúÎØ∏ÎÇò Î∞îÏùò ÏÇ¨ÎùºÏßêÍ≥º Ïû¨Ï∂úÌòÑ
 
-    //∏Æ¡ˆµÂπŸµ∏¶ »∞øÎ«œø© øÚ¡˜¿”¿ª ±∏«ˆ
-    public Rigidbody rigidbody;
+    // Ïö∞Î¶¨ Ïä§ÌÅ¨Î¶ΩÌä∏Îäî Î¶¨ÏßÄÎìúÎ∞îÎîîÎ•º ÌôúÏö©Ìïú ÏõÄÏßÅÏûÑ
+    public Rigidbody rigidbody; // ÏßÄÏö∞Í±∞ÎÇò Ï£ºÏÑùÌïòÏßÄ ÎßàÏÑ∏Ïöî
     [SerializeField] private float speed = 3f;
-    [SerializeField] private float jumpHeight = 4f; //¡°«¡ ≥Ù¿Ã
-    [SerializeField] private float dash = 6f; // ¥ÎΩ√ - ¿œ¥‹ ¥ﬁ∏Æ±‚ º”µµ ∞™¿∏∑Œ ¿Ã«ÿ «ÿ ¡÷ººø‰
-    [SerializeField] private float rotSpeed = 10f; // deltatime ∏∏ ∞ˆ«ÿ¡÷∏È ¥¿∏Æ±‚ ∂ßπÆø° rotSpeed∑Œ »∏¿¸ º”µµ∏¶ ¡∂¿˝ «ÿ ¡÷¿⁄
+    [SerializeField] private float jumpHeight = 4f; //Ï†êÌîÑ
+    [SerializeField] private float dash = 6f; // Îã¨Î¶¨Í∏∞ ÏÜçÎèÑ (ÎåÄÏãú Í∏∞Îä• ÎÇòÏ§ëÏóê Íµ¨ÌòÑÌï†ÏßÄ Î™®Î•¥Îãà ÏùºÎã® Ïù¥Î¶ÑÏùÄ Ïù¥ÎåÄÎ°ú)
+    [SerializeField] private float rotSpeed = 10f; //deltatime Îßå Í≥±Ìï¥Ï£ºÎ©¥ ÎäêÎ¶¨Í∏∞ ÎïåÎ¨∏Ïóê rotSpeedÎ°ú ÌöåÏ†Ñ ÏÜçÎèÑÎ•º Ï°∞Ï†à Ìï¥ Ï£ºÏûê
 
-    // ≈‰±€ƒ´∏ﬁ∂Û
+    // ÌÜ†Í∏ÄÏπ¥Î©îÎùº
     //public Camera _camera;
-    //public bool toggleCameraRotation; // Idle ¿œ∂ß µ—∑Ø∫∏±‚ ±‚¥…
+    //public bool toggleCameraRotation; // Idle ÏùºÎïå ÎëòÎü¨Î≥¥Í∏∞ Í∏∞Îä•
     //private float smoothness = 10.0f;
 
-    private Vector3 dir = Vector3.zero;//¿Ãµø
+    private Vector3 dir = Vector3.zero;// Ïù¥Îèô
     private float totalDist;
 
-    public bool run; // ¥ﬁ∏Æ±‚
-    private bool ground = false; // ø¨º”¡°«¡πÊ¡ˆ
+    public bool run; // Îã¨Î¶¨Í∏∞
+    public bool canRun = true; // Îã¨Î¶¨Í∏∞ÏôÄ Ïä§ÌÉúÎØ∏ÎÑàÎ∞îÏóê Ïó∞Í¥Ä
 
-    [SerializeField] private LayerMask layer; // ø¨º”¡°«¡πÊ¡ˆ
+    // Ïó∞ÏÜçÏ†êÌîÑÎ∞©ÏßÄ
+    private bool ground = false;
+    [SerializeField] private LayerMask layer;
 
-    public bool canRun = true;
+    //ÎîúÎ†àÏù¥
+    bool giveDelay = false;
 
-    // Ω∫≈¬πÃ≥™πŸ Ω∫≈©∏≥∆Æø° «‘ºˆ¿¸¥ﬁ
-   /* public static Action Run;
-    private void Awake()
+    void ChangeState(CHARACTER myCha)
     {
-        Run = () => { Dash(); };
+        Vector3 summonPosition = new Vector3(0, 1.5f, 0);
 
-    }*/
+        if (myCharacter == myCha) return;
+        myCharacter = myCha;
+        switch (myCharacter)
+        {
+            case CHARACTER.Kong:
+                this.transform.position = this.transform.transform.position + summonPosition;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
+                Kong.SetActive(true);
+                Ember.SetActive(false);
+                Jin.SetActive(false);
+                curAnimator = Kong.GetComponent<Animator>();
+                //UI
+                KongUI.SetActive(true);
+                EmberUI.SetActive(false);
+                JinUI.SetActive(false);
+                break;
+            
+            case CHARACTER.Jin:
+                this.transform.position = this.transform.transform.position + summonPosition;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
+                Kong.SetActive(false);
+                Ember.SetActive(false);
+                Jin.SetActive(true);
+                curAnimator = Jin.GetComponent<Animator>();
+                //UI
+                KongUI.SetActive(false);
+                EmberUI.SetActive(false);
+                JinUI.SetActive(true);
+                break;
 
-    // Start is called before the first frame update
+            case CHARACTER.Ember:
+                this.transform.position = this.transform.transform.position + summonPosition;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
+                Kong.SetActive(false);
+                Ember.SetActive(true);
+                Jin.SetActive(false);
+                curAnimator = Ember.GetComponent<Animator>();
+                //UI
+                KongUI.SetActive(false);
+                EmberUI.SetActive(true);
+                JinUI.SetActive(false);
+                break;
+        }
+    }
+    void StateProcess()
+    {
+        switch (myCharacter)
+        {
+            case CHARACTER.Kong:
+                break;
+            case CHARACTER.Jin:
+                break;
+            case CHARACTER.Ember:
+                break;
+        }
+
+    }
     void Start()
     {
-        // CharacterPropertyø°º≠ myRigid ∞°¡ÆøÕ æ≤¥¬µ• ≥™¡ﬂø° πÆ¡¶ ª˝±Ê¡ˆ ∏∏£¥œ øÏº± µ—∞‘ø‰
-        rigidbody = this.GetComponent<Rigidbody>(); // ∏Æ¡ˆµÂπŸµ∏¶ ¿Ã ∞¥√ºø° ø¨∞·
-        // ¿Ø¥œ∆ºø°º≠ πŸ¿Œµ˘ «ÿ ¡Ÿ « ø‰ æ¯¿Ω
+        curAnimator = Kong.GetComponent<Animator>(); // Í∏∞Î≥∏Ï∫êÎ¶≠ÌÑ∞Îäî 'Í≥µ'ÏúºÎ°ú ÏãúÏûë
+        ChangeState(CHARACTER.Kong);
+
+        rigidbody = this.GetComponent<Rigidbody>(); // Î¶¨ÏßÄÎìúÎ∞îÎîîÎ°ú ÏõÄÏßÅÏûÑ Íµ¨ÌòÑÏùÑ ÏúÑÌï®
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(KongUI.GetComponentInChildren<Image>().fillAmount);
+        Debug.Log(giveDelay);
 
+        CheckGround(); // Ïó∞ÏÜçÏ†êÌîÑ Í∞êÏßÄ
+      
+        if (ground)
+        {
+            // 1, 2, 3 ÌÇ§Î°ú Ï∫êÎ¶≠ÌÑ∞ ÍµêÏ≤¥
+            if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false)
+            {
+                ChangeState(CHARACTER.Kong);
+                StartCoroutine(CoolTime(5f));
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false)
+            {
+                ChangeState(CHARACTER.Jin);
+                StartCoroutine(CoolTime(5f));
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false)
+            {
+                ChangeState(CHARACTER.Ember);
+                StartCoroutine(CoolTime(5f));
+            }
+
+            dir.x = Input.GetAxis("Horizontal"); // RawÎ•º ÎÑ£ÏùÑÏßÄ ÎßêÏßÄ ÏÉÅÏùòÍ∞Ä ÌïÑÏöîÌï† Í≤É Í∞ôÏïÑÏö©
+                                                 // A ÏôÄ D ÌÇ§Î•º ÎàåÎ†ÄÏùÑ Îïå Ïù¥ÎèôÎ∞©Ìñ•
+            dir.z = Input.GetAxis("Vertical"); // W ÏôÄ S Î•º ÎàåÎ†ÄÏùÑ Îïå Ïïû Îí§ Ïù¥ÎèôÎ∞©Ìñ• ÏûÖÎ†•Î∞õÏùå
+            totalDist = dir.magnitude;
+
+            // Ïπ¥Î©îÎùº ÌöåÏ†ÑÏù¥ Ìä∏ÎûúÏä§ÌèºÏùò ÌöåÏ†ÑÏóê ÏòÅÌñ•ÏùÑ Ï§Ñ Ïàò ÏûàÎèÑÎ°ù
+            dir = myCamRot.rotation * dir;
+            dir.y = 0.0f;
+            dir.Normalize();
+
+            StateProcess(); //Ï∫êÎ¶≠ÌÑ∞ ÍµêÏ≤¥
+            Dash(); // Îã¨Î¶¨Í∏∞
+        }
+
+
+        if (!ground && Input.GetKey(KeyCode.Space))
+        {
+            dir.x = Input.GetAxis("Horizontal"); // RawÎ•º ÎÑ£ÏùÑÏßÄ ÎßêÏßÄ ÏÉÅÏùòÍ∞Ä ÌïÑÏöîÌï† Í≤É Í∞ôÏïÑÏö©
+                                                 // A ÏôÄ D ÌÇ§Î•º ÎàåÎ†ÄÏùÑ Îïå Ïù¥ÎèôÎ∞©Ìñ•
+            dir.z = Input.GetAxis("Vertical"); // W ÏôÄ S Î•º ÎàåÎ†ÄÏùÑ Îïå Ïïû Îí§ Ïù¥ÎèôÎ∞©Ìñ• ÏûÖÎ†•Î∞õÏùå
+            totalDist = dir.magnitude;
+
+            // Ïπ¥Î©îÎùº ÌöåÏ†ÑÏù¥ Ìä∏ÎûúÏä§ÌèºÏùò ÌöåÏ†ÑÏóê ÏòÅÌñ•ÏùÑ Ï§Ñ Ïàò ÏûàÎèÑÎ°ù
+            dir = myCamRot.rotation * dir;
+            dir.y = 0.0f;
+            dir.Normalize();
+
+            StateProcess(); //Ï∫êÎ¶≠ÌÑ∞ ÍµêÏ≤¥
+        }
+
+        HideStaminaBar(); // Ïä§ÌÉúÎØ∏ÎÇò Î∞î Ïà®Í∏∞Í∏∞
         
 
-        dir.x = Input.GetAxis("Horizontal"); // Raw∏¶ ≥÷¿ª¡ˆ ∏ª¡ˆ ªÛ¿«∞° « ø‰«“ ∞Õ ∞∞æ∆øÎ
-        // A øÕ D ≈∞∏¶ ¥≠∑∂¿ª ∂ß ¿ÃµøπÊ«‚
-        dir.z = Input.GetAxis("Vertical");
-        // W øÕ S ∏¶ ¥≠∑∂¿ª ∂ß æ’ µ⁄ ¿ÃµøπÊ«‚ ¿‘∑¬πﬁ¿Ω
 
-        // ≈∞∫∏µÂ ¿‘∑¬∞™¿∏∑Œ ƒ≥∏Ø≈Õ ¿Ãµø¿ª ¿ß«‘
-        totalDist = dir.magnitude;
-        //dir.Normalize(); // ∞™¿ª «◊ªÛ 1∑Œ µø¿œ«œ∞‘ √≥∏Æ«œ∞Ì ¥Î∞¢º±¿∏∑Œ ¿Ãµø«œ¥ı∂Ûµµ º”µµ∞° ª°∏Æ¡ˆ¥¬ «ˆªÛ πÊ¡ˆ
-
-        // ƒ´∏ﬁ∂Û »∏¿¸¿Ã ∆Æ∑£Ω∫∆˚¿« »∏¿¸ø° øµ«‚¿ª ¡Ÿ ºˆ ¿÷µµ∑œ
-        dir = myCamRot.rotation * dir;
-        dir.y = 0.0f;
-        dir.Normalize();
-
-
-
-        if (Mathf.Approximately(mySlider.value, 100f)) // 100f ¿œ ∞ÊøÏ Ω∫≈¬πÃ≥™ πŸ º˚±Ë
+        // Í±∑Îäî Ïï†ÎãàÎ©îÏù¥ÏÖò
+        if (totalDist > 0.0f)
         {
-            Debug.Log("µ∆¥Ÿ!");
+            curAnimator.SetBool("IsWalking", true);
+        }
+        if (totalDist <= 0.0f)
+        {
+            curAnimator.SetBool("IsWalking", false);
+        }
+
+
+        // Ï†êÌîÑ
+        // Ïú†ÎãàÌã∞ Í∏∞Î≥∏ÏÑ§Ï†ï Jump ÌÇ§Î•º Î∂àÎü¨ÏôÄÏÑú Ïä§ÌéòÏù¥Ïä§Î∞îÎ°ú Í∞ÄÎä•
+        if (Input.GetButtonDown("Jump") && ground) // Ïó∞ÏÜçÏ†êÌîÑ Î∞©ÏßÄ = && ground Í∑∏ÎùºÏö¥ÎìúÍ∞Ä Ï∞∏Ïùº Îïå
+        {
+            Vector3 jumpPower = Vector3.up * jumpHeight;
+            rigidbody.AddForce(jumpPower, ForceMode.VelocityChange);
+            //Ï†êÌîÑÎ•º ÌñàÏùÑ Îïå ÏúÑÎ°ú Îõ∏ Ïàò ÏûàÎèÑÎ°ù
+            curAnimator.SetTrigger("Jump");
+
+        }
+
+        /*// ÎåÄÏãú Íµ¨ÌòÑ - ÏÇ¨Ïö© ÏïàÌï† Í≤É Í∞ôÏïÑÏÑú Ï£ºÏÑùÏ≤òÎ¶¨ Ìï¥ ÎÜìÏùå
+        if(Input.GetButtonDown("Dash"))
+        {
+            Vector3 dashPower = this.transform.forward * -Mathf.Log(1/rigidbody.drag) * dash;
+            // drag Í≥µÍ∏∞Ï†ÄÌï≠Í∞íÏùÑ Ïó≠ÏàòÎ°ú Îí§ÏßëÏñ¥ÏÑú Î°úÍ∑∏Î°ú Î∞îÍæ∏Í≥† - Î•º ÎÑ£Ïñ¥Ï§òÏÑú Í∞íÏùÑ Íµ¨Ìïú ÌõÑ Ïö∞Î¶¨Í∞Ä Íµ¨Ìïú ÎåÄÏãúÏñëÏùÑ Í≥±Ìï¥Ï§ÄÎã§ < ÏûêÏó∞Ïä§Îü¨Ïö¥ ÎåÄÏãúÎ•º ÏúÑÌï¥(Î¨¥Ïä® ÏÜåÎ¶¨Ïù∏ÏßÄ Î™®Î•¥Í≤†Îã§.)
+            rigidbody.AddForce(dashPower, ForceMode.VelocityChange);
+        }
+        // ÎåÄÏãú ÌÇ§Ïùò Í∏∞Î≥∏Í∞íÏù¥ ÏóÜÏñ¥ÏÑú Ïú†ÎãàÌã∞ ÌîÑÎ°úÏ†ùÌä∏ ÏÑ∏ÌåÖÏóêÏÑú Ï∂îÍ∞Ä
+        // Ïú†ÎãàÌã∞ÏóêÏÑú Î¶¨ÏßÄÎìúÎ∞îÎîî DragÎ•º 10 Ï†ïÎèÑ ÏÑ§Ï†ï Ìï¥ Ï£ºÎ©¥ ÌôïÏù∏ Ìï† Ïàò ÏûàÏùå
+        // ÌïòÏßÄÎßå Í≥µÍ∏∞Ï†ÄÌï≠Í∞íÏùÑ ÎÑ£Ïñ¥Ï£ºÎ©¥ Ï†êÌîÑÌïú ÌõÑ ÎäêÎ¶¨Í≤å Îñ®Ïñ¥ÏßÄÎäî Î¨∏Ï†úÍ∞Ä ÏûàÏúºÎãà ÏùºÎã® Ï£ºÏÑùÏ≤òÎ¶¨ ÌïòÍ≥† Îã¨Î¶¨Í∏∞Î•º Íµ¨ÌòÑÌï† ÏòàÏ†ï
+        // Ï†êÌîÑÏóêÏÑú Îñ®Ïñ¥ÏßÄÎäî Ïù¥Ïú†Îäî Î¶¨ÏßÄÎìúÎ∞îÎîî Ï§ëÎ†•Í∞íÏóê ÏùòÌïú Í≤ÉÏù¥Í≥† Ï≤úÏ≤úÌûà Îñ®Ïñ¥ÏßÄÎäî Ïù¥Ïú†Îäî ÎìúÎûòÍ∑∏ Í≥µÍ∏∞Ï†ÄÌï≠Í∞í ÎïåÎ¨∏Ïù¥ÎØÄÎ°ú ÎëêÍ∞úÎ•º Ï°∞Ìï©Ìï¥ÏÑú Ï†êÌîÑ Î¨∏Ï†úÎ•º Ìï¥Í≤∞ÌïòÎùº*/
+
+    }
+
+
+    
+    private void FixedUpdate()
+    //Ï∫êÎ¶≠ÌÑ∞Ïùò Î∂ÄÎìúÎü¨Ïö¥ ÌöåÏ†ÑÏùÑ ÏúÑÌï¥
+    //Î¨ºÎ¶¨Ï†ÅÏù∏ Ïù¥ÎèôÏù¥ÎÇò ÌöåÏ†ÑÏùÑ Ìï† Îïå Ïì∞Î©¥ Ï¢ãÎã§
+    {
+        //ÌöåÏ†Ñ
+        if (dir != Vector3.zero) //Î≤°ÌÑ∞Ïùò Ï†úÎ°úÍ∞Ä ÏïÑÎãàÎùºÎ©¥ ÌÇ§ ÏûÖÎ†•Ïù¥ Îê®
+        {
+            // ÏïûÏúºÎ°ú ÎÇòÏïÑÍ∞à Îïå + Î∞©Ìñ•ÏúºÎ°ú ÎÇòÏïÑÍ∞ÄÎäîÎç∞ Î∞òÎåÄÎ∞©Ìñ•ÏúºÎ°ú ÎÇòÍ∞ÄÍ∞ÄÎäî ÌÇ§Î•º ÎàåÎ†ÄÏùÑ Îïå -Î∞©Ìñ•ÏúºÎ°ú ÌöåÏ†ÑÌïòÎ©¥ÏÑú ÏÉùÍ∏∞Îäî Ïò§Î•òÎ•º Î∞©ÏßÄÌïòÍ∏∞ÏúÑÌï¥ (Î∂ÄÌò∏Í∞Ä ÏÑúÎ°ú Î∞òÎåÄÏùº Í≤ΩÏö∞Î•º Ï≤¥ÌÅ¨Ìï¥ÏÑú ÏÇ¥ÏßùÎßå ÎØ∏Î¶¨ ÎèåÎ†§Ï£ºÎäî ÏΩîÎìú) Ïñ¥Î†µÎÑ§Ïöî... 
+            // ÏßÄÍ∏à Î∞îÎùºÎ≥¥Îäî Î∞©Ìñ•Ïùò Î∂ÄÌò∏ != ÎÇòÏïÑÍ∞à Î∞©Ìñ• Î∂ÄÌò∏
+            if (Mathf.Sign(transform.forward.x) != Mathf.Sign(dir.x) || Mathf.Sign(transform.forward.z) != Mathf.Sign(dir.z))
+            {
+                //Ïö∞Î¶¨Îäî Ïù¥ÎèôÌï† Îïå x ÏôÄ z Î∞ñÏóê ÏÇ¨Ïö©ÏùÑ ÏïàÌïòÎØÄÎ°ú
+                transform.Rotate(0, 1, 0); // ÏÇ¥ÏßùÎßå ÌöåÏ†Ñ
+                //Ï†ï Î∞òÎåÄÎ∞©Ìñ•ÏùÑ ÎàåÎü¨ÎèÑ ÌöåÏ†ÑÏïàÌïòÎäî Î≤ÑÍ∑∏ Î∞©ÏßÄ
+                //ÎØ∏Î¶¨ ÌöåÏ†ÑÏùÑ Ï°∞Í∏à ÏãúÏºúÏÑú Ï†ïÎ∞òÎåÄÏù∏ Í≤ΩÏö∞Î•º Ï†úÍ±∞
+            }
+            transform.forward = Vector3.Lerp(transform.forward, dir, rotSpeed * Time.deltaTime);
+            // SlerpÎ•º Ïì∏ÏßÄ LerpÎ•º Ïì∏ÏßÄ ÏÉÅÏùòÎ•º Ìï¥Î¥êÏïº Ìï† Í≤É Í∞ôÏïÑÏö© 
+            // Ï∫êÎ¶≠ÌÑ∞Ïùò ÏïûÎ∞©Ìñ•ÏùÄ dir ÌÇ§Î≥¥ÎìúÎ•º ÎàÑÎ•∏ Î∞©Ìñ•ÏúºÎ°ú Ï∫êÎ¶≠ÌÑ∞ ÌöåÏ†Ñ
+            //LerpÎ•º Ïì∞Î©¥ ÏõêÌïòÎäî Î∞©Ìñ•ÍπåÏßÄ ÏÑúÏÑúÌûà ÌöåÏ†Ñ
+        }
+
+
+        if(ground)
+        {
+            // Ïù¥ÎèôÏùÑ Íµ¨ÌòÑ
+            GetComponent<Rigidbody>().MovePosition(this.transform.position + dir * speed * Time.deltaTime);
+
+
+            if (run) // Îã¨Î¶¨Í∏∞
+            {
+                GetComponent<Rigidbody>().MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
+            }
+        }
+        
+
+        
+    }
+
+    void HideStaminaBar()
+    {
+        // 100f Ïùº Í≤ΩÏö∞ Ïä§ÌÉúÎØ∏ÎÇò Î∞î Ïà®ÍπÄ
+        if (Mathf.Approximately(mySlider.value, 100f))
+        {
             myStaminaBar.SetActive(false);
         }
         else
         {
-            myStaminaBar.SetActive(true);
-        }
 
-
-
-
-        CheckGround(); // ø¨º”¡°«¡ ∞®¡ˆ
-
-
-        // ∞»¥¬ æ÷¥œ∏ﬁ¿Ãº«
-        if (totalDist > 0.0f)
-        {
-            myAnim.SetBool("IsWalking", true);
-        }
-        if (totalDist <= 0.0f)
-        {
-            myAnim.SetBool("IsWalking", false);
-        }
-
-        Dash(); // ¥ﬁ∏Æ±‚
-
-        // ¡°«¡
-        // ¿Ø¥œ∆º ±‚∫ªº≥¡§ Jump ≈∞∏¶ ∫“∑ØøÕº≠ Ω∫∆‰¿ÃΩ∫πŸ∑Œ ∞°¥…
-        if (Input.GetButtonDown("Jump") && ground) // ø¨º”¡°«¡ πÊ¡ˆ = && ground ±◊∂ÛøÓµÂ∞° ¬¸¿œ ∂ß
-        {
-            Vector3 jumpPower = Vector3.up * jumpHeight;
-            myRigid.AddForce(jumpPower, ForceMode.VelocityChange);
-            //¡°«¡∏¶ «ﬂ¿ª ∂ß ¿ß∑Œ ∂€ ºˆ ¿÷µµ∑œ
-            myAnim.SetTrigger("Jump");
-
-        }
-
-        /*// ¥ÎΩ√ ±∏«ˆ - ªÁøÎ æ»«“ ∞Õ ∞∞æ∆º≠ ¡÷ºÆ√≥∏Æ «ÿ ≥ı¿Ω
-        if(Input.GetButtonDown("Dash"))
-        {
-            Vector3 dashPower = this.transform.forward * -Mathf.Log(1/rigidbody.drag) * dash;
-            // drag ∞¯±‚¿˙«◊∞™¿ª ø™ºˆ∑Œ µ⁄¡˝æÓº≠ ∑Œ±◊∑Œ πŸ≤Ÿ∞Ì - ∏¶ ≥÷æÓ¡‡º≠ ∞™¿ª ±∏«— »ƒ øÏ∏Æ∞° ±∏«— ¥ÎΩ√æÁ¿ª ∞ˆ«ÿ¡ÿ¥Ÿ < ¿⁄ø¨Ω∫∑ØøÓ ¥ÎΩ√∏¶ ¿ß«ÿ(π´Ωº º“∏Æ¿Œ¡ˆ ∏∏£∞⁄¥Ÿ.)
-            rigidbody.AddForce(dashPower, ForceMode.VelocityChange);
-        }
-        // ¥ÎΩ√ ≈∞¿« ±‚∫ª∞™¿Ã æ¯æÓº≠ ¿Ø¥œ∆º «¡∑Œ¡ß∆Æ ºº∆√ø°º≠ √ﬂ∞°
-        // ¿Ø¥œ∆ºø°º≠ ∏Æ¡ˆµÂπŸµ Drag∏¶ 10 ¡§µµ º≥¡§ «ÿ ¡÷∏È »Æ¿Œ «“ ºˆ ¿÷¿Ω
-        // «œ¡ˆ∏∏ ∞¯±‚¿˙«◊∞™¿ª ≥÷æÓ¡÷∏È ¡°«¡«— »ƒ ¥¿∏Æ∞‘ ∂≥æÓ¡ˆ¥¬ πÆ¡¶∞° ¿÷¿∏¥œ ¿œ¥‹ ¡÷ºÆ√≥∏Æ «œ∞Ì ¥ﬁ∏Æ±‚∏¶ ±∏«ˆ«“ øπ¡§
-        // ¡°«¡ø°º≠ ∂≥æÓ¡ˆ¥¬ ¿Ã¿Ø¥¬ ∏Æ¡ˆµÂπŸµ ¡ﬂ∑¬∞™ø° ¿««— ∞Õ¿Ã∞Ì √µ√µ»˜ ∂≥æÓ¡ˆ¥¬ ¿Ã¿Ø¥¬ µÂ∑°±◊ ∞¯±‚¿˙«◊∞™ ∂ßπÆ¿Ãπ«∑Œ µŒ∞≥∏¶ ¡∂«’«ÿº≠ ¡°«¡ πÆ¡¶∏¶ «ÿ∞·«œ∂Û*/
-
-    }
-
-
-    //ƒ≥∏Ø≈Õ¿« ∫ŒµÂ∑ØøÓ »∏¿¸¿ª ¿ß«ÿ
-    private void FixedUpdate() // π∞∏Æ¿˚¿Œ ¿Ãµø¿Ã≥™ »∏¿¸¿ª «“ ∂ß æ≤∏È ¡¡¥Ÿ
-    {
-        
-
-        //»∏¿¸
-        if (dir != Vector3.zero) //∫§≈Õ¿« ¡¶∑Œ∞° æ∆¥œ∂Û∏È ≈∞ ¿‘∑¬¿Ã µ 
-        {
-            // æ’¿∏∑Œ ≥™æ∆∞• ∂ß + πÊ«‚¿∏∑Œ ≥™æ∆∞°¥¬µ• π›¥ÎπÊ«‚¿∏∑Œ ≥™∞°∞°¥¬ ≈∞∏¶ ¥≠∑∂¿ª ∂ß -πÊ«‚¿∏∑Œ »∏¿¸«œ∏Èº≠ ª˝±‚¥¬ ø¿∑˘∏¶ πÊ¡ˆ«œ±‚¿ß«ÿ (∫Œ»£∞° º≠∑Œ π›¥Î¿œ ∞ÊøÏ∏¶ √º≈©«ÿº≠ ªÏ¬¶∏∏ πÃ∏Æ µπ∑¡¡÷¥¬ ƒ⁄µÂ) æÓ∑∆≥◊ø‰... 
-            // ¡ˆ±› πŸ∂Û∫∏¥¬ πÊ«‚¿« ∫Œ»£ != ≥™æ∆∞• πÊ«‚ ∫Œ»£
-            if (Mathf.Sign(transform.forward.x) != Mathf.Sign(dir.x) || Mathf.Sign(transform.forward.z) != Mathf.Sign(dir.z))
+            if (!myStaminaBar.activeSelf)
             {
-                //øÏ∏Æ¥¬ ¿Ãµø«“ ∂ß x øÕ z π€ø° ªÁøÎ¿ª æ»«œπ«∑Œ
-                transform.Rotate(0, 1, 0); // ªÏ¬¶∏∏ »∏¿¸
-                //¡§ π›¥ÎπÊ«‚¿ª ¥≠∑Øµµ »∏¿¸æ»«œ¥¬ πˆ±◊ πÊ¡ˆ
-                //πÃ∏Æ »∏¿¸¿ª ¡∂±› Ω√ƒ—º≠ ¡§π›¥Î¿Œ ∞ÊøÏ∏¶ ¡¶∞≈
+                myStaminaBar.SetActive(true);
+                myStaminaAnim.SetTrigger("FadeIn");
             }
-            transform.forward = Vector3.Lerp(transform.forward, dir, rotSpeed * Time.deltaTime);
-            // Slerp∏¶ æµ¡ˆ Lerp∏¶ æµ¡ˆ ªÛ¿«∏¶ «ÿ∫¡æﬂ «“ ∞Õ ∞∞æ∆øÎ 
-            // ƒ≥∏Ø≈Õ¿« æ’πÊ«‚¿∫ dir ≈∞∫∏µÂ∏¶ ¥©∏• πÊ«‚¿∏∑Œ ƒ≥∏Ø≈Õ »∏¿¸
-            //Lerp∏¶ æ≤∏È ø¯«œ¥¬ πÊ«‚±Ó¡ˆ º≠º≠»˜ »∏¿¸
+
         }
-
-        // ¿Ãµø¿ª ±∏«ˆ
-        rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
-
-
-        if (run) // ¥ﬁ∏Æ±‚
-        {
-            rigidbody.MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
-        }
-
-        
     }
-
-
 
 
 
     void Dash()
     {
-        if (Mathf.Approximately(mySlider.value, 0.0f))
+        if (Mathf.Approximately(mySlider.value, 0f))
+        //Ïä§ÌÉúÎØ∏ÎÑà Î∞îÏùò Î∞∏Î•òÍ∞Ä 0Ïóê Í∑ºÏÇ¨ÏπòÏóê ÎãøÏùÑ Îïå
         {
+            
             canRun = false;
-            if (totalDist > 0.0f)
+            if (totalDist > 0.0f) // Ï∫êÎ¶≠ÌÑ∞Ïùò ÏõÄÏßÅÏûÑÏù¥ ÏóÜÎã§Î©¥
             {
-                myAnim.SetBool("IsWalking", true);
+                curAnimator.SetBool("IsWalking", true);
             }
             else
             {
-                myAnim.SetBool("IsWalking", false);
+                curAnimator.SetBool("IsWalking", false);
             }
-            myAnim.SetBool("IsRunning", false);
+            curAnimator.SetBool("IsRunning", false);
             
             run = false;
         }
         else
         {
-            // ¥ﬁ∏Æ±‚
+            
             if (Input.GetKey(KeyCode.LeftShift) && totalDist > 0.0f && canRun)
+            // ÏãúÌîÑÌä∏Î•º ÎàåÎ†ÄÍ≥†, Ïù¥ÎèôÍ±∞Î¶¨Í∞Ä ÏûàÏúºÎ©∞ canRun Ïù¥ falseÍ∞Ä ÏïÑÎãê Îïå
             {
                 run = true;
-                myAnim.SetBool("IsRunning", true);
-
+                curAnimator.SetBool("IsRunning", true);
             }
-            else // ¿Ãµø∞≈∏Æ∞™¿Ã 0∫∏¥Ÿ ¿€¿ª ∂ß shift∑Œ ¥ﬁ∏Æ±‚ πﬂµø æ»«“ ºˆ ¿÷µµ∑œ
+            else // Ïù¥ÎèôÍ±∞Î¶¨Í∞íÏù¥ 0Î≥¥Îã§ ÏûëÏùÑ Îïå shiftÎ°ú Îã¨Î¶¨Í∏∞ Î∞úÎèô ÏïàÌï† Ïàò ÏûàÎèÑÎ°ù
             {
                 run = false;
-                myAnim.SetBool("IsRunning", false);
+                curAnimator.SetBool("IsRunning", false);
             }
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift) && !canRun)
+        // ÏãúÌîÑÌä∏ ÌÇ§Î•º ÎñºÏóàÍ≥†, canRun Ïù¥ falseÏùº Îïå
         {
-            canRun = true;
+             
+                canRun = true;
+            
         }
-
-        
-
     }
 
 
-    void CheckGround() // ø¨º”¡°«¡ πÊ¡ˆ, ¡°«¡∏¶ ∂•ø° ¿÷¿ª ∂ß∏∏
+    void CheckGround() // Ïó∞ÏÜçÏ†êÌîÑ Î∞©ÏßÄ, Ï†êÌîÑÎ•º ÎïÖÏóê ÏûàÏùÑ ÎïåÎßå
     {
-
-        //∑π¿Ãƒ≥Ω∫∆Æ∏¶ ªÁøÎ
+        //Î†àÏù¥Ï∫êÏä§Ìä∏Î•º ÏÇ¨Ïö©
         RaycastHit hit;
 
-        //««∫ø ¿ßƒ°∞° πﬂ≥°¿Ã±‚ ∂ßπÆø° ƒ≥∏Ø≈Õ πﬂ¿Ã ∂•ø° ∫ŸæÓπˆ∏Æ∏È ∞À√‚«“ ºˆ æ¯±‚ ∂ßπÆø° (Vector3.up * 0.2f)∑Œ ªÏ¬¶ ø√∑¡º≠ ∑π¿Ã∏¶ ΩÙ
-        // Vector3.down æ∆∑°¥œ±Ó æ∆∑°∑Œ Ω˜æﬂ «‘
-        // æÛ∏∂∏∏≈≠¿« ∞≈∏Æø° ∑π¿Ã¿˙∏¶ ΩÚ∞«¡ˆ = 0.4f
-        // = ∑π¿Ã¿˙∏¶ ΩÚ∞«µ• ƒ≥∏Ø≈Õ¿« πﬂ ≥°∫∏¥Ÿ 0.2 ∏∏≈≠ ≥Ù¿∫ ¿ßƒ°ø°º≠ æ∆∑°πÊ«‚¿∏∑Œ ΩÚ∞Õ¿Ã∞Ì 0.4 ∏∏≈≠∏∏ ∑π¿Ã¿˙∞° πﬂªÁ µ…∞Õ¿Ã¥Ÿ
-        // ¿Ã ±Ê¿Ã æ»ø°º≠ øÏ∏Æ∞° º≥¡§«“ ∑π¿ÃæÓ∞° ∞À√‚¿Ã µ«∏È ±◊ ¡§∫∏∏¶ out hit ø° ¥„æ∆∂Û
+        //ÌîºÎ¥á ÏúÑÏπòÍ∞Ä Î∞úÎÅùÏù¥Í∏∞ ÎïåÎ¨∏Ïóê Ï∫êÎ¶≠ÌÑ∞ Î∞úÏù¥ ÎïÖÏóê Î∂ôÏñ¥Î≤ÑÎ¶¨Î©¥ Í≤ÄÏ∂úÌï† Ïàò ÏóÜÍ∏∞ ÎïåÎ¨∏Ïóê (Vector3.up * 0.2f)Î°ú ÏÇ¥Ïßù Ïò¨Î†§ÏÑú Î†àÏù¥Î•º Ïè®
+        // Vector3.down ÏïÑÎûòÎãàÍπå ÏïÑÎûòÎ°ú Ïè¥Ïïº Ìï®
+        // ÏñºÎßàÎßåÌÅºÏùò Í±∞Î¶¨Ïóê Î†àÏù¥Ï†ÄÎ•º Ïè†Í±¥ÏßÄ = 0.4f
+        // = Î†àÏù¥Ï†ÄÎ•º Ïè†Í±¥Îç∞ Ï∫êÎ¶≠ÌÑ∞Ïùò Î∞ú ÎÅùÎ≥¥Îã§ 0.2 ÎßåÌÅº ÎÜíÏùÄ ÏúÑÏπòÏóêÏÑú ÏïÑÎûòÎ∞©Ìñ•ÏúºÎ°ú Ïè†Í≤ÉÏù¥Í≥† 0.4 ÎßåÌÅºÎßå Î†àÏù¥Ï†ÄÍ∞Ä Î∞úÏÇ¨ Îê†Í≤ÉÏù¥Îã§
+        // Ïù¥ Í∏∏Ïù¥ ÏïàÏóêÏÑú Ïö∞Î¶¨Í∞Ä ÏÑ§Ï†ïÌï† Î†àÏù¥Ïñ¥Í∞Ä Í≤ÄÏ∂úÏù¥ ÎêòÎ©¥ Í∑∏ Ï†ïÎ≥¥Î•º out hit Ïóê Îã¥ÏïÑÎùº
 
-        // ¿Ã¬  «¡∑Œ¡ß∆Æ∑Œ ø≈±‚¥¬ ∞˙¡§ø°º≠ ø¯∑° ºˆƒ°∞™(0.4f, 0.2f) øÕ ªÛ¿Ã«œ∞‘ «ÿæﬂ«œ¥¬ πÆ¡¶∞° ¡ª ¿÷≥◊ø‰ 
-        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.4f, layer))
+        // Ïù¥Ï™Ω ÌîÑÎ°úÏ†ùÌä∏Î°ú ÏòÆÍ∏∞Îäî Í≥ºÏ†ïÏóêÏÑú ÏõêÎûò ÏàòÏπòÍ∞í(0.4f, 0.2f) ÏôÄ ÏÉÅÏù¥ÌïòÍ≤å Ìï¥ÏïºÌïòÎäî Î¨∏Ï†úÍ∞Ä Ï¢Ä ÏûàÎÑ§Ïöî 
+        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.2f, layer))
         {
             ground = true;
+            curAnimator.SetBool("InAir", false);
         }
         else
         {
             ground = false;
+            curAnimator.SetBool("InAir", true);
         }
-
-
     }
 
-   
+
+    IEnumerator CoolTime(float cool)
+    {
+        print("Ïã§Ìñâ");
+        float coolTime = cool;
+        while (cool > 0.0f)
+        {
+            giveDelay = true;
+            cool -= Time.deltaTime;
+
+            KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            KongUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+
+            JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);  
+            JinUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+
+            EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            EmberUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+
+            yield return null;
+        }
+        giveDelay = false;
+        print("ÎÅù");
+    }
+
 
 
 }

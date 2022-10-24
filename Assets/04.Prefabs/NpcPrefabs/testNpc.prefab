@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 680594705294658526}
   - component: {fileID: 680594705294658522}
   - component: {fileID: -705255541073011279}
+  - component: {fileID: -1572240545006247324}
   m_Layer: 28
   m_Name: testNpc
   m_TagString: Npc
@@ -129,3 +130,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npc: {fileID: 11400000, guid: 9faccfa0e9ddcbd4abbd618386c455c0, type: 2}
+  item: {fileID: 0}
+  enemy: {fileID: 0}
+--- !u!114 &-1572240545006247324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680594705294658524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d231f842188144c41aabe70c27a8dfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1000
+  isNpc: 1

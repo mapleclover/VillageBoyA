@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 작성자 : 이현호
+
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] Slider volumeSlider;

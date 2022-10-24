@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 public class Emphasis : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
-    public float yPos;
+    private float yPos;
     public GameObject myEmphasis;
     // Start is called before the first frame update
     void Start()
