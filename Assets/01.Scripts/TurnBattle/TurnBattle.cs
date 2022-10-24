@@ -36,7 +36,7 @@ public class TurnBattle : MonoBehaviour
     
     public enum State
     {
-        Create, Choice,ActiveCheck,Moving, BackMoving, Battle, End
+        Create, Choice,ActiveCheck,Moving, BackMoving, Battle, End ,GameOver
     }
     public State myState = State.Create;
     void ChangeState(State s)
@@ -74,7 +74,8 @@ public class TurnBattle : MonoBehaviour
                     }
                 }
                 break;            
-            case State.ActiveCheck:                
+            case State.ActiveCheck:
+                
                 break;
             case State.Moving:              
                 
@@ -95,6 +96,8 @@ public class TurnBattle : MonoBehaviour
                 StartCoroutine(BackMoving(gos));
                 break;
             case State.End:
+                break;
+            case State.GameOver:
                 break;
         }
 
@@ -141,18 +144,19 @@ public class TurnBattle : MonoBehaviour
                 }
                 break;            
             case State.ActiveCheck:
+                
                 int Check = 0;
                 Active = PlayList[0];
                 while (!Active.GetComponent<BattleCharacter>().Active5)
                 {
                     Active = PlayList[Check];
                     ++Check;
-                    if(Check == PlayList.Count)
+                    if (Check == PlayList.Count)
                     {
                         break;
-                    }                    
+                    }
                 }
-                if(Check==PlayList.Count)
+                if (Check == PlayList.Count)
                 {
                     ChangeState(State.End);
                 }
@@ -168,6 +172,8 @@ public class TurnBattle : MonoBehaviour
             case State.BackMoving:
                 break;
             case State.End:
+                break;
+            case State.GameOver:
                 break;
         }
     }
@@ -227,8 +233,23 @@ public class TurnBattle : MonoBehaviour
         
         mySelectRing.SetActive(false); //캐릭터가 선택되기전까지 링 오프
         mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
-        StateProcess();        
-        
+        StateProcess();
+        for (int i = 0; i < Player.Length; ++i)
+        {
+            int count = 0;
+            if (Player[i].GetComponent<BattleCharacter>().myHp <= 0.0f)
+            {
+                count++;
+            }
+            if (count == 3)
+            {
+                StopAllCoroutines();
+                ChangeState(State.GameOver);
+            }
+            
+        }
+
+
     }
     public void BattleStart() //공격버튼 클릭시 함수
     {
@@ -251,6 +272,7 @@ public class TurnBattle : MonoBehaviour
             if(Active==act)
             {
                 Active.GetComponent<BattleCharacter>().ChoiceSkill(Active.GetComponent<BattleCharacter>().Skill);
+                
             }
         }
         foreach (GameObject act in Enemy)

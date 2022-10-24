@@ -5,7 +5,16 @@ using UnityEngine;
 
 public class BattleCharacter : CharacterProperty
 {
-    public float myHp = 100.0f;
+    public float _myhp = 100.0f;
+    public float myHp 
+    {
+        get => _myhp;
+        set
+        {
+            _myhp = value;
+        }
+        
+    }
     public float speed = 2.0f;
     public int Skill = 0;
     public GameObject myTarget;
