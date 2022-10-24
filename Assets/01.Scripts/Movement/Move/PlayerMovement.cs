@@ -53,6 +53,12 @@ public class PlayerMovement : MonoBehaviour
     public bool run; // 달리기
     public bool canRun = true; // 달리기와 스태미너바에 연관
 
+    //중복 방지
+    public bool KongTheSame = false;
+    public bool JinTheSame = false;
+    public bool EmberTheSame = false;
+
+
     // 연속점프방지
     private bool ground = false;
     [SerializeField] private LayerMask layer;
@@ -125,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
     {
         curAnimator = Kong.GetComponent<Animator>(); // 기본캐릭터는 '공'으로 시작
         ChangeState(CHARACTER.Kong);
+        KongTheSame = true;
 
         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디로 움직임 구현을 위함
     }
@@ -136,26 +143,37 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(giveDelay);
 
         CheckGround(); // 연속점프 감지
-      
+
+
+        
         if (ground)
         {
             // 1, 2, 3 키로 캐릭터 교체
-            if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false && KongTheSame == false)
             {
                 ChangeState(CHARACTER.Kong);
                 StartCoroutine(CoolTime(5f));
+                KongTheSame = true;
+                JinTheSame = false;
+                EmberTheSame = false;
 
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false)
+            if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false && JinTheSame == false)
             {
                 ChangeState(CHARACTER.Jin);
                 StartCoroutine(CoolTime(5f));
+                KongTheSame = false;
+                JinTheSame = true;
+                EmberTheSame = false;
 
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false)
+            if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false && EmberTheSame == false)
             {
                 ChangeState(CHARACTER.Ember);
                 StartCoroutine(CoolTime(5f));
+                KongTheSame = false;
+                JinTheSame = false;
+                EmberTheSame = true;
             }
 
             dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
@@ -362,7 +380,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator CoolTime(float cool)
     {
-        print("실행");
+       
         float coolTime = cool;
         while (cool > 0.0f)
         {
@@ -381,7 +399,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         giveDelay = false;
-        print("끝");
+       
     }
 
 

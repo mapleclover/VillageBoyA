@@ -28,14 +28,14 @@ public class QuestManager : MonoBehaviour
         return questId + questActionIndex;
     }
     // 대화가끝이났을때 인덱스증가함수.
-    public string CheckQuest(int id)
+    public string CheckQuest(int id, GameObject scanObject)
     {
         //Next Talk Target(NPC)
         if(id == questList[questId].npcId[questActionIndex]) // 현재진행중인 퀘스트id의 npc아이디체크.
         questActionIndex++;  //인덱스순서를주지않으면 A를거치고 B를가야하는데 A안거치고 B가도되기때문.
 
         //Control Quest Object
-        ControlObject();
+        ControlObject(scanObject);
 
         //Talk Complete & Next Quest
         if (questActionIndex == questList[questId].npcId.Length)//npcId의배열? -> 퀘스트진행시 다뤄야할 대화
@@ -56,11 +56,17 @@ public class QuestManager : MonoBehaviour
         questActionIndex = 0; // 액션인덱스는 초기화.
     }
 
-    private void ControlObject()
+    private void ControlObject(GameObject scanObject)
     {
         switch (questId)
         {
             case 10:
+                if(questActionIndex == 1)
+                {
+                    questObject[1].SetActive(false);
+                    questObject[1].transform.position = scanObject.transform.position;
+                    questObject[2].SetActive(true);
+                }
                 if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
                     questObject[0].SetActive(true); // 사과.
                 break;
