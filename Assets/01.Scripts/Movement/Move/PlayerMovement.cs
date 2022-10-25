@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public bool run; // 달리기
     public bool canRun = true; // 달리기와 스태미너바에 연관
 
-    //중복 방지
+    //캐릭터 중복쿨타임 방지
     private bool KongTheSame = false;
     private bool JinTheSame = false;
     private bool EmberTheSame = false;
@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ChangeState(CHARACTER myCha)
     {
-        Vector3 summonPosition = new Vector3(0, 1.5f, 0);
+        Vector3 summonPosition = new Vector3(0, 1.3f, 0); // 캐릭터 교체시 소환되는 높이값
 
         if (myCharacter == myCha) return;
         myCharacter = myCha;
@@ -403,14 +403,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
+    //쿨타임
     IEnumerator CoolTime(float cool)
     {
        
         float coolTime = cool;
         while (cool > 0.0f)
         {
-            giveDelay = true;
+            giveDelay = true; //트루를 주고
             cool -= Time.deltaTime;
             if(KongTheSame)
             {
@@ -431,12 +431,13 @@ public class PlayerMovement : MonoBehaviour
                 EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
                 KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
                 JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                
             }
             
 
             yield return null;
         }
-        giveDelay = false;
+        giveDelay = false; //시간이 끝나면
        
     }
 
