@@ -24,7 +24,7 @@ public class TalkManager : MonoBehaviour
         //NPC A:1000
         //Apple:100
         talkData.Add(1000, new string[] { "안녕?:0", "이곳에 처음 왔구나?:1" }); //대화뒤의숫자는 portratiIndex ":" 은구분자.
-        talkData.Add(2000, new string[] { "안녕?ㅋ" });
+        talkData.Add(2000, new string[] { "안녕?ㅋ:0" });
         talkData.Add(100, new string[] {"새빨갛게 잘 익은 사과다."  });
 
         //Quest Talk Data
@@ -39,7 +39,8 @@ public class TalkManager : MonoBehaviour
 
         talkData.Add(20 + 2000, new string[] { "찾으면 꼭 좀 가져다 줘:0" });
         talkData.Add(20 + 100, new string[] { "근처에서 사과를 찾았다." });
-        talkData.Add(21 + 2000, new string[] { "고마워 ㅋ:0" });
+        talkData.Add(21 + 100, new string[] { "근처에서 사과를 찾았다." });
+        talkData.Add(22 + 2000, new string[] { "고마워 ㅋ:0" });
 
 
         //Portrait Data
