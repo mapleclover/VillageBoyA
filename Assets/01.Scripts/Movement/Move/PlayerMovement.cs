@@ -54,9 +54,9 @@ public class PlayerMovement : MonoBehaviour
     public bool canRun = true; // 달리기와 스태미너바에 연관
 
     //중복 방지
-    public bool KongTheSame = false;
-    public bool JinTheSame = false;
-    public bool EmberTheSame = false;
+    private bool KongTheSame = false;
+    private bool JinTheSame = false;
+    private bool EmberTheSame = false;
 
 
     // 연속점프방지
@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask layer;
 
     //딜레이
-    bool giveDelay = false;
+    private bool giveDelay = false;
 
     void ChangeState(CHARACTER myCha)
     {
@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
     {
         curAnimator = Kong.GetComponent<Animator>(); // 기본캐릭터는 '공'으로 시작
         ChangeState(CHARACTER.Kong);
-        KongTheSame = true;
+        KongTheSame = true; // 같은 캐릭터로의 변경을 막기 위해
 
         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디로 움직임 구현을 위함
     }
@@ -149,38 +149,56 @@ public class PlayerMovement : MonoBehaviour
             // 1, 2, 3 키로 캐릭터 교체
             if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false && KongTheSame == false)
             {
+                KongUI.GetComponent<Animator>().SetTrigger("Expansion");
+                JinUI.GetComponent<Animator>().SetTrigger("Reduction");
+                if (!JinTheSame)
+                {
+                    EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
                 ChangeState(CHARACTER.Kong);
                 StartCoroutine(CoolTime(5f));
                 KongTheSame = true;
                 JinTheSame = false;
                 EmberTheSame = false;
-                KongUI.GetComponent<Animator>().SetTrigger("Expansion");
-                JinUI.GetComponent<Animator>().SetTrigger("Reduction");
-                EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+                
+                
 
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false && JinTheSame == false)
             {
+                JinUI.GetComponent<Animator>().SetTrigger("Expansion");
+                if(!EmberTheSame)
+                {
+                    KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
+                if (!KongTheSame)
+                {
+                    EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
                 ChangeState(CHARACTER.Jin);
                 StartCoroutine(CoolTime(5f));
                 KongTheSame = false;
                 JinTheSame = true;
                 EmberTheSame = false;
-                JinUI.GetComponent<Animator>().SetTrigger("Expansion");
-                KongUI.GetComponent<Animator>().SetTrigger("Reduction");
-                EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+                
+                
 
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false && EmberTheSame == false)
             {
+                EmberUI.GetComponent<Animator>().SetTrigger("Expansion");
+                JinUI.GetComponent<Animator>().SetTrigger("ReductionFromEmber");
+                if(!JinTheSame)
+                {
+                    KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
+                
                 ChangeState(CHARACTER.Ember);
                 StartCoroutine(CoolTime(5f));
                 KongTheSame = false;
                 JinTheSame = false;
                 EmberTheSame = true;
-                EmberUI.GetComponent<Animator>().SetTrigger("Expansion");
-                JinUI.GetComponent<Animator>().SetTrigger("ReductionFromEmber");
-                KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+               
             }
 
             dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
@@ -394,15 +412,27 @@ public class PlayerMovement : MonoBehaviour
         {
             giveDelay = true;
             cool -= Time.deltaTime;
-/*
-            KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
-            KongUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+            if(KongTheSame)
+            {
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            }
 
-            JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);  
-            JinUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+            if (JinTheSame)
+            {
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            }
 
-            EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
-            EmberUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);*/
+            if(EmberTheSame)
+            {
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            }
+            
 
             yield return null;
         }
