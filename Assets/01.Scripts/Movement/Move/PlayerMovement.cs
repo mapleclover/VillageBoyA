@@ -53,16 +53,22 @@ public class PlayerMovement : MonoBehaviour
     public bool run; // 달리기
     public bool canRun = true; // 달리기와 스태미너바에 연관
 
+    //캐릭터 중복쿨타임 방지
+    private bool KongTheSame = false;
+    private bool JinTheSame = false;
+    private bool EmberTheSame = false;
+
+
     // 연속점프방지
     private bool ground = false;
     [SerializeField] private LayerMask layer;
 
     //딜레이
-    bool giveDelay = false;
+    private bool giveDelay = false;
 
     void ChangeState(CHARACTER myCha)
     {
-        Vector3 summonPosition = new Vector3(0, 1.5f, 0);
+        Vector3 summonPosition = new Vector3(0, 1.3f, 0); // 캐릭터 교체시 소환되는 높이값
 
         if (myCharacter == myCha) return;
         myCharacter = myCha;
@@ -76,9 +82,9 @@ public class PlayerMovement : MonoBehaviour
                 Jin.SetActive(false);
                 curAnimator = Kong.GetComponent<Animator>();
                 //UI
-                KongUI.SetActive(true);
-                EmberUI.SetActive(false);
-                JinUI.SetActive(false);
+                //KongUI.SetActive(true);
+                //EmberUI.SetActive(false);
+                //JinUI.SetActive(false);
                 break;
             
             case CHARACTER.Jin:
@@ -89,9 +95,9 @@ public class PlayerMovement : MonoBehaviour
                 Jin.SetActive(true);
                 curAnimator = Jin.GetComponent<Animator>();
                 //UI
-                KongUI.SetActive(false);
-                EmberUI.SetActive(false);
-                JinUI.SetActive(true);
+                //KongUI.SetActive(false);
+                //EmberUI.SetActive(false);
+                //JinUI.SetActive(true);
                 break;
 
             case CHARACTER.Ember:
@@ -102,9 +108,9 @@ public class PlayerMovement : MonoBehaviour
                 Jin.SetActive(false);
                 curAnimator = Ember.GetComponent<Animator>();
                 //UI
-                KongUI.SetActive(false);
-                EmberUI.SetActive(true);
-                JinUI.SetActive(false);
+                //KongUI.SetActive(false);
+                //EmberUI.SetActive(true);
+                //JinUI.SetActive(false);
                 break;
         }
     }
@@ -125,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
     {
         curAnimator = Kong.GetComponent<Animator>(); // 기본캐릭터는 '공'으로 시작
         ChangeState(CHARACTER.Kong);
+        KongTheSame = true; // 같은 캐릭터로의 변경을 막기 위해
 
         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디로 움직임 구현을 위함
     }
@@ -132,30 +139,66 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(KongUI.GetComponentInChildren<Image>().fillAmount);
-        Debug.Log(giveDelay);
 
         CheckGround(); // 연속점프 감지
-      
+
+
+        
         if (ground)
         {
             // 1, 2, 3 키로 캐릭터 교체
-            if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false && KongTheSame == false)
             {
+                KongUI.GetComponent<Animator>().SetTrigger("Expansion");
+                JinUI.GetComponent<Animator>().SetTrigger("Reduction");
+                if (!JinTheSame)
+                {
+                    EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
                 ChangeState(CHARACTER.Kong);
                 StartCoroutine(CoolTime(5f));
+                KongTheSame = true;
+                JinTheSame = false;
+                EmberTheSame = false;
+                
+                
 
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false)
+            if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false && JinTheSame == false)
             {
+                JinUI.GetComponent<Animator>().SetTrigger("Expansion");
+                if(!EmberTheSame)
+                {
+                    KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
+                if (!KongTheSame)
+                {
+                    EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
                 ChangeState(CHARACTER.Jin);
                 StartCoroutine(CoolTime(5f));
+                KongTheSame = false;
+                JinTheSame = true;
+                EmberTheSame = false;
+                
+                
 
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false)
+            if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false && EmberTheSame == false)
             {
+                EmberUI.GetComponent<Animator>().SetTrigger("Expansion");
+                JinUI.GetComponent<Animator>().SetTrigger("ReductionFromEmber");
+                if(!JinTheSame)
+                {
+                    KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
+                
                 ChangeState(CHARACTER.Ember);
                 StartCoroutine(CoolTime(5f));
+                KongTheSame = false;
+                JinTheSame = false;
+                EmberTheSame = true;
+               
             }
 
             dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
@@ -202,6 +245,7 @@ public class PlayerMovement : MonoBehaviour
             curAnimator.SetBool("IsWalking", false);
         }
 
+        
 
         // 점프
         // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
@@ -359,29 +403,42 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
+    //쿨타임
     IEnumerator CoolTime(float cool)
     {
-        print("실행");
+       
         float coolTime = cool;
         while (cool > 0.0f)
         {
-            giveDelay = true;
+            giveDelay = true; //트루를 주고
             cool -= Time.deltaTime;
+            if(KongTheSame)
+            {
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            }
 
-            KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
-            KongUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+            if (JinTheSame)
+            {
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            }
 
-            JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);  
-            JinUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
-
-            EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
-            EmberUI.GetComponentsInChildren<Image>()[2].fillAmount = 1f - (cool / coolTime);
+            if(EmberTheSame)
+            {
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                
+            }
+            
 
             yield return null;
         }
-        giveDelay = false;
-        print("끝");
+        giveDelay = false; //시간이 끝나면
+       
     }
 
 
