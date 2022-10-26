@@ -30,14 +30,17 @@ public class TurnBattle : MonoBehaviour
     public static TurnBattle Inst = null;
     public GameObject GameOverCanvas;
     public TMPro.TMP_Text GameOverTxt = null;
-
+    public Slider[] CharacterHpbar;
+    public Slider EnemyHpbar;
+    public List<Slider> EnHpbar;
     int Check = 0;
     bool VictoryCheck;
     bool FastSpeedCheck;
     int Skill=0;
     Vector3 gos; //원래위치값
     Vector3 gos2; //원래바라보고있던위치값
-    
+    Vector3 pos;
+    Vector3 pos2;
     public enum State
     {
         Create, Choice,ActiveCheck, Battle, End ,GameOver
@@ -99,6 +102,7 @@ public class TurnBattle : MonoBehaviour
             case State.End:
                 break;
             case State.GameOver:
+                StopAllCoroutines();
                 GameOverCanvas.SetActive(true);
                 if (VictoryCheck)
                 {
@@ -176,6 +180,7 @@ public class TurnBattle : MonoBehaviour
     }
     private void Awake()
     {
+        
         Inst = this;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -215,6 +220,21 @@ public class TurnBattle : MonoBehaviour
         {
             Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0]; 
         }
+        for(int j = 0; j < Player.Length; ++j)
+        {
+            CharacterButton[j].GetComponent<CharacterButton>().myCharacter = Player[j];
+            Player[j].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[j];
+        }
+        for (int i = 0; i < Enemy.Length; ++i)
+        {
+            EnHpbar.Add(Instantiate(EnemyHpbar, Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
+            Enemy[i].GetComponent<BattleCharacter>().myHpBar = EnHpbar[i];
+            pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
+            pos.y += 2.0f;
+            pos2 = Camera.main.WorldToScreenPoint(pos);
+            EnHpbar[i].transform.position = pos2;
+        }
+
     }
     void Start()
     {
@@ -233,8 +253,18 @@ public class TurnBattle : MonoBehaviour
         Victory();
         Lose();
         PlayerTargetDie();
+        FollowEnemyHpbar();
 
-
+    }
+    public void FollowEnemyHpbar()
+    {
+        for (int i = 0; i < Enemy.Length; ++i)
+        {
+            pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
+            pos.y += 2.0f;
+            pos2 = Camera.main.WorldToScreenPoint(pos);
+            EnHpbar[i].transform.position = pos2;
+        }
     }
     public void PlayerTargetDie()
     {
