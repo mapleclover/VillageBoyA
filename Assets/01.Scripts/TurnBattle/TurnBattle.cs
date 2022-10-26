@@ -147,12 +147,12 @@ public class TurnBattle : MonoBehaviour
                 Active = PlayList[0];
                 while (!Active.GetComponent<BattleCharacter>().Active5 || Active.GetComponent<BattleCharacter>().State == STATE.Die)
                 {
-                    Active = PlayList[Check];
                     ++Check;
                     if (Check == PlayList.Count)
                     {
                         break;
                     }
+                    Active = PlayList[Check];                   
                 }
                 if (Check == PlayList.Count)
                 {
@@ -307,7 +307,7 @@ public class TurnBattle : MonoBehaviour
         gos = Active.transform.position;
         Vector3 dir = pos - Active.transform.position;
         gos2 = dir; 
-        float dist = (dir.magnitude)-0.8f; //캐릭터가 겹치면 안되니까 거리에서 -0.8 만큼준다
+        float dist = (dir.magnitude)-1.5f; //캐릭터가 겹치면 안되니까 거리에서 -0.8 만큼준다
         dir.Normalize();
         while (dist > 0.0f)
         {
