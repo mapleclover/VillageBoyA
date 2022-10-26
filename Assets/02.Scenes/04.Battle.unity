@@ -3761,7 +3761,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHp: 100
+  State: 0
+  _myhp: 10
+  maxHp: 0
   speed: 5
   Skill: 0
   myTarget: {fileID: 0}
@@ -7880,7 +7882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHp: 100
+  State: 0
+  _myhp: 100
+  maxHp: 0
   speed: 10
   Skill: 0
   myTarget: {fileID: 0}
@@ -10166,7 +10170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHp: 100
+  State: 0
+  _myhp: 100
+  maxHp: 0
   speed: 6
   Skill: 0
   myTarget: {fileID: 0}
@@ -13406,8 +13412,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111666015}
-  m_LocalRotation: {x: 0, y: 0.6427876, z: 0, w: 0.7660445}
-  m_LocalPosition: {x: 3.21, y: -0.5, z: -3.37}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 3.21, y: -0.5, z: 0.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13417,7 +13423,7 @@ Transform:
   - {fileID: 454261266}
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 80, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!1 &1120624074
 GameObject:
   m_ObjectHideFlags: 0
@@ -14335,7 +14341,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHp: 100
+  State: 0
+  _myhp: 100
+  maxHp: 0
   speed: 8
   Skill: 0
   myTarget: {fileID: 0}
@@ -15795,7 +15803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHp: 100
+  State: 0
+  _myhp: 10
+  maxHp: 0
   speed: 4
   Skill: 0
   myTarget: {fileID: 0}
@@ -18335,6 +18345,8 @@ MonoBehaviour:
   - {fileID: 1667729842}
   AttackStartButton: {fileID: 325777839}
   RunButton: {fileID: 2056716626}
+  GameOverCanvas: {fileID: 0}
+  GameOverTxt: {fileID: 0}
   myState: 0
 --- !u!4 &1543604257
 Transform:
@@ -28847,7 +28859,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myHp: 100
+  State: 0
+  _myhp: 100
+  maxHp: 0
   speed: 9
   Skill: 0
   myTarget: {fileID: 0}

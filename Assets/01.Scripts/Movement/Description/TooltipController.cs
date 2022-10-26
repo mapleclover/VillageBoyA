@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 public class TooltipController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
-    public Tooltip tooltip;
+    //public Tooltip tooltip;
     public GameObject myTool;
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -2,10 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+public enum STATE
+{
+    Live, Die
+}
 public class BattleCharacter : CharacterProperty
 {
+    public STATE State = STATE.Live;
     public float _myhp = 100.0f;
+    public float maxHp;
     public float myHp 
     {
         get => _myhp;
@@ -29,7 +36,18 @@ public class BattleCharacter : CharacterProperty
 
     void Update()
     {
-        
+        if (myHp <= 0.0f)
+        {
+            State = STATE.Die;
+        }
+        else
+        {
+            State = STATE.Live;
+        }
+        if (State == STATE.Die)
+        {
+            Active5 = false;
+        }
     }
     public void ChoiceSkill(int s)
     {
