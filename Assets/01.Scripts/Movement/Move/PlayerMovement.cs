@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject myStaminaBar; // 스태미나 바의 사라짐과 재출현
 
     // 우리 스크립트는 리지드바디를 활용한 움직임
-    public Rigidbody rigidbody; // 지우거나 주석하지 마세요
+    Rigidbody rigidbody; // 지우거나 주석하지 마세요
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpHeight = 4f; //점프
     [SerializeField] private float dash = 6f; // 달리기 속도 (대시 기능 나중에 구현할지 모르니 일단 이름은 이대로)
@@ -401,6 +401,8 @@ public class PlayerMovement : MonoBehaviour
             ground = false;
             curAnimator.SetBool("InAir", true);
         }
+
+
     }
 
     //쿨타임
