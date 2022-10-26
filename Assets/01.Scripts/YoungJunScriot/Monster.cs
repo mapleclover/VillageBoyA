@@ -37,7 +37,6 @@ public class Monster : CharacterMoveMent
                 Vector3 pos = Vector3.zero;
                 pos.x = Random.Range(-3.0f, 3.0f);
                 pos.z = Random.Range(-3.0f, 3.0f);
-                Debug.Log(startPos);
                 pos = startPos + pos;
                 MoveToPosition(pos, () => ChangeState(STATE.IDLE));
                 break;
@@ -58,7 +57,6 @@ public class Monster : CharacterMoveMent
             case STATE.ROAMING:
                 break;
             case STATE.BATTLE:
-              
                 theEnemyAI.ChaseTarget(myTarget);
                 break;
             case STATE.DEAD:
@@ -82,6 +80,7 @@ public class Monster : CharacterMoveMent
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(myState);
         StateProcess();
         theEnemyAI.View();
     }
