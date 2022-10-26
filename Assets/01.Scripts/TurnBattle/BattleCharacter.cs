@@ -2,16 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+public enum STATE
+{
+    Live, Die
+}
 public class BattleCharacter : CharacterProperty
 {
+    public STATE State = STATE.Live;
     public float _myhp = 100.0f;
+    float maxHp = 100.0f;
+    float minHp = 0.0f;
     public float myHp 
     {
         get => _myhp;
         set
         {
             _myhp = value;
+            if(_myhp > maxHp) _myhp=maxHp;
+            if(_myhp < minHp) _myhp=minHp;
         }
         
     }
@@ -24,12 +34,23 @@ public class BattleCharacter : CharacterProperty
         
     void Start()
     {
-        Canvas = GameObject.Find("Canvas");
+        Canvas = GameObject.Find("Canvas");        
     }
 
     void Update()
     {
-        
+        if (myHp <= 0.0f)
+        {
+            State = STATE.Die;
+        }
+        else
+        {
+            State = STATE.Live;
+        }
+        if (State == STATE.Die)
+        {
+            Active5 = false;
+        }
     }
     public void ChoiceSkill(int s)
     {

@@ -135,7 +135,6 @@ public class PlayerMovement : MonoBehaviour
         curAnimator = Kong.GetComponent<Animator>(); // 기본캐릭터는 '공'으로 시작
         ChangeState(CHARACTER.Kong);
         KongTheSame = true; // 같은 캐릭터로의 변경을 막기 위해
-
         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디로 움직임 구현을 위함
     }
 
