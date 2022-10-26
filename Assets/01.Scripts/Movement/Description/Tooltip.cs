@@ -12,7 +12,7 @@ public class Tooltip : MonoBehaviour
 {
     //public TextMeshProUGUI nameTxt;
     //public TextMeshProUGUI descriptionTxt;
-
+    public GameObject myTarget;
     private RectTransform rectTransform;
     Vector2 pos = new Vector2(10f, 150f);
     /*public void SetupTooltip(string name, string des, int atk)
@@ -32,9 +32,10 @@ public class Tooltip : MonoBehaviour
     private void Update()
     {
 
-        //rectTransform.position = Input.mousePosition;
-        rectTransform.transform.position = pos;
+        //rectTransform.position = Input.mousePosition; //마우스 위치로 사용하고 싶을 땐 피봇 위치를 0으로 맞춰주세요
 
+        rectTransform.transform.position = myTarget.transform.position;
+       
     }
 
 }
