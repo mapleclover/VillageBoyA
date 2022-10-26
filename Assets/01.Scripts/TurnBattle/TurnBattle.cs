@@ -6,28 +6,44 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using static UnityEditor.PlayerSettings;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class TurnBattle : MonoBehaviour
 {
-
+    
     public GameObject[] Player;
     public GameObject[] Enemy;
     public GameObject Active;
     public List<GameObject> PlayList;
-    List<GameObject> PlayerSpeedCheck;
+    public List<GameObject> PlayerSpeedCheck;
     public GameObject SelectedCharacter;
     public GameObject SelectedCharacterTarget;
     public GameObject mySelectRing;
     public GameObject mySelectTargetRing;
+    public Button[] CharacterButton;  
+    public Button AttackStartButton;
+    public Button RunButton;
+    public static TurnBattle Inst = null;
+    public GameObject GameOverCanvas;
+    public TMPro.TMP_Text GameOverTxt = null;
+    public Slider[] CharacterHpbar;
+    public Slider EnemyHpbar;
+    public List<Slider> EnHpbar;
+    int Check = 0;
+    bool VictoryCheck;
     bool FastSpeedCheck;
     int Skill=0;
     Vector3 gos; //원래위치값
     Vector3 gos2; //원래바라보고있던위치값
+    Vector3 pos;
+    Vector3 pos2;
     public enum State
     {
-        Create, Choice,ActiveCheck,Moving, BackMoving, Battle, End
+        Create, Choice,ActiveCheck, Battle, End ,GameOver
     }
     public State myState = State.Create;
     void ChangeState(State s)
@@ -37,9 +53,20 @@ public class TurnBattle : MonoBehaviour
         switch (myState)
         {
             case State.Create:
-                
+                for (int i = 0; i < CharacterButton.Length; ++i)
+                {
+                    CharacterButton[i].interactable = false;
+                }
                 break;
             case State.Choice:
+                Check = 0;
+                //선택단계에서 버튼활성화
+                for (int i = 0; i < CharacterButton.Length; ++i)
+                {
+                    CharacterButton[i].interactable = true;
+                }
+                AttackStartButton.interactable = true;
+                RunButton.interactable = true;
                 for (int i = 0; i < PlayList.Count; ++i)
                 {
                     PlayList[i].GetComponent<BattleCharacter>().Active5 = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다
@@ -56,24 +83,35 @@ public class TurnBattle : MonoBehaviour
                 }
                 break;            
             case State.ActiveCheck:                
-                break;
-            case State.Moving:
+                break;                       
+            case State.Battle:
                 for (int i = 0; i < Enemy.Length; ++i)
                 {
                     if (Active == Enemy[i])
                     {
-                        Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0,Player.Length)];
+                        Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0, Player.Length)];
+                        Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0, Player.Length)];
+                        if (Active.GetComponent<BattleCharacter>().myTarget.GetComponent<BattleCharacter>().State == STATE.Die)
+                        {
+                            EnemyTargetDie(Active);
+                        }
                     }
                 }
                 StartCoroutine(Moving(Active.GetComponent<BattleCharacter>().myTarget.transform.position));
                 break;            
-            case State.Battle:
-                StartCoroutine(Attack(Skill));
-                break;
-            case State.BackMoving:
-                StartCoroutine(BackMoving(gos));
-                break;
             case State.End:
+                break;
+            case State.GameOver:
+                StopAllCoroutines();
+                GameOverCanvas.SetActive(true);
+                if (VictoryCheck)
+                {
+                    GameOverTxt.text = "승 리";
+                }
+                else if (!VictoryCheck)
+                {
+                    GameOverTxt.text = "패 배";
+                }
                 break;
         }
 
@@ -86,19 +124,9 @@ public class TurnBattle : MonoBehaviour
                 break;
             case State.Choice:
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //메인카메라의 위치값
-                RaycastHit hit;
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (Physics.Raycast(ray, out hit, 1000.0f, 1 << LayerMask.NameToLayer("Friendly")))
-                    {
-                        SelectedCharacter = hit.collider.gameObject;
-                    }
-                }
+                RaycastHit hit;                
                 if (SelectedCharacter != null)
-                {
-                    if (Input.GetKeyDown(KeyCode.Q)) SelectedCharacter.GetComponent<BattleCharacter>().Skill = 0;
-                    if (Input.GetKeyDown(KeyCode.W)) SelectedCharacter.GetComponent<BattleCharacter>().Skill = 1;
-                    if (Input.GetKeyDown(KeyCode.E)) SelectedCharacter.GetComponent<BattleCharacter>().Skill = 2;
+                {                    
                     if (Input.GetMouseButtonDown(0))
                     {
                         if (Physics.Raycast(ray, out hit, 1000.0f, 1 << LayerMask.NameToLayer("Enemy")))
@@ -108,43 +136,55 @@ public class TurnBattle : MonoBehaviour
                         }
                     }
                 }
-                
-                break;
-            
-            case State.ActiveCheck:
-                int Check = 0;
-                Active = PlayList[0];
-                while (!Active.GetComponent<BattleCharacter>().Active5)
+                if (SelectedCharacter != null) //캐릭터가 선택되어있을경우
                 {
-                    Active = PlayList[Check];
+                    mySelectRing.SetActive(true); //캐릭터가 선택되면 링온
+                    mySelectRing.transform.position = SelectedCharacter.transform.position; //링을 선택캐릭터위치로
+                    if (SelectedCharacter.GetComponent<BattleCharacter>().myTarget != null) //캐릭터가 타겟으로 잡고있는게 있는지 확인
+                    {
+                        mySelectTargetRing.SetActive(true); // 타겟링온 
+                        mySelectTargetRing.transform.position = SelectedCharacter.GetComponent<BattleCharacter>().myTarget.transform.position; // 타겟링을 타겟위치로 
+                    }
+                }
+                break;            
+            case State.ActiveCheck:
+                Active = PlayList[0];
+                while (!Active.GetComponent<BattleCharacter>().Active5 || Active.GetComponent<BattleCharacter>().State == STATE.Die)
+                {
                     ++Check;
-                    if(Check == PlayList.Count)
+                    if (Check == PlayList.Count)
                     {
                         break;
-                    }                    
+                    }
+                    Active = PlayList[Check];                   
                 }
-                if(Check==PlayList.Count)
+                if (Check == PlayList.Count)
                 {
-                    ChangeState(State.End);
+                    ChangeState(State.Choice);
                 }
-                if (Active.GetComponent<BattleCharacter>().Active5)
+                else
                 {
-                    ChangeState(State.Moving);
+                    if (Active.GetComponent<BattleCharacter>().Active5)
+                    {
+                        ChangeState(State.Battle);
+                    }
                 }
-                break;
-            case State.Moving:
-                break;
+                break;            
             case State.Battle:
-                break;
-            case State.BackMoving:
-                break;
+                break;            
             case State.End:
+                break;
+            case State.GameOver:
                 break;
         }
     }
     private void Awake()
-    {        
-        for(int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
+    {
+        
+        Inst = this;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        for (int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);
         }
@@ -164,7 +204,6 @@ public class TurnBattle : MonoBehaviour
                     {
                         FastSpeedCheck = false; 
                     }
-
                 }
                 if (FastSpeedCheck) // 제일빠르다면 
                 {
@@ -181,32 +220,95 @@ public class TurnBattle : MonoBehaviour
         {
             Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0]; 
         }
+        for(int j = 0; j < Player.Length; ++j)
+        {
+            CharacterButton[j].GetComponent<CharacterButton>().myCharacter = Player[j];
+            Player[j].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[j];
+        }
+        for (int i = 0; i < Enemy.Length; ++i)
+        {
+            EnHpbar.Add(Instantiate(EnemyHpbar, Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
+            Enemy[i].GetComponent<BattleCharacter>().myHpBar = EnHpbar[i];
+            pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
+            pos.y += 2.0f;
+            pos2 = Camera.main.WorldToScreenPoint(pos);
+            EnHpbar[i].transform.position = pos2;
+        }
+
     }
     void Start()
     {
         ChangeState(State.Choice);
+        for (int i = 0; i < Player.Length; ++i) //캐릭터버튼에 내캐릭터 할당
+        {
+            CharacterButton[i].gameObject.GetComponent<CharacterButton>().myCharacter = Player[i];
+        }
     }
     void Update()
-    {        
+    {
+        
         mySelectRing.SetActive(false); //캐릭터가 선택되기전까지 링 오프
         mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
         StateProcess();
-        if (Input.GetKeyDown(KeyCode.Return))        
+        Victory();
+        Lose();
+        PlayerTargetDie();
+        FollowEnemyHpbar();
+
+    }
+    public void FollowEnemyHpbar()
+    {
+        for (int i = 0; i < Enemy.Length; ++i)
         {
-            SelectedCharacter = null;
-            ChangeState(State.ActiveCheck);
+            pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
+            pos.y += 2.0f;
+            pos2 = Camera.main.WorldToScreenPoint(pos);
+            EnHpbar[i].transform.position = pos2;
         }
-        if(SelectedCharacter!=null) //캐릭터가 선택되어있을경우
+    }
+    public void PlayerTargetDie()
+    {
+        for (int i = 0; i < Player.Length; ++i)
         {
-            mySelectRing.SetActive(true); //캐릭터가 선택되면 링온
-            mySelectRing.transform.position = SelectedCharacter.transform.position; //링을 선택캐릭터위치로
-            if (SelectedCharacter.GetComponent<BattleCharacter>().myTarget != null) //캐릭터가 타겟으로 잡고있는게 있는지 확인
+            if (Player[i].GetComponent<BattleCharacter>().myTarget.GetComponent<BattleCharacter>().State == STATE.Die)
             {
-                mySelectTargetRing.SetActive(true); // 타겟링온 
-                mySelectTargetRing.transform.position = SelectedCharacter.GetComponent<BattleCharacter>().myTarget.transform.position; // 타겟링을 타겟위치로 
+                foreach (GameObject act in Enemy)
+                {
+                    if (act.GetComponent<BattleCharacter>().State == STATE.Live) Player[i].GetComponent<BattleCharacter>().myTarget = act;
+                }
             }
         }
     }
+    public void Victory()
+    {
+        foreach (GameObject act in Enemy) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
+        VictoryCheck = true;
+        ChangeState(State.GameOver);
+    }
+    public void Lose()
+    {
+        foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
+        VictoryCheck = false;
+        ChangeState(State.GameOver);
+    }
+    public void EnemyTargetDie(GameObject v)
+    {
+        foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State == STATE.Live) v.GetComponent<BattleCharacter>().myTarget = act;
+    }
+    public void BattleStart() //공격버튼 클릭시 함수
+    {
+        ChangeState(State.ActiveCheck);
+        //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
+        SelectedCharacter = null;
+        AttackStartButton.interactable = false;
+        RunButton.interactable = false;
+        for (int i = 0; i < CharacterButton.Length; ++i)
+        {
+            CharacterButton[i].interactable = false;
+        }
+    }
+    
+
     IEnumerator Attack(int s)
     {
         foreach(GameObject act in Player)
@@ -214,6 +316,7 @@ public class TurnBattle : MonoBehaviour
             if(Active==act)
             {
                 Active.GetComponent<BattleCharacter>().ChoiceSkill(Active.GetComponent<BattleCharacter>().Skill);
+                
             }
         }
         foreach (GameObject act in Enemy)
@@ -225,7 +328,7 @@ public class TurnBattle : MonoBehaviour
         }
         
         yield return new WaitForSeconds(3.0f);
-        ChangeState(State.BackMoving);
+        StartCoroutine(BackMoving(gos));
     }
     IEnumerator Moving(Vector3 pos)
     {
@@ -234,7 +337,7 @@ public class TurnBattle : MonoBehaviour
         gos = Active.transform.position;
         Vector3 dir = pos - Active.transform.position;
         gos2 = dir; 
-        float dist = (dir.magnitude)-0.8f; //캐릭터가 겹치면 안되니까 거리에서 -0.8 만큼준다
+        float dist = (dir.magnitude)-1.5f; //캐릭터가 겹치면 안되니까 거리에서 -0.8 만큼준다
         dir.Normalize();
         while (dist > 0.0f)
         {
@@ -249,8 +352,8 @@ public class TurnBattle : MonoBehaviour
         }
         if (Mathf.Approximately(dist, 0.0f))
         {
-            Active.GetComponent<Animator>().SetBool("IsWalking", false);            
-            ChangeState(State.Battle);
+            Active.GetComponent<Animator>().SetBool("IsWalking", false);
+            StartCoroutine(Attack(Skill));
         }
     }
     IEnumerator BackMoving(Vector3 pos)
@@ -301,4 +404,7 @@ public class TurnBattle : MonoBehaviour
             yield return null;
         }
     }
+    
+
+
 }
