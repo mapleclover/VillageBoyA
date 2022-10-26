@@ -141,7 +141,6 @@ public class ActionController : MonoBehaviour
                                 {
                                     isBackAttack = true;
                                     //EnemyBackAttackInfoAppear();
-                                    
                                 }
                                 else if (_backAttackAngle <= 0.866f)// _zvalue값이 0이상일때 (뒤치기아닐때)
                                 {

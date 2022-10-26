@@ -142,7 +142,7 @@ public class QuestManager : MonoBehaviour
                 }
                 break;
             case 30:
-                if (questActionIndex == 2)
+                if (questActionIndex == 1)
                     questPopupText.text = "Empty";
                 break;
         }
