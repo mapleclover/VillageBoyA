@@ -19,6 +19,8 @@ public class ActionController : MonoBehaviour
     private bool pickItemActivated = false;
     private bool isBackAttack = false;
 
+    public bool isBattle;
+
     private RaycastHit hitInfo;
     private GameObject scanObject;
     
@@ -48,7 +50,7 @@ public class ActionController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        isBattle = false;   
     }
 
     // Update is called once per frame
@@ -64,6 +66,7 @@ public class ActionController : MonoBehaviour
             scanObject = null;
         }
         TryPickupAction();
+        Debug.Log(isBattle);
     }
 
     private Vector3 BoudaryAngle(float _angle)
@@ -174,7 +177,18 @@ public class ActionController : MonoBehaviour
     // 아이템체크 후 pickup 함수활성화
     private void TryPickupAction()
     {
-        if (Input.GetKeyDown(KeyCode.E) && scanObject != null)
+        if (scanObject != null)
+        {
+            if (scanObject.transform.tag == "Npc" || scanObject.transform.tag == "Item")
+            {
+                if (Input.GetKeyDown(KeyCode.E) && scanObject != null)
+                {
+                    CheckObject();
+                    CanPickUp();
+                }
+            }
+        }
+        if (isBattle)
         {
             CheckObject();
             CanPickUp();
@@ -203,11 +217,12 @@ public class ActionController : MonoBehaviour
         }
         else if (isBackAttack)
         {
-            if(hitInfo.transform != null)
+            if(hitInfo.transform != null && isBattle)
             {
                 //기습- 배틀씬으로넘어감.///////////////////////////////**************
                 Destroy(hitInfo.transform.gameObject);
                 isBackAttack = false;
+                isBattle = false;
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************
                 SceneLoad.Instance.ChangeScene(4);
@@ -262,6 +277,14 @@ public class ActionController : MonoBehaviour
             pickItemActivated = false;
             itemTextBackground.gameObject.SetActive(false);
             CheckText.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.transform.tag == "Enemy")
+        {
+            isBattle = true;
         }
     }
     //private void EnemyBackAttackInfoAppear()

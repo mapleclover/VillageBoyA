@@ -84,11 +84,11 @@ public class QuestManager : MonoBehaviour
                     questObject[1].SetActive(false); // ! 아이콘
                     questObject[2].SetActive(true); // ? 아이콘
                     questObject[2].transform.position = Kong_2000.transform.position + Vector3.up * 2.3f;
+                    questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
                 }
                 if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
                 {
                     questObject[2].SetActive(false);
-                    questObject[0].SetActive(true); // 사과.
                 }
                 break;
             case 20:
@@ -101,8 +101,8 @@ public class QuestManager : MonoBehaviour
                 }
                 if(questActionIndex == 2)
                 {
-                    questObject[2].transform.position = Kong_2000.transform.position + Vector3.up * 2.3f;
                     questObject[2].SetActive(true);
+                    questObject[2].transform.position = Kong_2000.transform.position + Vector3.up * 2.3f;
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
                         Destroy(scanObject); // 사과

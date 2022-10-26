@@ -1735,12 +1735,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewAngle: 120
-  viewDistance: 4
+  viewDistance: 5
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  battleDist: 1.2
-  notChaseDist: 12
+  battleDist: 1.4
+  notChaseDist: 15
   theMonster: {fileID: 4329890614985290407}
   theNav: {fileID: -2793706486179394294}
 --- !u!195 &-2793706486179394294
@@ -1789,7 +1789,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3626195210882121837}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.3
   m_Height: 1.35

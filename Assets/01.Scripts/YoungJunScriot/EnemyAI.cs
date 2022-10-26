@@ -10,13 +10,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float viewAngle; // 시야각
     [SerializeField] private float viewDistance; // 시야거리
     [SerializeField] private LayerMask layerMask; // 타겟마스크 (플레이어)
-    [SerializeField] private float battleDist; // 일정거리 도착하면 배틀씬으로 넘어가는 거리설정.
     [SerializeField] private float notChaseDist; // 일정거리이상도망치면 더이상 몬스터가 쫒아오지않게끔.
 
     [SerializeField]
     private Monster theMonster;
     [SerializeField]
     private NavMeshAgent theNav;
+    [SerializeField]
+    private ActionController theActionController;
 
     private bool findTarget = false;
     
@@ -79,7 +80,7 @@ public class EnemyAI : MonoBehaviour
     }
     public void ChaseTarget(Transform target)
     {
-        if ((target.position - transform.position).magnitude < battleDist) // 일정거리안으로 들어오면 배틀씬으로넘아가게.
+        if (theActionController.isBattle) // 일정거리안으로 들어오면 배틀씬으로넘아가게.
         {
            theNav.SetDestination(transform.position);
            theNav.ResetPath();
