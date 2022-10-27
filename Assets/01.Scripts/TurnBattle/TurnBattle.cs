@@ -41,6 +41,7 @@ public class TurnBattle : MonoBehaviour
     Vector3 gos2; //원래바라보고있던위치값
     Vector3 pos;
     Vector3 pos2;
+    public GameObject speedChanger;
     public enum State
     {
         Create, Choice,ActiveCheck, Battle, End ,GameOver
@@ -102,6 +103,8 @@ public class TurnBattle : MonoBehaviour
             case State.End:
                 break;
             case State.GameOver:
+                speedChanger.SetActive(false);
+                Time.timeScale = 1.0f;
                 StopAllCoroutines();
                 GameOverCanvas.SetActive(true);
                 if (VictoryCheck)
@@ -284,12 +287,14 @@ public class TurnBattle : MonoBehaviour
         foreach (GameObject act in Enemy) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
         VictoryCheck = true;
         ChangeState(State.GameOver);
+        Time.timeScale = 1.0f;
     }
     public void Lose()
     {
         foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
         VictoryCheck = false;
         ChangeState(State.GameOver);
+        Time.timeScale = 1.0f;
     }
     public void EnemyTargetDie(GameObject v)
     {
@@ -299,12 +304,17 @@ public class TurnBattle : MonoBehaviour
     {
         ChangeState(State.ActiveCheck);
         //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
+
+        SelectedCharacterAttack.Inst.myAttack.SetActive(false);
+        SelectedCharacterAttack.Inst.mySelectAttack.SetActive(false);
+        SelectedCharacterAttack.Inst.myActiveAttack.SetActive(true);
         SelectedCharacter = null;
         AttackStartButton.interactable = false;
         RunButton.interactable = false;
         for (int i = 0; i < CharacterButton.Length; ++i)
         {
             CharacterButton[i].interactable = false;
+            CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
         }
     }
     
