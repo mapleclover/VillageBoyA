@@ -304,12 +304,17 @@ public class TurnBattle : MonoBehaviour
     {
         ChangeState(State.ActiveCheck);
         //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
+
+        SelectedCharacterAttack.Inst.myAttack.SetActive(false);
+        SelectedCharacterAttack.Inst.mySelectAttack.SetActive(false);
+        SelectedCharacterAttack.Inst.myActiveAttack.SetActive(true);
         SelectedCharacter = null;
         AttackStartButton.interactable = false;
         RunButton.interactable = false;
         for (int i = 0; i < CharacterButton.Length; ++i)
         {
             CharacterButton[i].interactable = false;
+            CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
         }
     }
     
