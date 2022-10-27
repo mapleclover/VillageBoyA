@@ -9,6 +9,9 @@ public class InventoryController : MonoBehaviour
     public GameObject myPanel;
     public GameObject[] mySlots;
     public GameObject myAlert;
+    [SerializeField]
+    private GameObject[] itemIcons;
+
     bool v = true;
     // Update is called once per frame
     void Update()
@@ -78,4 +81,31 @@ public class InventoryController : MonoBehaviour
     {
         myAlert.SetActive(false);
     }
+
+    public void GetItem(GameObject theItem)
+    {
+
+        switch (theItem.GetComponent<ObjData>().id)
+        {
+            case 100:
+                for (int i = 0; i< mySlots.Length; i++)
+                {
+                    if (mySlots[i].transform.childCount == 0)
+                    {
+
+                        //GameObject obj = Instantiate(itemIcons[0], mySlots[i].transform.localPosition, Quaternion.identity);
+                        GameObject obj = Instantiate(itemIcons[0]);
+                        obj.transform.SetParent(mySlots[i].transform);
+                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f,1.0f);
+                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                        obj.transform.localPosition = Vector2.zero;
+                        break;
+                    }
+                }
+        
+                break;
+        }
+
+    }
+    
 }

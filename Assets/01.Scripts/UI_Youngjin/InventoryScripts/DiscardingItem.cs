@@ -25,7 +25,7 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
             eventData.pointerDrag.transform.SetParent(transform);
             eventData.pointerDrag.transform.localPosition = Vector3.zero;
 
-        if (eventData.pointerDrag.transform.gameObject.layer == 8)
+        if (eventData.pointerDrag.transform.gameObject.layer == 9)
         {
             isQuestItem.SetActive(true);
 
