@@ -6,7 +6,7 @@ public class CameraMovement2 : MonoBehaviour
 {
 
     //전정우
-
+    public GameObject myInventory;
     public Transform objectToFollow;
     public float followSpeed = 10.0f;
     public float sensitivity = 30.0f;
@@ -21,7 +21,7 @@ public class CameraMovement2 : MonoBehaviour
     public float smoothness = 10.0f;
     public float maxDistance;
 
-    public bool isCursor = false;
+    public bool cursorOn = false;
 
 
     //방해물이 많아 껏습니다. (주변 식물들을 마땅한 레이어가 없어서 그라운드로 설정)
@@ -57,8 +57,14 @@ public class CameraMovement2 : MonoBehaviour
         Quaternion rot = Quaternion.Euler(rotX, rotY, 0);
         transform.rotation = rot;
 
-        OnCursor();
-
+        if (myInventory.activeSelf)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            OnCursor();
+        }
 
     }
 
