@@ -5,8 +5,8 @@ using UnityEngine;
 // 작성자 : 이현호
 public class PauseMenu : MonoBehaviour
 {
-
     public GameObject PauseUI;
+
 
     private bool paused = false;
 
@@ -19,22 +19,26 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            paused = !paused;
-        }
-        if (paused)
-        {
             PauseUI.SetActive(true);
             Time.timeScale = 0;
+            //paused = !paused;
         }
+        /*
+            if (paused)
+            {
+                PauseUI.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else
+            {
+                PauseUI.SetActive(false);
+                Time.timeScale = 1;
+            }
 
-        if (!paused)
-        {
-            PauseUI.SetActive(false);
-            Time.timeScale = 1f;
-        }
-    }
-    public void Resume()
-    {
-        paused = !paused;
+            if (!paused)
+            {
+                PauseUI.SetActive(false);
+                Time.timeScale = 1f;
+            }*/
     }
 }
