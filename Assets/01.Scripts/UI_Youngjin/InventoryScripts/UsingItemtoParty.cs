@@ -10,7 +10,6 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public GameObject myArrow;
     public GameObject myPanel;
     public Transform myInventory;
-    public GameObject myAlert;
     public TMPro.TMP_Text myText;
     GameObject obj;
     public void OnPointerEnter(PointerEventData eventData)
@@ -27,7 +26,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (PointerInfo.instance.transform.gameObject.layer == 6)       //장비를 캐릭터에게 장착
+        if (PointerInfo.instance.transform.gameObject.layer == 7)       //장비를 캐릭터에게 장착
         {
             obj = Instantiate(this.gameObject);
             obj.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
@@ -43,14 +42,22 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
             obj.GetComponent<RawImage>().raycastTarget = false;
             //게임데이터에 적용할 때 여기서
         }
-        else if (PointerInfo.instance.transform.gameObject.layer == 7)          //소모품을 캐릭터에게 사용
+        else if (PointerInfo.instance.transform.gameObject.layer == 8)          //소모품을 캐릭터에게 사용
         {
             myText.text = $"{this.transform.name} has gained +10hp!";      //value값으로 변경해야 함
-            myAlert.SetActive(true);
+            StartCoroutine(UsedPotion());
             Destroy(PointerInfo.instance.transform.gameObject);
         }
-        myPanel.SetActive(false);
         
+        
+    }
+    IEnumerator UsedPotion()
+    {
+        myText.gameObject.SetActive(true);
+        myPanel.SetActive(false);
+        yield return new WaitForSeconds(1.0f);
+        myText.gameObject.SetActive(false);
+      //  myPanel.SetActive(false);
     }
   
 

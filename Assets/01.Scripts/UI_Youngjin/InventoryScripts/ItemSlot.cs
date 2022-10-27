@@ -24,4 +24,6 @@ public class ItemSlot : MonoBehaviour, IDropHandler
         child.SetParent(transform);
         child.localPosition = Vector3.zero;
     }
+
+    
 }

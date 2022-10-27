@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 public class PointerInfo : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    public GameObject myInfoBox;
-    public TMPro.TMP_Text myInfoText;
+    public GameObject myInfoBox;            //1
+    public TMPro.TMP_Text myInfoText;       //2
     public string itemName;
     public string itemInfo;
-    public GameObject myParty;
-    public GameObject myPanel;
+   public GameObject myParty;          //3
+    public GameObject myPanel;          //4
     Vector2 pos = Vector2.zero;
     Vector2 dragOffset = Vector2.zero;
     public static PointerInfo instance = null;
@@ -34,7 +34,7 @@ public class PointerInfo : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
                 break;
 
         }
-         myInfoText.text =$"<size=32><b>{itemName}</size></b> \n\n {itemInfo} ";
+         myInfoText.text =$"<size=36><b>{itemName}</size></b> \n\n {itemInfo} ";
          pos.x = this.transform.parent.localPosition.x;
          pos.y = this.transform.parent.localPosition.y+170 ;
          myInfoBox.transform.localPosition = pos;

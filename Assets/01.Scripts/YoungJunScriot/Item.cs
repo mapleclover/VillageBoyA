@@ -9,6 +9,7 @@ public class Item : ScriptableObject
     public NpcType itemType;
     public GameObject itemPrefab;
 
+
     public enum NpcType
     {
         Equiment,
