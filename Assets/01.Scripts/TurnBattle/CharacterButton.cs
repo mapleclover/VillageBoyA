@@ -10,6 +10,7 @@ public class CharacterButton : MonoBehaviour
     public GameObject myAttack;
     public GameObject mySelectAttack;
     public TMPro.TMP_Text myActvieTxt = null;
+    public GameObject mySelectCharacter;
     Vector3 pos;
     void Start()
     {
@@ -42,7 +43,8 @@ public class CharacterButton : MonoBehaviour
     }
     public void SelectedCharacter()
     {
-        
+        mySelectCharacter.SetActive(true);
+        mySelectCharacter.transform.position = transform.position;
         TurnBattle.Inst.SelectedCharacter=myCharacter;
         mySelectAttack.gameObject.SetActive(false);
         myAttack.gameObject.SetActive(true);        

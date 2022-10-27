@@ -21,6 +21,8 @@ public class QuestManager : MonoBehaviour
     private TMPro.TMP_Text questPopupText;
     [SerializeField]
     private GameObject theComplete;
+    [SerializeField]
+    private InventoryController theInven;
 
     private void Awake()
     {
@@ -96,6 +98,7 @@ public class QuestManager : MonoBehaviour
                 {
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
+                        
                         Destroy(scanObject); // 사과
                     }
                 }
@@ -134,6 +137,7 @@ public class QuestManager : MonoBehaviour
                 if (questActionIndex == 1)
                 {
                     questPopupText.text = "사과 구해오기 1/2";
+                    theInven.GetItem(scanObject);
                 }
                 if (questActionIndex == 2)
                 {

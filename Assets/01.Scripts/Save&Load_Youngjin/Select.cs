@@ -35,7 +35,9 @@ public class Select : MonoBehaviour
               //  slotText[i].text+="\n"+ $"<color=blue>{DataController.instance.gameData.currentVillage}</color>";//현재 있는 마을 표시
                 slotText[i].text += $"\nMy Progress={DataController.instance.gameData.myProgress}%";
                 DataController.instance.gameData.partyMember[0] = true;
-                for(int j=0;j< DataController.instance.gameData.partyMember.Length;j++)
+                DataController.instance.gameData.partyMember[1] = true;
+                DataController.instance.gameData.partyMember[2] = true;
+                for (int j=0;j< DataController.instance.gameData.partyMember.Length;j++)
                 {
                     if (DataController.instance.gameData.partyMember[j])
                     {

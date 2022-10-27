@@ -40,7 +40,7 @@ public class BattleCharacter : CharacterProperty
     }
     void Start()
     {
-              
+        myHpBar.value = myHp / maxHp;
     }
 
     void Update()
@@ -102,11 +102,11 @@ public class BattleCharacter : CharacterProperty
     {
         StartCoroutine(OnDmg(dmg));
     }
-    IEnumerator OnDmg(float dmg)
+    IEnumerator OnDmg(float dmg) //플로팅데미지
     {
-        yield return new WaitForSeconds(1.5f);
-        GameObject hudText = Instantiate(hudDmgText, Canvas.transform);
-        switch (Random.Range(0, 10))
+        yield return new WaitForSeconds(1.5f); // 1.5초이후 생성된다
+        GameObject hudText = Instantiate(hudDmgText, Canvas.transform); // 플로팅데미지 생성
+        switch (Random.Range(0, 10)) // 크리, 미스 , 일반데미지 확률
         {
             case 0:
                 dmg *= 2;
@@ -120,12 +120,12 @@ public class BattleCharacter : CharacterProperty
                 hudText.GetComponent<DmageText>().color = Color.white;
                 break;
         }
-        myHp -= dmg;
-        Vector3 pos = transform.position;
-        pos.y += 2.0f;
-        Vector3 pos2 = Camera.main.WorldToScreenPoint(pos);
-        hudText.transform.position = pos2;
-        if (dmg <= 0.0f)
+        myHp -= dmg; // 크리미스 일반데미지 확인이후 체력에 -
+        Vector3 pos = transform.position; //내위치
+        pos.y += 2.0f; // 내위치에서 2만큼 y위로이동
+        Vector3 pos2 = Camera.main.WorldToScreenPoint(pos); // pos2는 메인카메라에서 pos 위치값
+        hudText.transform.position = pos2; // 플로팅데미지를 po2로이동
+        if (dmg <= 0.0f) //데미지체크해서 0이하면 미스로뜨게한다
         {
             hudText.GetComponent<DmageText>().Dmg.text = "Miss";
         }
