@@ -66,7 +66,6 @@ public class ActionController : MonoBehaviour
             scanObject = null;
         }
         TryPickupAction();
-        Debug.Log(isBattle);
     }
 
     private Vector3 BoudaryAngle(float _angle)
