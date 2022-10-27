@@ -62,8 +62,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     IEnumerator UsedPotion()
     {
         myText.gameObject.SetActive(true);
-        myPanel.SetActive(false);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         myText.gameObject.SetActive(false);
         myPanel.SetActive(false);
     }
