@@ -12,7 +12,7 @@ public enum STATE
 public class BattleCharacter : CharacterProperty
 {
     public STATE State = STATE.Live;
-    public float _myhp = 100.0f;
+    float _myhp = 100.0f;
     float maxHp = 100.0f;
     float minHp = 0.0f;
     public Slider myHpBar;
@@ -29,15 +29,44 @@ public class BattleCharacter : CharacterProperty
     }
     public float speed = 2.0f;
     public int Skill = 0;
+    public bool longAttackCheck=false;
+
     public GameObject myTarget;
     public bool Active5=false;
     public GameObject Canvas;    
     public GameObject hudDmgText;
     public bool Stunned=false;
-    public bool Stunned2= false;
+    bool Stunned2= false;
     int StunCheck;
     public int StunTurn = 1;
-
+    void ChangeState(STATE s)
+    {
+        if (State == s) return;
+        State = s;
+        switch (State)
+        {
+            case STATE.Live:
+                break;
+            case STATE.Die:
+                myAnim.SetBool("Death",true);
+                break;
+        }
+    }
+    void StateProcess()
+    {
+        switch (State)
+        {
+            case STATE.Live:
+                if (myHp <= 0.0f)
+                {
+                    ChangeState(STATE.Die);
+                }
+                break;
+            case STATE.Die:
+                Active5 = false;
+                break;
+        }
+    }
     private void Awake()
     {
         Canvas = GameObject.Find("Canvas");
@@ -49,18 +78,7 @@ public class BattleCharacter : CharacterProperty
 
     void Update()
     {
-        if (myHp <= 0.0f)
-        {
-            State = STATE.Die;
-        }
-        else
-        {
-            State = STATE.Live;
-        }
-        if (State == STATE.Die)
-        {
-            Active5 = false;
-        }
+        StateProcess();        
         myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp , 5.0f * Time.deltaTime);
         StunnedCheck(StunTurn);
     }
@@ -129,7 +147,8 @@ public class BattleCharacter : CharacterProperty
     }
     IEnumerator OnDmg(float dmg) //플로팅데미지
     {
-        yield return new WaitForSeconds(1.5f); // 1.5초이후 생성된다
+        yield return new WaitForSeconds(1.0f); // 1.5초이후 생성된다
+        myAnim.SetTrigger("Hit");
         GameObject hudText = Instantiate(hudDmgText, Canvas.transform); // 플로팅데미지 생성
         switch (Random.Range(0, 10)) // 크리, 미스 , 일반데미지 확률
         {

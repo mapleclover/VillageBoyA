@@ -100,7 +100,7 @@ public class TurnBattle : MonoBehaviour
                         }
                     }
                 }
-                StartCoroutine(Moving(Active.GetComponent<BattleCharacter>().myTarget.transform.position));
+                StartCoroutine(Moving(Active.GetComponent<BattleCharacter>().myTarget.transform.position, Active.GetComponent<BattleCharacter>().longAttackCheck));
                 break;            
             case State.End:
                 break;
@@ -336,16 +336,17 @@ public class TurnBattle : MonoBehaviour
         
         
     }
-    
 
-    IEnumerator Attack(int s,Vector3 gos,Vector3 gos2) //공격
+
+    IEnumerator Attack(int s, Vector3 gos, Vector3 gos2, bool v=false) //공격
     {
-        foreach(GameObject act in Player)
+
+        foreach (GameObject act in Player)
         {
-            if(Active==act)
+            if (Active == act)
             {
                 Active.GetComponent<BattleCharacter>().ChoiceSkill(Active.GetComponent<BattleCharacter>().Skill);
-                
+
             }
         }
         foreach (GameObject act in Enemy)
@@ -355,34 +356,50 @@ public class TurnBattle : MonoBehaviour
                 Active.GetComponent<BattleCharacter>().RandomSkill();
             }
         }
-        
+
         yield return new WaitForSeconds(3.0f);
-        StartCoroutine(BackMoving(gos,gos2));
+        if (!v)
+        {
+            StartCoroutine(BackMoving(gos, gos2));
+        }
+        else
+        {
+            ChangeState(State.ActiveCheck);
+        }
+
     }
-    IEnumerator Moving(Vector3 pos) //적한테
+    IEnumerator Moving(Vector3 pos,bool v=false) //적한테
     {
         StartCoroutine(RotatingToPosition(pos,true));
-        Active.GetComponent<Animator>().SetBool("IsWalking", true);
         Vector3 gos = Active.transform.position;
         Vector3 dir = pos - Active.transform.position;
-        Vector3 gos2 = dir; 
-        float dist = (dir.magnitude)-1.5f; //캐릭터가 겹치면 안되니까 거리에서 -0.8 만큼준다
-        dir.Normalize();
-        while (dist > 0.0f)
+        Vector3 gos2 = dir;
+        if (!v) // v값으로 원거리 공격인지 확인
         {
-            float delta = 5.0f * Time.deltaTime;
-            if (delta > dist)
+            Active.GetComponent<Animator>().SetBool("IsWalking", true);
+            
+            float dist = (dir.magnitude) - 1.5f; //캐릭터가 겹치면 안되니까 -
+            dir.Normalize();
+            while (dist > 0.0f)
             {
-                delta = dist;
+                float delta = 5.0f * Time.deltaTime;
+                if (delta > dist)
+                {
+                    delta = dist;
+                }
+                dist -= delta;
+                Active.transform.Translate(dir * delta, Space.World);
+                yield return null;
             }
-            dist -= delta;
-            Active.transform.Translate(dir * delta, Space.World);
-            yield return null;
+            if (Mathf.Approximately(dist, 0.0f))
+            {
+                Active.GetComponent<Animator>().SetBool("IsWalking", false);
+                StartCoroutine(Attack(Skill, gos, gos2));
+            }
         }
-        if (Mathf.Approximately(dist, 0.0f))
+        else
         {
-            Active.GetComponent<Animator>().SetBool("IsWalking", false);
-            StartCoroutine(Attack(Skill,gos,gos2));
+            StartCoroutine(Attack(Skill, gos, gos2,v));
         }
     }
     IEnumerator BackMoving(Vector3 pos,Vector3 gos2) //원래자리로

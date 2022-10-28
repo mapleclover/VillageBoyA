@@ -3489,8 +3489,8 @@ GameObject:
   m_Component:
   - component: {fileID: 658239072}
   - component: {fileID: 658239073}
-  - component: {fileID: 658239075}
   - component: {fileID: 658239074}
+  - component: {fileID: 658239075}
   m_Layer: 30
   m_Name: Fox1
   m_TagString: Untagged
@@ -3548,16 +3548,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
+  longAttackCheck: 0
   myTarget: {fileID: 0}
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 1
-  Stunned2: 0
   StunTurn: 1
 --- !u!136 &658239075
 CapsuleCollider:
@@ -8084,8 +8083,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1639199656}
   - component: {fileID: 1639199659}
-  - component: {fileID: 1639199658}
   - component: {fileID: 1639199657}
+  - component: {fileID: 1639199658}
   m_Layer: 30
   m_Name: Fox3
   m_TagString: Untagged
@@ -8123,16 +8122,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
+  longAttackCheck: 0
   myTarget: {fileID: 0}
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 1
-  Stunned2: 0
   StunTurn: 1
 --- !u!136 &1639199658
 CapsuleCollider:
@@ -10379,8 +10377,8 @@ GameObject:
   m_Component:
   - component: {fileID: 823081628053210107}
   - component: {fileID: 823081628053210110}
-  - component: {fileID: 823081628053210109}
   - component: {fileID: 823081628053210108}
+  - component: {fileID: 823081628053210109}
   m_Layer: 30
   m_Name: Fox2
   m_TagString: Untagged
@@ -10910,16 +10908,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
+  longAttackCheck: 0
   myTarget: {fileID: 0}
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 1
-  Stunned2: 0
   StunTurn: 1
 --- !u!136 &823081628053210109
 CapsuleCollider:
@@ -19015,16 +19012,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 2
   Skill: 0
+  longAttackCheck: 1
   myTarget: {fileID: 0}
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 0
-  Stunned2: 0
   StunTurn: 1
 --- !u!1 &870975820478593648
 GameObject:
@@ -23740,16 +23736,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 2
   Skill: 0
+  longAttackCheck: 0
   myTarget: {fileID: 0}
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 0
-  Stunned2: 0
   StunTurn: 1
 --- !u!1001 &4512408567310413145
 PrefabInstance:
@@ -28173,16 +28168,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 2
   Skill: 0
+  longAttackCheck: 0
   myTarget: {fileID: 0}
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 0
-  Stunned2: 0
   StunTurn: 1
 --- !u!4 &9117064292226123784
 Transform:
