@@ -39,8 +39,8 @@ public class TurnBattle : MonoBehaviour
     bool VictoryCheck;
     bool FastSpeedCheck;
     int Skill=0;
-    Vector3 gos; //원래위치값
-    Vector3 gos2; //원래바라보고있던위치값
+    //Vector3 gos; //원래위치값
+    //Vector3 gos2; //원래바라보고있던위치값
     Vector3 pos;
     Vector3 pos2;
     public GameObject speedChanger;
@@ -188,8 +188,8 @@ public class TurnBattle : MonoBehaviour
     {
         
         Inst = this;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true; // 커서안보이는거 트루로
+        Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제
         for (int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);
@@ -315,24 +315,30 @@ public class TurnBattle : MonoBehaviour
     }
     public void BattleStart() //공격버튼 클릭시 함수
     {
-        ChangeState(State.ActiveCheck);
-        //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
 
+        if (!SelectedCharacterAttack.Inst.myAttack.activeSelf && !SelectedCharacterAttack.Inst.mySelectAttack.activeSelf)
+        {
+            ChangeState(State.ActiveCheck);
+            AttackStartButton.interactable = false;
+            RunButton.interactable = false; 
+            for (int i = 0; i < CharacterButton.Length; ++i)
+            {
+                CharacterButton[i].interactable = false;  //버튼비활성화
+                CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
+            }
+        }
+        //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
+        
         SelectedCharacterAttack.Inst.myAttack.SetActive(false);
         SelectedCharacterAttack.Inst.mySelectAttack.SetActive(false);
         SelectedCharacterAttack.Inst.myActiveAttack.SetActive(true);
         SelectedCharacter = null;
-        AttackStartButton.interactable = false;
-        RunButton.interactable = false;
-        for (int i = 0; i < CharacterButton.Length; ++i)
-        {
-            CharacterButton[i].interactable = false;  //버튼비활성화
-            CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false); 
-        }
+        
+        
     }
     
 
-    IEnumerator Attack(int s) //공격
+    IEnumerator Attack(int s,Vector3 gos,Vector3 gos2) //공격
     {
         foreach(GameObject act in Player)
         {
@@ -351,15 +357,15 @@ public class TurnBattle : MonoBehaviour
         }
         
         yield return new WaitForSeconds(3.0f);
-        StartCoroutine(BackMoving(gos));
+        StartCoroutine(BackMoving(gos,gos2));
     }
     IEnumerator Moving(Vector3 pos) //적한테
     {
         StartCoroutine(RotatingToPosition(pos,true));
         Active.GetComponent<Animator>().SetBool("IsWalking", true);
-        gos = Active.transform.position;
+        Vector3 gos = Active.transform.position;
         Vector3 dir = pos - Active.transform.position;
-        gos2 = dir; 
+        Vector3 gos2 = dir; 
         float dist = (dir.magnitude)-1.5f; //캐릭터가 겹치면 안되니까 거리에서 -0.8 만큼준다
         dir.Normalize();
         while (dist > 0.0f)
@@ -376,10 +382,10 @@ public class TurnBattle : MonoBehaviour
         if (Mathf.Approximately(dist, 0.0f))
         {
             Active.GetComponent<Animator>().SetBool("IsWalking", false);
-            StartCoroutine(Attack(Skill));
+            StartCoroutine(Attack(Skill,gos,gos2));
         }
     }
-    IEnumerator BackMoving(Vector3 pos) //원래자리로
+    IEnumerator BackMoving(Vector3 pos,Vector3 gos2) //원래자리로
     {
         StartCoroutine(RotatingToPosition(pos,true));
         Active.GetComponent<Animator>().SetBool("IsWalking", true);        
