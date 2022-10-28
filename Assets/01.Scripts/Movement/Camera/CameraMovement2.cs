@@ -21,7 +21,7 @@ public class CameraMovement2 : MonoBehaviour
     public float smoothness = 10.0f;
     public float maxDistance;
 
-    public bool cursorOn = false;
+    //public bool cursorOn = false;
 
 
     //방해물이 많아 껏습니다. (주변 식물들을 마땅한 레이어가 없어서 그라운드로 설정)
