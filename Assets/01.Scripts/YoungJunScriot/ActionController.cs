@@ -102,13 +102,18 @@ public class ActionController : MonoBehaviour
                         // 플레이어위치에서 ovelapSphere에 감지된 대상에게로 레이저를쏨.
                         if (Physics.Raycast(transform.position, _direction, out hitInfo, range, layerMask))
                         {
-                            if (hitInfo.transform.tag == "Npc")
+                            if (hitInfo.transform.tag == "Npc" && !theManager.isAction)
                             {
                                 NpcInfoAppear();
                             }
-                            else if (hitInfo.transform.tag == "Item")
+                            else if (hitInfo.transform.tag == "Item" && !theManager.isAction)
                             {
                                 ItemInfoAppear();
+                            }
+                            else
+                            {
+                                NpcInfoDisappear();
+                                ItemInfoDisappear();
                             }
                         }
                         else //거리안맞을떄지움.
