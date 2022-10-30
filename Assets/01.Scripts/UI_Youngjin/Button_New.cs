@@ -15,7 +15,7 @@ public class Button_New : MonoBehaviour
     public GameObject[] myButtons2;
     public GameObject mySaveLoad;
     public GameObject myStart;
-
+    public GameObject GameSetting;
 
     bool check = false;
     bool v = false;
@@ -115,7 +115,9 @@ public class Button_New : MonoBehaviour
     }
     public void OnClickSettings()
     {
-
+        myStart.SetActive(false);
+        OnMouse.SetActive(false);
+        GameSetting.SetActive(true);
     }
     public void OnClickExit()
     {
