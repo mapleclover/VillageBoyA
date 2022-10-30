@@ -229,6 +229,7 @@ public class ActionController : MonoBehaviour
         }
         else if (theManager.isAction)
         {
+            Debug.Log(scanObject);
             theManager.Action(scanObject);
         }
     }

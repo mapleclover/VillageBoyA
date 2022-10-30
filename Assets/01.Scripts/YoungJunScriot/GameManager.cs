@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         //대화시작
         int questTalkIndex = questManager.GetQuestTalkIndex(id);
         string talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex); // 대화가져옴.
+        Debug.Log(talkData);
         //대화종료
         if(talkData == null) // 더이상 대화할내용이없을경우 isaction을 false로바꿈.
         {
