@@ -30,8 +30,19 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         {
             myText.text = $"{this.transform.name} has gained +10hp!";      //value값으로 변경해야 함
             StartCoroutine(UsedPotion());
-            Destroy(PointerInfo.instance.transform.gameObject);
+            GameObject temp = PointerInfo.instance.transform.gameObject;
+            if (InventoryController.Instance.myItem[temp.GetComponent<Pickup>().item.itemName] > 1)
+            {
+                InventoryController.Instance.myItem[temp.GetComponent<Pickup>().item.itemName]--;
+                InventoryController.Instance.ShowNumbertoUI();
+            }
+            else
+            {
+                Destroy(PointerInfo.instance.transform.gameObject);
+            }
+
         }
+
         else
         {
             if (PointerInfo.instance.transform.gameObject.layer == 7)       //장비를 캐릭터에게 장착
