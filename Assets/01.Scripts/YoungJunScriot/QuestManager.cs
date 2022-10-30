@@ -141,6 +141,7 @@ public class QuestManager : MonoBehaviour
                 }
                 if (questActionIndex == 2)
                 {
+                    theInven.GetItem(scanObject);
                     questPopupText.text = "Kong에게 \n사과 갖다주기";
                     myAnim.SetBool("isComplete", true);
                 }
