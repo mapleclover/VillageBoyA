@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class DontDestroyMusic : MonoBehaviour
+public class TextSpeedControl : MonoBehaviour
 {
-    public AudioSource bgm;
+    public Slider speedController;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (PlayerPrefs.HasKey("TextSpeed"))
+        {
+            speedController.value = PlayerPrefs.GetInt("TextSpeed");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("TextSpeed", 7);
+            speedController.value = PlayerPrefs.GetInt("TextSpeed");
+        }
     }
-    void Start()
+    public void changeTextSpeed()
     {
-        bgm.Play();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PlayerPrefs.SetInt("TextSpeed", (int)speedController.value);
     }
 }
