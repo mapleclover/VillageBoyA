@@ -180,10 +180,13 @@ public class ActionController : MonoBehaviour
         {
             if (scanObject.transform.tag == "Npc" || scanObject.transform.tag == "Item")
             {
-                if (Input.GetKeyDown(KeyCode.E) && scanObject != null)
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                 {
-                    CheckObject();
-                    CanPickUp();
+                    if (scanObject != null)
+                    {
+                        CheckObject();
+                        CanPickUp();
+                    }
                 }
             }
         }

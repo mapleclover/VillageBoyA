@@ -66,7 +66,7 @@ public class Goal : MonoBehaviour
         {
             if (goalCounting == 1)
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                 {
                     theManager.Action(this.gameObject);
                     keyDowunCount++;
