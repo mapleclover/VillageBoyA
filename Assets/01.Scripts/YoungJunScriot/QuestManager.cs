@@ -115,10 +115,12 @@ public class QuestManager : MonoBehaviour
                         Destroy(scanObject); // 사과
                     }
                 }
-                //if(questActionIndex == 3)
-                //{
-                //    questObject[2].SetActive(false);
-                //}
+                if(questActionIndex == 3)
+                {
+                    questObject[2].SetActive(false); // ? 사라지게.
+                    questObject[4].SetActive(true);
+                    Goal.goalCounting++; 
+                }
                 break;
         }
     }
@@ -148,6 +150,10 @@ public class QuestManager : MonoBehaviour
                     theInven.GetItem(scanObject);
                     questPopupText.text = "클레에게 \n사과 갖다주기";
                     myAnim.SetBool("isComplete", true);
+                }
+                if (questActionIndex == 3)
+                {
+                    questPopupText.text = "다음 목표지점으로\n이동하기";
                 }
                 break;
             case 30:
