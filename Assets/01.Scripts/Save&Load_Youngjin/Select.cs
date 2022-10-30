@@ -64,7 +64,7 @@ public class Select : MonoBehaviour
                         obj.transform.parent = GameObject.Find("SaveLoad").transform;
                         obj.transform.localPosition = position;
                         obj.SetActive(true);
-                                                //파티원이 있으면 사진이 뜸
+                        //파티원이 있으면 사진이 뜸
                     }
                 }
             }
@@ -108,7 +108,7 @@ public class Select : MonoBehaviour
             savefile[DataController.instance.nowSlot] = true;
             DataController.instance.SaveGameData(); //입력한 이름 복사 후 현재 정보 저장
         }
-        SceneManager.LoadScene(1);  //게임씬으로 이동
+        SceneManager.LoadScene(2);  //게임씬으로 이동
     }
 }
 //경로: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json

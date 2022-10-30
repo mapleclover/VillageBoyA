@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.XR;
 using Unity.VisualScripting;
 
 // 전정우
-// 1023
+// 1030
 
 
 public class PlayerMovement : MonoBehaviour 
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject myStaminaBar; // 스태미나 바의 사라짐과 재출현
     
     
-    new // 지우지마세용
+    new // 지우지마세용 에러 방지용 입니다.
 
         // 우리 스크립트는 리지드바디를 활용한 움직임
         Rigidbody rigidbody; // 지우거나 주석하지 마세요

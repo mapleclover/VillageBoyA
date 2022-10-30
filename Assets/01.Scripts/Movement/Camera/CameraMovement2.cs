@@ -41,8 +41,6 @@ public class CameraMovement2 : MonoBehaviour
         dirNormalized = realCamera.localPosition.normalized;
         //finalDistance = realCamera.localPosition.magnitude;
 
-        // 커서를 화면에서 안쓰고 싶으면 활성화
-
     }
 
     void Update()
