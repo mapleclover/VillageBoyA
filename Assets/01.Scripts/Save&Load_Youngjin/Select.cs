@@ -64,7 +64,7 @@ public class Select : MonoBehaviour
                         obj.transform.parent = GameObject.Find("SaveLoad").transform;
                         obj.transform.localPosition = position;
                         obj.SetActive(true);
-                                                //파티원이 있으면 사진이 뜸
+                        //파티원이 있으면 사진이 뜸
                     }
                 }
             }
