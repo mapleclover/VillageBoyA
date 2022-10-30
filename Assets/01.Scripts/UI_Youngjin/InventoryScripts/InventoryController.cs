@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 public class InventoryController : MonoBehaviour
 {
+    public static InventoryController Instance;
     public GameObject myParty;
     public GameObject myInventory;
     public GameObject myPanel;
@@ -11,20 +12,25 @@ public class InventoryController : MonoBehaviour
     public GameObject myAlert;
     public GameObject myInfoBox;
     public GameObject itemCount;
-    [SerializeField]
-    private List<GameObject> itemIcons;
+   public  Dictionary<string, int> myItem = new Dictionary<string, int>();               //key는 item name, value는 개수
     public TMPro.TMP_Text countUI;
     public int defaultCount = 1;
-    List<int> countList = new List<int>();
+    public List<GameObject> curItem;
+    bool v = true;
+
     private void Awake()
     {
-        for(int i = 0; i < itemIcons.Count; i++)
+        Instance = this;
+       foreach(GameObject obj in mySlots)
         {
-            countList.Add(1);                   //아이템이 추가되면 countList[itemIcons.IndexOf(~~~)]++;
-        }   
+            if (obj.transform.childCount > 0)
+            {
+                myItem[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = 1;
+            }
+        }
+        myItem["포션"] = 2;
     }
-    bool v = true;
-    // Update is called once per frame
+
     void Update()
     {
 
@@ -32,36 +38,21 @@ public class InventoryController : MonoBehaviour
         {
             if (v)
             {
-                for (int i = 0; i < mySlots.Length; i++)
-                {
-                    if (mySlots[i].transform.childCount > 0)
-                    {
-                        GameObject obj = mySlots[i].transform.GetChild(0).transform.gameObject;
-                        if (obj.GetComponent<Pickup>().item.itemType == Item.NpcType.Ingredient || obj.layer == 8)
-                        {
-                            itemCount.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                            GameObject count = Instantiate(itemCount);
-                            count.transform.SetParent(mySlots[i].transform.GetChild(0).transform);
-                            count.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                            if (!itemIcons.Contains(obj))
-                            {
-                                itemIcons.Add(obj);
-                                countList.Add(1);
-                            }
-                            count.transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = countList[itemIcons.IndexOf(obj)].ToString();
-
-
-                            count.transform.localPosition = new Vector2(20, 20);
-                            //  count.SetActive(true);
-                        }
-                    }
-                }
+                //  myItem["해골"]++;
+                //해골로 테스트
+                ShowNumbertoUI();
+              
             }
             myInventory.SetActive(v);
             if (v) v = false;
             else v = true;          //인벤토리 열기
             myInfoBox.SetActive(false);
-      
+          
+        }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            GameObject test = null;
+            GetItem(test);
         }
     }
     public void OnClickX()
@@ -124,32 +115,72 @@ public class InventoryController : MonoBehaviour
 
     public void GetItem(GameObject theItem)
     {
-        if (itemIcons.Contains(theItem))
+        if (myItem.ContainsKey(theItem.GetComponent<Pickup>().item.itemName))
         {
-            countList[itemIcons.IndexOf(theItem)]++;
-        }
-        switch (theItem.GetComponent<ObjData>().id)
+            Debug.Log("사과2");
+            myItem[theItem.GetComponent<Pickup>().item.itemName]++;
+        }                                       //이미 내 인벤토리에 있으면 숫자만 더함
+       else
         {
-            case 100:
-                for (int i = 0; i< mySlots.Length; i++)
-                {
-                    if (mySlots[i].transform.childCount == 0)
+            switch (theItem.GetComponent<ObjData>().id)             //내 인벤토리에 없으면 추가
+            {
+                case 100:
+                    //100: 사과
+                    Debug.Log("사과1");
+                    for (int i = 0; i < mySlots.Length; i++)
                     {
+                        if (mySlots[i].transform.childCount == 0)
+                        {
 
-                        //GameObject obj = Instantiate(itemIcons[0], mySlots[i].transform.localPosition, Quaternion.identity);
-                        GameObject obj = Instantiate(itemIcons[0]);
-                        obj.transform.SetParent(mySlots[i].transform);
-                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f,1.0f);
-                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-                        obj.transform.localPosition = Vector2.zero;
-                        break;
+                            //GameObject obj = Instantiate(itemIcons[0], mySlots[i].transform.localPosition, Quaternion.identity);
+                            GameObject obj = Instantiate(curItem[0]);
+                            myItem[curItem[0].GetComponent<Pickup>().item.itemName] = 1;
+                          //  curItem.Add(obj);
+                            obj.transform.SetParent(mySlots[i].transform);
+                            obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                            obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                            obj.transform.localPosition = Vector2.zero;     
+                            break;
+                        }
                     }
-                }
-        
-                break;
+
+                    break;
+            }
+
         }
+    }
+    public void ShowNumbertoUI()
+    {
+        for (int i = 0; i < mySlots.Length; i++)
+        {
+            if (mySlots[i].transform.childCount > 0)
+            {
+
+                GameObject obj = mySlots[i].transform.GetChild(0).gameObject;
+                if (obj.GetComponent<Pickup>().item.itemType == Item.NpcType.Ingredient || obj.layer == 8)
+                {
+
+                    itemCount.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    GameObject count = Instantiate(itemCount);
+                    count.transform.SetParent(mySlots[i].transform.GetChild(0).transform);
+                    count.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
 
+                    if (myItem.ContainsKey(obj.GetComponent<Pickup>().item.itemName))
+                    {
+                        count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = myItem[obj.GetComponent<Pickup>().item.itemName].ToString();
+                    }
+                    count.transform.localPosition = new Vector2(20, 20);
+                    if (obj.transform.childCount > 2)
+                    {
+                        Destroy(obj.transform.GetChild(1).gameObject);
+                    }
+                    //  count.SetActive(true);
+                }
+            }
+        }
     }
     
 }
+
+
