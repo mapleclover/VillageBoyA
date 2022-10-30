@@ -33,6 +33,10 @@ public class BattleCharacter : CharacterProperty
     public bool Active5=false;
     public GameObject Canvas;    
     public GameObject hudDmgText;
+    public bool Stunned=false;
+    public bool Stunned2= false;
+    int StunCheck;
+    public int StunTurn = 1;
 
     private void Awake()
     {
@@ -58,6 +62,27 @@ public class BattleCharacter : CharacterProperty
             Active5 = false;
         }
         myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp , 5.0f * Time.deltaTime);
+        StunnedCheck(StunTurn);
+    }
+    void StunnedCheck(int v=1)
+    {
+        //스턴구상중
+           
+        if (StunCheck + v == TurnBattle.Inst.BattleTurn)
+        {
+            Stunned2 = false;
+        }
+        if (Stunned2)
+        {
+            Active5 = false;
+        }
+        if (Stunned)
+        {
+            Stunned2 = true;
+            StunCheck = TurnBattle.Inst.BattleTurn;
+            Stunned = false;
+        }
+
     }
     public void ChoiceSkill(int s)
     {

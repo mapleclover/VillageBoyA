@@ -33,6 +33,8 @@ public class TurnBattle : MonoBehaviour
     public Slider[] CharacterHpbar;
     public Slider EnemyHpbar;
     public List<Slider> EnHpbar;
+
+    public int BattleTurn=0;
     int Check = 0;
     bool VictoryCheck;
     bool FastSpeedCheck;
@@ -70,7 +72,7 @@ public class TurnBattle : MonoBehaviour
                 RunButton.interactable = true;
                 for (int i = 0; i < PlayList.Count; ++i)
                 {
-                    PlayList[i].GetComponent<BattleCharacter>().Active5 = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다
+                    PlayList[i].GetComponent<BattleCharacter>().Active5 = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다                  
                 }
                 for (int i = 0; i < Enemy.Length; ++i)
                 {
@@ -163,12 +165,13 @@ public class TurnBattle : MonoBehaviour
                 }
                 if (Check == PlayList.Count)
                 {
+                    ++BattleTurn;
                     ChangeState(State.Choice);
                 }
                 else
                 {
                     if (Active.GetComponent<BattleCharacter>().Active5)
-                    {
+                    {                        
                         ChangeState(State.Battle);
                     }
                 }
@@ -228,15 +231,7 @@ public class TurnBattle : MonoBehaviour
             CharacterButton[j].GetComponent<CharacterButton>().myCharacter = Player[j];
             Player[j].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[j];
         }
-        for (int i = 0; i < Enemy.Length; ++i)
-        {
-            EnHpbar.Add(Instantiate(EnemyHpbar, Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
-            Enemy[i].GetComponent<BattleCharacter>().myHpBar = EnHpbar[i];
-            pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
-            pos.y += 2.0f;
-            pos2 = Camera.main.WorldToScreenPoint(pos);
-            EnHpbar[i].transform.position = pos2;
-        }
+        InstantiateEnemyHpbar();
 
     }
     void Start()
@@ -259,7 +254,19 @@ public class TurnBattle : MonoBehaviour
         FollowEnemyHpbar();
 
     }
-    public void FollowEnemyHpbar()
+    void InstantiateEnemyHpbar()
+    {
+        for (int i = 0; i < Enemy.Length; ++i) //몬스터 hp바만들기
+        {
+            EnHpbar.Add(Instantiate(EnemyHpbar, Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
+            Enemy[i].GetComponent<BattleCharacter>().myHpBar = EnHpbar[i];
+            pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
+            pos.y += 2.0f;
+            pos2 = Camera.main.WorldToScreenPoint(pos);
+            EnHpbar[i].transform.position = pos2;
+        }
+    }
+    void FollowEnemyHpbar() //몬스터hp바가 몬스터를 따라다니도록
     {
         for (int i = 0; i < Enemy.Length; ++i)
         {
@@ -269,7 +276,7 @@ public class TurnBattle : MonoBehaviour
             EnHpbar[i].transform.position = pos2;
         }
     }
-    public void PlayerTargetDie()
+    void PlayerTargetDie() //플레이어가 타겟으로삼는상대가죽으면
     {
         for (int i = 0; i < Player.Length; ++i)
         {
@@ -282,23 +289,29 @@ public class TurnBattle : MonoBehaviour
             }
         }
     }
-    public void Victory()
+    void Victory() //승리시
     {
         foreach (GameObject act in Enemy) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
         VictoryCheck = true;
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }
-    public void Lose()
+    void Lose() //패배시
     {
         foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
         VictoryCheck = false;
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }
-    public void EnemyTargetDie(GameObject v)
+    void EnemyTargetDie(GameObject v) //적이 타겟으로 하고있는상대가죽으면 살아있는상대로변경
     {
-        foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State == STATE.Live) v.GetComponent<BattleCharacter>().myTarget = act;
+        foreach (GameObject act in Player)
+        { 
+            if (act.GetComponent<BattleCharacter>().State == STATE.Live) 
+            {
+                v.GetComponent<BattleCharacter>().myTarget = act; 
+            } 
+        }
     }
     public void BattleStart() //공격버튼 클릭시 함수
     {
@@ -313,13 +326,13 @@ public class TurnBattle : MonoBehaviour
         RunButton.interactable = false;
         for (int i = 0; i < CharacterButton.Length; ++i)
         {
-            CharacterButton[i].interactable = false;
-            CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
+            CharacterButton[i].interactable = false;  //버튼비활성화
+            CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false); 
         }
     }
     
 
-    IEnumerator Attack(int s)
+    IEnumerator Attack(int s) //공격
     {
         foreach(GameObject act in Player)
         {
@@ -340,7 +353,7 @@ public class TurnBattle : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         StartCoroutine(BackMoving(gos));
     }
-    IEnumerator Moving(Vector3 pos)
+    IEnumerator Moving(Vector3 pos) //적한테
     {
         StartCoroutine(RotatingToPosition(pos,true));
         Active.GetComponent<Animator>().SetBool("IsWalking", true);
@@ -366,7 +379,7 @@ public class TurnBattle : MonoBehaviour
             StartCoroutine(Attack(Skill));
         }
     }
-    IEnumerator BackMoving(Vector3 pos)
+    IEnumerator BackMoving(Vector3 pos) //원래자리로
     {
         StartCoroutine(RotatingToPosition(pos,true));
         Active.GetComponent<Animator>().SetBool("IsWalking", true);        
@@ -393,7 +406,7 @@ public class TurnBattle : MonoBehaviour
             ChangeState(State.ActiveCheck);            
         }
     }
-    IEnumerator RotatingToPosition(Vector3 pos,bool v)
+    IEnumerator RotatingToPosition(Vector3 pos,bool v) //회전
     {
         Vector3 dir;
         if (v)  dir = (pos - Active.transform.position).normalized;

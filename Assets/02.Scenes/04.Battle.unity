@@ -4953,6 +4953,9 @@ MonoBehaviour:
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
+  Stunned: 1
+  Stunned2: 0
+  StunTurn: 1
 --- !u!136 &658239075
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7046,7 +7049,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &954244509
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8414,6 +8417,9 @@ MonoBehaviour:
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
+  Stunned: 0
+  Stunned2: 0
+  StunTurn: 1
 --- !u!95 &1219290449
 Animator:
   serializedVersion: 4
@@ -8846,8 +8852,20 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2412442212264391230, guid: 9c3aaa1e7de6a0448a2aa925b7106ffc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412442212264391230, guid: 9c3aaa1e7de6a0448a2aa925b7106ffc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412442212264391230, guid: 9c3aaa1e7de6a0448a2aa925b7106ffc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412442212264391230, guid: 9c3aaa1e7de6a0448a2aa925b7106ffc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.00000023841858
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2412442212264391230, guid: 9c3aaa1e7de6a0448a2aa925b7106ffc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10621,6 +10639,7 @@ MonoBehaviour:
   - {fileID: 1043339928}
   EnemyHpbar: {fileID: 5658333677654139872, guid: 7e02ea925d3308f48a40e3d34e2cf73e, type: 3}
   EnHpbar: []
+  BattleTurn: 0
   speedChanger: {fileID: 32659051}
   myState: 0
 --- !u!4 &1543604257
@@ -11128,6 +11147,9 @@ MonoBehaviour:
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
+  Stunned: 1
+  Stunned2: 0
+  StunTurn: 1
 --- !u!136 &1639199658
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15700,6 +15722,9 @@ MonoBehaviour:
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
+  Stunned: 1
+  Stunned2: 0
+  StunTurn: 1
 --- !u!136 &823081628053210109
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -23919,6 +23944,9 @@ MonoBehaviour:
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
+  Stunned: 0
+  Stunned2: 0
+  StunTurn: 1
 --- !u!1 &6258288303418711055
 GameObject:
   m_ObjectHideFlags: 0
@@ -26350,6 +26378,9 @@ MonoBehaviour:
   Active5: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
+  Stunned: 0
+  Stunned2: 0
+  StunTurn: 1
 --- !u!4 &7720701017806064199
 Transform:
   m_ObjectHideFlags: 0
