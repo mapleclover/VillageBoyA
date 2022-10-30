@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(questManager.CheckQuest());
+        //Debug.Log(questManager.CheckQuest());
     }
     public void Action(GameObject scanObj)
     {
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         {
             isAction = false;
             talkIndex = 0; // 대화끝낫으면 인덱스 초기화.
-            Debug.Log(questManager.CheckQuest(id)); // 퀘스트 대화인덱스 추가
+            Debug.Log(questManager.CheckQuest(id, scanObject)); // 퀘스트 대화인덱스 추가
             return; // 더어차피대화할것없으니 바로리턴.
         }
         //Npc일경우 토그 지속 및 초상화

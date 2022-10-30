@@ -6,7 +6,7 @@ public class CameraMovement2 : MonoBehaviour
 {
 
     //전정우
-
+    public GameObject myInventory;
     public Transform objectToFollow;
     public float followSpeed = 10.0f;
     public float sensitivity = 30.0f;
@@ -20,6 +20,8 @@ public class CameraMovement2 : MonoBehaviour
     public Vector3 finalDir; // 최종방향
     public float smoothness = 10.0f;
     public float maxDistance;
+
+    //public bool cursorOn = false;
 
 
     //방해물이 많아 껏습니다. (주변 식물들을 마땅한 레이어가 없어서 그라운드로 설정)
@@ -39,8 +41,7 @@ public class CameraMovement2 : MonoBehaviour
         dirNormalized = realCamera.localPosition.normalized;
         //finalDistance = realCamera.localPosition.magnitude;
 
-        Cursor.lockState = CursorLockMode.Locked; // 커서를 화면에서 안쓰고 싶으면 활성화
-        //Cursor.visible = false;
+        // 커서를 화면에서 안쓰고 싶으면 활성화
 
     }
 
@@ -55,6 +56,15 @@ public class CameraMovement2 : MonoBehaviour
         //회전
         Quaternion rot = Quaternion.Euler(rotX, rotY, 0);
         transform.rotation = rot;
+
+        if (myInventory.activeSelf)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            OnCursor();
+        }
 
     }
 
@@ -85,5 +95,17 @@ public class CameraMovement2 : MonoBehaviour
 
     }
 
+    public void OnCursor()
+    {
+
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
 
 }

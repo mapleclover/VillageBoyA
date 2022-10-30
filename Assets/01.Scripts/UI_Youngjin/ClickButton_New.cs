@@ -9,6 +9,7 @@ public class ClickButton_New : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     public int i;
     public void OnPointerEnter(PointerEventData eventData)
     {
+        //i = this.transform.localPosition.y;
         Button_New.cur = i;
     }
     public void OnPointerExit(PointerEventData eventData)
