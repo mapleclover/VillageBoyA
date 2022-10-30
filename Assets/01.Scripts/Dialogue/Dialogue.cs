@@ -16,6 +16,9 @@ public class Dialogue : MonoBehaviour
         dialogue = DialogueManager.instance;
 
         s = System.IO.File.ReadAllLines("Assets/10.Resources/TextScript/Text1.txt");
+
+        Say(s[index]);
+        index++;
     }
 
     
@@ -39,6 +42,13 @@ public class Dialogue : MonoBehaviour
             }
         }
     }
+
+    public void LoadFirstSentence()
+    {
+        Say(s[index]);
+        index++;
+    }
+
     void Say(string s)
     {
         string[] parts = s.Split(':');
