@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     public Animator curAnimator;
     public Animator myStaminaAnim;
 
+    [SerializeField]
+    public GameManager theManager;
+
     public enum CHARACTER
     {
         Kong, Ember, Jin
@@ -202,11 +205,11 @@ public class PlayerMovement : MonoBehaviour
                 EmberTheSame = true;
                
             }
-
-            dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
-                                                 // A 와 D 키를 눌렀을 때 이동방향
-            dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
-            totalDist = dir.magnitude;
+            
+                dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
+                                                     // A 와 D 키를 눌렀을 때 이동방향
+                dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
+                totalDist = dir.magnitude;
 
             // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
             dir = myCamRot.rotation * dir;
@@ -218,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (!ground && Input.GetKey(KeyCode.Space))
+        if (!ground && Input.GetKey(KeyCode.Space)) // 대화안하고있을떄만 점프하게 (영준수정)
         {
             dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
                                                  // A 와 D 키를 눌렀을 때 이동방향
