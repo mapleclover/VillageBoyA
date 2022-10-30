@@ -39,7 +39,7 @@ public class TalkManager : MonoBehaviour
 
         talkData.Add(20 + 100, new string[] { "근처에서 사과를 찾았다." });
         talkData.Add(21 + 100, new string[] { "근처에서 사과를 찾았다." });
-        talkData.Add(22 + 1000, new string[] { "오빠! 고마워! 냠냠:0" });
+        talkData.Add(22 + 1000, new string[] { "오빠! 고마워! 냠냠:1" });
 
 
         //Portrait Data
