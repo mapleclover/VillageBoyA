@@ -56,6 +56,7 @@ public class Goal : MonoBehaviour
                 theTutorialText.gameObject.SetActive(false);
 
                 //ÄÆ¾ÀÀÌµ¿ µ¹ºÎ¸®¿¡ ³Ñ¾îÁö´ÂÄÆ¾À !///////////////////////////////////////////////
+                SceneLoad.Instance.ChangeScene(4);
             }
         }
     }
