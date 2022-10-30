@@ -48,7 +48,6 @@ public class SoundManager : MonoBehaviour
                 break;
         }
         BGMSFXSource[i].volume = volumeSlider[i].value;
-
     }
     private void Save(int i)
     {

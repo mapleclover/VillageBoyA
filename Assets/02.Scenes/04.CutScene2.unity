@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4308,7 +4308,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699723167}
-  m_LocalRotation: {x: 0.32516316, y: 0.4365917, z: -0.17295356, w: 0.8208189}
+  m_LocalRotation: {x: 0.32516316, y: 0.43659174, z: -0.17295358, w: 0.8208189}
   m_LocalPosition: {x: 249.6, y: 2.6, z: 120.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4891,10 +4891,16 @@ MonoBehaviour:
   Text: {fileID: 1577204537}
   CharacterImage: {fileID: 1820577574}
   CharacterImages:
-  - {fileID: 21300000, guid: 7a165b2553454a1459947264720f8dde, type: 3}
-  - {fileID: 21300000, guid: 0a8fd215f7ce45544904df11437906bf, type: 3}
-  - {fileID: 21300000, guid: cfec8b2bf4f1ee4428a2f61a86e94de9, type: 3}
-  textSpeed: 9
+  - {fileID: 21300000, guid: b0d117fc4ae9be74caf680164ee00d5a, type: 3}
+  - {fileID: 21300000, guid: b0d117fc4ae9be74caf680164ee00d5a, type: 3}
+  - {fileID: 21300000, guid: b59dd33e216d1584ca79d65f18f2505e, type: 3}
+  - {fileID: 21300000, guid: e34eee7a7f7b22249ac849e2ee51ad12, type: 3}
+  - {fileID: 21300000, guid: d1a2905d2f4101d42958f93bb5994287, type: 3}
+  - {fileID: 21300000, guid: b1d9b66af5a5f1e439e0c42795869349, type: 3}
+  - {fileID: 21300000, guid: 5589c099e73d4db458b9d1af534bc411, type: 3}
+  - {fileID: 21300000, guid: 86873dc6b34c77c4db122a640f527212, type: 3}
+  - {fileID: 21300000, guid: 36197575a52235541a7a409e67d7b0e7, type: 3}
+  textSpeed: 0
   isWaitingForUserInput: 0
   skip: 0
 --- !u!4 &1871536860
@@ -4925,75 +4931,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   s: []
---- !u!1 &1890211875
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1890211878}
-  - component: {fileID: 1890211877}
-  - component: {fileID: 1890211876}
-  m_Layer: 0
-  m_Name: DialogueManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1890211876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890211875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc40fb780033f15478fd9ac4271204c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  s: []
---- !u!114 &1890211877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890211875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328bc0fe9776c8a4c85d460785f8e500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DialogueBox: {fileID: 1488025463}
-  Name: {fileID: 403544132}
-  Text: {fileID: 1577204537}
-  CharacterImage: {fileID: 1820577574}
-  CharacterImages:
-  - {fileID: 21300000, guid: 7a165b2553454a1459947264720f8dde, type: 3}
-  - {fileID: 21300000, guid: 0a8fd215f7ce45544904df11437906bf, type: 3}
-  - {fileID: 21300000, guid: cfec8b2bf4f1ee4428a2f61a86e94de9, type: 3}
-  textSpeed: 9
-  isWaitingForUserInput: 0
-  skip: 0
---- !u!4 &1890211878
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890211875}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 365.6571, y: 97.053955, z: 0.0013275146}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1910139863
 GameObject:
   m_ObjectHideFlags: 0
