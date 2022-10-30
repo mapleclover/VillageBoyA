@@ -32,9 +32,6 @@ public class CharacterButton : MonoBehaviour
                 }
             }
         }
-        pos = transform.position;
-        float y = myAttack.gameObject.transform.position.y;
-        pos.y = y;
     }
     
     void Update()
@@ -47,6 +44,9 @@ public class CharacterButton : MonoBehaviour
         mySelectCharacter.transform.position = transform.position;
         TurnBattle.Inst.SelectedCharacter=myCharacter;
         mySelectAttack.gameObject.SetActive(false);
+        pos = transform.position;
+        float y = myAttack.gameObject.transform.position.y;
+        pos.y = y;
         myAttack.gameObject.SetActive(true);        
         myAttack.gameObject.transform.position = pos;
         SelectedCharacterAttack.Inst.myActvieTxt = myActvieTxt;
