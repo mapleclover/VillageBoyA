@@ -148,10 +148,10 @@ public class PlayerMovement : MonoBehaviour
         CheckGround(); // 연속점프 감지
         HideStaminaBar(); // 스태미나 바 숨기기
 
-        if (ground)
+        if (ground && !theManager.isAction)
         {
             //PlayerJump();
-
+            
             PlayerMove();
             SwitchingCharacter();
             StateProcess(); //캐릭터 교체
@@ -181,9 +181,13 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerRotation();
 
-        if (ground)
+        if (ground && !theManager.isAction)
         {
             Dash();
+        }
+        else
+        {
+            DashCancel();
         }
     }
 
@@ -334,6 +338,13 @@ public class PlayerMovement : MonoBehaviour
         // 하지만 공기저항값을 넣어주면 점프한 후 느리게 떨어지는 문제가 있으니 일단 주석처리 하고 달리기를 구현할 예정
         // 점프에서 떨어지는 이유는 리지드바디 중력값에 의한 것이고 천천히 떨어지는 이유는 드래그 공기저항값 때문이므로 두개를 조합해서 점프 문제를 해결하라*/
 
+    }
+    
+    private void DashCancel()
+    {
+        curAnimator.SetBool("IsWalking", false);
+        curAnimator.SetBool("IsRunning", false);
+        run = false;
     }
 
     void SwitchingCharacter()

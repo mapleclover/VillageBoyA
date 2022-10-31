@@ -1105,6 +1105,7 @@ MonoBehaviour:
   itemTextBackground: {fileID: 760008511}
   enemyextBackground: {fileID: 1596730490}
   theManager: {fileID: 949683155}
+  theGoal: {fileID: 2145330320}
 --- !u!1 &131430645
 GameObject:
   m_ObjectHideFlags: 0
@@ -7062,7 +7063,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &851132830
@@ -7824,10 +7825,13 @@ MonoBehaviour:
   questManager: {fileID: 1899953964}
   talkPanel: {fileID: 188849875}
   portraitImg: {fileID: 1843725878}
+  namePanel: {fileID: 2029688430}
+  nameText: {fileID: 1558690554}
   talkText: {fileID: 526408071}
   scanObject: {fileID: 0}
   isAction: 0
   talkIndex: 0
+  theGoal: {fileID: 2145330320}
 --- !u!4 &949683156
 Transform:
   m_ObjectHideFlags: 0
@@ -14951,7 +14955,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cfec8b2bf4f1ee4428a2f61a86e94de9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a6d20768473b1144aa1d7e8a67c244ef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -18086,6 +18090,7 @@ MonoBehaviour:
   moveKey: {fileID: 670084295}
   runKey: {fileID: 1161897578}
   theManager: {fileID: 949683155}
+  isTutorial: 0
 --- !u!4 &13954041756301829
 Transform:
   m_ObjectHideFlags: 0

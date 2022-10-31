@@ -41,6 +41,8 @@ public class ActionController : MonoBehaviour
     private Image enemyextBackground;
     [SerializeField]
     private GameManager theManager;
+    [SerializeField]
+    private Goal theGoal;
     
 
 
@@ -102,11 +104,11 @@ public class ActionController : MonoBehaviour
                         // 플레이어위치에서 ovelapSphere에 감지된 대상에게로 레이저를쏨.
                         if (Physics.Raycast(transform.position, _direction, out hitInfo, range, layerMask))
                         {
-                            if (hitInfo.transform.tag == "Npc" && !theManager.isAction)
+                            if (hitInfo.transform.tag == "Npc" && !theManager.isAction && !theGoal.isTutorial)
                             {
                                 NpcInfoAppear();
                             }
-                            else if (hitInfo.transform.tag == "Item" && !theManager.isAction)
+                            else if (hitInfo.transform.tag == "Item" && !theManager.isAction && !theGoal.isTutorial)
                             {
                                 ItemInfoAppear();
                             }
@@ -245,7 +247,7 @@ public class ActionController : MonoBehaviour
     // npc 정보창 오픈
     private void NpcInfoAppear()
     {
-        if (!pickNpcActivated && !theManager.isAction) // false일때말실행
+        if (!pickNpcActivated && !theManager.isAction && !theGoal.isTutorial) // false일때말실행
         {
             pickNpcActivated = true;
             npcTextBackground.gameObject.SetActive(true);
@@ -257,7 +259,7 @@ public class ActionController : MonoBehaviour
     // item 정보창 오픈
     private void ItemInfoAppear()
     {
-        if (!pickItemActivated && !theManager.isAction)
+        if (!pickItemActivated && !theManager.isAction && !theGoal.isTutorial)
         {
             pickItemActivated = true;
             itemTextBackground.gameObject.SetActive(true);
