@@ -10,6 +10,7 @@ public class TalkManager : MonoBehaviour
     public Sprite[] portraitArr;
 
 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -30,8 +31,7 @@ public class TalkManager : MonoBehaviour
         //Quest Talk Data
         //첫마을 방문 마을사람과대화하기.
         talkData.Add(10 + 10000, new string[] {"좋아요 !\n 대화는 E 버튼을 눌러 넘어갈 수 있어요.",
-                                               "이번에는 앞에 있는 클레에게 E 버튼을 눌러 말을 걸어볼까요?"
-                                              });
+                                               "이번에는 앞에 있는 클레에게 E 버튼을 눌러 말을 걸어볼까요?" });
 
         talkData.Add(11 + 1000, new string[] {"안녕! 오빠:0",
                                               "Npc나 아이템과 상호작용 하고 싶으면 바로 앞에서 E 버튼누르면돼 !:0",
