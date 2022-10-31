@@ -1,4 +1,5 @@
 ///박진
+///캐릭터 상태
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public enum STATE
 public class BattleCharacter : CharacterProperty
 {
     public STATE State = STATE.Live;
-    float _myhp = 100.0f;
+    public float _myhp = 100.0f;
     float maxHp = 100.0f;
     float minHp = 0.0f;
     public Slider myHpBar;
@@ -30,14 +31,15 @@ public class BattleCharacter : CharacterProperty
     public float speed = 2.0f;
     public int Skill = 0;
     public bool longAttackCheck=false;
-
+    public bool[] longAttack = new bool[3];
     public GameObject myTarget;
-    public bool Active5=false;
+    public bool TurnActive=false;
     public GameObject Canvas;    
     public GameObject hudDmgText;
     public bool Stunned=false;
     bool Stunned2= false;
     int StunCheck;
+    public bool ActiveHeal=false;
     public int StunTurn = 1;
     void ChangeState(STATE s)
     {
@@ -63,7 +65,7 @@ public class BattleCharacter : CharacterProperty
                 }
                 break;
             case STATE.Die:
-                Active5 = false;
+                TurnActive = false;
                 break;
         }
     }
@@ -92,7 +94,7 @@ public class BattleCharacter : CharacterProperty
         }
         if (Stunned2)
         {
-            Active5 = false;
+            TurnActive = false;
         }
         if (Stunned)
         {
@@ -102,6 +104,7 @@ public class BattleCharacter : CharacterProperty
         }
 
     }
+    
     public void ChoiceSkill(int s)
     {
         switch(s)
@@ -140,6 +143,12 @@ public class BattleCharacter : CharacterProperty
             default:
                 break;
         }
+    }
+    public void Healing()
+    {
+        TurnBattle.Inst.HealingPotion -= 1;
+        myHp += 30.0f;
+        ActiveHeal = false;
     }
     public void OnDamage(float dmg)
     {
