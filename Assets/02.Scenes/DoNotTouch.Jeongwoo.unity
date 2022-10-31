@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2003931976}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1166,6 +1166,7 @@ MonoBehaviour:
   itemTextBackground: {fileID: 760008511}
   enemyextBackground: {fileID: 1596730490}
   theManager: {fileID: 949683155}
+  theGoal: {fileID: 2145330320}
 --- !u!1 &131430645
 GameObject:
   m_ObjectHideFlags: 0
@@ -7827,10 +7828,13 @@ MonoBehaviour:
   questManager: {fileID: 1899953964}
   talkPanel: {fileID: 188849875}
   portraitImg: {fileID: 1843725878}
+  namePanel: {fileID: 0}
+  nameText: {fileID: 0}
   talkText: {fileID: 526408071}
   scanObject: {fileID: 0}
   isAction: 0
   talkIndex: 0
+  theGoal: {fileID: 0}
 --- !u!4 &949683156
 Transform:
   m_ObjectHideFlags: 0
@@ -11850,8 +11854,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD574\uB2F9 \uBAA9\uD45C\uC9C0\uC810\uAE4C\uC9C0\n\uC774\uB3D9\uD558\uC138\uC694."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
-  m_sharedMaterial: {fileID: -7307645607112893538, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c88d2616ba6058c44a155070a534c6b7, type: 2}
+  m_sharedMaterial: {fileID: 1881566223937926655, guid: c88d2616ba6058c44a155070a534c6b7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11875,7 +11879,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.4
+  m_fontSize: 22
   m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18044,6 +18048,7 @@ MonoBehaviour:
   moveKey: {fileID: 670084295}
   runKey: {fileID: 1161897578}
   theManager: {fileID: 0}
+  isTutorial: 0
 --- !u!4 &13954041756301829
 Transform:
   m_ObjectHideFlags: 0
