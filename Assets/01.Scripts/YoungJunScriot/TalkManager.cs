@@ -10,6 +10,7 @@ public class TalkManager : MonoBehaviour
     public Sprite[] portraitArr;
 
 
+
     // Start is called before the first frame update
     void Awake()
     {

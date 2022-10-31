@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public QuestManager questManager;
     public GameObject talkPanel; // 대화창배경
     public Image portraitImg; // 대화시 초상화.
+    //public TMPro.TMP_Text nameText; // 대화시 NPC 이름.
     public TMPro.TMP_Text talkText; // 대화 대사
     public GameObject scanObject; // 대화하고있는 대상 
     public bool isAction; // 대화하고있는지아닌지
