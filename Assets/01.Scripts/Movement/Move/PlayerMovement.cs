@@ -4,8 +4,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.InputSystem.XR;
-using Unity.VisualScripting;
 
 // 전정우
 // 1030
@@ -16,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Kong;
     public GameObject Jin;
     public GameObject Ember;
+
     //UI
     public GameObject KongUI;
     public GameObject JinUI;
@@ -120,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
+
+    // NPC와 대화 상태에서 무브먼트 제어  
     void StateProcess()
     {
         switch (myCharacter)
@@ -144,114 +145,50 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         CheckGround(); // 연속점프 감지
+        HideStaminaBar(); // 스태미나 바 숨기기
 
-
-        
         if (ground)
         {
-            // 1, 2, 3 키로 캐릭터 교체
-            if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false && KongTheSame == false)
-            {
-                KongUI.GetComponent<Animator>().SetTrigger("Expansion");
-                JinUI.GetComponent<Animator>().SetTrigger("Reduction");
-                if (!JinTheSame)
-                {
-                    EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
-                }
-                ChangeState(CHARACTER.Kong);
-                StartCoroutine(CoolTime(5f));
-                KongTheSame = true;
-                JinTheSame = false;
-                EmberTheSame = false;
-                
-                
+            //PlayerJump();
 
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false && JinTheSame == false)
-            {
-                JinUI.GetComponent<Animator>().SetTrigger("Expansion");
-                if(!EmberTheSame)
-                {
-                    KongUI.GetComponent<Animator>().SetTrigger("Reduction");
-                }
-                if (!KongTheSame)
-                {
-                    EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
-                }
-                ChangeState(CHARACTER.Jin);
-                StartCoroutine(CoolTime(5f));
-                KongTheSame = false;
-                JinTheSame = true;
-                EmberTheSame = false;
-                
-                
+            PlayerMove();
+            SwitchingCharacter();
+            StateProcess(); //캐릭터 교체
 
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false && EmberTheSame == false)
+            /*if (!theManager.isAction)
             {
-                EmberUI.GetComponent<Animator>().SetTrigger("Expansion");
-                JinUI.GetComponent<Animator>().SetTrigger("ReductionFromEmber");
-                if(!JinTheSame)
-                {
-                    KongUI.GetComponent<Animator>().SetTrigger("Reduction");
-                }
                 
-                ChangeState(CHARACTER.Ember);
-                StartCoroutine(CoolTime(5f));
-                KongTheSame = false;
-                JinTheSame = false;
-                EmberTheSame = true;
-               
-            }
-            
-                dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
-                                                     // A 와 D 키를 눌렀을 때 이동방향
-                dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
-                totalDist = dir.magnitude;
+                Dash(); // 달리기
+                run = false;
+            }*/
+        }
 
-            // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
-            dir = myCamRot.rotation * dir;
-            dir.y = 0.0f;
-            dir.Normalize();
+        /*if (!ground && Input.GetKey(KeyCode.Space)) // 대화안하고있을떄만 점프하게 (영준수정)
+        {
 
             StateProcess(); //캐릭터 교체
-            Dash(); // 달리기
-        }
+        }*/
 
 
-        if (!ground && Input.GetKey(KeyCode.Space)) // 대화안하고있을떄만 점프하게 (영준수정)
+    }
+
+
+    
+    private void FixedUpdate()
+    //캐릭터의 부드러운 회전을 위해
+    //물리적인 이동이나 회전을 할 때 쓰면 좋다
+    {
+        PlayerRotation();
+
+        if (ground)
         {
-            dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
-                                                 // A 와 D 키를 눌렀을 때 이동방향
-            dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
-            totalDist = dir.magnitude;
-
-            // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
-            dir = myCamRot.rotation * dir;
-            dir.y = 0.0f;
-            dir.Normalize();
-
-            StateProcess(); //캐릭터 교체
+            Dash();
         }
+    }
 
-        HideStaminaBar(); // 스태미나 바 숨기기
-        
-
-
-        // 걷는 애니메이션
-        if (totalDist > 0.0f)
-        {
-            curAnimator.SetBool("IsWalking", true);
-        }
-        if (totalDist <= 0.0f)
-        {
-            curAnimator.SetBool("IsWalking", false);
-        }
-
-        
-
+    void PlayerJump()
+    {
         // 점프
         // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
         if (Input.GetButtonDown("Jump") && ground) // 연속점프 방지 = && ground 그라운드가 참일 때
@@ -262,61 +199,38 @@ public class PlayerMovement : MonoBehaviour
             curAnimator.SetTrigger("Jump");
 
         }
-
-        /*// 대시 구현 - 사용 안할 것 같아서 주석처리 해 놓음
-        if(Input.GetButtonDown("Dash"))
-        {
-            Vector3 dashPower = this.transform.forward * -Mathf.Log(1/rigidbody.drag) * dash;
-            // drag 공기저항값을 역수로 뒤집어서 로그로 바꾸고 - 를 넣어줘서 값을 구한 후 우리가 구한 대시양을 곱해준다 < 자연스러운 대시를 위해(무슨 소리인지 모르겠다.)
-            rigidbody.AddForce(dashPower, ForceMode.VelocityChange);
-        }
-        // 대시 키의 기본값이 없어서 유니티 프로젝트 세팅에서 추가
-        // 유니티에서 리지드바디 Drag를 10 정도 설정 해 주면 확인 할 수 있음
-        // 하지만 공기저항값을 넣어주면 점프한 후 느리게 떨어지는 문제가 있으니 일단 주석처리 하고 달리기를 구현할 예정
-        // 점프에서 떨어지는 이유는 리지드바디 중력값에 의한 것이고 천천히 떨어지는 이유는 드래그 공기저항값 때문이므로 두개를 조합해서 점프 문제를 해결하라*/
-
     }
 
 
-    
-    private void FixedUpdate()
-    //캐릭터의 부드러운 회전을 위해
-    //물리적인 이동이나 회전을 할 때 쓰면 좋다
+
+    void PlayerMove()
     {
-        //회전
-        if (dir != Vector3.zero) //벡터의 제로가 아니라면 키 입력이 됨
+        // 이동과 카메라
+        dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
+                                             // A 와 D 키를 눌렀을 때 이동방향
+        dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
+        totalDist = dir.magnitude;
+
+        // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
+        dir = myCamRot.rotation * dir;
+        dir.y = 0.0f;
+        dir.Normalize();
+
+
+        // 이동을 구현
+        GetComponent<Rigidbody>().MovePosition(this.transform.position + dir * speed * Time.deltaTime);
+        // 걷는 애니메이션
+        if (totalDist > 0.0f)
         {
-            // 앞으로 나아갈 때 + 방향으로 나아가는데 반대방향으로 나가가는 키를 눌렀을 때 -방향으로 회전하면서 생기는 오류를 방지하기위해 (부호가 서로 반대일 경우를 체크해서 살짝만 미리 돌려주는 코드) 어렵네요... 
-            // 지금 바라보는 방향의 부호 != 나아갈 방향 부호
-            if (Mathf.Sign(transform.forward.x) != Mathf.Sign(dir.x) || Mathf.Sign(transform.forward.z) != Mathf.Sign(dir.z))
-            {
-                //우리는 이동할 때 x 와 z 밖에 사용을 안하므로
-                transform.Rotate(0, 1, 0); // 살짝만 회전
-                //정 반대방향을 눌러도 회전안하는 버그 방지
-                //미리 회전을 조금 시켜서 정반대인 경우를 제거
-            }
-            transform.forward = Vector3.Lerp(transform.forward, dir, rotSpeed * Time.deltaTime);
-            // Slerp를 쓸지 Lerp를 쓸지 상의를 해봐야 할 것 같아용 
-            // 캐릭터의 앞방향은 dir 키보드를 누른 방향으로 캐릭터 회전
-            //Lerp를 쓰면 원하는 방향까지 서서히 회전
+            curAnimator.SetBool("IsWalking", true);
         }
-
-
-        if(ground)
+        if (totalDist <= 0.0f)
         {
-            // 이동을 구현
-            GetComponent<Rigidbody>().MovePosition(this.transform.position + dir * speed * Time.deltaTime);
-
-
-            if (run) // 달리기
-            {
-                GetComponent<Rigidbody>().MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
-            }
+            curAnimator.SetBool("IsWalking", false);
         }
-        
-
-        
     }
+
+
 
     void HideStaminaBar()
     {
@@ -337,10 +251,35 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void PlayerRotation()
+    {
+        //회전
+        if (dir != Vector3.zero) //벡터의 제로가 아니라면 키 입력이 됨
+        {
+            // 앞으로 나아갈 때 + 방향으로 나아가는데 반대방향으로 나가가는 키를 눌렀을 때 -방향으로 회전하면서 생기는 오류를 방지하기위해 (부호가 서로 반대일 경우를 체크해서 살짝만 미리 돌려주는 코드) 어렵네요... 
+            // 지금 바라보는 방향의 부호 != 나아갈 방향 부호
+            if (Mathf.Sign(transform.forward.x) != Mathf.Sign(dir.x) || Mathf.Sign(transform.forward.z) != Mathf.Sign(dir.z))
+            {
+                //우리는 이동할 때 x 와 z 밖에 사용을 안하므로
+                transform.Rotate(0, 1, 0); // 살짝만 회전
+                //정 반대방향을 눌러도 회전안하는 버그 방지
+                //미리 회전을 조금 시켜서 정반대인 경우를 제거
+            }
+            transform.forward = Vector3.Lerp(transform.forward, dir, rotSpeed * Time.deltaTime);
+            // Slerp를 쓸지 Lerp를 쓸지 상의를 해봐야 할 것 같아용 
+            // 캐릭터의 앞방향은 dir 키보드를 누른 방향으로 캐릭터 회전
+            //Lerp를 쓰면 원하는 방향까지 서서히 회전
+        }
 
+    }
 
     void Dash()
     {
+        if (run) // 달리기
+        {
+            GetComponent<Rigidbody>().MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
+        }
+
         if (Mathf.Approximately(mySlider.value, 0f))
         //스태미너 바의 밸류가 0에 근사치에 닿을 때
         {
@@ -381,8 +320,75 @@ public class PlayerMovement : MonoBehaviour
                 canRun = true;
             
         }
+
+
+        /*// 대시 구현 - 사용 안할 것 같아서 주석처리 해 놓음
+        if(Input.GetButtonDown("Dash"))
+        {
+            Vector3 dashPower = this.transform.forward * -Mathf.Log(1/rigidbody.drag) * dash;
+            // drag 공기저항값을 역수로 뒤집어서 로그로 바꾸고 - 를 넣어줘서 값을 구한 후 우리가 구한 대시양을 곱해준다 < 자연스러운 대시를 위해(무슨 소리인지 모르겠다.)
+            rigidbody.AddForce(dashPower, ForceMode.VelocityChange);
+        }
+        // 대시 키의 기본값이 없어서 유니티 프로젝트 세팅에서 추가
+        // 유니티에서 리지드바디 Drag를 10 정도 설정 해 주면 확인 할 수 있음
+        // 하지만 공기저항값을 넣어주면 점프한 후 느리게 떨어지는 문제가 있으니 일단 주석처리 하고 달리기를 구현할 예정
+        // 점프에서 떨어지는 이유는 리지드바디 중력값에 의한 것이고 천천히 떨어지는 이유는 드래그 공기저항값 때문이므로 두개를 조합해서 점프 문제를 해결하라*/
+
     }
 
+    void SwitchingCharacter()
+    {
+        // 1, 2, 3 키로 캐릭터 교체
+        if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false && KongTheSame == false)
+        {
+            KongUI.GetComponent<Animator>().SetTrigger("Expansion");
+            JinUI.GetComponent<Animator>().SetTrigger("Reduction");
+            if (!JinTheSame)
+            {
+                EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+            }
+            ChangeState(CHARACTER.Kong);
+            StartCoroutine(CoolTime(5f));
+            KongTheSame = true;
+            JinTheSame = false;
+            EmberTheSame = false;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false && JinTheSame == false)
+        {
+            JinUI.GetComponent<Animator>().SetTrigger("Expansion");
+            if (!EmberTheSame)
+            {
+                KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+            }
+            if (!KongTheSame)
+            {
+                EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+            }
+            ChangeState(CHARACTER.Jin);
+            StartCoroutine(CoolTime(5f));
+            KongTheSame = false;
+            JinTheSame = true;
+            EmberTheSame = false;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false && EmberTheSame == false)
+        {
+            EmberUI.GetComponent<Animator>().SetTrigger("Expansion");
+            JinUI.GetComponent<Animator>().SetTrigger("ReductionFromEmber");
+            if (!JinTheSame)
+            {
+                KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+            }
+
+            ChangeState(CHARACTER.Ember);
+            StartCoroutine(CoolTime(5f));
+            KongTheSame = false;
+            JinTheSame = false;
+            EmberTheSame = true;
+
+        }
+    }
 
     void CheckGround() // 연속점프 방지, 점프를 땅에 있을 때만
     {
@@ -447,7 +453,5 @@ public class PlayerMovement : MonoBehaviour
         giveDelay = false; //시간이 끝나면
        
     }
-
-
 
 }
