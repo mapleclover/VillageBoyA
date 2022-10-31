@@ -10,7 +10,7 @@ public class arrowmove : MonoBehaviour
     float currentrightPosition;
     float rightend = -225.0f;
     float leftend = -200.0f;
-    float dir= 50.0f;
+    public float dir= 70.0f;
 
     void Start()
     {

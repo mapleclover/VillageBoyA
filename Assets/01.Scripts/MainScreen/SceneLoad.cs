@@ -6,13 +6,35 @@ using UnityEngine.UI;
 
 public class SceneLoad : MonoBehaviour
 {
-    public static SceneLoad Inst = null;
-    bool isChange = false;
+    private static SceneLoad instance = null;
+
     private void Awake()
     {
-        Inst = this;
-        DontDestroyOnLoad(gameObject);
+        if(null == instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
+    
+    public static SceneLoad Instance
+    {
+        get
+        {
+            if(null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+
+    bool isChange = false;
+
     public void ChangeScene(int i)
     {
         if (!isChange)

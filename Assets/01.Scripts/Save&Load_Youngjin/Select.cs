@@ -15,20 +15,9 @@ using System.Runtime.ConstrainedExecution;
 public class Select : MonoBehaviour
 {
     public static Select instance=null;
-    public GameObject create;
     public TextMeshProUGUI[] slotText;// 슬롯 버튼 아래 텍스트
     public bool[] savefile = new bool[3];//세이브파일 존재 유무
-    //  public GameObject[] myParty;
-    //   public GameObject[] myMember; 
-    /*
-    [Serializable]
-    public class Party
-    {
-        public static GameObject[]myMember=new GameObject[3];
-    }
-    
-    public Party[] myParty=new Party[3];
-    */
+    public GameObject[] buttonList;
     public GameObject[] myMember;
     void Start()        
     {
@@ -46,7 +35,9 @@ public class Select : MonoBehaviour
               //  slotText[i].text+="\n"+ $"<color=blue>{DataController.instance.gameData.currentVillage}</color>";//현재 있는 마을 표시
                 slotText[i].text += $"\nMy Progress={DataController.instance.gameData.myProgress}%";
                 DataController.instance.gameData.partyMember[0] = true;
-                for(int j=0;j< DataController.instance.gameData.partyMember.Length;j++)
+                DataController.instance.gameData.partyMember[1] = true;
+                DataController.instance.gameData.partyMember[2] = true;
+                for (int j=0;j< DataController.instance.gameData.partyMember.Length;j++)
                 {
                     if (DataController.instance.gameData.partyMember[j])
                     {
@@ -54,36 +45,26 @@ public class Select : MonoBehaviour
                         switch (j)
                         {
                             case 0:
-                                position.x = 120;
+                                position.x = 140;
                                 break;
                             case 1:
-                                position.x = 185;
+                                position.x = 220;
                                 break;
                             case 2:
-                                position.x = 250;
+                                position.x = 300;
                                 break;
                         }
-                        switch (i)
-                        {
-                            case 0:
-                                position.y = 153;
-                                break;
-                            case 1:
-                                position.y = 0;
-                                break;
-                            case 2:
-                                position.y = -153;
-                                break;
-                        }
+                        position.y = buttonList[i].transform.localPosition.y;
+                       
                         GameObject obj = Instantiate(myMember[j],position,Quaternion.identity);
                         if (DataController.instance.gameData.isLeader[j] == true)
                         {
-                            obj.GetComponent<RectTransform>().sizeDelta = new Vector2(80.0f, 80.0f);
+                            obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
                         }
                         obj.transform.parent = GameObject.Find("SaveLoad").transform;
                         obj.transform.localPosition = position;
                         obj.SetActive(true);
-                                                //파티원이 있으면 사진이 뜸
+                        //파티원이 있으면 사진이 뜸
                     }
                 }
             }
@@ -102,10 +83,7 @@ public class Select : MonoBehaviour
             Slot(Button_New.cur);
 
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-          create.gameObject.SetActive(false);
-        }
+
     }
     public void Slot(int num)
     {
@@ -113,32 +91,24 @@ public class Select : MonoBehaviour
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
-            create.gameObject.SetActive(false);
-            Game();     //해당 슬롯에 데이터가 존재하면 게임씬으로 이동
+     //해당 슬롯에 데이터가 존재하면 게임씬으로 이동
         }
-        else
-        {
-            Create();       //없으면 UI 활성화
-            
-        }
+        Game();
 
     }
-    public void Create()
-    {
-        create.transform.SetAsLastSibling();
-        create.gameObject.SetActive(true);
 
-    }
     public void Game()      
     {
         if (!savefile[DataController.instance.nowSlot])     //현재 슬롯에 데이터 없으면 
         {
             DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
             DataController.instance.gameData.isLeader[0] = true;    //맨 처음에 처음 나오는 파티원이 리더
+            DataController.instance.gameData.partyMember[1] = true;
+            DataController.instance.gameData.partyMember[2] = true;
             savefile[DataController.instance.nowSlot] = true;
             DataController.instance.SaveGameData(); //입력한 이름 복사 후 현재 정보 저장
         }
-        SceneManager.LoadScene(1);  //게임씬으로 이동
+        SceneManager.LoadScene(2);  //게임씬으로 이동
     }
 }
 //경로: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json

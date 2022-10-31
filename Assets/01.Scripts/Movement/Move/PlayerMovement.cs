@@ -5,17 +5,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.XR;
+using Unity.VisualScripting;
 
 // 전정우
-// 1022
+// 1030
 
 
 public class PlayerMovement : MonoBehaviour 
 {
     public GameObject Kong;
-    public GameObject Ember;
     public GameObject Jin;
+    public GameObject Ember;
+    //UI
+    public GameObject KongUI;
+    public GameObject JinUI;
+    public GameObject EmberUI;
     public Animator curAnimator;
+    public Animator myStaminaAnim;
+
+    [SerializeField]
+    public GameManager theManager;
+
     public enum CHARACTER
     {
         Kong, Ember, Jin
@@ -27,9 +37,12 @@ public class PlayerMovement : MonoBehaviour
     public Transform myCamRot; // 카메라 회전값 
     public Slider mySlider;
     public GameObject myStaminaBar; // 스태미나 바의 사라짐과 재출현
+    
+    
+    new // 지우지마세용 에러 방지용 입니다.
 
-    // 우리 스크립트는 리지드바디를 활용한 움직임
-    public Rigidbody rigidbody; // 지우거나 주석하지 마세요
+        // 우리 스크립트는 리지드바디를 활용한 움직임
+        Rigidbody rigidbody; // 지우거나 주석하지 마세요
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpHeight = 4f; //점프
     [SerializeField] private float dash = 6f; // 달리기 속도 (대시 기능 나중에 구현할지 모르니 일단 이름은 이대로)
@@ -46,14 +59,22 @@ public class PlayerMovement : MonoBehaviour
     public bool run; // 달리기
     public bool canRun = true; // 달리기와 스태미너바에 연관
 
+    //캐릭터 중복쿨타임 방지
+    private bool KongTheSame = false;
+    private bool JinTheSame = false;
+    private bool EmberTheSame = false;
+
+
     // 연속점프방지
     private bool ground = false;
-    [SerializeField] private LayerMask layer; 
+    [SerializeField] private LayerMask layer;
+
+    //딜레이
+    private bool giveDelay = false;
 
     void ChangeState(CHARACTER myCha)
     {
-
-        Vector3 summonPosition = new Vector3(0, 1.5f, 0);
+        Vector3 summonPosition = new Vector3(0, 1.3f, 0); // 캐릭터 교체시 소환되는 높이값
 
         if (myCharacter == myCha) return;
         myCharacter = myCha;
@@ -66,15 +87,12 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(false);
                 Jin.SetActive(false);
                 curAnimator = Kong.GetComponent<Animator>();
+                //UI
+                //KongUI.SetActive(true);
+                //EmberUI.SetActive(false);
+                //JinUI.SetActive(false);
                 break;
-            case CHARACTER.Ember:
-                this.transform.position = this.transform.transform.position + summonPosition;
-                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
-                Kong.SetActive(false);
-                Ember.SetActive(true);
-                Jin.SetActive(false);
-                curAnimator = Ember.GetComponent<Animator>();
-                break;
+            
             case CHARACTER.Jin:
                 this.transform.position = this.transform.transform.position + summonPosition;
                 Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
@@ -82,6 +100,23 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(false);
                 Jin.SetActive(true);
                 curAnimator = Jin.GetComponent<Animator>();
+                //UI
+                //KongUI.SetActive(false);
+                //EmberUI.SetActive(false);
+                //JinUI.SetActive(true);
+                break;
+
+            case CHARACTER.Ember:
+                this.transform.position = this.transform.transform.position + summonPosition;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
+                Kong.SetActive(false);
+                Ember.SetActive(true);
+                Jin.SetActive(false);
+                curAnimator = Ember.GetComponent<Animator>();
+                //UI
+                //KongUI.SetActive(false);
+                //EmberUI.SetActive(true);
+                //JinUI.SetActive(false);
                 break;
         }
     }
@@ -91,9 +126,9 @@ public class PlayerMovement : MonoBehaviour
         {
             case CHARACTER.Kong:
                 break;
-            case CHARACTER.Ember:
-                break;
             case CHARACTER.Jin:
+                break;
+            case CHARACTER.Ember:
                 break;
         }
 
@@ -102,30 +137,91 @@ public class PlayerMovement : MonoBehaviour
     {
         curAnimator = Kong.GetComponent<Animator>(); // 기본캐릭터는 '공'으로 시작
         ChangeState(CHARACTER.Kong);
-
+        KongTheSame = true; // 같은 캐릭터로의 변경을 막기 위해
         rigidbody = this.GetComponent<Rigidbody>(); // 리지드바디로 움직임 구현을 위함
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 1, 2, 3 키로 캐릭터 교체
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeState(CHARACTER.Kong);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeState(CHARACTER.Jin);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeState(CHARACTER.Ember);
-        }
-        CheckGround(); // 연속점프 감지
-        
 
+        CheckGround(); // 연속점프 감지
+
+
+        
         if (ground)
+        {
+            // 1, 2, 3 키로 캐릭터 교체
+            if (Input.GetKeyDown(KeyCode.Alpha1) && giveDelay == false && KongTheSame == false)
+            {
+                KongUI.GetComponent<Animator>().SetTrigger("Expansion");
+                JinUI.GetComponent<Animator>().SetTrigger("Reduction");
+                if (!JinTheSame)
+                {
+                    EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
+                ChangeState(CHARACTER.Kong);
+                StartCoroutine(CoolTime(5f));
+                KongTheSame = true;
+                JinTheSame = false;
+                EmberTheSame = false;
+                
+                
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2) && giveDelay == false && JinTheSame == false)
+            {
+                JinUI.GetComponent<Animator>().SetTrigger("Expansion");
+                if(!EmberTheSame)
+                {
+                    KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
+                if (!KongTheSame)
+                {
+                    EmberUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
+                ChangeState(CHARACTER.Jin);
+                StartCoroutine(CoolTime(5f));
+                KongTheSame = false;
+                JinTheSame = true;
+                EmberTheSame = false;
+                
+                
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3) && giveDelay == false && EmberTheSame == false)
+            {
+                EmberUI.GetComponent<Animator>().SetTrigger("Expansion");
+                JinUI.GetComponent<Animator>().SetTrigger("ReductionFromEmber");
+                if(!JinTheSame)
+                {
+                    KongUI.GetComponent<Animator>().SetTrigger("Reduction");
+                }
+                
+                ChangeState(CHARACTER.Ember);
+                StartCoroutine(CoolTime(5f));
+                KongTheSame = false;
+                JinTheSame = false;
+                EmberTheSame = true;
+               
+            }
+            
+                dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
+                                                     // A 와 D 키를 눌렀을 때 이동방향
+                dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
+                totalDist = dir.magnitude;
+
+            // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
+            dir = myCamRot.rotation * dir;
+            dir.y = 0.0f;
+            dir.Normalize();
+
+            StateProcess(); //캐릭터 교체
+            Dash(); // 달리기
+        }
+
+
+        if (!ground && Input.GetKey(KeyCode.Space)) // 대화안하고있을떄만 점프하게 (영준수정)
         {
             dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
                                                  // A 와 D 키를 눌렀을 때 이동방향
@@ -138,7 +234,6 @@ public class PlayerMovement : MonoBehaviour
             dir.Normalize();
 
             StateProcess(); //캐릭터 교체
-            Dash(); // 달리기
         }
 
         HideStaminaBar(); // 스태미나 바 숨기기
@@ -155,6 +250,7 @@ public class PlayerMovement : MonoBehaviour
             curAnimator.SetBool("IsWalking", false);
         }
 
+        
 
         // 점프
         // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
@@ -231,7 +327,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            myStaminaBar.SetActive(true);
+
+            if (!myStaminaBar.activeSelf)
+            {
+                myStaminaBar.SetActive(true);
+                myStaminaAnim.SetTrigger("FadeIn");
+            }
+
         }
     }
 
@@ -239,9 +341,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
-        if (Mathf.Approximately(mySlider.value, 0.0f))
+        if (Mathf.Approximately(mySlider.value, 0f))
         //스태미너 바의 밸류가 0에 근사치에 닿을 때
         {
+            
             canRun = false;
             if (totalDist > 0.0f) // 캐릭터의 움직임이 없다면
             {
@@ -263,7 +366,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 run = true;
                 curAnimator.SetBool("IsRunning", true);
-
             }
             else // 이동거리값이 0보다 작을 때 shift로 달리기 발동 안할 수 있도록
             {
@@ -275,7 +377,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift) && !canRun)
         // 시프트 키를 떼었고, canRun 이 false일 때
         {
-            canRun = true;
+             
+                canRun = true;
+            
         }
     }
 
@@ -292,7 +396,7 @@ public class PlayerMovement : MonoBehaviour
         // 이 길이 안에서 우리가 설정할 레이어가 검출이 되면 그 정보를 out hit 에 담아라
 
         // 이쪽 프로젝트로 옮기는 과정에서 원래 수치값(0.4f, 0.2f) 와 상이하게 해야하는 문제가 좀 있네요 
-        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.3f, layer))
+        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.2f, layer))
         {
             ground = true;
             curAnimator.SetBool("InAir", false);
@@ -302,5 +406,48 @@ public class PlayerMovement : MonoBehaviour
             ground = false;
             curAnimator.SetBool("InAir", true);
         }
+
+
     }
+
+    //쿨타임
+    IEnumerator CoolTime(float cool)
+    {
+       
+        float coolTime = cool;
+        while (cool > 0.0f)
+        {
+            giveDelay = true; //트루를 주고
+            cool -= Time.deltaTime;
+            if(KongTheSame)
+            {
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            }
+
+            if (JinTheSame)
+            {
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+            }
+
+            if(EmberTheSame)
+            {
+                EmberUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f;
+                KongUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
+                
+            }
+            
+
+            yield return null;
+        }
+        giveDelay = false; //시간이 끝나면
+       
+    }
+
+
+
 }

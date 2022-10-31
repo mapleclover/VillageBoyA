@@ -19,7 +19,10 @@ public class ActionController : MonoBehaviour
     private bool pickItemActivated = false;
     private bool isBackAttack = false;
 
+    public bool isBattle;
+
     private RaycastHit hitInfo;
+    private GameObject scanObject;
     
 
     [SerializeField]
@@ -36,6 +39,8 @@ public class ActionController : MonoBehaviour
     private Image itemTextBackground;
     [SerializeField]
     private Image enemyextBackground;
+    [SerializeField]
+    private GameManager theManager;
     
 
 
@@ -45,13 +50,21 @@ public class ActionController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        isBattle = false;   
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckObject();
+        if (hitInfo.collider != null)
+        {
+            scanObject = hitInfo.collider.gameObject; // 레이저로 맞춘놈의 gameobject 저장.
+        }
+        else
+        {
+            scanObject = null;
+        }
         TryPickupAction();
     }
 
@@ -89,13 +102,18 @@ public class ActionController : MonoBehaviour
                         // 플레이어위치에서 ovelapSphere에 감지된 대상에게로 레이저를쏨.
                         if (Physics.Raycast(transform.position, _direction, out hitInfo, range, layerMask))
                         {
-                            if (hitInfo.transform.tag == "Npc")
+                            if (hitInfo.transform.tag == "Npc" && !theManager.isAction)
                             {
                                 NpcInfoAppear();
                             }
-                            else if (hitInfo.transform.tag == "Item")
+                            else if (hitInfo.transform.tag == "Item" && !theManager.isAction)
                             {
                                 ItemInfoAppear();
+                            }
+                            else
+                            {
+                                NpcInfoDisappear();
+                                ItemInfoDisappear();
                             }
                         }
                         else //거리안맞을떄지움.
@@ -130,7 +148,6 @@ public class ActionController : MonoBehaviour
                                 {
                                     isBackAttack = true;
                                     //EnemyBackAttackInfoAppear();
-                                    
                                 }
                                 else if (_backAttackAngle <= 0.866f)// _zvalue값이 0이상일때 (뒤치기아닐때)
                                 {
@@ -164,7 +181,21 @@ public class ActionController : MonoBehaviour
     // 아이템체크 후 pickup 함수활성화
     private void TryPickupAction()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (scanObject != null)
+        {
+            if (scanObject.transform.tag == "Npc" || scanObject.transform.tag == "Item")
+            {
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (scanObject != null)
+                    {
+                        CheckObject();
+                        CanPickUp();
+                    }
+                }
+            }
+        }
+        if (isBattle)
         {
             CheckObject();
             CanPickUp();
@@ -177,8 +208,9 @@ public class ActionController : MonoBehaviour
         {
             if(hitInfo.transform != null) // 한번더 체크 및 아이템획득
             {
-                Destroy(hitInfo.transform.gameObject);
+                Debug.Log(scanObject);
                 ItemInfoDisappear();
+                theManager.Action(scanObject);
                 // 인벤토리창으로 아이템들어감 ///////////////////**************
             }
         }
@@ -186,39 +218,46 @@ public class ActionController : MonoBehaviour
         {
             if(hitInfo.transform != null) // 한번 더 확인 및 // NPC와 대화.
             {
-                //대화. ////////////////////////*************
+                Debug.Log(scanObject);
+                theManager.Action(scanObject);
             }
         }
         else if (isBackAttack)
         {
-            if(hitInfo.transform != null)
+            if(hitInfo.transform != null && isBattle)
             {
                 //기습- 배틀씬으로넘어감.///////////////////////////////**************
                 Destroy(hitInfo.transform.gameObject);
                 isBackAttack = false;
+                isBattle = false;
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************
-                SceneLoad.Inst.ChangeScene(4);
+                SceneLoad.Instance.ChangeScene(4);
             }
+        }
+        else if (theManager.isAction)
+        {
+            Debug.Log(scanObject);
+            theManager.Action(scanObject);
         }
     }
 
     // npc 정보창 오픈
     private void NpcInfoAppear()
     {
-        if (!pickNpcActivated) // false일때말실행
+        if (!pickNpcActivated && !theManager.isAction) // false일때말실행
         {
             pickNpcActivated = true;
             npcTextBackground.gameObject.SetActive(true);
             CheckText.gameObject.SetActive(true); // 텍스트창 활성화
             CheckText.alignment = TMPro.TextAlignmentOptions.Right;
-            CheckText.text = "<color=blue>" + hitInfo.transform.GetComponent<Pickup>().npc.npcName + "</color>" + "와 대화하시겠습니까?" + "<color=yellow>" + " (Y) " + "</color>";
+            CheckText.text = "<color=blue>" + hitInfo.transform.GetComponent<Pickup>().npc.npcName + "</color>" + "와 대화하시겠습니까?" + "<color=yellow>" + " (E) " + "</color>";
         }
     }
     // item 정보창 오픈
     private void ItemInfoAppear()
     {
-        if (!pickItemActivated)
+        if (!pickItemActivated && !theManager.isAction)
         {
             pickItemActivated = true;
             itemTextBackground.gameObject.SetActive(true);
@@ -246,6 +285,14 @@ public class ActionController : MonoBehaviour
             pickItemActivated = false;
             itemTextBackground.gameObject.SetActive(false);
             CheckText.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.transform.tag == "Enemy")
+        {
+            isBattle = true;
         }
     }
     //private void EnemyBackAttackInfoAppear()

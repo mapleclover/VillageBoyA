@@ -21,8 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     public Image CharacterImage;
     public Sprite[] CharacterImages;
-    public float textSpeed = 10f;
-    public bool skip = false;
+    public int textSpeed;
 
     public void Say(string speech, string speaker = "", int imageIndex = -1)
     {
@@ -39,10 +38,12 @@ public class DialogueManager : MonoBehaviour
         speaking = null;
     }
     public bool isSpeaking { get { return speaking != null; } }
-    public bool isWaitingForUserInput = false;
+    [HideInInspector]public bool isWaitingForUserInput = false;
+    [HideInInspector]public bool skip = false;
     Coroutine speaking = null;
     IEnumerator Speaking(string targetSpeech, string speaker = "", int imageIndex = -1)
     {
+        textSpeed = PlayerPrefs.GetInt("TextSpeed");
         DialogueBox.SetActive(true);
         Text.text = "";
         Name.text = DetermineSpeaker(speaker);
@@ -52,11 +53,11 @@ public class DialogueManager : MonoBehaviour
         }        
         isWaitingForUserInput = false;
 
-        if(textSpeed >= 9.9f)
+        if(textSpeed == 10)
         {
             Text.text = targetSpeech;
         }
-        else if(textSpeed < 9.9f)
+        else
         {
             while (Text.text != targetSpeech)
             {
