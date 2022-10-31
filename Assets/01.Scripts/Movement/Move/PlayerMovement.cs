@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         {
             case CHARACTER.Kong:
                 this.transform.position = this.transform.transform.position + summonPosition;
-                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, Quaternion.identity);
                 Kong.SetActive(true);
                 Ember.SetActive(false);
                 Jin.SetActive(false);
@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
             
             case CHARACTER.Jin:
                 this.transform.position = this.transform.transform.position + summonPosition;
-                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, Quaternion.identity);
                 Kong.SetActive(false);
                 Ember.SetActive(false);
                 Jin.SetActive(true);
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
             case CHARACTER.Ember:
                 this.transform.position = this.transform.transform.position + summonPosition;
-                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, this.transform.rotation);
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, Quaternion.identity);
                 Kong.SetActive(false);
                 Ember.SetActive(true);
                 Jin.SetActive(false);

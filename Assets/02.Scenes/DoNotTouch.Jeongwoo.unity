@@ -1166,6 +1166,7 @@ MonoBehaviour:
   itemTextBackground: {fileID: 760008511}
   enemyextBackground: {fileID: 1596730490}
   theManager: {fileID: 949683155}
+  theGoal: {fileID: 2145330320}
 --- !u!1 &131430645
 GameObject:
   m_ObjectHideFlags: 0
@@ -7827,10 +7828,13 @@ MonoBehaviour:
   questManager: {fileID: 1899953964}
   talkPanel: {fileID: 188849875}
   portraitImg: {fileID: 1843725878}
+  namePanel: {fileID: 0}
+  nameText: {fileID: 0}
   talkText: {fileID: 526408071}
   scanObject: {fileID: 0}
   isAction: 0
   talkIndex: 0
+  theGoal: {fileID: 0}
 --- !u!4 &949683156
 Transform:
   m_ObjectHideFlags: 0
@@ -18044,6 +18048,7 @@ MonoBehaviour:
   moveKey: {fileID: 670084295}
   runKey: {fileID: 1161897578}
   theManager: {fileID: 0}
+  isTutorial: 0
 --- !u!4 &13954041756301829
 Transform:
   m_ObjectHideFlags: 0
