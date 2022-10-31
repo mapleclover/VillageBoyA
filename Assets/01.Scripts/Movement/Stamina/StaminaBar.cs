@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using Unity.VisualScripting;
-using UnityEditor.UIElements;
 
 public class StaminaBar : MonoBehaviour
 {

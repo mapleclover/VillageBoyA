@@ -8,7 +8,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using static UnityEditor.PlayerSettings;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 

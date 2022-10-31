@@ -14,8 +14,8 @@ public class Dialogue : MonoBehaviour
     private void Start()
     {
         dialogue = DialogueManager.instance;
-
-        s = System.IO.File.ReadAllLines("Assets/10.Resources/TextScript/Text1.txt");
+        TextAsset a = Resources.Load<TextAsset>("Text/Text1");
+        s = a.text.Split("\n");
 
         Say(s[index]);
         index++;

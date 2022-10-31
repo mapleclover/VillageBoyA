@@ -46,7 +46,7 @@ public class SceneLoad : MonoBehaviour
     IEnumerator Loading(int i)
     {
         isChange = true;
-        yield return SceneManager.LoadSceneAsync(0);
+        yield return SceneManager.LoadSceneAsync(1);
         GameObject obj = GameObject.Find("LoadingGage");
         Slider slider = obj.GetComponent<Slider>();
         slider.value = 0.0f;
