@@ -4,48 +4,46 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-
 // 전정우
-// 1030
-
-
+// 1101
 public class PlayerMovement : MonoBehaviour 
 {
+    [Header("Character")]
     public GameObject Kong;
     public GameObject Jin;
     public GameObject Ember;
+    public CHARACTER myCharacter = CHARACTER.Kong;
 
-    //UI
+    [Header("UI")]
     public GameObject KongUI;
     public GameObject JinUI;
     public GameObject EmberUI;
     public Animator curAnimator;
     public Animator myStaminaAnim;
+    public Slider mySlider;
+    public GameObject myStaminaBar; // 스태미나 바의 사라짐과 재출현
+
+    [Header("Camera")]
+    public Transform myCamRot; // 카메라 회전값 
+
+    new // 지우지마세용 에러 방지용 입니다.
+    // 리지드바디를 활용한 움직임
+    Rigidbody rigidbody; // 지우거나 주석하지 마세요
+
+    [Header("Ability")]
+    public float speed = 3f;
+    //[SerializeField] private float jumpHeight = 4f; //점프
+    public float dash = 6f; // 달리기 속도 (대시 기능 나중에 구현할지 모르니 일단 이름은 이대로)
+    public float rotSpeed = 10f; //deltatime 만 곱해주면 느리기 때문에 rotSpeed로 회전 속도를 조절 해 주자
+    public LayerMask layer;
 
     [SerializeField]
-    public GameManager theManager;
+    private GameManager theManager;
 
     public enum CHARACTER
     {
         Kong, Ember, Jin
     }
-
-    public CHARACTER myCharacter = CHARACTER.Kong;
-
-
-    public Transform myCamRot; // 카메라 회전값 
-    public Slider mySlider;
-    public GameObject myStaminaBar; // 스태미나 바의 사라짐과 재출현
-    
-    
-    new // 지우지마세용 에러 방지용 입니다.
-
-        // 우리 스크립트는 리지드바디를 활용한 움직임
-        Rigidbody rigidbody; // 지우거나 주석하지 마세요
-    [SerializeField] private float speed = 3f;
-    [SerializeField] private float jumpHeight = 4f; //점프
-    [SerializeField] private float dash = 6f; // 달리기 속도 (대시 기능 나중에 구현할지 모르니 일단 이름은 이대로)
-    [SerializeField] private float rotSpeed = 10f; //deltatime 만 곱해주면 느리기 때문에 rotSpeed로 회전 속도를 조절 해 주자
 
     // 토글카메라
     //public Camera _camera;
@@ -54,20 +52,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 dir = Vector3.zero;// 이동
     private float totalDist;
-
     public bool run; // 달리기
     public bool canRun = true; // 달리기와 스태미너바에 연관
-
     //캐릭터 중복쿨타임 방지
     private bool KongTheSame = false;
     private bool JinTheSame = false;
     private bool EmberTheSame = false;
-
-
     // 연속점프방지
     private bool ground = false;
-    [SerializeField] private LayerMask layer;
-
     //딜레이
     private bool giveDelay = false;
 
@@ -156,25 +148,14 @@ public class PlayerMovement : MonoBehaviour
             SwitchingCharacter();
             StateProcess(); //캐릭터 교체
 
-            /*if (!theManager.isAction)
-            {
-                
-                Dash(); // 달리기
-                run = false;
-            }*/
         }
 
-        /*if (!ground && Input.GetKey(KeyCode.Space)) // 대화안하고있을떄만 점프하게 (영준수정)
-        {
-
-            StateProcess(); //캐릭터 교체
-        }*/
 
 
     }
 
 
-    
+
     private void FixedUpdate()
     //캐릭터의 부드러운 회전을 위해
     //물리적인 이동이나 회전을 할 때 쓰면 좋다
@@ -191,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void PlayerJump()
+ /*   void PlayerJump()
     {
         // 점프
         // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
@@ -203,9 +184,7 @@ public class PlayerMovement : MonoBehaviour
             curAnimator.SetTrigger("Jump");
 
         }
-    }
-
-
+    }*/
 
     void PlayerMove()
     {
@@ -233,9 +212,6 @@ public class PlayerMovement : MonoBehaviour
             curAnimator.SetBool("IsWalking", false);
         }
     }
-
-
-
     void HideStaminaBar()
     {
         // 100f 일 경우 스태미나 바 숨김
@@ -400,7 +376,6 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
-
     void CheckGround() // 연속점프 방지, 점프를 땅에 있을 때만
     {
         //레이캐스트를 사용
@@ -423,10 +398,7 @@ public class PlayerMovement : MonoBehaviour
             ground = false;
             curAnimator.SetBool("InAir", true);
         }
-
-
     }
-
     //쿨타임
     IEnumerator CoolTime(float cool)
     {
@@ -457,12 +429,9 @@ public class PlayerMovement : MonoBehaviour
                 JinUI.GetComponentsInChildren<Image>()[1].fillAmount = 1f - (cool / coolTime);
                 
             }
-            
-
             yield return null;
         }
         giveDelay = false; //시간이 끝나면
-       
     }
 
 }
