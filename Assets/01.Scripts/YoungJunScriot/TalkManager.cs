@@ -10,6 +10,7 @@ public class TalkManager : MonoBehaviour
     public Sprite[] portraitArr;
 
 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,24 +24,22 @@ public class TalkManager : MonoBehaviour
         //Talk Data
         //NPC A:1000
         //Apple:100
-        talkData.Add(1000, new string[] { "안녕?:0", "이곳에 처음 왔구나?:1" }); //대화뒤의숫자는 portratiIndex ":" 은구분자.
+        talkData.Add(1000, new string[] { "안녕! 오빠 나는 클레야:0", "이곳에 처음 왔구나?:1" }); //대화뒤의숫자는 portratiIndex ":" 은구분자.
         talkData.Add(2000, new string[] { "안녕?ㅋ:0" });
         talkData.Add(100, new string[] {"새빨갛게 잘 익은 사과다."  });
 
         //Quest Talk Data
         //첫마을 방문 마을사람과대화하기.
-        talkData.Add(10 + 1000, new string[] {"어서 와.:0",
-                                            "이 마을에 놀라운 전설이 있다는데:0",
-                                            "저쪽에 있는 공이 알려줄꺼야:1"});
-        talkData.Add(11 + 2000, new string[] {"여어 ㅋ:0",
-                                            "이 마을의 전설을 들으러 온거야?ㅋ :0",
-                                            "맨 입으로 가르쳐주긴 좀 그렇고 ㅋ:0",
-                                            "사과가 먹고싶어서 사과좀 하나 따와주겠어?ㅋ:0"});
+        talkData.Add(10 + 10000, new string[] {"좋아요 !\n 대화는 E 버튼을 눌러 넘어갈 수 있어요.",
+                                               "이번에는 앞에 있는 클레에게 E 버튼을 눌러 말을 걸어볼까요?" });
 
-        talkData.Add(20 + 2000, new string[] { "찾으면 꼭 좀 가져다 줘:0" });
+        talkData.Add(11 + 1000, new string[] {"안녕! 오빠:0",
+                                              "Npc나 아이템과 상호작용 하고 싶으면 바로 앞에서 E 버튼누르면돼 !:0",
+                                              "클레가 배가고픈데 혹시 건너편 사과 두개만 구해줄 수 있을까?:1"});
+
         talkData.Add(20 + 100, new string[] { "근처에서 사과를 찾았다." });
         talkData.Add(21 + 100, new string[] { "근처에서 사과를 찾았다." });
-        talkData.Add(22 + 2000, new string[] { "고마워 ㅋ:0" });
+        talkData.Add(22 + 1000, new string[] { "오빠! 고마워! 냠냠:1" });
 
 
         //Portrait Data

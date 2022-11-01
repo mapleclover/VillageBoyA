@@ -24,7 +24,7 @@ public class TurnBattle : MonoBehaviour
     public GameObject SelectedCharacterTarget;
     public GameObject mySelectRing;
     public GameObject mySelectTargetRing;
-    public Button[] CharacterButton;  
+    public Button[] CharacterButton;
     public Button AttackStartButton;
     public Button RunButton;
     public static TurnBattle Inst = null;
@@ -34,13 +34,12 @@ public class TurnBattle : MonoBehaviour
     public Slider EnemyHpbar;
     public List<Slider> EnHpbar;
 
+    public int HealingPotion = 0;
     public int BattleTurn=0;
     int Check = 0;
     bool VictoryCheck;
     bool FastSpeedCheck;
-    int Skill=0;
-    //Vector3 gos; //원래위치값
-    //Vector3 gos2; //원래바라보고있던위치값
+    int Skill=0;    
     Vector3 pos;
     Vector3 pos2;
     public GameObject speedChanger;
@@ -72,7 +71,7 @@ public class TurnBattle : MonoBehaviour
                 RunButton.interactable = true;
                 for (int i = 0; i < PlayList.Count; ++i)
                 {
-                    PlayList[i].GetComponent<BattleCharacter>().Active5 = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다                  
+                    PlayList[i].GetComponent<BattleCharacter>().TurnActive = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다                  
                 }
                 for (int i = 0; i < Enemy.Length; ++i)
                 {
@@ -100,7 +99,10 @@ public class TurnBattle : MonoBehaviour
                         }
                     }
                 }
-                StartCoroutine(Moving(Active.GetComponent<BattleCharacter>().myTarget.transform.position, Active.GetComponent<BattleCharacter>().longAttackCheck));
+                if (!Active.GetComponent<BattleCharacter>().ActiveHeal)
+                    StartCoroutine(Moving(Active.GetComponent<BattleCharacter>().myTarget.transform.position, Active.GetComponent<BattleCharacter>().longAttackCheck));
+                else
+                    StartCoroutine(HealingActive());
                 break;            
             case State.End:
                 break;
@@ -154,7 +156,7 @@ public class TurnBattle : MonoBehaviour
                 break;            
             case State.ActiveCheck:
                 Active = PlayList[0];
-                while (!Active.GetComponent<BattleCharacter>().Active5 || Active.GetComponent<BattleCharacter>().State == STATE.Die)
+                while (!Active.GetComponent<BattleCharacter>().TurnActive || Active.GetComponent<BattleCharacter>().State != STATE.Live)
                 {
                     ++Check;
                     if (Check == PlayList.Count)
@@ -170,7 +172,7 @@ public class TurnBattle : MonoBehaviour
                 }
                 else
                 {
-                    if (Active.GetComponent<BattleCharacter>().Active5)
+                    if (Active.GetComponent<BattleCharacter>().TurnActive)
                     {                        
                         ChangeState(State.Battle);
                     }
@@ -291,14 +293,14 @@ public class TurnBattle : MonoBehaviour
     }
     void Victory() //승리시
     {
-        foreach (GameObject act in Enemy) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
+        foreach (GameObject act in Enemy) if (act.GetComponent<BattleCharacter>().State != STATE.Die) return;
         VictoryCheck = true;
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }
     void Lose() //패배시
     {
-        foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
+        foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State != STATE.Die) return;
         VictoryCheck = false;
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
@@ -336,11 +338,17 @@ public class TurnBattle : MonoBehaviour
         
         
     }
+    IEnumerator HealingActive()
+    {
+        Active.GetComponent<BattleCharacter>().Healing();
+        yield return new WaitForSeconds(1.0f);
+        ChangeState(State.ActiveCheck);
 
+    }
 
     IEnumerator Attack(int s, Vector3 gos, Vector3 gos2, bool v=false) //공격
     {
-
+        Active.GetComponent<BattleCharacter>().TurnActive = false;
         foreach (GameObject act in Player)
         {
             if (Active == act)
@@ -422,7 +430,7 @@ public class TurnBattle : MonoBehaviour
         }
         if (Mathf.Approximately(dist, 0.0f))
         {
-            Active.GetComponent<BattleCharacter>().Active5 = false;
+            
             Active.GetComponent<Animator>().SetBool("IsWalking", false);
             StartCoroutine(RotatingToPosition(gos2,false));
             yield return new WaitForSeconds(0.5f);

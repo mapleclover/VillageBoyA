@@ -15,8 +15,8 @@ public class QuestManager : MonoBehaviour
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
 
     // 필요한 컴퍼넌트
-    public GameObject testNPC_1000;
-    public GameObject Kong_2000;
+    public GameObject Klee_1000;
+
     [SerializeField]
     private TMPro.TMP_Text questPopupText;
     [SerializeField]
@@ -34,8 +34,8 @@ public class QuestManager : MonoBehaviour
 
     private void GenerateData()
     {
-        questList.Add(10, new QuestData("첫 마을 방문", new int[] { 1000, 2000 }));
-        questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 2000 }));
+        questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
+        questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000 }));
         questList.Add(30, new QuestData("퀘스트 올 클리어!", new int[] { 0 }));
     }
 
@@ -77,20 +77,25 @@ public class QuestManager : MonoBehaviour
     {
         //questObject[0] = 사과
         //questObject[1] = ! 아이콘
-        //questObject[2] = ? 아이콘ㅋ
+        //questObject[2] = ? 아이콘
+        //questObject[3] = 사과2
+        //questObject[4] = 듀토리얼 goal
         switch (questId)
         {
             case 10:
                 if(questActionIndex == 1)
                 {
-                    questObject[1].SetActive(false); // ! 아이콘
-                    questObject[2].SetActive(true); // ? 아이콘
-                    questObject[2].transform.position = Kong_2000.transform.position + Vector3.up * 2.3f;
+                    questObject[1].SetActive(true); // ! 아이콘
+                    //questObject[2].SetActive(true); // ? 아이콘
+                    questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
+                    questObject[4].transform.position = new Vector3(291.0f, 1.1f, 222.0f); // goal지접이동
                 }
                 if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
                 {
-                    questObject[2].SetActive(false);
+                    questObject[1].SetActive(false);
+                    questObject[0].SetActive(true); // 사과 1 
+                    questObject[3].SetActive(true); // 사과 2
                 }
                 break;
             case 20:
@@ -98,14 +103,13 @@ public class QuestManager : MonoBehaviour
                 {
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
-                        
                         Destroy(scanObject); // 사과
                     }
                 }
                 if(questActionIndex == 2)
                 {
-                    questObject[2].SetActive(true);
-                    questObject[2].transform.position = Kong_2000.transform.position + Vector3.up * 2.3f;
+                    questObject[2].SetActive(true); // ? 아이콘
+                    questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
                         Destroy(scanObject); // 사과
@@ -113,7 +117,9 @@ public class QuestManager : MonoBehaviour
                 }
                 if(questActionIndex == 3)
                 {
-                    questObject[2].SetActive(false);
+                    questObject[2].SetActive(false); // ? 사라지게.
+                    questObject[4].SetActive(true);
+                    Goal.goalCounting++; 
                 }
                 break;
         }
@@ -126,7 +132,7 @@ public class QuestManager : MonoBehaviour
         {
             case 10:
                 if(questActionIndex == 1)
-                    questPopupText.text = "Kong 과 대화하기";
+                    questPopupText.text = "클레와 대화하기";
                 if (questActionIndex == 2)
                 {
                     questPopupText.text = "사과 구해오기 0/2";
@@ -141,8 +147,13 @@ public class QuestManager : MonoBehaviour
                 }
                 if (questActionIndex == 2)
                 {
-                    questPopupText.text = "Kong에게 \n사과 갖다주기";
+                    theInven.GetItem(scanObject);
+                    questPopupText.text = "클레에게 \n사과 갖다주기";
                     myAnim.SetBool("isComplete", true);
+                }
+                if (questActionIndex == 3)
+                {
+                    questPopupText.text = "다음 목표지점으로\n이동하기";
                 }
                 break;
             case 30:

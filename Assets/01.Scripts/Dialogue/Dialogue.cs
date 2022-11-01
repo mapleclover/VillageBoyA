@@ -16,6 +16,9 @@ public class Dialogue : MonoBehaviour
         dialogue = DialogueManager.instance;
 
         s = System.IO.File.ReadAllLines("Assets/10.Resources/TextScript/Text1.txt");
+
+        Say(s[index]);
+        index++;
     }
 
     
@@ -39,6 +42,13 @@ public class Dialogue : MonoBehaviour
             }
         }
     }
+
+    public void LoadFirstSentence()
+    {
+        Say(s[index]);
+        index++;
+    }
+
     void Say(string s)
     {
         string[] parts = s.Split(':');
@@ -46,7 +56,7 @@ public class Dialogue : MonoBehaviour
         {
             Debug.Log("이동화면으로 이동한다");
             dialogue.CloseChatAnim();
-            SceneLoad.Instance.ChangeScene(3);
+            SceneLoad.Instance.ChangeScene(int.Parse(parts[1]));
             return;
         }
         string speech = parts[0];
