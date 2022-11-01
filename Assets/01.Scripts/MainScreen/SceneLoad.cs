@@ -68,6 +68,7 @@ public class SceneLoad : MonoBehaviour
                 ao.allowSceneActivation = true;
             }
             yield return null;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }
