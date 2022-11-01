@@ -1,4 +1,5 @@
 ///박진
+///캐릭터 상태
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,12 @@ using UnityEngine.Events;
 
 public enum STATE
 {
-    Live, Die
+    Live, Stunned, Die
 }
 public class BattleCharacter : CharacterProperty
 {
     public STATE State = STATE.Live;
-    float _myhp = 100.0f;
+    public float _myhp = 100.0f;
     float maxHp = 100.0f;
     float minHp = 0.0f;
     public Slider myHpBar;
@@ -27,18 +28,19 @@ public class BattleCharacter : CharacterProperty
         }
         
     }
-    public float speed = 2.0f;
+    public float speed;
     public int Skill = 0;
     public bool longAttackCheck=false;
-
+    public bool[] longAttack = new bool[3];
     public GameObject myTarget;
-    public bool Active5=false;
+    public bool TurnActive=false;
     public GameObject Canvas;    
     public GameObject hudDmgText;
-    public bool Stunned=false;
-    bool Stunned2= false;
+    public bool Stunned=false;    
     int StunCheck;
+    public bool ActiveHeal=false;
     public int StunTurn = 1;
+    public float[] SkillDmg=new float[3] {10.0f,20.0f,30.0f };
     void ChangeState(STATE s)
     {
         if (State == s) return;
@@ -46,6 +48,8 @@ public class BattleCharacter : CharacterProperty
         switch (State)
         {
             case STATE.Live:
+                break;
+            case STATE.Stunned:
                 break;
             case STATE.Die:
                 myAnim.SetBool("Death",true);
@@ -61,9 +65,21 @@ public class BattleCharacter : CharacterProperty
                 {
                     ChangeState(STATE.Die);
                 }
+                if (Stunned)
+                {
+                    ChangeState(STATE.Stunned);
+                    StunCheck = TurnBattle.Inst.BattleTurn;
+                    Stunned = false;
+                }
+                break;
+            case STATE.Stunned:
+                if (StunCheck + StunTurn == TurnBattle.Inst.BattleTurn)
+                {
+                    ChangeState(STATE.Live);
+                }
                 break;
             case STATE.Die:
-                Active5 = false;
+                TurnActive = false;
                 break;
         }
     }
@@ -80,43 +96,24 @@ public class BattleCharacter : CharacterProperty
     {
         StateProcess();        
         myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp , 5.0f * Time.deltaTime);
-        StunnedCheck(StunTurn);
-    }
-    void StunnedCheck(int v=1)
-    {
-        //스턴구상중
-           
-        if (StunCheck + v == TurnBattle.Inst.BattleTurn)
-        {
-            Stunned2 = false;
-        }
-        if (Stunned2)
-        {
-            Active5 = false;
-        }
-        if (Stunned)
-        {
-            Stunned2 = true;
-            StunCheck = TurnBattle.Inst.BattleTurn;
-            Stunned = false;
-        }
-
-    }
+        
+    }    
+    
     public void ChoiceSkill(int s)
     {
         switch(s)
         {
             case 0:
                 myAnim.SetTrigger("Attack");
-                myTarget.GetComponent<BattleCharacter>().OnDamage(10.0f);
+                
                 break;
             case 1:
                 myAnim.SetTrigger("Attack2");
-                myTarget.GetComponent<BattleCharacter>().OnDamage(20.0f);
+                
                 break;
             case 2:
                 myAnim.SetTrigger("Attack3");
-                myTarget.GetComponent<BattleCharacter>().OnDamage(30.0f);
+                
                 break;
         }
     }
@@ -127,28 +124,45 @@ public class BattleCharacter : CharacterProperty
         {
             case 0:
                 myAnim.SetTrigger("Attack");
-                myTarget.GetComponent<BattleCharacter>().OnDamage(10.0f);
+                //OnTargetDamage(10.0f);
                 break;
             case 1:
                 myAnim.SetTrigger("Attack2");
-                myTarget.GetComponent<BattleCharacter>().OnDamage(20.0f);
+                //OnTargetDamage(20.0f);
                 break;
             case 2:
                 myAnim.SetTrigger("Attack3");
-                myTarget.GetComponent<BattleCharacter>().OnDamage(30.0f);
+                //OnTargetDamage(30.0f);
                 break;
             default:
                 break;
         }
     }
-    public void OnDamage(float dmg)
+    public void Healing()
     {
-        StartCoroutine(OnDmg(dmg));
+        TurnBattle.Inst.HealingPotion -= 1;
+        myHp += 30.0f;
+        ActiveHeal = false;
+    }
+
+    public void OnTargetDamage(int a)
+    {
+        switch (a)
+        {
+            case 0:
+                StartCoroutine(OnDmg(SkillDmg[0]));
+                break;                
+            case 1:
+                StartCoroutine(OnDmg(SkillDmg[1]));
+                break;
+            case 2:
+                StartCoroutine(OnDmg(SkillDmg[2]));
+                break;
+        }
     }
     IEnumerator OnDmg(float dmg) //플로팅데미지
-    {
-        yield return new WaitForSeconds(1.0f); // 1.5초이후 생성된다
-        myAnim.SetTrigger("Hit");
+    {        
+        
         GameObject hudText = Instantiate(hudDmgText, Canvas.transform); // 플로팅데미지 생성
         switch (Random.Range(0, 10)) // 크리, 미스 , 일반데미지 확률
         {
@@ -164,9 +178,10 @@ public class BattleCharacter : CharacterProperty
                 hudText.GetComponent<DmageText>().color = Color.white;
                 break;
         }
-        myHp -= dmg; // 크리미스 일반데미지 확인이후 체력에 -
-        Vector3 pos = transform.position; //내위치
-        pos.y += 2.0f; // 내위치에서 2만큼 y위로이동
+        if(dmg > 0) myTarget.GetComponent<BattleCharacter>().GetComponent<Animator>().SetTrigger("Hit"); //미스시 피격모션x
+        myTarget.GetComponent<BattleCharacter>().myHp -= dmg; // 크리미스 일반데미지 확인이후 체력에 -
+        Vector3 pos = myTarget.transform.position; //타겟위치
+        pos.y += 2.0f; // 위치에서 2만큼 y위로이동
         Vector3 pos2 = Camera.main.WorldToScreenPoint(pos); // pos2는 메인카메라에서 pos 위치값
         hudText.transform.position = pos2; // 플로팅데미지를 po2로이동
         if (dmg <= 0.0f) //데미지체크해서 0이하면 미스로뜨게한다
@@ -177,6 +192,7 @@ public class BattleCharacter : CharacterProperty
         {
             hudText.GetComponent<DmageText>().dmg = dmg;
         }
+        yield return null;
     }
 }
 

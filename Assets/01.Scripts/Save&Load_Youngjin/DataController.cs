@@ -7,12 +7,25 @@ using TMPro;
 using UnityEngine;
 public class GameData
 {
-   // public string name;
-    public string savedTime;
-    public bool[] partyMember=Enumerable.Repeat(false,3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함
-    public string currentVillage="FirstVillage";
     public int myProgress = 0;
-    public bool[] isLeader= Enumerable.Repeat(false, 3).ToArray();
+    public string savedTime;
+
+    public string mapName="FirstVillage";
+    public Vector3 currentPosition = Vector3.zero;
+    public List<GameObject> currentItems = new List<GameObject>();
+    //1. public Dictionary<GameObject, GameObject> whoHasWhat = new Dictionary<GameObject, GameObject>();
+    //key가 아이템, value가 파티원
+   //2. List<List<GameObject>> partyItems = new List<List<GameObject>>();
+    //  partyItems[0]이 앰버 [1]이 진 [2]가 메인캐릭터
+
+
+    public int[] questProgress = Enumerable.Repeat(0, 3).ToArray();
+
+
+    public bool[] isLeader = { true,false,false };
+    public int[] partyHP = Enumerable.Repeat(100,3).ToArray();
+    public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함
+
 }
 public class DataController: MonoBehaviour
 {
@@ -69,7 +82,16 @@ public class DataController: MonoBehaviour
         gameData = new GameData();
     }
    
-  
+  public void SaveGameDataByESC(int curSlot)
+    {
+        gameData.isLeader[0] = false;
+        gameData.isLeader[1] = true;
+        gameData.savedTime = DateTime.Now.ToString();
+        string ToJsonData = JsonUtility.ToJson(gameData);     
+                                                             
+        File.WriteAllText(filePath + curSlot.ToString(), ToJsonData);
+        Debug.Log("저장");       
+    }
   /*  private void OnApplicationQuit()
     {
         SaveGameData();     

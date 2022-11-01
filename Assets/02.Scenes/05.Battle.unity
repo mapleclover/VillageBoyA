@@ -185,7 +185,7 @@ MonoBehaviour:
   m_text: Ember
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -894,7 +894,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 126800378}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1928689854}
+        m_TargetAssemblyTypeName: SelectedCharacterAttack, Assembly-CSharp
+        m_MethodName: Healing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &126800378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,7 +1007,7 @@ MonoBehaviour:
   m_text: Button
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1505,7 +1517,7 @@ MonoBehaviour:
   m_text: "\uACF5\uACA9"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3548,16 +3560,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
   longAttackCheck: 0
+  longAttack: 000000
   myTarget: {fileID: 0}
-  Active5: 0
+  TurnActive: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 1
+  ActiveHeal: 0
   StunTurn: 1
+  SkillDmg:
+  - 10
+  - 20
+  - 30
 --- !u!136 &658239075
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3633,7 +3652,7 @@ MonoBehaviour:
   m_text: "\uB3C4\uB9DD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4464,7 +4483,7 @@ MonoBehaviour:
   m_text: '>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5858,7 +5877,7 @@ MonoBehaviour:
   m_text: Jin
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6689,7 +6708,7 @@ MonoBehaviour:
   m_text: Button
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7138,7 +7157,7 @@ MonoBehaviour:
   m_text: Kong
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7812,6 +7831,7 @@ MonoBehaviour:
   - {fileID: 1043339928}
   EnemyHpbar: {fileID: 5658333677654139872, guid: 7e02ea925d3308f48a40e3d34e2cf73e, type: 3}
   EnHpbar: []
+  HealingPotion: 5
   BattleTurn: 0
   speedChanger: {fileID: 32659051}
   myState: 0
@@ -8122,16 +8142,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
   longAttackCheck: 0
+  longAttack: 000000
   myTarget: {fileID: 0}
-  Active5: 0
+  TurnActive: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 1
+  ActiveHeal: 0
   StunTurn: 1
+  SkillDmg:
+  - 10
+  - 20
+  - 30
 --- !u!136 &1639199658
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8447,7 +8474,7 @@ MonoBehaviour:
   m_text: Button
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
-  m_sharedMaterial: {fileID: -1252415965963237448, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
+  m_sharedMaterial: {fileID: -2742817980480763056, guid: 7eed38f5fbf356a41a1e9257adc2b2a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9392,6 +9419,7 @@ MonoBehaviour:
   myAttack: {fileID: 1801061777}
   mySelectAttack: {fileID: 1888127490}
   myActiveAttack: {fileID: 542147058}
+  myHeal: {fileID: 126800377}
   myActvieTxt: {fileID: 0}
 --- !u!4 &1928689855
 Transform:
@@ -10908,16 +10936,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
   longAttackCheck: 0
+  longAttack: 000000
   myTarget: {fileID: 0}
-  Active5: 0
+  TurnActive: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 1
+  ActiveHeal: 0
   StunTurn: 1
+  SkillDmg:
+  - 10
+  - 20
+  - 30
 --- !u!136 &823081628053210109
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -19012,16 +19047,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  _myhp: 100
   myHpBar: {fileID: 0}
-  speed: 2
+  speed: 100
   Skill: 0
   longAttackCheck: 1
+  longAttack: 010001
   myTarget: {fileID: 0}
-  Active5: 0
+  TurnActive: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 0
+  ActiveHeal: 0
   StunTurn: 1
+  SkillDmg:
+  - 10
+  - 20
+  - 10
 --- !u!1 &870975820478593648
 GameObject:
   m_ObjectHideFlags: 0
@@ -23736,16 +23778,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 2
   Skill: 0
   longAttackCheck: 0
+  longAttack: 000000
   myTarget: {fileID: 0}
-  Active5: 0
+  TurnActive: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 0
+  ActiveHeal: 0
   StunTurn: 1
+  SkillDmg:
+  - 10
+  - 20
+  - 30
 --- !u!1001 &4512408567310413145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28168,16 +28217,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  _myhp: 100
   myHpBar: {fileID: 0}
   speed: 2
   Skill: 0
   longAttackCheck: 0
+  longAttack: 000000
   myTarget: {fileID: 0}
-  Active5: 0
+  TurnActive: 0
   Canvas: {fileID: 0}
   hudDmgText: {fileID: 3246482643428163868, guid: 1da24fe570ed4854dab21f82ed50ba4e, type: 3}
   Stunned: 0
+  ActiveHeal: 0
   StunTurn: 1
+  SkillDmg:
+  - 10
+  - 20
+  - 30
 --- !u!4 &9117064292226123784
 Transform:
   m_ObjectHideFlags: 0
