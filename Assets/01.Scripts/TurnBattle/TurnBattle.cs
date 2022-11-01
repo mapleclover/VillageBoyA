@@ -156,7 +156,7 @@ public class TurnBattle : MonoBehaviour
                 break;            
             case State.ActiveCheck:
                 Active = PlayList[0];
-                while (!Active.GetComponent<BattleCharacter>().TurnActive || Active.GetComponent<BattleCharacter>().State == STATE.Die)
+                while (!Active.GetComponent<BattleCharacter>().TurnActive || Active.GetComponent<BattleCharacter>().State != STATE.Live)
                 {
                     ++Check;
                     if (Check == PlayList.Count)
@@ -293,14 +293,14 @@ public class TurnBattle : MonoBehaviour
     }
     void Victory() //승리시
     {
-        foreach (GameObject act in Enemy) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
+        foreach (GameObject act in Enemy) if (act.GetComponent<BattleCharacter>().State != STATE.Die) return;
         VictoryCheck = true;
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }
     void Lose() //패배시
     {
-        foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State == STATE.Live) return;
+        foreach (GameObject act in Player) if (act.GetComponent<BattleCharacter>().State != STATE.Die) return;
         VictoryCheck = false;
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
@@ -348,7 +348,7 @@ public class TurnBattle : MonoBehaviour
 
     IEnumerator Attack(int s, Vector3 gos, Vector3 gos2, bool v=false) //공격
     {
-
+        Active.GetComponent<BattleCharacter>().TurnActive = false;
         foreach (GameObject act in Player)
         {
             if (Active == act)
@@ -430,7 +430,7 @@ public class TurnBattle : MonoBehaviour
         }
         if (Mathf.Approximately(dist, 0.0f))
         {
-            Active.GetComponent<BattleCharacter>().TurnActive = false;
+            
             Active.GetComponent<Animator>().SetBool("IsWalking", false);
             StartCoroutine(RotatingToPosition(gos2,false));
             yield return new WaitForSeconds(0.5f);
