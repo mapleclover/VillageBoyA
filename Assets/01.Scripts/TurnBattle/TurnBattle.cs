@@ -341,6 +341,7 @@ public class TurnBattle : MonoBehaviour
     IEnumerator HealingActive()
     {
         Active.GetComponent<BattleCharacter>().Healing();
+        Active.GetComponent<BattleCharacter>().TurnActive = false;
         yield return new WaitForSeconds(1.0f);
         ChangeState(State.ActiveCheck);
 

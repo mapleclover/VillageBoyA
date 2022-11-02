@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.HID;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public enum STATE
 {
@@ -41,6 +43,7 @@ public class BattleCharacter : CharacterProperty
     public bool ActiveHeal=false;
     public int StunTurn = 1;
     public float[] SkillDmg=new float[3] {10.0f,20.0f,30.0f };
+    GameObject Stun;
     void ChangeState(STATE s)
     {
         if (State == s) return;
@@ -50,6 +53,18 @@ public class BattleCharacter : CharacterProperty
             case STATE.Live:
                 break;
             case STATE.Stunned:
+                if (Stun == null)
+                {
+                    Stun = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Stun"));
+                }
+                else
+                {
+                    Stun.SetActive(true);
+                }
+                Vector3 pos = transform.position; //타겟위치
+                pos.y += 1.0f; // 위치에서 2만큼 y위로이동                
+                Stun.transform.position = pos;
+                Stun.transform.SetParent(transform);
                 break;
             case STATE.Die:
                 myAnim.SetBool("Death",true);
@@ -67,6 +82,7 @@ public class BattleCharacter : CharacterProperty
                 }
                 if (Stunned)
                 {
+                    
                     ChangeState(STATE.Stunned);
                     StunCheck = TurnBattle.Inst.BattleTurn;
                     Stunned = false;
@@ -75,6 +91,7 @@ public class BattleCharacter : CharacterProperty
             case STATE.Stunned:
                 if (StunCheck + StunTurn == TurnBattle.Inst.BattleTurn)
                 {
+                    if (Stun != null) Stun.SetActive(false);
                     ChangeState(STATE.Live);
                 }
                 break;
@@ -140,7 +157,11 @@ public class BattleCharacter : CharacterProperty
     }
     public void Healing()
     {
-        TurnBattle.Inst.HealingPotion -= 1;
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Heal"));
+        Vector3 pos = transform.position;
+        pos.y += 1.0f;
+        obj.transform.position = pos;
+        Destroy(obj, 2.0f);        
         myHp += 30.0f;
         ActiveHeal = false;
     }
@@ -159,6 +180,49 @@ public class BattleCharacter : CharacterProperty
                 StartCoroutine(OnDmg(SkillDmg[2]));
                 break;
         }
+    }
+    public void BowAttack1()
+    {
+        GameObject obj= Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack1"));
+        Vector3 pos;        
+        Vector3 myPos=transform.position;
+        myPos.y += 1.0f;
+        Vector3 myTargetPos= myTarget.transform.position;
+        myTargetPos.y += 1.0f;
+        Ray ray = new Ray(myPos, (myTargetPos - myPos).normalized);
+        RaycastHit hitData;
+
+        if (Physics.Raycast(ray, out hitData, 100f, 1 << LayerMask.NameToLayer("Enemy")))
+        {
+            //Debug.DrawLine(transform.position, hitData.point, Color.red);
+
+            pos=hitData.point;
+            obj.transform.position = pos;
+        }
+        
+
+
+        Destroy(obj,2.0f);
+    }
+    public void BowAttack2()
+    {
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack2"));
+        Vector3 pos;
+        Vector3 myPos = transform.position;
+        myPos.y += 1.0f;
+        Vector3 myTargetPos = myTarget.transform.position;
+        myTargetPos.y += 1.0f;
+        Ray ray = new Ray(myPos, (myTargetPos - myPos).normalized);
+        RaycastHit hitData;
+
+        if (Physics.Raycast(ray, out hitData, 100f, 1 << LayerMask.NameToLayer("Enemy")))
+        {
+            //Debug.DrawLine(transform.position, hitData.point, Color.red);
+
+            pos = hitData.point;
+            obj.transform.position = pos;
+        }
+        Destroy(obj, 1.0f);
     }
     IEnumerator OnDmg(float dmg) //플로팅데미지
     {        
