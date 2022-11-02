@@ -41,6 +41,13 @@ public class TalkManager : MonoBehaviour
         talkData.Add(21 + 100, new string[] { "근처에서 사과를 찾았다." });
         talkData.Add(22 + 1000, new string[] { "오빠! 고마워! 냠냠:1" });
 
+        talkData.Add(30 + 1000,new string[]{"안녕! 오빠\n아까는 고마웠어 !:1",
+                                              "아까 케이야 오빠한테 들었는데\n마을의 평화를 위해 힘쓴다며?:0",
+                                              "반대편의 호두 언니가 요즘 고민 많아보이는데 한번가봐!:0"});
+        talkData.Add(30 + 2000,new string[]{"안녕! 오빠\n아까는 고마웠어 !:1",
+                                              "아까 케이야 오빠한테 들었는데\n마을의 평화를 위해 힘쓴다며?:0",
+                                              "반대편의 호두 언니가 요즘 고민 많아보이는데 한번가봐!:0"});
+
 
         //Portrait Data
         portraitData.Add(1000 + 0, portraitArr[0]); // id + portraitIndex
