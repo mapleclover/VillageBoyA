@@ -128,42 +128,7 @@ public class Select : MonoBehaviour
         }
         DataController.instance.DataClear();//불러온 데이터 초기화(시간만 표기만 함)
     }
-<<<<<<< Updated upstream
-=======
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            Slot(Button_New.cur);
 
-        }
-
-    }
-    public void Slot(int num)
-    {
-        DataController.instance.nowSlot = num;
-        if (savefile[num])
-        {
-            DataController.instance.LoadGameData();
-     //해당 슬롯에 데이터가 존재하면 게임씬으로 이동
-        }
-        Game();
-
-    }
-
-    public void Game()      
-    {
-        if (!savefile[DataController.instance.nowSlot])     //현재 슬롯에 데이터 없으면 
-        {
-            DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
-            DataController.instance.gameData.isLeader[0] = true;    //맨 처음에 처음 나오는 파티원이 리더
-            DataController.instance.gameData.partyMember[1] = true;
-            DataController.instance.gameData.partyMember[2] = true;
-            savefile[DataController.instance.nowSlot] = true;
-            DataController.instance.SaveGameData(); //입력한 이름 복사 후 현재 정보 저장
-        }
-        SceneManager.LoadScene(7);  //게임씬으로 이동
-    }
->>>>>>> Stashed changes
+   
 }
 //경로: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json
