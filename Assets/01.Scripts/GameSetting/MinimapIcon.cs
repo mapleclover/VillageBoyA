@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MinimapIcon : MonoBehaviour
 {
-
     public void Initialize(Transform target, Color color)
     {
         StartCoroutine(Following(target, color));
@@ -22,5 +21,4 @@ public class MinimapIcon : MonoBehaviour
             yield return null;
         }
     }
-
 }

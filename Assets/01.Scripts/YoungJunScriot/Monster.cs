@@ -11,6 +11,9 @@ public class Monster : CharacterMoveMent
 
     private Transform myTarget;
 
+    [SerializeField]
+    private Animator myAnim;
+
     public enum STATE
     {
         CREATE,
@@ -53,8 +56,10 @@ public class Monster : CharacterMoveMent
             case STATE.CREATE:
                 break;
             case STATE.IDLE:
+                myAnim.SetBool("IsWalking", false);
                 break;
             case STATE.ROAMING:
+                myAnim.SetBool("IsWalking", true);
                 break;
             case STATE.BATTLE:
                 theEnemyAI.ChaseTarget(myTarget);
@@ -73,7 +78,7 @@ public class Monster : CharacterMoveMent
     // Start is called before the first frame update
     public void Start()
     {
-        startPos = transform.position;
+        startPos = this.transform.position;
         ChangeState(STATE.IDLE);
     }
 

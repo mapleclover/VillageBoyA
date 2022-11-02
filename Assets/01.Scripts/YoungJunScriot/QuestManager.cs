@@ -16,6 +16,7 @@ public class QuestManager : MonoBehaviour
 
     // 필요한 컴퍼넌트
     public GameObject Klee_1000;
+    public GameObject Hodu_2000;
 
     [SerializeField]
     private TMPro.TMP_Text questPopupText;
@@ -36,7 +37,7 @@ public class QuestManager : MonoBehaviour
     {
         questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
         questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000 }));
-        questList.Add(30, new QuestData("퀘스트 올 클리어!", new int[] { 0 }));
+        questList.Add(30, new QuestData("마을 첫 방문", new int[] { 1000, 2000 }));
     }
 
     public int GetQuestTalkIndex(int id)
@@ -122,6 +123,12 @@ public class QuestManager : MonoBehaviour
                     Goal.goalCounting++; 
                 }
                 break;
+            case 30:
+                if(questActionIndex == 1)
+                {
+                    questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
+                }
+                break;
         }
     }
 
@@ -158,7 +165,7 @@ public class QuestManager : MonoBehaviour
                 break;
             case 30:
                 if (questActionIndex == 1)
-                    questPopupText.text = "Empty";
+                    questPopupText.text = "호두와 대화하기";
                 break;
         }
     }
