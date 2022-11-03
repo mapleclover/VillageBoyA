@@ -1330,24 +1330,24 @@ MonoBehaviour:
   Kong: {fileID: 1734304535}
   Jin: {fileID: 2044970239}
   Ember: {fileID: 1110539115}
+  myCharacter: 0
   KongUI: {fileID: 0}
   JinUI: {fileID: 0}
   EmberUI: {fileID: 0}
   curAnimator: {fileID: 1734304537}
   myStaminaAnim: {fileID: 0}
-  myCharacter: 0
-  myCamRot: {fileID: 927279252}
   mySlider: {fileID: 1829935873}
   myStaminaBar: {fileID: 1829935871}
+  myCamRot: {fileID: 927279252}
   speed: 3
-  jumpHeight: 4
   dash: 6
   rotSpeed: 10
-  run: 0
-  canRun: 1
   layer:
     serializedVersion: 2
     m_Bits: 2147483648
+  theManager: {fileID: 0}
+  run: 0
+  canRun: 1
 --- !u!4 &127366220
 Transform:
   m_ObjectHideFlags: 0
@@ -1396,6 +1396,7 @@ MonoBehaviour:
   itemTextBackground: {fileID: 760008511}
   enemyextBackground: {fileID: 1596730490}
   theManager: {fileID: 949683155}
+  theGoal: {fileID: 0}
 --- !u!1 &131430645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,24 +1711,24 @@ MonoBehaviour:
   Kong: {fileID: 0}
   Jin: {fileID: 629736008}
   Ember: {fileID: 342535492}
+  myCharacter: 0
   KongUI: {fileID: 0}
   JinUI: {fileID: 0}
   EmberUI: {fileID: 0}
   curAnimator: {fileID: 0}
   myStaminaAnim: {fileID: 0}
-  myCharacter: 0
-  myCamRot: {fileID: 927279252}
   mySlider: {fileID: 1603504215}
   myStaminaBar: {fileID: 1603504213}
+  myCamRot: {fileID: 927279252}
   speed: 3
-  jumpHeight: 4
   dash: 6
   rotSpeed: 10
-  run: 0
-  canRun: 1
   layer:
     serializedVersion: 2
     m_Bits: 0
+  theManager: {fileID: 0}
+  run: 0
+  canRun: 1
 --- !u!1 &178542075
 GameObject:
   m_ObjectHideFlags: 0
@@ -8160,7 +8161,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d21ddca067cdc3649bdf89553ede44a0, type: 2}
   m_sharedMaterial: {fileID: -7307645607112893538, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -8224,7 +8225,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &854901311
@@ -8999,15 +9000,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c27f9f6c7b10f540b1cb4bef6baa9c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myInventory: {fileID: 8357914373262080257}
   objectToFollow: {fileID: 1599737372}
   followSpeed: 10
   sensitivity: 30
   clampAngle: 40
-  realCamera: {fileID: 409220099}
-  finalDir: {x: 0, y: 0, z: 0}
   smoothness: 10
+  finalDir: {x: 0, y: 0, z: 0}
   maxDistance: 2
+  myInventory: {fileID: 8357914373262080257}
+  realCamera: {fileID: 409220099}
 --- !u!1 &927778501
 GameObject:
   m_ObjectHideFlags: 0
@@ -9230,10 +9231,13 @@ MonoBehaviour:
   questManager: {fileID: 1899953964}
   talkPanel: {fileID: 188849875}
   portraitImg: {fileID: 1843725878}
+  namePanel: {fileID: 0}
+  nameText: {fileID: 0}
   talkText: {fileID: 526408071}
   scanObject: {fileID: 0}
   isAction: 0
   talkIndex: 0
+  theGoal: {fileID: 0}
 --- !u!4 &949683156
 Transform:
   m_ObjectHideFlags: 0
@@ -10466,6 +10470,53 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1087244225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1087244227}
+  - component: {fileID: 1087244226}
+  m_Layer: 0
+  m_Name: DataController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1087244226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087244225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ffb860ad6e10142a15596f8a6164b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamedataFilename: VillageBoyA.json
+  filePath: 
+  nowSlot: 0
+--- !u!4 &1087244227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087244225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 382.5, y: 304, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1088121967
 GameObject:
   m_ObjectHideFlags: 0
@@ -10769,24 +10820,24 @@ MonoBehaviour:
   Kong: {fileID: 0}
   Jin: {fileID: 0}
   Ember: {fileID: 0}
+  myCharacter: 0
   KongUI: {fileID: 0}
   JinUI: {fileID: 0}
   EmberUI: {fileID: 0}
   curAnimator: {fileID: 0}
   myStaminaAnim: {fileID: 0}
-  myCharacter: 0
-  myCamRot: {fileID: 927279252}
   mySlider: {fileID: 1097446777}
   myStaminaBar: {fileID: 1097446775}
+  myCamRot: {fileID: 927279252}
   speed: 3
-  jumpHeight: 5
   dash: 6
   rotSpeed: 7
-  run: 0
-  canRun: 1
   layer:
     serializedVersion: 2
     m_Bits: 2147483648
+  theManager: {fileID: 0}
+  run: 0
+  canRun: 1
 --- !u!136 &1122895167
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12971,8 +13022,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
-  m_sharedMaterial: {fileID: -7307645607112893538, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5f42fd6b6b40f534cb0890c581daafce, type: 2}
+  m_sharedMaterial: {fileID: -7307645607112893538, guid: 5f42fd6b6b40f534cb0890c581daafce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13754,8 +13805,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "testNPC \uC640 \n\uB300\uD654\uD558\uC2DC\uC624."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
-  m_sharedMaterial: {fileID: -7307645607112893538, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5f42fd6b6b40f534cb0890c581daafce, type: 2}
+  m_sharedMaterial: {fileID: -7307645607112893538, guid: 5f42fd6b6b40f534cb0890c581daafce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14854,11 +14905,6 @@ Transform:
   m_Father: {fileID: 33055471}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1567907797 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8754144197712892000, guid: d94597daa52f4f5488ad7ccf5976950f, type: 3}
-  m_PrefabInstance: {fileID: 1936354656}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1576394977
 GameObject:
   m_ObjectHideFlags: 0
@@ -16464,11 +16510,6 @@ Transform:
   m_Father: {fileID: 33055471}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1797735455 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 680594705294658524, guid: 9cedd4961b63f0147bc83eb0a27d3e46, type: 3}
-  m_PrefabInstance: {fileID: 2007115110}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1799531698
 GameObject:
   m_ObjectHideFlags: 0
@@ -17343,8 +17384,8 @@ MonoBehaviour:
   - {fileID: 1410305679}
   - {fileID: 960907451}
   - {fileID: 2017085392}
-  testNPC_1000: {fileID: 1797735455}
-  Kong_2000: {fileID: 1567907797}
+  Klee_1000: {fileID: 0}
+  Hodu_2000: {fileID: 0}
   questPopupText: {fileID: 1458992205}
   theComplete: {fileID: 1536791343}
   theInven: {fileID: 8357914374517935917}
@@ -17983,8 +18024,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
-  m_sharedMaterial: {fileID: -7307645607112893538, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5f42fd6b6b40f534cb0890c581daafce, type: 2}
+  m_sharedMaterial: {fileID: -7307645607112893538, guid: 5f42fd6b6b40f534cb0890c581daafce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -20042,8 +20083,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
-  m_sharedMaterial: {fileID: -7307645607112893538, guid: fc491408ba6c60a4a90a470bea6a5f63, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5f42fd6b6b40f534cb0890c581daafce, type: 2}
+  m_sharedMaterial: {fileID: -7307645607112893538, guid: 5f42fd6b6b40f534cb0890c581daafce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -37577,7 +37618,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 247514349226d7940a4dff7c74b1211d, type: 3}
+  m_Texture: {fileID: 2800000, guid: bb3b9568da576a149a0b32ca27d54aa8, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -37605,7 +37646,7 @@ GameObject:
   - component: {fileID: 8357914372989382146}
   - component: {fileID: 8357914372989382144}
   m_Layer: 5
-  m_Name: MainCharacter
+  m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37618,7 +37659,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8357914372989382148}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39462,7 +39503,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: bb3b9568da576a149a0b32ca27d54aa8, type: 3}
+  m_Texture: {fileID: 2800000, guid: 247514349226d7940a4dff7c74b1211d, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -39490,7 +39531,7 @@ GameObject:
   - component: {fileID: 8357914373822098540}
   - component: {fileID: 8357914373822098538}
   m_Layer: 5
-  m_Name: Ember
+  m_Name: MainCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39886,7 +39927,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -39963,8 +40004,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -238}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 0, y: -777}
+  m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8357914374089871842
 MonoBehaviour:

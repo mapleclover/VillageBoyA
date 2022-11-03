@@ -47,7 +47,19 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
         myText.SetActive(false);
     }
     public void OnClickYesDiscard()
-    {
+   { 
+       if (DataController.instance.gameData.partyItems[0].Contains(this.transform.GetChild(0).gameObject))
+        {
+            DataController.instance.gameData.partyItems[0].Remove(this.transform.GetChild(0).gameObject);
+        }
+        else if (DataController.instance.gameData.partyItems[1].Contains(this.transform.GetChild(0).gameObject))
+        {
+            DataController.instance.gameData.partyItems[1].Remove(this.transform.GetChild(0).gameObject);
+        }
+        else if (DataController.instance.gameData.partyItems[2].Contains(this.transform.GetChild(0).gameObject))
+        {
+            DataController.instance.gameData.partyItems[2].Remove(this.transform.GetChild(0).gameObject);
+        }
         Destroy(this.transform.GetChild(0).gameObject);
         myPanel.SetActive(false);
     }

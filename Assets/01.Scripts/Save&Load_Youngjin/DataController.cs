@@ -16,7 +16,8 @@ public class GameData
     //1. public Dictionary<GameObject, GameObject> whoHasWhat = new Dictionary<GameObject, GameObject>();
     //key가 아이템, value가 파티원
    //2. List<List<GameObject>> partyItems = new List<List<GameObject>>();
-    //  partyItems[0]이 앰버 [1]이 진 [2]가 메인캐릭터
+    //  partyItems[0]이 메인캐릭터 1이 진 2가 앰버
+    public List<List<GameObject>> partyItems=new List<List<GameObject>>();
 
 
     public int[] questProgress = Enumerable.Repeat(0, 3).ToArray();
@@ -47,6 +48,10 @@ public class DataController: MonoBehaviour
         else if (instance != this)
         {
             Destroy(instance.gameObject);
+        }
+        for(int i = 0; i < 3; i++)
+        {
+            gameData.partyItems.Add(new List<GameObject>());
         }
         DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
