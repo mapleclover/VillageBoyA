@@ -14,7 +14,7 @@ using UnityEngine.InputSystem.Controls;
 
 public class TurnBattle : MonoBehaviour
 {
-    
+    public static TurnBattle Inst = null;
     public GameObject[] Player;
     public GameObject[] Enemy;
     public GameObject Active;
@@ -24,18 +24,13 @@ public class TurnBattle : MonoBehaviour
     public GameObject SelectedCharacterTarget;
     public GameObject mySelectRing;
     public GameObject mySelectTargetRing;
-    public Button[] CharacterButton;
-    public Button AttackStartButton;
-    public Button RunButton;
-    public static TurnBattle Inst = null;
     public GameObject GameOverCanvas;
     public TMPro.TMP_Text GameOverTxt = null;
-    public Slider[] CharacterHpbar;
-    public Slider EnemyHpbar;
+    public Slider[] CharacterHpbar;    
     public List<Slider> EnHpbar;
 
-    public int HealingPotion = 0;
-    public int BattleTurn=0;
+    public int HealingPotion = 0; //포션임의값
+    public int BattleTurn=0; //현재턴
     int Check = 0;
     bool VictoryCheck;
     bool FastSpeedCheck;
@@ -55,20 +50,12 @@ public class TurnBattle : MonoBehaviour
         switch (myState)
         {
             case State.Create:
-                for (int i = 0; i < CharacterButton.Length; ++i)
-                {
-                    CharacterButton[i].interactable = false;
-                }
+                
                 break;
             case State.Choice:
                 Check = 0;
                 //선택단계에서 버튼활성화
-                for (int i = 0; i < CharacterButton.Length; ++i)
-                {
-                    CharacterButton[i].interactable = true;
-                }
-                AttackStartButton.interactable = true;
-                RunButton.interactable = true;
+                SelectedCharacterAttack.Inst.ButtonFalse();
                 for (int i = 0; i < PlayList.Count; ++i)
                 {
                     PlayList[i].GetComponent<BattleCharacter>().TurnActive = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다                  
@@ -192,6 +179,7 @@ public class TurnBattle : MonoBehaviour
         Inst = this;
         Cursor.visible = true; // 커서안보이는거 트루로
         Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제
+        
         for (int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);
@@ -229,19 +217,17 @@ public class TurnBattle : MonoBehaviour
             Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0]; 
         }
         for(int j = 0; j < Player.Length; ++j)
-        {
-            CharacterButton[j].GetComponent<CharacterButton>().myCharacter = Player[j];
+        {            
             Player[j].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[j];
         }
-        InstantiateEnemyHpbar();
-
+        InstantiateEnemyHpbar();        
     }
     void Start()
     {
         ChangeState(State.Choice);
-        for (int i = 0; i < Player.Length; ++i) //캐릭터버튼에 내캐릭터 할당
+        for (int j = 0; j < Player.Length; ++j)
         {
-            CharacterButton[i].gameObject.GetComponent<CharacterButton>().myCharacter = Player[i];
+            SelectedCharacterAttack.Inst.CharacterButton[j].gameObject.GetComponent<CharacterButton>().myCharacter = TurnBattle.Inst.Player[j];
         }
     }
     void Update()
@@ -260,7 +246,7 @@ public class TurnBattle : MonoBehaviour
     {
         for (int i = 0; i < Enemy.Length; ++i) //몬스터 hp바만들기
         {
-            EnHpbar.Add(Instantiate(EnemyHpbar, Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
+            EnHpbar.Add(Instantiate(Resources.Load<Slider>("Prefabs/TurnBattle/EnemyHpbar"), Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
             Enemy[i].GetComponent<BattleCharacter>().myHpBar = EnHpbar[i];
             pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
             pos.y += 2.0f;
@@ -317,25 +303,8 @@ public class TurnBattle : MonoBehaviour
     }
     public void BattleStart() //공격버튼 클릭시 함수
     {
-
-        if (!SelectedCharacterAttack.Inst.myAttack.activeSelf && !SelectedCharacterAttack.Inst.mySelectAttack.activeSelf)
-        {
-            ChangeState(State.ActiveCheck);
-            AttackStartButton.interactable = false;
-            RunButton.interactable = false; 
-            for (int i = 0; i < CharacterButton.Length; ++i)
-            {
-                CharacterButton[i].interactable = false;  //버튼비활성화
-                CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
-            }
-        }
-        //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
-        
-        SelectedCharacterAttack.Inst.myAttack.SetActive(false);
-        SelectedCharacterAttack.Inst.mySelectAttack.SetActive(false);
-        SelectedCharacterAttack.Inst.myActiveAttack.SetActive(true);
-        SelectedCharacter = null;
-        
+        ChangeState(State.ActiveCheck);
+        SelectedCharacter = null;     
         
     }
     IEnumerator HealingActive()
@@ -347,42 +316,28 @@ public class TurnBattle : MonoBehaviour
 
     }
 
-    IEnumerator Attack(int s, Vector3 gos, Vector3 gos2, bool v=false) //공격
+    IEnumerator Attack(int s, Vector3 gos, Vector3 gos2, bool v = false) //공격
     {
         Active.GetComponent<BattleCharacter>().TurnActive = false;
         foreach (GameObject act in Player)
         {
-            if (Active == act)
-            {
-                Active.GetComponent<BattleCharacter>().ChoiceSkill(Active.GetComponent<BattleCharacter>().Skill);
-
-            }
+            if (Active == act) Active.GetComponent<BattleCharacter>().ChoiceSkill(Active.GetComponent<BattleCharacter>().Skill);
         }
         foreach (GameObject act in Enemy)
         {
-            if (Active == act)
-            {
-                Active.GetComponent<BattleCharacter>().RandomSkill();
-            }
+            if (Active == act) Active.GetComponent<BattleCharacter>().RandomSkill();
         }
-
-        yield return new WaitForSeconds(3.0f);
-        if (!v)
-        {
-            StartCoroutine(BackMoving(gos, gos2));
-        }
-        else
-        {
-            ChangeState(State.ActiveCheck);
-        }
-
+        yield return new WaitForSeconds(0.5f);
+        while (!Active.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle")) yield return null;
+        if (!v) StartCoroutine(BackMoving(gos, gos2));
+        else ChangeState(State.ActiveCheck); 
     }
-    IEnumerator Moving(Vector3 pos,bool v=false) //적한테
+    IEnumerator Moving(Vector3 pos,bool v=false) 
     {
         StartCoroutine(RotatingToPosition(pos,true));
         Vector3 gos = Active.transform.position;
         Vector3 dir = pos - Active.transform.position;
-        Vector3 gos2 = dir;
+        Vector3 gos2 = Active.transform.forward;
         if (!v) // v값으로 원거리 공격인지 확인
         {
             Active.GetComponent<Animator>().SetBool("IsWalking", true);
@@ -411,10 +366,11 @@ public class TurnBattle : MonoBehaviour
             StartCoroutine(Attack(Skill, gos, gos2,v));
         }
     }
-    IEnumerator BackMoving(Vector3 pos,Vector3 gos2) //원래자리로
+    IEnumerator BackMoving(Vector3 pos, Vector3 gos2) //원래자리로
     {
-        StartCoroutine(RotatingToPosition(pos,true));
-        Active.GetComponent<Animator>().SetBool("IsWalking", true);        
+
+        StartCoroutine(RotatingToPosition(pos, true));
+        Active.GetComponent<Animator>().SetBool("IsWalking", true);
         Vector3 dir = pos - Active.transform.position;
         float dist = (dir.magnitude);
         dir.Normalize();
@@ -431,11 +387,11 @@ public class TurnBattle : MonoBehaviour
         }
         if (Mathf.Approximately(dist, 0.0f))
         {
-            
+
             Active.GetComponent<Animator>().SetBool("IsWalking", false);
-            StartCoroutine(RotatingToPosition(gos2,false));
+            StartCoroutine(RotatingToPosition(gos2, false));
             yield return new WaitForSeconds(0.5f);
-            ChangeState(State.ActiveCheck);            
+            ChangeState(State.ActiveCheck);
         }
     }
     IEnumerator RotatingToPosition(Vector3 pos,bool v) //회전

@@ -2070,8 +2070,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1543604256}
-        m_TargetAssemblyTypeName: TurnBattle, Assembly-CSharp
+      - m_Target: {fileID: 1928689854}
+        m_TargetAssemblyTypeName: SelectedCharacterAttack, Assembly-CSharp
         m_MethodName: BattleStart
         m_Mode: 1
         m_Arguments:
@@ -3452,7 +3452,6 @@ MonoBehaviour:
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
-  longAttackCheck: 0
   longAttack: 000000
   myTarget: {fileID: 0}
   TurnActive: 0
@@ -7804,19 +7803,12 @@ MonoBehaviour:
   SelectedCharacterTarget: {fileID: 0}
   mySelectRing: {fileID: 702602499}
   mySelectTargetRing: {fileID: 454261265}
-  CharacterButton:
-  - {fileID: 737484746}
-  - {fileID: 365520548}
-  - {fileID: 1667729842}
-  AttackStartButton: {fileID: 325777839}
-  RunButton: {fileID: 2056716626}
   GameOverCanvas: {fileID: 355087907}
   GameOverTxt: {fileID: 1341320695}
   CharacterHpbar:
   - {fileID: 561193207}
   - {fileID: 1059182360}
   - {fileID: 1043339928}
-  EnemyHpbar: {fileID: 5658333677654139872, guid: 7e02ea925d3308f48a40e3d34e2cf73e, type: 3}
   EnHpbar: []
   HealingPotion: 2
   BattleTurn: 0
@@ -8134,7 +8126,6 @@ MonoBehaviour:
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
-  longAttackCheck: 0
   longAttack: 000000
   myTarget: {fileID: 0}
   TurnActive: 0
@@ -9425,6 +9416,12 @@ MonoBehaviour:
   myActiveAttack: {fileID: 542147058}
   myHeal: {fileID: 126800377}
   myActvieTxt: {fileID: 0}
+  AttackStartButton: {fileID: 325777839}
+  RunButton: {fileID: 2056716626}
+  CharacterButton:
+  - {fileID: 737484746}
+  - {fileID: 365520548}
+  - {fileID: 1667729842}
 --- !u!4 &1928689855
 Transform:
   m_ObjectHideFlags: 0
@@ -10945,7 +10942,6 @@ MonoBehaviour:
   myHpBar: {fileID: 0}
   speed: 20
   Skill: 0
-  longAttackCheck: 0
   longAttack: 000000
   myTarget: {fileID: 0}
   TurnActive: 0
@@ -19073,7 +19069,6 @@ MonoBehaviour:
   myHpBar: {fileID: 0}
   speed: 100
   Skill: 0
-  longAttackCheck: 1
   longAttack: 010001
   myTarget: {fileID: 0}
   TurnActive: 0
@@ -23821,7 +23816,6 @@ MonoBehaviour:
   myHpBar: {fileID: 0}
   speed: 2
   Skill: 0
-  longAttackCheck: 0
   longAttack: 000000
   myTarget: {fileID: 0}
   TurnActive: 0
@@ -28277,7 +28271,6 @@ MonoBehaviour:
   myHpBar: {fileID: 0}
   speed: 2
   Skill: 0
-  longAttackCheck: 0
   longAttack: 000000
   myTarget: {fileID: 0}
   TurnActive: 0

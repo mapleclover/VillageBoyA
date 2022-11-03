@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEditor.PlayerSettings;
 
@@ -14,10 +15,14 @@ public class SelectedCharacterAttack : MonoBehaviour
     public Button myHeal;
     public static SelectedCharacterAttack Inst = null;
     public TMPro.TMP_Text myActvieTxt = null;
-   
+    public Button AttackStartButton;
+    public Button RunButton;
+    public Button[] CharacterButton;
+
     private void Awake()
     {
-        Inst = this;        
+        Inst = this;
+        
     }
 
     // Update is called once per frame
@@ -44,6 +49,35 @@ public class SelectedCharacterAttack : MonoBehaviour
         }
         
     }
+    public void BattleStart() //공격버튼 클릭시 함수
+    {
+
+        if (!myAttack.activeSelf && !mySelectAttack.activeSelf)
+        {
+            TurnBattle.Inst.BattleStart();
+            AttackStartButton.interactable = false;
+            RunButton.interactable = false;
+            for (int i = 0; i < CharacterButton.Length; ++i)
+            {
+                CharacterButton[i].interactable = false;  //버튼비활성화
+                CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
+            }
+        }
+        //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
+        Inst.myAttack.SetActive(false);
+        mySelectAttack.SetActive(false);
+        myActiveAttack.SetActive(true);
+    }
+    public void ButtonFalse()
+    {
+        for (int i = 0; i < CharacterButton.Length; ++i)
+        {
+            CharacterButton[i].interactable = true;
+        }
+        AttackStartButton.interactable = true;
+        RunButton.interactable = true;
+    }
+    
     public void AttackSelected()
     {
         myAttack.gameObject.SetActive(false);

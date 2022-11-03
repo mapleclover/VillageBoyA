@@ -18,19 +18,22 @@ public class CharacterButton : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            if(myCharacter.GetComponent<BattleCharacter>().Skill==i)
+            if (myCharacter != null)
             {
-                if(i==0)
+                if (myCharacter.GetComponent<BattleCharacter>().Skill == i)
                 {
-                    myActvieTxt.text = "공격1";
-                }
-                else if (i == 1)
-                {
-                    myActvieTxt.text = "공격2";
-                }
-                else if (i == 2)
-                {
-                    myActvieTxt.text = "공격3";
+                    if (i == 0)
+                    {
+                        myActvieTxt.text = "공격1";
+                    }
+                    else if (i == 1)
+                    {
+                        myActvieTxt.text = "공격2";
+                    }
+                    else if (i == 2)
+                    {
+                        myActvieTxt.text = "공격3";
+                    }
                 }
             }
         }
