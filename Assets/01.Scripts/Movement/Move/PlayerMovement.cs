@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
         Kong, Ember, Jin
     }
 
+    
+
     // 토글카메라
     //public Camera _camera;
     //public bool toggleCameraRotation; // Idle 일때 둘러보기 기능
@@ -109,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
                 //EmberUI.SetActive(true);
                 //JinUI.SetActive(false);
                 break;
+
         }
     }
 
