@@ -1,24 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class QuestIcon : MonoBehaviour
 {
-    public void Initialize(Transform target, Color color)
+    MinimapIcon myIcon = null;
+    // Start is called before the first frame update
+    void Start()
     {
-        StartCoroutine(Following(target, color));
+        GameObject obj = Instantiate(Resources.Load("Prefabs/QuestComplet"), SceneData.Inst.Minimap) as GameObject;
+        myIcon = obj.GetComponent<MinimapIcon>();
+        myIcon.Initialize(transform, Color.yellow);
     }
-    IEnumerator Following(Transform target, Color color)
+    // Update is called once per frame
+    void Update()
     {
-        GetComponent<Image>().color = color;
-        Vector2 size = transform.parent.GetComponent<RectTransform>().sizeDelta;
-        RectTransform rt = GetComponent<RectTransform>();
-        while (target != null)
-        {
-            Vector3 pos = Camera.allCameras[1].WorldToViewportPoint(target.position);
-            rt.anchoredPosition = pos * size;
-            yield return null;
-        }
+
     }
 }
