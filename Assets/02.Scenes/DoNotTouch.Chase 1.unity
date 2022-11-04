@@ -21566,6 +21566,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1875267215911671876}
+  - component: {fileID: 1875267215911671881}
   - component: {fileID: 1875267215911671877}
   - component: {fileID: 1875267215911671880}
   - component: {fileID: 1875267215911671879}
@@ -21674,6 +21675,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1875267215911671881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875267215911671875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5a6669cc8396b4792335677807a6d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KongHP: {fileID: 1875267214309456077}
+  JinHP: {fileID: 1875267214530138239}
+  EmberHP: {fileID: 1875267214231021083}
+  state: 0
 --- !u!1 &1875267215937999710
 GameObject:
   m_ObjectHideFlags: 0
