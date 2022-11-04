@@ -9,17 +9,22 @@ public class GameData
 {                                                                                                               //모든 배열은 0이 콩 1이 진 2가 앰버
     public int myProgress = 0;          //진행도
     public string savedTime;            //저장한 시간
-     public string mapName="FirstVillage";           //현재 마을
+    public string mapName = "FirstVillage";           //현재 마을
 
 
 
     public Vector3 currentPosition = Vector3.zero;          //현재 캐릭터 위치
+    public Vector3 currentRotation;
     public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
     public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 아이템
-                                                                                    
-   
 
-    public int[] questProgress = Enumerable.Repeat(0, 3).ToArray();     //퀘스트 진행도
+
+
+    //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
+    public int questID; // 퀘스트순서
+    public int questActionIndex; // 퀘스트대화순서.
+    public bool isBackAttack; // 빽어택으로 전투돌입인지 아닌지
+
 
 
     public bool[] isLeader = { true,false,false };                  //누가 리더인지
@@ -36,6 +41,10 @@ public class DataController: MonoBehaviour
     public int nowSlot;
   public  GameData gameData=new GameData();
     public static DataController instance;
+
+    private PlayerMovement thePlayer;
+    private QuestManager theQuestManager;
+    private ActionController theActionController;
   
     private void Awake()
     {
@@ -74,6 +83,22 @@ public class DataController: MonoBehaviour
     }
     public void SaveGameData()
     {
+        thePlayer = FindObjectOfType<PlayerMovement>();
+        theQuestManager = FindObjectOfType<QuestManager>();
+        theActionController = FindObjectOfType<ActionController>();
+
+        // Player position
+        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
+        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+         
+        // Quest ~ing
+        gameData.questID = theQuestManager.questId;
+        gameData.questActionIndex = theQuestManager.questActionIndex;
+
+        // BackAttack Battle ? true : false
+        gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
+
+
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData=JsonUtility.ToJson(gameData);     //Json으로 변환
                                                             //  filePath = Application.persistentDataPath + gamedataFilename;

@@ -17,8 +17,8 @@ public class ActionController : MonoBehaviour
     //대상 감지시 활성화.
     private bool pickNpcActivated = false;
     private bool pickItemActivated = false;
-    private bool isBackAttack = false;
 
+    public bool isBackAttack = false;
     public bool isBattle;
 
     private RaycastHit hitInfo;
@@ -230,7 +230,6 @@ public class ActionController : MonoBehaviour
             {
                 //기습- 배틀씬으로넘어감.///////////////////////////////**************
                 Destroy(hitInfo.transform.gameObject);
-                isBackAttack = false;
                 isBattle = false;
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************
