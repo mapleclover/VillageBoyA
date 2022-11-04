@@ -14,9 +14,10 @@ using UnityEngine.InputSystem.Controls;
 
 public class TurnBattle : MonoBehaviour
 {
-    
-    public GameObject[] Player;
-    public GameObject[] Enemy;
+    public Transform PlayerParent;
+    public List<GameObject> Player;
+    public Transform EnemyParent;
+    public List<GameObject> Enemy;
     public GameObject Active;
     public List<GameObject> PlayList;
     public List<GameObject> PlayerSpeedCheck;
@@ -34,6 +35,8 @@ public class TurnBattle : MonoBehaviour
     public Slider EnemyHpbar;
     public List<Slider> EnHpbar;
 
+    string CharacterName;
+    int x;
     public int HealingPotion = 0;
     public int BattleTurn=0;
     int Check = 0;
@@ -73,9 +76,9 @@ public class TurnBattle : MonoBehaviour
                 {
                     PlayList[i].GetComponent<BattleCharacter>().TurnActive = true; //초이스단계에서 모든캐릭터 행동값을 트루로 만든다                  
                 }
-                for (int i = 0; i < Enemy.Length; ++i)
+                for (int i = 0; i < Enemy.Count; ++i)
                 {
-                    for (int j = 0; j < Player.Length; ++j)
+                    for (int j = 0; j < Player.Count; ++j)
                     {
                         if (Enemy[i].GetComponent<BattleCharacter>().myTarget = null)
                         {
@@ -89,12 +92,12 @@ public class TurnBattle : MonoBehaviour
                 Lose();
                 break;                       
             case State.Battle:
-                for (int i = 0; i < Enemy.Length; ++i)
+                for (int i = 0; i < Enemy.Count; ++i)
                 {
                     if (Active == Enemy[i])
                     {
-                        Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0, Player.Length)];
-                        Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0, Player.Length)];
+                        Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0, Player.Count)];
+                        Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0, Player.Count)];
                         if (Active.GetComponent<BattleCharacter>().myTarget.GetComponent<BattleCharacter>().State == STATE.Die)
                         {
                             EnemyTargetDie(Active);
@@ -194,16 +197,45 @@ public class TurnBattle : MonoBehaviour
         }
     }
     private void Awake()
-    {
-        
+    {        
         Inst = this;
         Cursor.visible = true; // 커서안보이는거 트루로
         Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제
-        for (int i = 0; i < Player.Length; ++i) //플레이어갯수만큼 추가
+        for (int i = 0; i < DataController.instance.gameData.partyMember.Length; ++i)
+        {
+            
+            switch(i)
+            {
+                case 0:
+                    CharacterName = "KongForBattle";
+                    x = -2;
+                    break;
+                case 1:
+                    CharacterName = "JinForBattle";
+                    x = 0;
+                    break;
+                case 2:
+                    CharacterName = "EmberForBattle";
+                    x = 2;
+                    break;
+            }
+            GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{CharacterName}"), PlayerParent) as GameObject;            
+            Vector3 pos= new Vector3(x, 0, 0);
+            obj.transform.localPosition = pos;
+            Player.Add(obj);
+            CharacterButton[i].GetComponent<CharacterButton>().myCharacter = Player[i];
+            Player[i].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[i];
+            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0];
+            Player[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
+        }
+    }
+    void Start()
+    {
+        for (int i = 0; i < Player.Count; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);
         }
-        for(int i = 0; i < Enemy.Length; ++i) // 에너미갯수만큼추가
+        for (int i = 0; i < Enemy.Count; ++i) // 에너미갯수만큼추가
         {
             PlayerSpeedCheck.Add(Enemy[i]);
         }
@@ -215,9 +247,9 @@ public class TurnBattle : MonoBehaviour
                 for (int j = 0; j < PlayerSpeedCheck.Count; ++j)
                 {
                     if (i == j) continue; //같은값끼리 비교할필요가없어서 컨티뉴
-                    if (PlayerSpeedCheck[i].GetComponent<BattleCharacter>().speed < PlayerSpeedCheck[j].GetComponent<BattleCharacter>().speed) //나보다빠른게있는지 체크
+                    if (PlayerSpeedCheck[i].GetComponent<BattleCharacter>().speed < PlayerSpeedCheck[j].GetComponent<BattleCharacter>().speed)
                     {
-                        FastSpeedCheck = false; 
+                        FastSpeedCheck = false;
                     }
                 }
                 if (FastSpeedCheck) // 제일빠르다면 
@@ -231,25 +263,17 @@ public class TurnBattle : MonoBehaviour
                 }
             }
         }
-        for (int i = 0; i < Player.Length; ++i) // 플레이어의 기본타겟설정
-        {
-            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0]; 
-        }
-        for(int j = 0; j < Player.Length; ++j)
-        {
-            CharacterButton[j].GetComponent<CharacterButton>().myCharacter = Player[j];
-            Player[j].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[j];
-        }
-        InstantiateEnemyHpbar();
 
-    }
-    void Start()
-    {
-        ChangeState(State.Choice);
-        for (int i = 0; i < Player.Length; ++i) //캐릭터버튼에 내캐릭터 할당
+        
+        InstantiateEnemyHpbar();
+        /*for (int i = 0; i < Player.Count; ++i) // 플레이어의 기본타겟설정
         {
-            CharacterButton[i].gameObject.GetComponent<CharacterButton>().myCharacter = Player[i];
-        }
+            CharacterButton[i].GetComponent<CharacterButton>().myCharacter = Player[i];
+            Player[i].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[i];
+            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0];
+        }*/
+        ChangeState(State.Choice);
+        
     }
     void Update()
     {
@@ -263,7 +287,7 @@ public class TurnBattle : MonoBehaviour
     }
     void InstantiateEnemyHpbar()
     {
-        for (int i = 0; i < Enemy.Length; ++i) //몬스터 hp바만들기
+        for (int i = 0; i < Enemy.Count; ++i) //몬스터 hp바만들기
         {
             EnHpbar.Add(Instantiate(EnemyHpbar, Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
             Enemy[i].GetComponent<BattleCharacter>().myHpBar = EnHpbar[i];
@@ -275,7 +299,7 @@ public class TurnBattle : MonoBehaviour
     }
     void FollowEnemyHpbar() //몬스터hp바가 몬스터를 따라다니도록
     {
-        for (int i = 0; i < Enemy.Length; ++i)
+        for (int i = 0; i < Enemy.Count; ++i)
         {
             pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
             pos.y += 2.0f;
@@ -285,7 +309,7 @@ public class TurnBattle : MonoBehaviour
     }
     void PlayerTargetDie() //플레이어가 타겟으로삼는상대가죽으면
     {
-        for (int i = 0; i < Player.Length; ++i)
+        for (int i = 0; i < Player.Count; ++i)
         {
             if (Player[i].GetComponent<BattleCharacter>().myTarget.GetComponent<BattleCharacter>().State == STATE.Die)
             {
@@ -371,15 +395,10 @@ public class TurnBattle : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(3.0f);
-        if (!v)
-        {
-            StartCoroutine(BackMoving(gos, gos2));
-        }
-        else
-        {
-            ChangeState(State.ActiveCheck);
-        }
+        yield return new WaitForSeconds(0.5f);
+        while (!Active.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle")) yield return null;
+        if (!v) StartCoroutine(BackMoving(gos, gos2));
+        else ChangeState(State.ActiveCheck);
 
     }
     IEnumerator Moving(Vector3 pos,bool v=false) //적한테

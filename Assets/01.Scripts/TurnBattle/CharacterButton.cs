@@ -18,6 +18,7 @@ public class CharacterButton : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
+            if (myCharacter == null) return;
             if(myCharacter.GetComponent<BattleCharacter>().Skill==i)
             {
                 if(i==0)

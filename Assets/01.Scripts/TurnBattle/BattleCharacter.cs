@@ -120,16 +120,19 @@ public class BattleCharacter : CharacterProperty
     }
     void Start()
     {
-        myHpBar.value = myHp / maxHp;
+        
     }
 
     void Update()
     {
-        StateProcess();        
-        myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp , 5.0f * Time.deltaTime);
-        
+        StateProcess();
+        myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp, 5.0f * Time.deltaTime);
     }    
     
+    public void ValuemyHpmaxHP()
+    {
+        myHpBar.value = myHp / maxHp;
+    }
     public void ChoiceSkill(int s)
     {
         switch(s)
