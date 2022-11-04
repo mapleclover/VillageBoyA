@@ -142,6 +142,8 @@ public class TurnBattle : MonoBehaviour
                 }
                 break;            
             case State.ActiveCheck:
+                Victory();
+                Lose();
                 Active = PlayList[0];
                 while (!Active.GetComponent<BattleCharacter>().TurnActive || Active.GetComponent<BattleCharacter>().State != STATE.Live)
                 {
@@ -236,8 +238,7 @@ public class TurnBattle : MonoBehaviour
         mySelectRing.SetActive(false); //캐릭터가 선택되기전까지 링 오프
         mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
         StateProcess();
-        Victory();
-        Lose();
+        
         PlayerTargetDie();
         FollowEnemyHpbar();
 
@@ -272,7 +273,7 @@ public class TurnBattle : MonoBehaviour
             {
                 foreach (GameObject act in Enemy)
                 {
-                    if (act.GetComponent<BattleCharacter>().State == STATE.Live) Player[i].GetComponent<BattleCharacter>().myTarget = act;
+                    if (act.GetComponent<BattleCharacter>().State != STATE.Die) Player[i].GetComponent<BattleCharacter>().myTarget = act;
                 }
             }
         }
