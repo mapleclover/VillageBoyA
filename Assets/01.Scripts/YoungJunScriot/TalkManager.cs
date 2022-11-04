@@ -25,7 +25,7 @@ public class TalkManager : MonoBehaviour
         //NPC A:1000
         //Apple:100
         talkData.Add(1000, new string[] { "안녕! 오빠 나는 클레야:0", "이곳에 처음 왔구나?:1" }); //대화뒤의숫자는 portratiIndex ":" 은구분자.
-        talkData.Add(2000, new string[] { "안녕?ㅋ:0" });
+        talkData.Add(2000, new string[] { "안녕 ~ 난 호두야 ~:0", "누구 좀 도와줄 사람 없으려나~:1" });
         talkData.Add(100, new string[] {"새빨갛게 잘 익은 사과다."  });
 
         //Quest Talk Data
@@ -44,16 +44,20 @@ public class TalkManager : MonoBehaviour
         talkData.Add(30 + 1000,new string[]{"안녕! 오빠\n아까는 고마웠어 !:1",
                                               "아까 케이야 오빠한테 들었는데\n마을의 평화를 위해 힘쓴다며?:0",
                                               "반대편의 호두 언니가 요즘 고민 많아보이는데 한번가봐!:0"});
-        talkData.Add(30 + 2000,new string[]{"안녕! 오빠\n아까는 고마웠어 !:1",
-                                              "아까 케이야 오빠한테 들었는데\n마을의 평화를 위해 힘쓴다며?:0",
-                                              "반대편의 호두 언니가 요즘 고민 많아보이는데 한번가봐!:0"});
+        talkData.Add(31 + 2000,new string[]{"에휴 . . . . . . . . . . . . .:0",
+                                              "... 무슨 한숨을 땅이 꺼지라 쉬냐고,,?\n아서라 도와줄거아니면 저리가..:0",
+                                              "응..?\n너같은 꼬맹이가 도와주겠다고?:0",
+                                              "푸핫..그래그래 ㅋㅋ:1",
+                                              "사실 최근에 근방의 여우들이 우리아빠 밭을 다 밟아놔서\n우리집에 근심이 많아 근방의 여우들이 좀 사라졌으면좋겠는데..:0",
+                                              "너무진지하게 듣지말고~\n근방여우들이 단체로 몰려다니니깐 괜히 까불지마~:1"});
 
 
         //Portrait Data
         portraitData.Add(1000 + 0, portraitArr[0]); // id + portraitIndex
         portraitData.Add(1000 + 1, portraitArr[1]);
 
-        portraitData.Add(2000 + 0, portraitArr[2]);
+        portraitData.Add(2000 + 0, portraitArr[2]); // 호두
+        portraitData.Add(2000 + 1, portraitArr[3]);
         
     }
 
