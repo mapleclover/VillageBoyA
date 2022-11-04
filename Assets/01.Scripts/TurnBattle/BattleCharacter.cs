@@ -32,7 +32,15 @@ public class BattleCharacter : CharacterProperty
     }
     public float speed;
     public int Skill = 0;
-    public bool longAttackCheck=false;
+    bool _longAttackCheck = false;
+    public bool longAttackCheck
+    {
+        get => _longAttackCheck;
+        set
+        {
+            _longAttackCheck = value;
+        }
+    }
     public bool[] longAttack = new bool[3];
     public GameObject myTarget;
     public bool TurnActive=false;
@@ -68,6 +76,11 @@ public class BattleCharacter : CharacterProperty
                 break;
             case STATE.Die:
                 myAnim.SetBool("Death",true);
+                if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    transform.Translate(Vector3.down * 1.0f * Time.deltaTime);
+                    Invoke("SetActiveFalse", 2.0f);
+                }
                 break;
         }
     }
@@ -103,6 +116,7 @@ public class BattleCharacter : CharacterProperty
     private void Awake()
     {
         Canvas = GameObject.Find("Canvas");
+        longAttackCheck = longAttack[0];
     }
     void Start()
     {
@@ -121,16 +135,13 @@ public class BattleCharacter : CharacterProperty
         switch(s)
         {
             case 0:
-                myAnim.SetTrigger("Attack");
-                
+                myAnim.SetTrigger("Attack");                
                 break;
             case 1:
-                myAnim.SetTrigger("Attack2");
-                
+                myAnim.SetTrigger("Attack2");                
                 break;
             case 2:
-                myAnim.SetTrigger("Attack3");
-                
+                myAnim.SetTrigger("Attack3");                
                 break;
         }
     }
@@ -199,9 +210,6 @@ public class BattleCharacter : CharacterProperty
             pos=hitData.point;
             obj.transform.position = pos;
         }
-        
-
-
         Destroy(obj,2.0f);
     }
     public void BowAttack2()
@@ -257,6 +265,11 @@ public class BattleCharacter : CharacterProperty
             hudText.GetComponent<DmageText>().dmg = dmg;
         }
         yield return null;
+    }
+    void SetActiveFalse()
+    {
+        gameObject.SetActive(false);
+        myHpBar.gameObject.SetActive(false);
     }
 }
 
