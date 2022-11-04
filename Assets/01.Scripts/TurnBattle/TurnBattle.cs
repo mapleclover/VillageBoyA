@@ -84,7 +84,9 @@ public class TurnBattle : MonoBehaviour
                     }
                 }
                 break;            
-            case State.ActiveCheck:                
+            case State.ActiveCheck:
+                Victory();
+                Lose();
                 break;                       
             case State.Battle:
                 for (int i = 0; i < Enemy.Length; ++i)
@@ -108,15 +110,19 @@ public class TurnBattle : MonoBehaviour
                 break;
             case State.GameOver:
                 speedChanger.SetActive(false);
-                Time.timeScale = 1.0f;
-                StopAllCoroutines();
-                GameOverCanvas.SetActive(true);
+                Time.timeScale = 1.0f;               
                 if (VictoryCheck)
-                {
+                {                    
+                    foreach (GameObject act in Player)
+                    {
+                        act.GetComponent<Animator>().SetTrigger("Victory");
+                    }
+                    GameOverCanvas.SetActive(true);
                     GameOverTxt.text = "승 리";
                 }
                 else if (!VictoryCheck)
                 {
+                    GameOverCanvas.SetActive(true);
                     GameOverTxt.text = "패 배";
                 }
                 break;
@@ -129,7 +135,7 @@ public class TurnBattle : MonoBehaviour
         {
             case State.Create:
                 break;
-            case State.Choice:
+            case State.Choice:                
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //메인카메라의 위치값
                 RaycastHit hit;                
                 if (SelectedCharacter != null)
@@ -155,6 +161,7 @@ public class TurnBattle : MonoBehaviour
                 }
                 break;            
             case State.ActiveCheck:
+                PlayerTargetDie();
                 Active = PlayList[0];
                 while (!Active.GetComponent<BattleCharacter>().TurnActive || Active.GetComponent<BattleCharacter>().State != STATE.Live)
                 {
@@ -182,7 +189,7 @@ public class TurnBattle : MonoBehaviour
                 break;            
             case State.End:
                 break;
-            case State.GameOver:
+            case State.GameOver:                
                 break;
         }
     }
@@ -249,10 +256,8 @@ public class TurnBattle : MonoBehaviour
         
         mySelectRing.SetActive(false); //캐릭터가 선택되기전까지 링 오프
         mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
-        StateProcess();
-        Victory();
-        Lose();
-        PlayerTargetDie();
+        StateProcess();        
+        
         FollowEnemyHpbar();
 
     }
