@@ -63,7 +63,7 @@ public class Select : MonoBehaviour
             savefile[DataController.instance.nowSlot] = true;
             DataController.instance.SaveGameData(); //입력한 이름 복사 후 현재 정보 저장
         }
-        SceneManager.LoadScene(6);  //게임씬으로 이동
+        SceneManager.LoadScene(1);  //게임씬으로 이동
     }
     public void ShowUI()
     {
@@ -128,5 +128,7 @@ public class Select : MonoBehaviour
         }
         DataController.instance.DataClear();//불러온 데이터 초기화(시간만 표기만 함)
     }
+
+   
 }
 //경로: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json

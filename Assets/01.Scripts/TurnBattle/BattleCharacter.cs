@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.HID;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public enum STATE
 {
@@ -30,7 +32,15 @@ public class BattleCharacter : CharacterProperty
     }
     public float speed;
     public int Skill = 0;
-    public bool longAttackCheck=false;
+    bool _longAttackCheck = false;
+    public bool longAttackCheck
+    {
+        get => _longAttackCheck;
+        set
+        {
+            _longAttackCheck = value;
+        }
+    }
     public bool[] longAttack = new bool[3];
     public GameObject myTarget;
     public bool TurnActive=false;
@@ -41,6 +51,7 @@ public class BattleCharacter : CharacterProperty
     public bool ActiveHeal=false;
     public int StunTurn = 1;
     public float[] SkillDmg=new float[3] {10.0f,20.0f,30.0f };
+    GameObject Stun;
     void ChangeState(STATE s)
     {
         if (State == s) return;
@@ -50,9 +61,26 @@ public class BattleCharacter : CharacterProperty
             case STATE.Live:
                 break;
             case STATE.Stunned:
+                if (Stun == null)
+                {
+                    Stun = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Stun"));
+                }
+                else
+                {
+                    Stun.SetActive(true);
+                }
+                Vector3 pos = transform.position; //타겟위치
+                pos.y += 1.0f; // 위치에서 2만큼 y위로이동                
+                Stun.transform.position = pos;
+                Stun.transform.SetParent(transform);
                 break;
             case STATE.Die:
                 myAnim.SetBool("Death",true);
+                if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    transform.Translate(Vector3.down * 1.0f * Time.deltaTime);
+                    Invoke("SetActiveFalse", 2.0f);
+                }
                 break;
         }
     }
@@ -67,6 +95,7 @@ public class BattleCharacter : CharacterProperty
                 }
                 if (Stunned)
                 {
+                    
                     ChangeState(STATE.Stunned);
                     StunCheck = TurnBattle.Inst.BattleTurn;
                     Stunned = false;
@@ -75,6 +104,7 @@ public class BattleCharacter : CharacterProperty
             case STATE.Stunned:
                 if (StunCheck + StunTurn == TurnBattle.Inst.BattleTurn)
                 {
+                    if (Stun != null) Stun.SetActive(false);
                     ChangeState(STATE.Live);
                 }
                 break;
@@ -86,34 +116,35 @@ public class BattleCharacter : CharacterProperty
     private void Awake()
     {
         Canvas = GameObject.Find("Canvas");
+        longAttackCheck = longAttack[0];
     }
     void Start()
     {
-        myHpBar.value = myHp / maxHp;
+        
     }
 
     void Update()
     {
-        StateProcess();        
-        myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp , 5.0f * Time.deltaTime);
-        
+        StateProcess();
+        myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp, 5.0f * Time.deltaTime);
     }    
     
+    public void ValuemyHpmaxHP()
+    {
+        myHpBar.value = myHp / maxHp;
+    }
     public void ChoiceSkill(int s)
     {
         switch(s)
         {
             case 0:
-                myAnim.SetTrigger("Attack");
-                
+                myAnim.SetTrigger("Attack");                
                 break;
             case 1:
-                myAnim.SetTrigger("Attack2");
-                
+                myAnim.SetTrigger("Attack2");                
                 break;
             case 2:
-                myAnim.SetTrigger("Attack3");
-                
+                myAnim.SetTrigger("Attack3");                
                 break;
         }
     }
@@ -140,7 +171,11 @@ public class BattleCharacter : CharacterProperty
     }
     public void Healing()
     {
-        TurnBattle.Inst.HealingPotion -= 1;
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Heal"));
+        Vector3 pos = transform.position;
+        pos.y += 1.0f;
+        obj.transform.position = pos;
+        Destroy(obj, 2.0f);        
         myHp += 30.0f;
         ActiveHeal = false;
     }
@@ -159,6 +194,46 @@ public class BattleCharacter : CharacterProperty
                 StartCoroutine(OnDmg(SkillDmg[2]));
                 break;
         }
+    }
+    public void BowAttack1()
+    {
+        GameObject obj= Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack1"));
+        Vector3 pos;        
+        Vector3 myPos=transform.position;
+        myPos.y += 1.0f;
+        Vector3 myTargetPos= myTarget.transform.position;
+        myTargetPos.y += 1.0f;
+        Ray ray = new Ray(myPos, (myTargetPos - myPos).normalized);
+        RaycastHit hitData;
+
+        if (Physics.Raycast(ray, out hitData, 100f, 1 << LayerMask.NameToLayer("Enemy")))
+        {
+            //Debug.DrawLine(transform.position, hitData.point, Color.red);
+
+            pos=hitData.point;
+            obj.transform.position = pos;
+        }
+        Destroy(obj,2.0f);
+    }
+    public void BowAttack2()
+    {
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack2"));
+        Vector3 pos;
+        Vector3 myPos = transform.position;
+        myPos.y += 1.0f;
+        Vector3 myTargetPos = myTarget.transform.position;
+        myTargetPos.y += 1.0f;
+        Ray ray = new Ray(myPos, (myTargetPos - myPos).normalized);
+        RaycastHit hitData;
+
+        if (Physics.Raycast(ray, out hitData, 100f, 1 << LayerMask.NameToLayer("Enemy")))
+        {
+            //Debug.DrawLine(transform.position, hitData.point, Color.red);
+
+            pos = hitData.point;
+            obj.transform.position = pos;
+        }
+        Destroy(obj, 1.0f);
     }
     IEnumerator OnDmg(float dmg) //플로팅데미지
     {        
@@ -193,6 +268,11 @@ public class BattleCharacter : CharacterProperty
             hudText.GetComponent<DmageText>().dmg = dmg;
         }
         yield return null;
+    }
+    void SetActiveFalse()
+    {
+        gameObject.SetActive(false);
+        myHpBar.gameObject.SetActive(false);
     }
 }
 

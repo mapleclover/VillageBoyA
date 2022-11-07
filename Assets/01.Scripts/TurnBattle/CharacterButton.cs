@@ -18,6 +18,7 @@ public class CharacterButton : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
+            if (myCharacter == null) return;
             if(myCharacter.GetComponent<BattleCharacter>().Skill==i)
             {
                 if(i==0)
@@ -38,7 +39,30 @@ public class CharacterButton : MonoBehaviour
     
     void Update()
     {
-        
+        if (TurnBattle.Inst.myState == TurnBattle.State.Choice)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (!myCharacter.GetComponent<BattleCharacter>().ActiveHeal)
+                {
+                    if (myCharacter.GetComponent<BattleCharacter>().Skill == i)
+                    {
+                        if (i == 0)
+                        {
+                            myActvieTxt.text = "공격1";
+                        }
+                        else if (i == 1)
+                        {
+                            myActvieTxt.text = "공격2";
+                        }
+                        else if (i == 2)
+                        {
+                            myActvieTxt.text = "공격3";
+                        }
+                    }
+                }
+            }
+        }
     }
     public void SelectedCharacter()
     {

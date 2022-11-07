@@ -19,7 +19,20 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Goal theGoal;
 
+    static public GameManager instance;
 
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // 최초생긴 게임오브젝트 삭제x
+        }
+        else
+        {
+            Destroy(this.gameObject); // 중복생성시에 새로생긴거 삭제.
+        }
+    }
 
     private void Start()
     {
