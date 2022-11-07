@@ -35,7 +35,8 @@ public class TurnBattle : MonoBehaviour
     public Slider EnemyHpbar;
     public List<Slider> EnHpbar;
 
-    string CharacterName;
+    string PlayerCharacterName;
+    string EnemyCharacterName;
     int x;
     public int HealingPotion = 0;
     public int BattleTurn=0;
@@ -169,10 +170,7 @@ public class TurnBattle : MonoBehaviour
                 while (!Active.GetComponent<BattleCharacter>().TurnActive || Active.GetComponent<BattleCharacter>().State != STATE.Live)
                 {
                     ++Check;
-                    if (Check == PlayList.Count)
-                    {
-                        break;
-                    }
+                    if (Check == PlayList.Count) break;                    
                     Active = PlayList[Check];                   
                 }
                 if (Check == PlayList.Count)
@@ -182,10 +180,7 @@ public class TurnBattle : MonoBehaviour
                 }
                 else
                 {
-                    if (Active.GetComponent<BattleCharacter>().TurnActive)
-                    {                        
-                        ChangeState(State.Battle);
-                    }
+                    if (Active.GetComponent<BattleCharacter>().TurnActive) ChangeState(State.Battle);                    
                 }
                 break;            
             case State.Battle:
@@ -201,33 +196,10 @@ public class TurnBattle : MonoBehaviour
         Inst = this;
         Cursor.visible = true; // 커서안보이는거 트루로
         Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제
-        for (int i = 0; i < DataController.instance.gameData.partyMember.Length; ++i)
-        {
-            
-            switch(i)
-            {
-                case 0:
-                    CharacterName = "KongForBattle";
-                    x = -2;
-                    break;
-                case 1:
-                    CharacterName = "JinForBattle";
-                    x = 0;
-                    break;
-                case 2:
-                    CharacterName = "EmberForBattle";
-                    x = 2;
-                    break;
-            }
-            GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{CharacterName}"), PlayerParent) as GameObject;            
-            Vector3 pos= new Vector3(x, 0, 0);
-            obj.transform.localPosition = pos;
-            Player.Add(obj);
-            CharacterButton[i].GetComponent<CharacterButton>().myCharacter = Player[i];
-            Player[i].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[i];
-            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0];
-            Player[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
-        }
+        EnemyCharacterName = "Fox";
+        InstantiateEnemy();
+        InstantiatePlayerCharacter();
+        
     }
     void Start()
     {
@@ -265,7 +237,7 @@ public class TurnBattle : MonoBehaviour
         }
 
         
-        InstantiateEnemyHpbar();
+        
         /*for (int i = 0; i < Player.Count; ++i) // 플레이어의 기본타겟설정
         {
             CharacterButton[i].GetComponent<CharacterButton>().myCharacter = Player[i];
@@ -285,18 +257,58 @@ public class TurnBattle : MonoBehaviour
         FollowEnemyHpbar();
 
     }
-    void InstantiateEnemyHpbar()
+    void InstantiatePlayerCharacter()
     {
-        for (int i = 0; i < Enemy.Count; ++i) //몬스터 hp바만들기
+        for (int i = 0; i < DataController.instance.gameData.partyMember.Length; ++i)
         {
+            CharacterButton[i].gameObject.SetActive(true);
+            CharacterButton[i].GetComponent<CharacterButton>().MyChosenAttack.SetActive(true);
+            switch (i)
+            {
+                case 0:
+                    PlayerCharacterName = "KongForBattle";
+                    x = -2;
+                    break;
+                case 1:
+                    PlayerCharacterName = "JinForBattle";
+                    x = 0;
+                    break;
+                case 2:
+                    PlayerCharacterName = "EmberForBattle";
+                    x = 2;
+                    break;
+            }
+            GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{PlayerCharacterName}"), PlayerParent) as GameObject;
+            Vector3 pos = new Vector3(x, 0, 0);
+            obj.transform.localPosition = pos;
+            Player.Add(obj);
+            CharacterButton[i].GetComponent<CharacterButton>().myCharacter = Player[i];
+            Player[i].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[i];
+            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0];
+            Player[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
+        }
+    }
+    void InstantiateEnemy()
+    {
+        for (int i = 0; i < DataController.instance.gameData.partyMember.Length; ++i)
+        {                        
+            GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{EnemyCharacterName}"), EnemyParent) as GameObject;
+            Vector3 pos = new Vector3(-2+(2*i), 0, 0);
+            obj.transform.localPosition = pos;
+            Enemy.Add(obj);
             EnHpbar.Add(Instantiate(EnemyHpbar, Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
-            Enemy[i].GetComponent<BattleCharacter>().myHpBar = EnHpbar[i];
+            Enemy[i].GetComponent<BattleCharacter>().myHpBar= EnHpbar[i];
             pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
             pos.y += 2.0f;
             pos2 = Camera.main.WorldToScreenPoint(pos);
             EnHpbar[i].transform.position = pos2;
+            Enemy[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
+            Enemy[i].GetComponent<BattleCharacter>().Stunned=DataController.instance.gameData.isBackAttack;
+            
         }
     }
+
+    
     void FollowEnemyHpbar() //몬스터hp바가 몬스터를 따라다니도록
     {
         for (int i = 0; i < Enemy.Count; ++i)
