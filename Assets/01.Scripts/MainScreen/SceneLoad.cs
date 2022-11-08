@@ -68,7 +68,7 @@ public class SceneLoad : MonoBehaviour
     {
         isChange = true;
         yield return SceneManager.LoadSceneAsync(0);
-        GameObject obj = GameObject.Find("LoadingGage");
+        GameObject obj = GameObject.Find("LoadingGauge");
         Slider slider = obj.GetComponent<Slider>();
         slider.value = 0.0f;
         StartCoroutine(LoadingTarget(slider, i));
@@ -78,7 +78,7 @@ public class SceneLoad : MonoBehaviour
     {
         isChange = true;
         yield return SceneManager.LoadSceneAsync(0);
-        GameObject obj = GameObject.Find("LoadingGage");
+        GameObject obj = GameObject.Find("LoadingGauge");
         Slider slider = obj.GetComponent<Slider>();
         slider.value = 0.0f;
         StartCoroutine(LoadingTarget(slider, mapName));
