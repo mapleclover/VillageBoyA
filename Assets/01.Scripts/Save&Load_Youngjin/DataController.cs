@@ -32,7 +32,7 @@ public class GameData
     public int[] partyHP = Enumerable.Repeat(100,3).ToArray();          //파티원 개개인의 HP
     public int[] partySpeed = {10,20,30 };              //파티원 개개인의 speed
     public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
-    public bool questClear;
+    public bool questClear = true;
 }
 public class DataController: MonoBehaviour
 {
