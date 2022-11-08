@@ -35,8 +35,9 @@ public class SceneLoad : MonoBehaviour
 
     bool isChange = false;
     public bool BackAttack = false;
-    public string[] MonsterType;
-    public int[] MonsterCount;
+    public string MonsterType;
+    public int MonsterCount;
+    public int MonsterSpeed;
 
     public void ChangeScene(int i)
     {
@@ -53,11 +54,12 @@ public class SceneLoad : MonoBehaviour
         }
     }
 
-    public void ToBattleScene(bool backAttack, string[] monsterType, int[] monsterCount)
+    public void ToBattleScene(bool backAttack, string monsterType, int monsterCount, int monsterSpeed)
     {
         BackAttack = backAttack;
         MonsterType = monsterType;
         MonsterCount = monsterCount;
+        MonsterSpeed = monsterSpeed;
         if (!isChange)
         {
             StartCoroutine(Loading("05.Battle"));
