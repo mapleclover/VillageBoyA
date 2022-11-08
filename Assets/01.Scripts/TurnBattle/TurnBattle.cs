@@ -114,7 +114,7 @@ public class TurnBattle : MonoBehaviour
                 break;
             case State.GameOver:
                 speedChanger.SetActive(false);
-                Time.timeScale = 1.0f;               
+                Time.timeScale = 1.0f;
                 if (VictoryCheck)
                 {                    
                     foreach (GameObject act in Player)
@@ -123,6 +123,10 @@ public class TurnBattle : MonoBehaviour
                     }
                     GameOverCanvas.SetActive(true);
                     GameOverTxt.text = "승 리";
+                    if(Input.anyKey)
+                    {
+                        
+                    }
                 }
                 else if (!VictoryCheck)
                 {
@@ -187,7 +191,23 @@ public class TurnBattle : MonoBehaviour
                 break;            
             case State.End:
                 break;
-            case State.GameOver:                
+            case State.GameOver:
+                if (Input.anyKey)
+                {
+                    if (VictoryCheck)
+                    {
+                        if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
+                        {
+                            if (SceneLoad.Instance.MonsterType == "여우")
+                            {
+                                DataController.instance.gameData.questClear = true;
+                            }
+                        }
+                        
+                        SceneLoad.Instance.ChangeScene("06.Field");
+                    }
+                }
+
                 break;
         }
     }
@@ -196,7 +216,7 @@ public class TurnBattle : MonoBehaviour
         Inst = this;
         Cursor.visible = true; // 커서안보이는거 트루로
         Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제
-        EnemyCharacterName = "Fox";
+        EnemyCharacterName = "Golem";
         InstantiateEnemy();
         InstantiatePlayerCharacter();
         

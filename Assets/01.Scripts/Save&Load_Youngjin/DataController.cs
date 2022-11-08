@@ -15,9 +15,10 @@ public class GameData
 
     public Vector3 currentPosition = Vector3.zero;          //현재 캐릭터 위치
     public Vector3 currentRotation;
-    public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
-    public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 아이템
 
+   // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
+    public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
+    public Dictionary<GameObject, Vector3> savedInventory = new Dictionary<GameObject, Vector3>();          //아이템과 몇번째 슬롯인지 저장
 
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
@@ -31,10 +32,11 @@ public class GameData
     public int[] partyHP = Enumerable.Repeat(100,3).ToArray();          //파티원 개개인의 HP
     public int[] partySpeed = {10,20,30 };              //파티원 개개인의 speed
     public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
-
+    public bool questClear = true;
 }
 public class DataController: MonoBehaviour
 {
+    
    // static GameObject _container;
     public string gamedataFilename = "VillageBoyA.json";       //.json 앞에 게임 데이터 파일 이름 설정
    public string filePath;
@@ -48,6 +50,7 @@ public class DataController: MonoBehaviour
   
     private void Awake()
     {
+        
         // File.Delete(filePath);
         if (instance == null)
         {
@@ -64,7 +67,10 @@ public class DataController: MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
+
     }
+
+    
 
     public void LoadGameData()
     {

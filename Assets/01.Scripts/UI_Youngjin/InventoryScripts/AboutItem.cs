@@ -17,7 +17,7 @@ public class AboutItem : MonoBehaviour
     {
           instance = this;
     }
-    public void pointerenter(PointerInfo inst)
+    public void pointerenter(PointerInfo temp)
     {
         switch (PointerInfo.instance.transform.gameObject.layer)
         {
@@ -33,8 +33,8 @@ public class AboutItem : MonoBehaviour
 
         }
        myInfoText.text = $"<size=36><b>{PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName}</size></b> \n\n {PointerInfo.instance.transform.GetComponent<Pickup>().item.itemInfo} ";
-        pos.x = inst.transform.parent.localPosition.x;
-        pos.y =inst.transform.parent.localPosition.y + 170;
+        pos.x = temp.transform.parent.localPosition.x;
+        pos.y =temp.transform.parent.localPosition.y + 170;
         myInfoBox.transform.localPosition = pos;
 
         //  myInfoBox.transform.SetParent(this.transform);

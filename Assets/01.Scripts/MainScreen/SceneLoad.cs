@@ -35,23 +35,31 @@ public class SceneLoad : MonoBehaviour
 
     bool isChange = false;
     public bool BackAttack = false;
-    public string[] MonsterType;
-    public int[] MonsterCount;
+    public string MonsterType;
+    public int MonsterCount;
+    public int MonsterSpeed;
 
     public void ChangeScene(int i)
     {
         if (!isChange)
         {
             StartCoroutine(Loading(i));
-            
         }
     }
-    
-    public void ToBattleScene(bool backAttack, string[] monsterType, int[] monsterCount)
+    public void ChangeScene(string i)
+    {
+        if (!isChange)
+        {
+            StartCoroutine(Loading(i));
+        }
+    }
+
+    public void ToBattleScene(bool backAttack, string monsterType, int monsterCount, int monsterSpeed)
     {
         BackAttack = backAttack;
         MonsterType = monsterType;
         MonsterCount = monsterCount;
+        MonsterSpeed = monsterSpeed;
         if (!isChange)
         {
             StartCoroutine(Loading("05.Battle"));
@@ -61,8 +69,8 @@ public class SceneLoad : MonoBehaviour
     IEnumerator Loading(int i)
     {
         isChange = true;
-        yield return SceneManager.LoadSceneAsync(0);
-        GameObject obj = GameObject.Find("LoadingGage");
+        yield return SceneManager.LoadSceneAsync("00.LoadingScene");
+        GameObject obj = GameObject.Find("LoadingGauge");
         Slider slider = obj.GetComponent<Slider>();
         slider.value = 0.0f;
         StartCoroutine(LoadingTarget(slider, i));
@@ -71,8 +79,8 @@ public class SceneLoad : MonoBehaviour
     IEnumerator Loading(string mapName)
     {
         isChange = true;
-        yield return SceneManager.LoadSceneAsync(0);
-        GameObject obj = GameObject.Find("LoadingGage");
+        yield return SceneManager.LoadSceneAsync("00.LoadingScene");
+        GameObject obj = GameObject.Find("LoadingGauge");
         Slider slider = obj.GetComponent<Slider>();
         slider.value = 0.0f;
         StartCoroutine(LoadingTarget(slider, mapName));
