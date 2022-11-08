@@ -76,10 +76,9 @@ public class BattleCharacter : CharacterProperty
                 break;
             case STATE.Die:
                 myAnim.SetBool("Death",true);
-                if(gameObject.layer==LayerMask.NameToLayer("Enemy"))
-                {
-                    transform.Translate(Vector3.down * 1.0f * Time.deltaTime);
-                    Invoke("SetActiveFalse", 2.0f);                    
+                if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {                    
+                    Invoke("SetActiveFalse", 2.0f);
                 }
                 break;
         }
@@ -120,16 +119,19 @@ public class BattleCharacter : CharacterProperty
     }
     void Start()
     {
-        myHpBar.value = myHp / maxHp;
+        
     }
 
     void Update()
     {
-        StateProcess();        
-        myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp , 5.0f * Time.deltaTime);
-        
+        StateProcess();
+        myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp, 5.0f * Time.deltaTime);
     }    
     
+    public void ValuemyHpmaxHP()
+    {
+        myHpBar.value = myHp / maxHp;
+    }
     public void ChoiceSkill(int s)
     {
         switch(s)
@@ -210,9 +212,6 @@ public class BattleCharacter : CharacterProperty
             pos=hitData.point;
             obj.transform.position = pos;
         }
-        
-
-
         Destroy(obj,2.0f);
     }
     public void BowAttack2()

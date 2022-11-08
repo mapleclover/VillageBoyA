@@ -11,6 +11,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public GameObject myPanel;
     public Transform myInventory;
     public TMPro.TMP_Text myText;
+   // public GameObject myData;
     GameObject obj;
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -19,7 +20,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         myArrow.transform.localPosition=pos;    
         myArrow.SetActive(true);
 
-    }                                                           //7 장비 8 소모품 9 퀘스트
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
         myArrow.SetActive(false);
@@ -30,6 +31,20 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         {
           
             GameObject temp = PointerInfo.instance.transform.gameObject;
+            switch (this.name)
+            {
+                case "MainCharacter":
+                   DataController.instance.gameData.partyHP[0] += temp.GetComponent<Pickup>().item.value;
+                    break;
+                case "Jin":
+                    DataController.instance.gameData.partyHP[1] += temp.GetComponent<Pickup>().item.value;
+                    break;
+                case "Ember":
+                    DataController.instance.gameData.partyHP[2] += temp.GetComponent<Pickup>().item.value;
+                    break;
+            }
+            myText.text = $"{this.transform.name} has gained +{temp.GetComponent<Pickup>().item.value}hp!";      //value값으로 변경해야 함
+            StartCoroutine(UsedPotion());
             if (InventoryController.Instance.myItem[temp.GetComponent<Pickup>().item.itemName] > 1)
             {
                 InventoryController.Instance.myItem[temp.GetComponent<Pickup>().item.itemName]--;
@@ -39,21 +54,8 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
             {
                 Destroy(PointerInfo.instance.transform.gameObject);
             }
-            switch (this.gameObject.name)
-            {
-                case "MainCharacter":
-                    DataController.instance.gameData.partyHP[0] += temp.GetComponent<Pickup>().item.value;
-                    break;
-                case "Jin":
-                    DataController.instance.gameData.partyHP[1] += temp.GetComponent<Pickup>().item.value;
-                    break;
-                case "Ember":
-                    DataController.instance.gameData.partyHP[2] += temp.GetComponent<Pickup>().item.value;
-                    break;
-            }
+           
 
-            myText.text = $"{this.transform.name} has gained +{temp.GetComponent<Pickup>().item.value}hp!";
-            StartCoroutine(UsedPotion());
         }
 
         else
@@ -68,9 +70,8 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 obj.transform.SetParent(PointerInfo.instance.transform);
                 if (PointerInfo.instance.transform.childCount > 2)
                 {
-                    Destroy(PointerInfo.instance.transform.GetChild(1).gameObject);
                     if (DataController.instance.gameData.partyItems[0].Contains(PointerInfo.instance.transform.gameObject))
-                    {                      
+                    {
                         DataController.instance.gameData.partyItems[0].Remove(PointerInfo.instance.transform.gameObject);
                     }
                     else if (DataController.instance.gameData.partyItems[1].Contains(PointerInfo.instance.transform.gameObject))
@@ -81,17 +82,16 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     {
                         DataController.instance.gameData.partyItems[2].Remove(PointerInfo.instance.transform.gameObject);
                     }
-                    //아이템이 기존에 장착된 경우 리스트에서 제거
+                    Destroy(PointerInfo.instance.transform.GetChild(1).gameObject);
                 }
                 obj.transform.localPosition = pos;                          //UI로 누가 어떤 아이템 갖고 있는지 표시
                 obj.GetComponent<RawImage>().raycastTarget = false;
-
-                //게임데이터에 적용
-                switch (this.gameObject.name)
+                //게임데이터에 적용할 때 여기서
+                switch (this.name)
                 {
                     case "MainCharacter":
                         DataController.instance.gameData.partyItems[0].Add(PointerInfo.instance.transform.gameObject);
-                        Debug.Log(DataController.instance.gameData.partyItems[0][0]);
+                        Debug.Log($"{this.name}has{PointerInfo.instance.transform.gameObject}");
                         break;
                     case "Jin":
                         DataController.instance.gameData.partyItems[1].Add(PointerInfo.instance.transform.gameObject);
@@ -99,15 +99,11 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     case "Ember":
                         DataController.instance.gameData.partyItems[2].Add(PointerInfo.instance.transform.gameObject);
                         break;
-
-                        //리스트에 아이템 추가
                 }
-                myPanel.SetActive(false);
             }
 
-            
+            myPanel.SetActive(false);
         }
-       // myPanel.SetActive(false);
     }
     IEnumerator UsedPotion()
     {

@@ -9,7 +9,6 @@ public class InventoryController : MonoBehaviour
     public GameObject myInventory;
     public GameObject myPanel;
     public GameObject[] mySlots;
-    public GameObject myAlert;
     public GameObject myInfoBox;
     public GameObject itemCount;
    public  Dictionary<string, int> myItem = new Dictionary<string, int>();               //key는 item name, value는 개수
@@ -108,10 +107,7 @@ public class InventoryController : MonoBehaviour
             mySlots[i] = list[i];
         }
     }
-    public void ClickOK()
-    {
-        myAlert.SetActive(false);
-    }
+
 
     public void GetItem(GameObject theItem)
     {

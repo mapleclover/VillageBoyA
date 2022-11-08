@@ -2,12 +2,14 @@
 ///캐릭터 버튼
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterButton : MonoBehaviour
 {
     public Button myButton;
+    public GameObject MyChosenAttack;
     public GameObject myCharacter;
     public GameObject myAttack;
     public GameObject mySelectAttack;
@@ -18,35 +20,35 @@ public class CharacterButton : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            if (myCharacter != null)
+            if (myCharacter == null) return;
+            if(myCharacter.GetComponent<BattleCharacter>().Skill==i)
             {
-                if (myCharacter.GetComponent<BattleCharacter>().Skill == i)
+                if(i==0)
                 {
-                    if (i == 0)
-                    {
-                        myActvieTxt.text = "공격1";
-                    }
-                    else if (i == 1)
-                    {
-                        myActvieTxt.text = "공격2";
-                    }
-                    else if (i == 2)
-                    {
-                        myActvieTxt.text = "공격3";
-                    }
+                    myActvieTxt.text = "공격1";
+                }
+                else if (i == 1)
+                {
+                    myActvieTxt.text = "공격2";
+                }
+                else if (i == 2)
+                {
+                    myActvieTxt.text = "공격3";
                 }
             }
         }
     }
-    
+
     void Update()
     {
-        if (TurnBattle.Inst.myState == TurnBattle.State.Choice)
+        if(myCharacter.GetComponent<BattleCharacter>().State==STATE.Die)
         {
+            myButton.interactable = false;
+            MyChosenAttack.GetComponent<CharacterImgaeAlpha>().DieCheck=true;
+        }
+        if (TurnBattle.Inst.myState == TurnBattle.State.Choice)
             for (int i = 0; i < 3; i++)
-            {
                 if (!myCharacter.GetComponent<BattleCharacter>().ActiveHeal)
-                {
                     if (myCharacter.GetComponent<BattleCharacter>().Skill == i)
                     {
                         if (i == 0)
@@ -62,9 +64,6 @@ public class CharacterButton : MonoBehaviour
                             myActvieTxt.text = "공격3";
                         }
                     }
-                }
-            }
-        }
     }
     public void SelectedCharacter()
     {

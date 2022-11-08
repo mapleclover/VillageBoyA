@@ -6,37 +6,45 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 public class GameData
-{
-    public int myProgress = 0;
-    public string savedTime;
-
-    public string mapName="FirstVillage";
-    public Vector3 currentPosition = Vector3.zero;
-    public List<GameObject> currentItems = new List<GameObject>();
-    //1. public Dictionary<GameObject, GameObject> whoHasWhat = new Dictionary<GameObject, GameObject>();
-    //key가 아이템, value가 파티원
-   //2. List<List<GameObject>> partyItems = new List<List<GameObject>>();
-    //  partyItems[0]이 메인캐릭터 1이 진 2가 앰버
-    public List<List<GameObject>> partyItems=new List<List<GameObject>>();
+{                                                                                                               //모든 배열은 0이 콩 1이 진 2가 앰버
+    public int myProgress = 0;          //진행도
+    public string savedTime;            //저장한 시간
+    public string mapName = "FirstVillage";           //현재 마을
 
 
-    public int[] questProgress = Enumerable.Repeat(0, 3).ToArray();
+
+    public Vector3 currentPosition = Vector3.zero;          //현재 캐릭터 위치
+    public Vector3 currentRotation;
+    public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
+    public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 아이템
 
 
-    public bool[] isLeader = { true,false,false };
-    public int[] partyHP = Enumerable.Repeat(100,3).ToArray();
-    public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함
+
+    //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
+    public int questID; // 퀘스트순서
+    public int questActionIndex; // 퀘스트대화순서.
+    public bool isBackAttack; // 빽어택으로 전투돌입인지 아닌지
+
+
+
+    public bool[] isLeader = { true,false,false };                  //누가 리더인지
+    public int[] partyHP = Enumerable.Repeat(100,3).ToArray();          //파티원 개개인의 HP
+    public int[] partySpeed = {10,20,30 };              //파티원 개개인의 speed
+    public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
 
 }
 public class DataController: MonoBehaviour
 {
-    static GameObject _container;
+   // static GameObject _container;
     public string gamedataFilename = "VillageBoyA.json";       //.json 앞에 게임 데이터 파일 이름 설정
    public string filePath;
     public int nowSlot;
   public  GameData gameData=new GameData();
     public static DataController instance;
 
+    private PlayerMovement thePlayer;
+    private QuestManager theQuestManager;
+    private ActionController theActionController;
   
     private void Awake()
     {
@@ -49,6 +57,7 @@ public class DataController: MonoBehaviour
         {
             Destroy(instance.gameObject);
         }
+
         for(int i = 0; i < 3; i++)
         {
             gameData.partyItems.Add(new List<GameObject>());
@@ -74,6 +83,22 @@ public class DataController: MonoBehaviour
     }
     public void SaveGameData()
     {
+        thePlayer = FindObjectOfType<PlayerMovement>();
+        theQuestManager = FindObjectOfType<QuestManager>();
+        theActionController = FindObjectOfType<ActionController>();
+
+        // Player position
+        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
+        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+         
+        // Quest ~ing
+        gameData.questID = theQuestManager.questId;
+        gameData.questActionIndex = theQuestManager.questActionIndex;
+
+        // BackAttack Battle ? true : false
+        gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
+
+
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData=JsonUtility.ToJson(gameData);     //Json으로 변환
                                                             //  filePath = Application.persistentDataPath + gamedataFilename;

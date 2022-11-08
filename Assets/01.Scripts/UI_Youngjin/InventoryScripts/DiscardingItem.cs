@@ -30,7 +30,10 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
             isQuestItem.SetActive(true);
 
         }
-        else myPanel.SetActive(true);
+        else
+        {
+            myPanel.SetActive(true);
+        }
         
     }
     public void SetChildren(Transform child)
@@ -47,8 +50,8 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
         myText.SetActive(false);
     }
     public void OnClickYesDiscard()
-   { 
-       if (DataController.instance.gameData.partyItems[0].Contains(this.transform.GetChild(0).gameObject))
+    {
+        if (DataController.instance.gameData.partyItems[0].Contains(this.transform.GetChild(0).gameObject))
         {
             DataController.instance.gameData.partyItems[0].Remove(this.transform.GetChild(0).gameObject);
         }
