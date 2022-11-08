@@ -11,12 +11,13 @@ public class EnemyIcon : MonoBehaviour
         GameObject obj = Instantiate(Resources.Load("Prefabs/MinimapIcon"), SceneData.Inst.Minimap) as GameObject;      
         myIcon = obj.GetComponent<MinimapIcon>();
         myIcon.Initialize(transform, Color.red);
+        
     }
     
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 }

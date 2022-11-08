@@ -10,7 +10,7 @@ public class QuestManager : MonoBehaviour
     private ObjData theObjectData;
     public GameObject[] questObject;
 
-   
+    
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
 
@@ -25,6 +25,8 @@ public class QuestManager : MonoBehaviour
     [SerializeField]
     private InventoryController theInven;
 
+
+    
     private void Awake()
     {
         questList = new Dictionary<int, QuestData>(); // 초기화
@@ -74,6 +76,7 @@ public class QuestManager : MonoBehaviour
         questActionIndex = 0; // 액션인덱스는 초기화.
     }
 
+   
     private void ControlObject(GameObject scanObject)
     {
         //questObject[0] = 사과
@@ -86,14 +89,14 @@ public class QuestManager : MonoBehaviour
             case 10:
                 if(questActionIndex == 1)
                 {
-                    questObject[1].SetActive(true); // ! 아이콘
+                    questObject[1].SetActive(true); // ! 아이콘                  
                     //questObject[2].SetActive(true); // ? 아이콘
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
                     questObject[4].transform.position = new Vector3(291.0f, 1.1f, 222.0f); // goal지접이동
                 }
                 if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
-                {
+                {                   
                     questObject[1].SetActive(false);
                     questObject[0].SetActive(true); // 사과 1 
                     questObject[3].SetActive(true); // 사과 2
@@ -101,14 +104,14 @@ public class QuestManager : MonoBehaviour
                 break;
             case 20:
                 if (questActionIndex == 1)
-                {
+                {                    
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
                         Destroy(scanObject); // 사과
                     }
                 }
                 if(questActionIndex == 2)
-                {
+                {                  
                     questObject[2].SetActive(true); // ? 아이콘
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     if (scanObject.GetComponent<ObjData>().id == 100)
@@ -117,16 +120,17 @@ public class QuestManager : MonoBehaviour
                     }
                 }
                 if(questActionIndex == 3)
-                {
-                    questObject[2].SetActive(false); // ? 사라지게.
-                    questObject[4].SetActive(true);
+                {                   
+                    questObject[2].SetActive(false); // ? 사라지게.                    
+                    questObject[4].SetActive(true);                 
                     Goal.goalCounting++; 
                 }
                 break;
-            case 30:
+            case 30:                          
                 if(questActionIndex == 1)
                 {
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
+                    
                 }
                 break;
         }
