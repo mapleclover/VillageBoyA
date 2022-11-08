@@ -15,9 +15,10 @@ public class GameData
 
     public Vector3 currentPosition = Vector3.zero;          //현재 캐릭터 위치
     public Vector3 currentRotation;
-    public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
-    public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 아이템
 
+   // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
+    public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
+    public Dictionary<GameObject, Vector3> savedInventory = new Dictionary<GameObject, Vector3>();          //아이템과 몇번째 슬롯인지 저장
 
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도

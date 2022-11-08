@@ -10,7 +10,8 @@ public class QuestManager : MonoBehaviour
     private ObjData theObjectData;
     public GameObject[] questObject;
 
-    
+    static public bool questComplete = true;
+
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
 
@@ -39,7 +40,7 @@ public class QuestManager : MonoBehaviour
     {
         questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
         questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000 }));
-        questList.Add(30, new QuestData("마을 첫 방문", new int[] { 1000, 2000 }));
+        questList.Add(30, new QuestData("마을 첫 방문 및 여우잡기", new int[] { 1000, 2000, 2000 }));
     }
 
     public int GetQuestTalkIndex(int id)
@@ -50,9 +51,11 @@ public class QuestManager : MonoBehaviour
     public string CheckQuest(int id, GameObject scanObject)
     {
         //Next Talk Target(NPC)
-        if(id == questList[questId].npcId[questActionIndex]) // 현재진행중인 퀘스트id의 npc아이디체크.
-        questActionIndex++;  //인덱스순서를주지않으면 A를거치고 B를가야하는데 A안거치고 B가도되기때문.
-
+        if (questComplete)
+        {
+            if (id == questList[questId].npcId[questActionIndex]) // 현재진행중인 퀘스트id의 npc아이디체크.
+                questActionIndex++;  //인덱스순서를주지않으면 A를거치고 B를가야하는데 A안거치고 B가도되기때문.
+        }
         //Control Quest Object
         ControlObject(scanObject);
         ControlPopup(scanObject);
@@ -130,7 +133,13 @@ public class QuestManager : MonoBehaviour
                 if(questActionIndex == 1)
                 {
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
-                    
+                }
+                if(questActionIndex == 1 && !questComplete)
+                    questObject[1].SetActive(false);
+                if (questActionIndex == 2 && questComplete)
+                {
+                    questObject[2].SetActive(true);
+                    questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                 }
                 break;
         }
@@ -169,7 +178,17 @@ public class QuestManager : MonoBehaviour
                 break;
             case 30:
                 if (questActionIndex == 1)
+                {
+                    questComplete = false;
                     questPopupText.text = "호두와 대화하기";
+                    myAnim.SetBool("isComplete", false);
+                }
+                if(questActionIndex == 1 && !questComplete)
+                    questPopupText.text = "여우 잡아오기";
+                if (questActionIndex == 2)
+                    questPopupText.text = "호두에게 가기";
+                if (questActionIndex == 3)
+                    questPopupText.text = "호두에게 가기";
                 break;
         }
     }

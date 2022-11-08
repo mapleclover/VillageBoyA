@@ -68,19 +68,20 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 pos.y = PointerInfo.instance.transform.localPosition.y - 20;
 
                 obj.transform.SetParent(PointerInfo.instance.transform);
+                GameObject thisEquipment = PointerInfo.instance.transform.gameObject ;
                 if (PointerInfo.instance.transform.childCount > 2)
                 {
-                    if (DataController.instance.gameData.partyItems[0].Contains(PointerInfo.instance.transform.gameObject))
+                    if (DataController.instance.gameData.partyItems[0].Contains(thisEquipment))
                     {
-                        DataController.instance.gameData.partyItems[0].Remove(PointerInfo.instance.transform.gameObject);
+                        DataController.instance.gameData.partyItems[0].Remove(thisEquipment);
                     }
-                    else if (DataController.instance.gameData.partyItems[1].Contains(PointerInfo.instance.transform.gameObject))
+                    else if (DataController.instance.gameData.partyItems[1].Contains(thisEquipment))
                     {
-                        DataController.instance.gameData.partyItems[1].Remove(PointerInfo.instance.transform.gameObject);
+                        DataController.instance.gameData.partyItems[1].Remove(thisEquipment);
                     }
-                    else if (DataController.instance.gameData.partyItems[2].Contains(PointerInfo.instance.transform.gameObject))
+                    else if (DataController.instance.gameData.partyItems[2].Contains(thisEquipment))
                     {
-                        DataController.instance.gameData.partyItems[2].Remove(PointerInfo.instance.transform.gameObject);
+                        DataController.instance.gameData.partyItems[2].Remove(thisEquipment);
                     }
                     Destroy(PointerInfo.instance.transform.GetChild(1).gameObject);
                 }

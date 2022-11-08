@@ -8,6 +8,7 @@ public class EnemySC : ScriptableObject
     public string enemyName;
     public EnemyType enemyType;
     public float moveSpeed;
+    public int monsterSpeed;
     public GameObject enemyPrefab;
     
 
