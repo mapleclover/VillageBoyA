@@ -51,19 +51,24 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     }
     public void OnClickYesDiscard()
     {
-        if (DataController.instance.gameData.partyItems[0].Contains(this.transform.GetChild(0).gameObject))
+        GameObject selectedItem = this.transform.GetChild(0).gameObject;
+        if (DataController.instance.gameData.partyItems[0].Contains(selectedItem))
         {
-            DataController.instance.gameData.partyItems[0].Remove(this.transform.GetChild(0).gameObject);
+            DataController.instance.gameData.partyItems[0].Remove(selectedItem);
         }
-        else if (DataController.instance.gameData.partyItems[1].Contains(this.transform.GetChild(0).gameObject))
+        else if (DataController.instance.gameData.partyItems[1].Contains(selectedItem))
         {
-            DataController.instance.gameData.partyItems[1].Remove(this.transform.GetChild(0).gameObject);
+            DataController.instance.gameData.partyItems[1].Remove(selectedItem);
         }
-        else if (DataController.instance.gameData.partyItems[2].Contains(this.transform.GetChild(0).gameObject))
+        else if (DataController.instance.gameData.partyItems[2].Contains(selectedItem))
         {
-            DataController.instance.gameData.partyItems[2].Remove(this.transform.GetChild(0).gameObject);
+            DataController.instance.gameData.partyItems[2].Remove(selectedItem);
         }
-        Destroy(this.transform.GetChild(0).gameObject);
+
+
+        DataController.instance.gameData.savedInventory.Remove(selectedItem);
+        Destroy(selectedItem);
+
         myPanel.SetActive(false);
     }
     public void OnClickNoDiscard()
