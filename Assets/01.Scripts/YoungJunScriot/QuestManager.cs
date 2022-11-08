@@ -10,7 +10,6 @@ public class QuestManager : MonoBehaviour
     private ObjData theObjectData;
     public GameObject[] questObject;
 
-    
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
 
@@ -18,21 +17,21 @@ public class QuestManager : MonoBehaviour
     public GameObject Klee_1000;
     public GameObject Hodu_2000;
 
+    MinimapIcon myIcon = null;
+
     [SerializeField]
     private TMPro.TMP_Text questPopupText;
     [SerializeField]
     private GameObject theComplete;
     [SerializeField]
     private InventoryController theInven;
+ 
 
-
-    
     private void Awake()
-    {
+    {      
         questList = new Dictionary<int, QuestData>(); // 초기화
         GenerateData();
         myAnim = theComplete.GetComponent<Animator>();
-
     }
 
     private void GenerateData()
@@ -77,7 +76,7 @@ public class QuestManager : MonoBehaviour
     }
 
    
-    private void ControlObject(GameObject scanObject)
+   private void ControlObject(GameObject scanObject)
     {
         //questObject[0] = 사과
         //questObject[1] = ! 아이콘
@@ -89,7 +88,8 @@ public class QuestManager : MonoBehaviour
             case 10:
                 if(questActionIndex == 1)
                 {
-                    questObject[1].SetActive(true); // ! 아이콘                  
+                    questObject[1].SetActive(true); // ! 아이콘
+                    
                     //questObject[2].SetActive(true); // ? 아이콘
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
@@ -126,11 +126,11 @@ public class QuestManager : MonoBehaviour
                     Goal.goalCounting++; 
                 }
                 break;
+           
             case 30:                          
                 if(questActionIndex == 1)
                 {
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
-                    
                 }
                 break;
         }
