@@ -114,7 +114,7 @@ public class TurnBattle : MonoBehaviour
                 break;
             case State.GameOver:
                 speedChanger.SetActive(false);
-                Time.timeScale = 1.0f;               
+                Time.timeScale = 1.0f;
                 if (VictoryCheck)
                 {                    
                     foreach (GameObject act in Player)
@@ -187,7 +187,15 @@ public class TurnBattle : MonoBehaviour
                 break;            
             case State.End:
                 break;
-            case State.GameOver:                
+            case State.GameOver:
+                if (Input.anyKey)
+                {
+                    if (VictoryCheck)
+                    {
+                        SceneLoad.Instance.ChangeScene("06.Field");
+                    }
+                }
+
                 break;
         }
     }
