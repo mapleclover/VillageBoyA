@@ -19,7 +19,7 @@ public class AboutItem : MonoBehaviour
     }
     public void pointerenter(PointerInfo temp)
     {
-        switch (PointerInfo.instance.transform.gameObject.layer)
+        switch (temp.transform.gameObject.layer)
         {
             case 7:                         //7: 장비, 8:소모품,9:퀘스트
                 myInfoBox.GetComponent<Image>().color = Color.yellow;
@@ -32,7 +32,7 @@ public class AboutItem : MonoBehaviour
                 break;
 
         }
-       myInfoText.text = $"<size=36><b>{PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName}</size></b> \n\n {PointerInfo.instance.transform.GetComponent<Pickup>().item.itemInfo} ";
+       myInfoText.text = $"<size=36><b>{PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName}</size></b> \n\n {temp.transform.GetComponent<Pickup>().item.itemInfo} ";
         pos.x = temp.transform.parent.localPosition.x;
         pos.y =temp.transform.parent.localPosition.y + 170;
         myInfoBox.transform.localPosition = pos;
@@ -46,12 +46,13 @@ public class AboutItem : MonoBehaviour
     }
     public void pointerclick()
     {
+        Transform clickedItem = PointerInfo.instance.transform;
       //  instance = this;
-        if (PointerInfo.instance.transform.gameObject.layer == 7 || PointerInfo.instance.transform.gameObject.layer == 8)
+        if (clickedItem.gameObject.layer == 7 || clickedItem.gameObject.layer == 8)
         {
             myPanel.SetActive(true);
-            pos.x = PointerInfo.instance.transform.parent.localPosition.x;
-            pos.y = PointerInfo.instance.transform.parent.localPosition.y + 150;
+            pos.x = clickedItem.parent.localPosition.x;
+            pos.y = clickedItem.parent.localPosition.y + 150;
            myParty.transform.localPosition = pos;
             myInfoBox.SetActive(false);
             myParty.SetActive(true);
