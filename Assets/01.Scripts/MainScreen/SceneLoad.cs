@@ -43,10 +43,16 @@ public class SceneLoad : MonoBehaviour
         if (!isChange)
         {
             StartCoroutine(Loading(i));
-            
         }
     }
-    
+    public void ChangeScene(string i)
+    {
+        if (!isChange)
+        {
+            StartCoroutine(Loading(i));
+        }
+    }
+
     public void ToBattleScene(bool backAttack, string[] monsterType, int[] monsterCount)
     {
         BackAttack = backAttack;
