@@ -10,7 +10,15 @@ public class QuestManager : MonoBehaviour
     private ObjData theObjectData;
     public GameObject[] questObject;
 
-    static public bool questComplete = true;
+    public bool _questComplete;
+    public bool questComplete
+    {
+        get => _questComplete;
+        set
+        {
+            _questComplete = value;
+        }
+    }
 
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
@@ -33,7 +41,7 @@ public class QuestManager : MonoBehaviour
         questList = new Dictionary<int, QuestData>(); // √ ±‚»≠
         GenerateData();
         myAnim = theComplete.GetComponent<Animator>();
-
+        questComplete = DataController.instance.gameData.questClear;
     }
 
     private void GenerateData()

@@ -32,10 +32,11 @@ public class GameData
     public int[] partyHP = Enumerable.Repeat(100,3).ToArray();          //파티원 개개인의 HP
     public int[] partySpeed = {10,20,30 };              //파티원 개개인의 speed
     public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
-
+    public bool questClear;
 }
 public class DataController: MonoBehaviour
 {
+    
    // static GameObject _container;
     public string gamedataFilename = "VillageBoyA.json";       //.json 앞에 게임 데이터 파일 이름 설정
    public string filePath;
@@ -49,6 +50,7 @@ public class DataController: MonoBehaviour
   
     private void Awake()
     {
+        
         // File.Delete(filePath);
         if (instance == null)
         {
@@ -65,7 +67,10 @@ public class DataController: MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
+
     }
+
+    
 
     public void LoadGameData()
     {

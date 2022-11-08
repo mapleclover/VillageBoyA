@@ -123,6 +123,10 @@ public class TurnBattle : MonoBehaviour
                     }
                     GameOverCanvas.SetActive(true);
                     GameOverTxt.text = "½Â ¸®";
+                    if(Input.anyKey)
+                    {
+                        
+                    }
                 }
                 else if (!VictoryCheck)
                 {
@@ -192,6 +196,14 @@ public class TurnBattle : MonoBehaviour
                 {
                     if (VictoryCheck)
                     {
+                        if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
+                        {
+                            if (SceneLoad.Instance.MonsterType == "¿©¿ì")
+                            {
+                                DataController.instance.gameData.questClear = true;
+                            }
+                        }
+                        
                         SceneLoad.Instance.ChangeScene("06.Field");
                     }
                 }
