@@ -86,7 +86,7 @@ public class EnemyAI : MonoBehaviour
            theNav.ResetPath();
 
             SceneLoad.Instance.ToBattleScene(theActionController.isBackAttack, this.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2, 4)
-                                                              , , this.transform.GetComponent<Pickup>().enemy.monsterSpeed);
+                                                              , this.transform.GetComponent<Pickup>().enemy.monsterSpeed);
             //EnemyBackAttackInfoDisappear();
             // ================배틀씬으로넘어감. ===================
         }
