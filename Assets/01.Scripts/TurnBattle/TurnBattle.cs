@@ -204,7 +204,7 @@ public class TurnBattle : MonoBehaviour
         Inst = this;
         Cursor.visible = true; // 커서안보이는거 트루로
         Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제
-        EnemyCharacterName = "Fox";
+        EnemyCharacterName = "Golem";
         InstantiateEnemy();
         InstantiatePlayerCharacter();
         
