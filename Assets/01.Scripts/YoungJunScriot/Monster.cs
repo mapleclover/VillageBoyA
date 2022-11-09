@@ -13,6 +13,8 @@ public class Monster : CharacterMoveMent
 
     [SerializeField]
     private Animator myAnim;
+    [SerializeField]
+    private float roamingDist;
 
     public enum STATE
     {
@@ -34,12 +36,12 @@ public class Monster : CharacterMoveMent
             case STATE.CREATE:
                 break;
             case STATE.IDLE:
-                StartCoroutine(DelayRoaming(7.0f));
+                StartCoroutine(DelayRoaming(5.0f));
                 break;
             case STATE.ROAMING:
                 Vector3 pos = Vector3.zero;
-                pos.x = Random.Range(-3.0f, 3.0f);
-                pos.z = Random.Range(-3.0f, 3.0f);
+                pos.x = Random.Range(-roamingDist, roamingDist);
+                pos.z = Random.Range(-roamingDist, roamingDist);
                 pos = startPos + pos;
                 MoveToPosition(pos, () => ChangeState(STATE.IDLE));
                 break;

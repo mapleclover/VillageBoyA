@@ -11,7 +11,6 @@ public class PointerInfo : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
     Vector2 pos = Vector2.zero;
     Vector2 dragOffset = Vector2.zero;
     public static PointerInfo instance = null;
-
     private void Awake()
     {
         instance = this;

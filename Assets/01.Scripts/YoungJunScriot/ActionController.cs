@@ -12,7 +12,6 @@ public class ActionController : MonoBehaviour
     [SerializeField] private float viewAngle; // 플레이어 시야각 (130도예정)
     [SerializeField] private float viewDistance; // 플레이어 시야거리
     [SerializeField] private float _backAttackAngle; // 뒤치기 기습범위 (30도 + 30도 = 60도 예정.)
-    
 
     //대상 감지시 활성화.
     private bool pickNpcActivated = false;
@@ -42,7 +41,11 @@ public class ActionController : MonoBehaviour
     [SerializeField]
     private GameManager theManager;
     [SerializeField]
+    private Image thePicture;
+    [SerializeField]
     private Goal theGoal;
+
+    
     
 
 
@@ -52,7 +55,8 @@ public class ActionController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isBattle = false;   
+        isBattle = false;
+        isBackAttack = false;
     }
 
     // Update is called once per frame
@@ -231,9 +235,13 @@ public class ActionController : MonoBehaviour
                 //기습- 배틀씬으로넘어감.///////////////////////////////**************
                 Destroy(hitInfo.transform.gameObject);
                 isBattle = false;
+                
+                SceneLoad.Instance.ToBattleScene(isBackAttack, hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2,4) 
+                                                                   ,hitInfo.transform.GetComponent<Pickup>().enemy.monsterSpeed) ;
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************
-                SceneLoad.Instance.ChangeScene(4);
+                
+                //SceneLoad.Instance.ChangeScene(4);
             }
         }
         else if (theManager.isAction)
@@ -250,6 +258,7 @@ public class ActionController : MonoBehaviour
         {
             pickNpcActivated = true;
             npcTextBackground.gameObject.SetActive(true);
+            thePicture.sprite = hitInfo.transform.GetComponent<Pickup>().npc.npcImage;
             CheckText.gameObject.SetActive(true); // 텍스트창 활성화
             CheckText.alignment = TMPro.TextAlignmentOptions.Right;
             CheckText.text = "<color=blue>" + hitInfo.transform.GetComponent<Pickup>().npc.npcName + "</color>" + "와 대화하시겠습니까?" + "<color=yellow>" + " (E) " + "</color>";

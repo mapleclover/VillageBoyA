@@ -68,44 +68,49 @@ public class InventoryController : MonoBehaviour
             {
                 if (mySlots[j].transform.childCount > 0 && mySlots[i].transform.childCount == 0)
                 {
-                    temp= mySlots[j].transform.localPosition;
+                   temp= mySlots[j].transform.localPosition;
                    mySlots[j].transform.localPosition = mySlots[i].transform.localPosition;
-                    mySlots[i].transform.localPosition = temp;
-                    temp2 = mySlots[j];
-                    mySlots[j] = mySlots[i];
-                    mySlots[i] = temp2;
+                   mySlots[i].transform.localPosition = temp;
+                   temp2 = mySlots[j];
+                   mySlots[j] = mySlots[i];
+                   mySlots[i] = temp2;                          //아이템이 없는 슬롯을 뒤로 이동       
                 }
             }
-        }               //아이템이 없는 슬롯을 뒤로 이동         
-        List<GameObject> list = new List<GameObject>();
+        }
+        int count = 0;   
         for(int i = 0; i < mySlots.Length; i++)
         {
             if (mySlots[i].transform.childCount > 0)
             {
-                list.Add(mySlots[i]);
+                count++;
             }
         }
-       for(int i=0; i < list.Count-1; i++)
+        for(int i = 0; i < count - 1; i++)
         {
-            for(int j = i + 1; j < list.Count; j++)
+            for(int j = i+1; j < count; j++)
             {
-                if (list[j].transform.GetChild(0).gameObject.layer < list[i].transform.GetChild(0).gameObject.layer)
+                GameObject obj1 = mySlots[j].transform.GetChild(0).gameObject;
+                GameObject obj2 = mySlots[i].transform.GetChild(0).gameObject;
+                if (obj1.layer <obj2.layer)
                 {
-                    
-                    temp = list[j].transform.localPosition;
-                    list[j].transform.localPosition = list[i].transform.localPosition;
-                    list[i].transform.localPosition = temp;
-                    temp2 = list[j];
-                    list[j] = list[i];
-                    list[i] = temp2;                 //장비, 퀘스트, 소모품 순서로 정렬   
+                   temp= mySlots[i].transform.localPosition;
+                    mySlots[i].transform.localPosition = mySlots[j].transform.localPosition;            //아이템 정렬
+                    mySlots[j].transform.localPosition = temp;
+                    temp2 = mySlots[i];
+                    mySlots[i] = mySlots[j];
+                    mySlots[j] = temp2;
 
                 }
             }
         }
-       for(int i = 0; i < list.Count; i++)
+        for(int i = 0; i < count; i++)
         {
-            mySlots[i] = list[i];
+            DataController.instance.gameData.savedInventory[mySlots[i].transform.GetChild(0).gameObject] = mySlots[i].transform.GetChild(0).localPosition;              //정렬된 위치값을 데이터로 저장
         }
+
+
+
+   
     }
 
 
@@ -135,7 +140,8 @@ public class InventoryController : MonoBehaviour
                             obj.transform.SetParent(mySlots[i].transform);
                             obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                             obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-                            obj.transform.localPosition = Vector2.zero;     
+                            obj.transform.localPosition = Vector2.zero;
+                            DataController.instance.gameData.savedInventory[obj] = obj.transform.localPosition;
                             break;
                         }
                     }
