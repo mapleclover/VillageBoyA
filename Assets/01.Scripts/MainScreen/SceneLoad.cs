@@ -80,7 +80,7 @@ public class SceneLoad : MonoBehaviour
         }
     }
 
-    public void ToBattleScene(bool backAttack, string monsterType, int monsterCount, int monsterSpeed)
+    public void ToBattleScene(bool backAttack, string monsterType , int monsterCount, int monsterSpeed)
     {
         BackAttack = backAttack;
         MonsterType = monsterType;
