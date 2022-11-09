@@ -10,7 +10,7 @@ public class SceneLoad : MonoBehaviour
 
     private void Awake()
     {
-        if(null == instance)
+        if (null == instance)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -33,11 +33,37 @@ public class SceneLoad : MonoBehaviour
         }
     }
 
+
+
     bool isChange = false;
     public bool BackAttack = false;
     public string MonsterType;
     public int MonsterCount;
     public int MonsterSpeed;
+
+
+    private GameObject player;
+
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "06.Field")
+        {
+            player = GameObject.Find("Summons(Final)");
+            Debug.Log("캐릭터위치 : "+ DataController.instance.gameData.currentPosition);
+            player.transform.position = DataController.instance.gameData.currentPosition;
+            player.transform.eulerAngles = DataController.instance.gameData.currentRotation;
+        }
+    }
 
     public void ChangeScene(int i)
     {
@@ -54,7 +80,7 @@ public class SceneLoad : MonoBehaviour
         }
     }
 
-    public void ToBattleScene(bool backAttack, string monsterType, int monsterCount, int monsterSpeed)
+    public void ToBattleScene(bool backAttack, string monsterType , int monsterCount, int monsterSpeed)
     {
         BackAttack = backAttack;
         MonsterType = monsterType;

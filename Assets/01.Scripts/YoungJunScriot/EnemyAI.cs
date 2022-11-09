@@ -85,6 +85,7 @@ public class EnemyAI : MonoBehaviour
            theNav.SetDestination(transform.position);
            theNav.ResetPath();
 
+            DataController.instance.SavePlayerPosRot();
             SceneLoad.Instance.ToBattleScene(theActionController.isBackAttack, this.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2, 4)
                                                               , this.transform.GetComponent<Pickup>().enemy.monsterSpeed);
             //EnemyBackAttackInfoDisappear();
