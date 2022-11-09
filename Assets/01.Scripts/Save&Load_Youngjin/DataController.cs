@@ -39,9 +39,9 @@ public class DataController: MonoBehaviour
     
    // static GameObject _container;
     public string gamedataFilename = "VillageBoyA.json";       //.json 앞에 게임 데이터 파일 이름 설정
-   public string filePath;
+    public string filePath;
     public int nowSlot;
-  public  GameData gameData=new GameData();
+    public  GameData gameData=new GameData();
     public static DataController instance;
 
     private PlayerMovement thePlayer;
@@ -128,6 +128,7 @@ public class DataController: MonoBehaviour
         File.WriteAllText(filePath + curSlot.ToString(), ToJsonData);
         Debug.Log("저장");       
     }
+
   /*  private void OnApplicationQuit()
     {
         SaveGameData();     

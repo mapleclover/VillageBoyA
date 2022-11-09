@@ -35,13 +35,14 @@ public class QuestManager : MonoBehaviour
     private InventoryController theInven;
 
 
-    
     private void Awake()
     {
         questList = new Dictionary<int, QuestData>(); // √ ±‚»≠
+        questComplete = DataController.instance.gameData.questClear;
+        
         GenerateData();
         myAnim = theComplete.GetComponent<Animator>();
-        questComplete = DataController.instance.gameData.questClear;
+        
     }
 
     private void GenerateData()
