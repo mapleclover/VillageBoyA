@@ -376,6 +376,10 @@ public class TurnBattle : MonoBehaviour
             } 
         }
     }
+    public void BattleRun() //도망버튼 클릭시 함수
+    {
+
+    }
     public void BattleStart() //공격버튼 클릭시 함수
     {
 
