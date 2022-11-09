@@ -41,14 +41,17 @@ public class MinimapIcon : MonoBehaviour
                 StartCoroutine(Following(target, Color.green));
                 break;
             case IconType.npc:
+                this.GetComponent<Image>().sprite = IconImages[1];
                 directionIndicator.SetActive(false);
                 StartCoroutine(Following(target, Color.yellow));
                 break;
             case IconType.quest:
+                this.GetComponent<Image>().sprite = IconImages[2];
                 directionIndicator.SetActive(false);
                 StartCoroutine(Following(target, Color.yellow));
                 break;
             case IconType.enemy:
+                this.GetComponent<Image>().sprite = IconImages[0];
                 directionIndicator.SetActive(false);
                 StartCoroutine(Following(target, Color.red));
                 break;
