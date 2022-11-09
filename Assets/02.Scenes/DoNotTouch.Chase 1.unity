@@ -1105,6 +1105,7 @@ MonoBehaviour:
   itemTextBackground: {fileID: 760008511}
   enemyextBackground: {fileID: 1596730490}
   theManager: {fileID: 949683155}
+  thePicture: {fileID: 0}
   theGoal: {fileID: 2145330320}
 --- !u!1 &131430645
 GameObject:
@@ -15285,6 +15286,7 @@ MonoBehaviour:
   - {fileID: 2017085392}
   - {fileID: 68432847}
   - {fileID: 2145330316}
+  _questComplete: 0
   Klee_1000: {fileID: 252487873}
   Hodu_2000: {fileID: 0}
   questPopupText: {fileID: 1458992205}
@@ -18350,6 +18352,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 10000
   isNpc: 0
+  obj: {fileID: 0}
+  Klee_1000: {fileID: 0}
+  Hodu_2000: {fileID: 0}
 --- !u!114 &2145330320
 MonoBehaviour:
   m_ObjectHideFlags: 0
