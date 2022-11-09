@@ -87,7 +87,6 @@ public class Monster : CharacterMoveMent
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(myState);
         StateProcess();
         theEnemyAI.View();
     }
