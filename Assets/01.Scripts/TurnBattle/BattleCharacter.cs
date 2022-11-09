@@ -125,7 +125,7 @@ public class BattleCharacter : CharacterProperty
     void Update()
     {
         StateProcess();
-        myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp, 5.0f * Time.deltaTime);
+        if(myHpBar!=null)myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp, 5.0f * Time.deltaTime);
     }    
     
     public void ValuemyHpmaxHP()
