@@ -1002,7 +1002,7 @@ Rigidbody:
   m_GameObject: {fileID: 127366216}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1092,6 +1092,7 @@ MonoBehaviour:
   viewAngle: 120
   viewDistance: 2
   _backAttackAngle: 0.886
+  isBackAttack: 0
   isBattle: 0
   layerMask:
     serializedVersion: 2
@@ -1735,6 +1736,10 @@ PrefabInstance:
     - target: {fileID: 7818059672150645188, guid: 1df3ce6060233f847b2a5a4162b80c48, type: 3}
       propertyPath: m_Name
       value: Klee(final)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818059672150645188, guid: 1df3ce6060233f847b2a5a4162b80c48, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1df3ce6060233f847b2a5a4162b80c48, type: 3}
@@ -3789,6 +3794,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EmberForBattle
       objectReference: {fileID: 0}
+    - target: {fileID: 8989488952855991236, guid: 6002129bedfd8414983ff2b6f8423353, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6002129bedfd8414983ff2b6f8423353, type: 3}
 --- !u!1001 &466433928
@@ -5749,6 +5758,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KongForBattle
       objectReference: {fileID: 0}
+    - target: {fileID: 7720753623890841164, guid: 2d161cd48bff4a24b8a438ededd4e621, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d161cd48bff4a24b8a438ededd4e621, type: 3}
 --- !u!1 &679220338
@@ -7125,7 +7138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &856919699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7310,7 +7323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7826868592975836839, guid: 20b4901745ba08747a8a16d73a35a397, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20b4901745ba08747a8a16d73a35a397, type: 3}
@@ -12282,6 +12295,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: testItem
       objectReference: {fileID: 0}
+    - target: {fileID: 4152213543644430678, guid: 6885096178247294f9f7cc92d62215a6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6130248153888294601, guid: 6885096178247294f9f7cc92d62215a6, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -12916,6 +12933,10 @@ PrefabInstance:
     - target: {fileID: 4152213543644430678, guid: 6885096178247294f9f7cc92d62215a6, type: 3}
       propertyPath: m_Name
       value: testItem (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152213543644430678, guid: 6885096178247294f9f7cc92d62215a6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6130248153888294601, guid: 6885096178247294f9f7cc92d62215a6, type: 3}
       propertyPath: m_RootOrder
@@ -15243,7 +15264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1899953964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24717,7 +24738,6 @@ MonoBehaviour:
   - {fileID: 8016425096694906058}
   - {fileID: 8016425096762743609}
   - {fileID: 8016425097793025183}
-  myAlert: {fileID: 0}
   myInfoBox: {fileID: 8016425097802736557}
   itemCount: {fileID: 2070906993435841056}
   countUI: {fileID: 2070906993822398721}
