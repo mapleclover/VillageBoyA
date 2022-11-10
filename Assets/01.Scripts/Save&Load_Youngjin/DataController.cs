@@ -55,17 +55,17 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != null)
         {
-            Destroy(instance.gameObject);
+            Destroy(this.gameObject);
         }
 
         for(int i = 0; i < 3; i++)
         {
             gameData.partyItems.Add(new List<GameObject>());
         }
-        DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
 
     }
