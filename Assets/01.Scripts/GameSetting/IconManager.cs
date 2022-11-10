@@ -12,7 +12,6 @@ public class IconManager : MonoBehaviour
     }
     public IEnumerator Following(Transform target, Color color)
     {
-        GetComponent<Image>().color = color;
         Vector2 size = transform.parent.GetComponent<RectTransform>().sizeDelta;
         RectTransform rt = GetComponent<RectTransform>();
         Debug.Log(Camera.allCameras[1].name);

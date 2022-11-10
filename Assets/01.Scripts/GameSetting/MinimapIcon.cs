@@ -26,22 +26,27 @@ public class MinimapIcon : MonoBehaviour
             case IconType.player:
                 this.GetComponent<Image>().sprite = IconImages[0];
                 directionIndicator.SetActive(true);
-                StartCoroutine(IconManager.Following(transform, Color.green));
+                my_Icon.GetComponent<Image>().color = Color.green;
+
+                //StartCoroutine(IconManager.Following(transform, Color.green));
                 break;
             case IconType.npc:
                 this.GetComponent<Image>().sprite = IconImages[1];
                 directionIndicator.SetActive(false);
-                StartCoroutine(IconManager.Following(transform, Color.yellow));
+                my_Icon.GetComponent<Image>().color = Color.yellow;
+                //StartCoroutine(IconManager.Following(transform, Color.yellow));
                 break;
             case IconType.quest:
                 this.GetComponent<Image>().sprite = IconImages[2];
                 directionIndicator.SetActive(false);
-                StartCoroutine(IconManager.Following(transform, Color.yellow));
+                my_Icon.GetComponent<Image>().color = Color.yellow;
+                //StartCoroutine(IconManager.Following(transform, Color.yellow));
                 break;
             case IconType.enemy:
                 this.GetComponent<Image>().sprite = IconImages[0];
                 directionIndicator.SetActive(false);
-                StartCoroutine(IconManager.Following(transform, Color.red));
+                my_Icon.GetComponent<Image>().color = Color.red;
+                //StartCoroutine(IconManager.Following(transform, Color.red));
                 break;
         }
     }
