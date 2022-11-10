@@ -19,7 +19,11 @@ public class ChangeAllText : EditorWindow
     {
         ChangeText("Assets/09.Fonts/AutoFix/DalseoHealingBold SDF.asset");
     }
-
+    [MenuItem("AutoTextFix/LoadScene/¹èÆ²¾À³Ñ±â±â")]
+    static void ToInfinityAndBeyond()
+    {
+        SceneLoad.Instance.ToBattleScene(true, "Fox", 3, 10);
+    }
     private static void ChangeText(string str)
     {
         count = 0;
@@ -39,6 +43,8 @@ public class ChangeAllText : EditorWindow
         }
         Debug.Log("TextMeshProUGUI¸¦ Æ÷ÇÔÇÑ ¿ÀºêÁ§Æ® °¹¼ö : " + count); //ÃÑ ¹Ù²ï ÆùÆ® °¹¼ö
     }
+
+
     private static GameObject[] GetSceneRootObject()
     {
         Scene currentScene = SceneManager.GetActiveScene();

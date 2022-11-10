@@ -5,9 +5,57 @@ using UnityEngine.UI;
 
 public class MinimapIcon : MonoBehaviour
 {
-    public void Initialize(Transform target, Color color)
+    public GameObject directionIndicator = null;
+    public Sprite[] IconImages;
+
+    public enum IconType
     {
-        StartCoroutine(Following(target, color));
+        player, npc, quest, enemy
+    }
+    public IconType myIcon = IconType.player;    
+
+    public void ChangeState(IconType s)
+    {
+        if (myIcon == s) return;
+        myIcon = s;
+        switch(s)
+        {
+            case IconType.player:
+                break;
+            case IconType.npc:
+                break;
+            case IconType.quest:
+                break;
+            case IconType.enemy:
+                break;
+        }
+    }
+
+    public void Initialize(Transform target)
+    {
+        switch(myIcon)
+        {
+            case IconType.player:
+                this.GetComponent<Image>().sprite = IconImages[0];
+                directionIndicator.SetActive(true);
+                StartCoroutine(Following(target, Color.green));
+                break;
+            case IconType.npc:
+                this.GetComponent<Image>().sprite = IconImages[1];
+                directionIndicator.SetActive(false);
+                StartCoroutine(Following(target, Color.yellow));
+                break;
+            case IconType.quest:
+                this.GetComponent<Image>().sprite = IconImages[2];
+                directionIndicator.SetActive(false);
+                StartCoroutine(Following(target, Color.yellow));
+                break;
+            case IconType.enemy:
+                this.GetComponent<Image>().sprite = IconImages[0];
+                directionIndicator.SetActive(false);
+                StartCoroutine(Following(target, Color.red));
+                break;
+        }
     }
     IEnumerator Following(Transform target, Color color)
     {

@@ -44,6 +44,7 @@ public class ActionController : MonoBehaviour
     private Image thePicture;
     [SerializeField]
     private Goal theGoal;
+
     
     
 
@@ -54,7 +55,8 @@ public class ActionController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isBattle = false;   
+        isBattle = false;
+        isBackAttack = false;
     }
 
     // Update is called once per frame
@@ -94,7 +96,7 @@ public class ActionController : MonoBehaviour
         {
             for (int i = 0; i < _target.Length; i++)
             {
-                Debug.Log(_target[i].transform.name);
+                /*Debug.Log(_target[i].transform.name);*/
                 Transform Target = _target[i].transform;
 
                 if (Target.tag == "Npc" || Target.tag == "Item") // 해당태그만 if문실행.
@@ -233,9 +235,14 @@ public class ActionController : MonoBehaviour
                 //기습- 배틀씬으로넘어감.///////////////////////////////**************
                 Destroy(hitInfo.transform.gameObject);
                 isBattle = false;
+
+                DataController.instance.SavePlayerPosRot();
+                SceneLoad.Instance.ToBattleScene(isBackAttack, hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2,4) 
+                                                                   ,hitInfo.transform.GetComponent<Pickup>().enemy.monsterSpeed) ;
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************
-                SceneLoad.Instance.ChangeScene(4);
+                
+                //SceneLoad.Instance.ChangeScene(4);
             }
         }
         else if (theManager.isAction)

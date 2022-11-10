@@ -15,9 +15,10 @@ public class GameData
 
     public Vector3 currentPosition = Vector3.zero;          //현재 캐릭터 위치
     public Vector3 currentRotation;
-    public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
-    public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 아이템
 
+   // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
+    public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
+    public Dictionary<GameObject, Vector3> savedInventory = new Dictionary<GameObject, Vector3>();          //아이템과 몇번째 슬롯인지 저장
 
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
@@ -31,29 +32,31 @@ public class GameData
     public int[] partyHP = Enumerable.Repeat(100,3).ToArray();          //파티원 개개인의 HP
     public int[] partySpeed = {10,20,30 };              //파티원 개개인의 speed
     public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
-
+    public bool questClear = true;
 }
 public class DataController: MonoBehaviour
 {
+    
    // static GameObject _container;
     public string gamedataFilename = "VillageBoyA.json";       //.json 앞에 게임 데이터 파일 이름 설정
-   public string filePath;
+    public string filePath;
     public int nowSlot;
-  public  GameData gameData=new GameData();
+    public  GameData gameData=new GameData();
     public static DataController instance;
 
     private PlayerMovement thePlayer;
     private QuestManager theQuestManager;
     private ActionController theActionController;
-  
+   
     private void Awake()
     {
+        
         // File.Delete(filePath);
         if (instance == null)
         {
             instance = this;
         }
-        else if (instance != this)
+        else if (instance != null)
         {
             Destroy(instance.gameObject);
         }
@@ -64,7 +67,10 @@ public class DataController: MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
+
     }
+
+    
 
     public void LoadGameData()
     {
@@ -87,19 +93,19 @@ public class DataController: MonoBehaviour
         theQuestManager = FindObjectOfType<QuestManager>();
         theActionController = FindObjectOfType<ActionController>();
 
-        // Player position
+        //Player position
         gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
         gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
-         
-        // Quest ~ing
+
+        //Quest ~ing
         gameData.questID = theQuestManager.questId;
         gameData.questActionIndex = theQuestManager.questActionIndex;
 
-        // BackAttack Battle ? true : false
-        gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
+        //BackAttack Battle ? true : false
+        //gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
 
 
-        gameData.savedTime = DateTime.Now.ToString();
+        //gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData=JsonUtility.ToJson(gameData);     //Json으로 변환
                                                             //  filePath = Application.persistentDataPath + gamedataFilename;
         File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
@@ -122,12 +128,22 @@ public class DataController: MonoBehaviour
         File.WriteAllText(filePath + curSlot.ToString(), ToJsonData);
         Debug.Log("저장");       
     }
-  /*  private void OnApplicationQuit()
+
+    public void SavePlayerPosRot()
     {
-        SaveGameData();     
-    }                           // 게임 종료 시 자동 저장
-  */
-    
+        thePlayer = FindObjectOfType<PlayerMovement>();
+        //Player position
+        gameData.currentPosition = thePlayer.transform.position + Vector3.up; //플레이어좌표값.
+        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+        Debug.Log(gameData.currentPosition);
+
+    }
+    /*  private void OnApplicationQuit()
+      {
+          SaveGameData();     
+      }                           // 게임 종료 시 자동 저장
+    */
+
     //다른 부분에서 저장을 해야될 경우
-   // DataController.Instance.SaveGameData();
+    // DataController.Instance.SaveGameData();
 }

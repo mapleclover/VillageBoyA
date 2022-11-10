@@ -71,7 +71,7 @@ public class InGameSave : MonoBehaviour
     }
     public void OnClickExit()
     {
-
+        Application.Quit(); 
     }
     public void OnClickBack()
     {
