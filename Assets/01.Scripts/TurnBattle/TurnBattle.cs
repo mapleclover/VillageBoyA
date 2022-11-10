@@ -199,7 +199,7 @@ public class TurnBattle : MonoBehaviour
                     {
                         if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
                         {
-                            if (SceneLoad.Instance.MonsterType == "¿©¿ì")
+                            if (SceneLoad.Instance.MonsterType == "Fox")
                             {
                                 DataController.instance.gameData.questClear = true;
                             }
