@@ -5,7 +5,7 @@ using UnityEditor;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class ChangeAllText : EditorWindow
+public class DebugWindow : EditorWindow
 {
     private static int count = 0;
     [MenuItem("AutoTextFix/ChangeText/을지로체")]
@@ -23,6 +23,33 @@ public class ChangeAllText : EditorWindow
     static void ToInfinityAndBeyond()
     {
         SceneLoad.Instance.ToBattleScene(true, "Fox", 3, 10);
+    }
+
+    [MenuItem("AutoTextFix/Debug")]
+    static void Init()
+    {
+        DebugWindow window = EditorWindow.GetWindow<DebugWindow>("BattleDebug");
+        window.Show();
+    }
+
+    string myString = "Hello World";
+    bool groupEnabled;
+    bool myBool = true;
+    float myFloat = 1.23f;
+    void OnGUI()
+    {
+        if(GUILayout.Button("Kill All Enemies"))
+        {
+            KillAllEnemy();
+        }
+    }
+
+    private void KillAllEnemy()
+    {
+        for(int i = 0; i < TurnBattle.Inst.Enemy.Count; i++)
+        {
+            TurnBattle.Inst.Enemy[i].GetComponent<BattleCharacter>().myHp = 0;
+        }
     }
     private static void ChangeText(string str)
     {
