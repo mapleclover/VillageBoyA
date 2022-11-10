@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 [CreateAssetMenu(fileName = "new item", menuName = "new item/item")]
 public class Item : ScriptableObject
 {
@@ -10,13 +10,14 @@ public class Item : ScriptableObject
     public GameObject itemPrefab;
     public string itemInfo;
     public int itemPrice;
-    public Sprite itemImage;
+    public RawImage itemImage;
     public int value;
 
 
     public enum NpcType
     {
-        Equiment,
+        Weapon,
+        Armor,      
         Used,
         Ingredient
     }
