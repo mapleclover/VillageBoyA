@@ -6,7 +6,7 @@ public class SceneData : MonoBehaviour
 {
     public static SceneData Inst = null;
     public Transform Minimap;
-    public Canvas canVas;
+    public Transform Canvas;
     private void Awake()
     {
         Inst = this;
