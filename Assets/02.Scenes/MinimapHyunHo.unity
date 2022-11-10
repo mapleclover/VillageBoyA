@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385577, g: 0.22906174, b: 0.30346733, a: 1}
+  m_IndirectSpecularColor: {r: 0.1838554, g: 0.22906086, b: 0.3034666, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -695,7 +695,6 @@ GameObject:
   m_Component:
   - component: {fileID: 25970293}
   - component: {fileID: 25970292}
-  - component: {fileID: 25970294}
   m_Layer: 6
   m_Name: Kong
   m_TagString: Untagged
@@ -739,21 +738,6 @@ Transform:
   m_Father: {fileID: 1781634734}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &25970294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 25970291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d689339b072b7364aae68496173636f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  directionIndicator: {fileID: 0}
-  IconImages: []
-  myIcon: 0
 --- !u!1 &28082279
 GameObject:
   m_ObjectHideFlags: 0
@@ -19568,7 +19552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Minimap: {fileID: 2057525702}
-  canVas: {fileID: 0}
+  Canvas: {fileID: 487980037}
 --- !u!4 &597524476
 Transform:
   m_ObjectHideFlags: 0
@@ -21119,7 +21103,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -23828,7 +23812,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -20.000061}
+  m_AnchoredPosition: {x: 75, y: -20.000122}
   m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &790994320
@@ -34332,7 +34316,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -53155,8 +53139,8 @@ GameObject:
   - component: {fileID: 1879290774}
   - component: {fileID: 1879290773}
   - component: {fileID: 1879290772}
-  - component: {fileID: 1879290771}
   - component: {fileID: 1879290775}
+  - component: {fileID: 1879290771}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -53251,11 +53235,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1879290769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52c7599b22f258443bcd4ac395f6f023, type: 3}
+  m_Script: {fileID: 11500000, guid: 582ca017869894247ba77f8515c95fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IconManager: {fileID: 0}
   directionIndicator: {fileID: 0}
-  IconImages: []
+  IconImages:
+  - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   myIcon: 0
 --- !u!1 &1883601809
 GameObject:
@@ -57561,7 +57547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25, y: -20.000061}
+  m_AnchoredPosition: {x: 25, y: -20.000122}
   m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2007437710
