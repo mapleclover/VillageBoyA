@@ -88,10 +88,7 @@ public class BattleCharacter : CharacterProperty
         switch (State)
         {
             case STATE.Live:
-                if (myHp <= 0.0f)
-                {
-                    ChangeState(STATE.Die);
-                }
+               
                 if (Stunned)
                 {
                     
@@ -126,6 +123,10 @@ public class BattleCharacter : CharacterProperty
     {
         StateProcess();
         if(myHpBar!=null)myHpBar.value = Mathf.Lerp(myHpBar.value, myHp / maxHp, 5.0f * Time.deltaTime);
+        if (myHp <= 0.0f)
+        {
+            ChangeState(STATE.Die);
+        }
     }    
     
     public void ValuemyHpmaxHP()

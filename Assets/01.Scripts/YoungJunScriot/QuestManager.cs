@@ -5,20 +5,14 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     public int questId;
+    public bool questComplete;
     public int questActionIndex; // 퀘스트npc대화순서 변수
     private Animator myAnim;
     private ObjData theObjectData;
     public GameObject[] questObject;
 
-    public bool _questComplete;
-    public bool questComplete
-    {
-        get => _questComplete;
-        set
-        {
-            _questComplete = value;
-        }
-    }
+    
+    
 
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
@@ -38,7 +32,6 @@ public class QuestManager : MonoBehaviour
     private void Awake()
     {
         questList = new Dictionary<int, QuestData>(); // 초기화
-        questComplete = DataController.instance.gameData.questClear;
         
         GenerateData();
         myAnim = theComplete.GetComponent<Animator>();
@@ -80,6 +73,7 @@ public class QuestManager : MonoBehaviour
     public string CheckQuest() //오버로딩. (매개변수에따른호출 , 맨첨이라 매개변수없으므로 매개변수는뺴줌)
     {
         //Quest Name Return
+        
         return questList[questId].questName;
     }
     private void NextQuest()

@@ -169,6 +169,7 @@ public class TurnBattle : MonoBehaviour
                 }
                 break;
             case State.ActiveCheck:
+                
                 PlayerTargetDie();
                 Active = PlayList[0];
                 while (!Active.GetComponent<BattleCharacter>().TurnActive || Active.GetComponent<BattleCharacter>().State != STATE.Live)
@@ -198,7 +199,7 @@ public class TurnBattle : MonoBehaviour
                     {
                         if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
                         {
-                            if (SceneLoad.Instance.MonsterType == "¿©¿ì")
+                            if (SceneLoad.Instance.MonsterType == "Fox")
                             {
                                 DataController.instance.gameData.questClear = true;
                             }

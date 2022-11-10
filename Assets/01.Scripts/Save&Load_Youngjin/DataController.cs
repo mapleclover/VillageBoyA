@@ -13,7 +13,7 @@ public class GameData
 
 
 
-    public Vector3 currentPosition = Vector3.zero;          //현재 캐릭터 위치
+    public Vector3 currentPosition = new Vector3(-136, 0, -90);          //현재 캐릭터 위치
     public Vector3 currentRotation;
 
    // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
@@ -22,8 +22,9 @@ public class GameData
 
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
-    public int questID; // 퀘스트순서
+    public int questID = 30; // 퀘스트순서
     public int questActionIndex; // 퀘스트대화순서.
+    public bool questClear = true; // 퀘스트클리어 유무
     public bool isBackAttack; // 빽어택으로 전투돌입인지 아닌지
 
 
@@ -32,7 +33,7 @@ public class GameData
     public int[] partyHP = Enumerable.Repeat(100,3).ToArray();          //파티원 개개인의 HP
     public int[] partySpeed = {10,20,30 };              //파티원 개개인의 speed
     public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
-    public bool questClear = true;
+    
 }
 public class DataController: MonoBehaviour
 {
@@ -55,19 +56,18 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != null)
         {
-            Destroy(instance.gameObject);
+            Destroy(this.gameObject);
         }
 
         for(int i = 0; i < 3; i++)
         {
             gameData.partyItems.Add(new List<GameObject>());
         }
-        DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
-
     }
 
     
@@ -94,12 +94,12 @@ public class DataController: MonoBehaviour
         theActionController = FindObjectOfType<ActionController>();
 
         //Player position
-        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
-        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+     //   gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
+     //   gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
 
         //Quest ~ing
-        gameData.questID = theQuestManager.questId;
-        gameData.questActionIndex = theQuestManager.questActionIndex;
+    //    gameData.questID = theQuestManager.questId;
+     //   gameData.questActionIndex = theQuestManager.questActionIndex;
 
         //BackAttack Battle ? true : false
         //gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
@@ -129,13 +129,17 @@ public class DataController: MonoBehaviour
         Debug.Log("저장");       
     }
 
-    public void SavePlayerPosRot()
+    public void SaveData()
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
-        //Player position
-        gameData.currentPosition = thePlayer.transform.position + Vector3.up; //플레이어좌표값.
+        theQuestManager = FindObjectOfType<QuestManager>();
+        // Player position
+        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
         gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
-        Debug.Log(gameData.currentPosition);
+        // Quest ~ing
+        gameData.questID = theQuestManager.questId;
+        gameData.questClear = theQuestManager.questComplete;
+        gameData.questActionIndex = theQuestManager.questActionIndex;
 
     }
     /*  private void OnApplicationQuit()
