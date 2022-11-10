@@ -20,7 +20,7 @@ public class MinimapIcon : MonoBehaviour
     {
         if (myIcon == s) return;
         myIcon = s;
-        StopAllCoroutines();
+        
         switch (myIcon)
         {
             case IconType.player:
