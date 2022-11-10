@@ -47,7 +47,7 @@ public class DataController: MonoBehaviour
     private PlayerMovement thePlayer;
     private QuestManager theQuestManager;
     private ActionController theActionController;
-  
+   
     private void Awake()
     {
         
@@ -55,17 +55,17 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
-        else if (instance != this)
+        else if (instance != null)
         {
-            Destroy(this.gameObject);
+            Destroy(instance.gameObject);
         }
 
         for(int i = 0; i < 3; i++)
         {
             gameData.partyItems.Add(new List<GameObject>());
         }
+        DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
 
     }
@@ -93,19 +93,19 @@ public class DataController: MonoBehaviour
         theQuestManager = FindObjectOfType<QuestManager>();
         theActionController = FindObjectOfType<ActionController>();
 
-        // Player position
-      //  gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
-      //  gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
-         
+        //Player position
+        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
+        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+
         //Quest ~ing
-      //  gameData.questID = theQuestManager.questId;
-      //  gameData.questActionIndex = theQuestManager.questActionIndex;
+        gameData.questID = theQuestManager.questId;
+        gameData.questActionIndex = theQuestManager.questActionIndex;
 
-        // BackAttack Battle ? true : false
-     //   gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
+        //BackAttack Battle ? true : false
+        //gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
 
 
-      //  gameData.savedTime = DateTime.Now.ToString();
+        //gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData=JsonUtility.ToJson(gameData);     //Json으로 변환
                                                             //  filePath = Application.persistentDataPath + gamedataFilename;
         File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
@@ -129,12 +129,21 @@ public class DataController: MonoBehaviour
         Debug.Log("저장");       
     }
 
-  /*  private void OnApplicationQuit()
+    public void SavePlayerPosRot()
     {
-        SaveGameData();     
-    }                           // 게임 종료 시 자동 저장
-  */
-    
+        thePlayer = FindObjectOfType<PlayerMovement>();
+        //Player position
+        gameData.currentPosition = thePlayer.transform.position + Vector3.up; //플레이어좌표값.
+        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+        Debug.Log(gameData.currentPosition);
+
+    }
+    /*  private void OnApplicationQuit()
+      {
+          SaveGameData();     
+      }                           // 게임 종료 시 자동 저장
+    */
+
     //다른 부분에서 저장을 해야될 경우
-   // DataController.Instance.SaveGameData();
+    // DataController.Instance.SaveGameData();
 }

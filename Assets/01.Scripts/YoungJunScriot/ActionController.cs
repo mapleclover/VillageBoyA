@@ -96,7 +96,7 @@ public class ActionController : MonoBehaviour
         {
             for (int i = 0; i < _target.Length; i++)
             {
-                Debug.Log(_target[i].transform.name);
+                /*Debug.Log(_target[i].transform.name);*/
                 Transform Target = _target[i].transform;
 
                 if (Target.tag == "Npc" || Target.tag == "Item") // 해당태그만 if문실행.
@@ -236,7 +236,7 @@ public class ActionController : MonoBehaviour
                 Destroy(hitInfo.transform.gameObject);
                 isBattle = false;
 
-                
+                DataController.instance.SavePlayerPosRot();
                 SceneLoad.Instance.ToBattleScene(isBackAttack, hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2,4) 
                                                                    ,hitInfo.transform.GetComponent<Pickup>().enemy.monsterSpeed) ;
                 //EnemyBackAttackInfoDisappear();
