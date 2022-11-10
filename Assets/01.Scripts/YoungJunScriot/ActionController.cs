@@ -236,7 +236,7 @@ public class ActionController : MonoBehaviour
                 Destroy(hitInfo.transform.gameObject);
                 isBattle = false;
 
-                DataController.instance.SavePlayerPosRot();
+                DataController.instance.SaveData();
                 SceneLoad.Instance.ToBattleScene(isBackAttack, hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2,4) 
                                                                    ,hitInfo.transform.GetComponent<Pickup>().enemy.monsterSpeed) ;
                 //EnemyBackAttackInfoDisappear();

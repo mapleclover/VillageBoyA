@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic;                                           
 using System.IO;        //폴더 안 저장된 파일 확인
 using System.Linq;
 using TMPro;
@@ -13,26 +13,30 @@ public class GameData
 
 
 
-    public Vector3 currentPosition = Vector3.zero;          //현재 캐릭터 위치
+    public Vector3 currentPosition = new Vector3(-136, 0, -90);          //현재 캐릭터 위치
     public Vector3 currentRotation;
 
    // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
     public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
     public Dictionary<GameObject, Vector3> savedInventory = new Dictionary<GameObject, Vector3>();          //아이템과 몇번째 슬롯인지 저장
-
+    public Dictionary<string, int> myItem = new Dictionary<string, int>();      // 아이템과 개수
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
-    public int questID; // 퀘스트순서
+    public int questID = 30; // 퀘스트순서
     public int questActionIndex; // 퀘스트대화순서.
+    public bool questClear = true; // 퀘스트클리어 유무
     public bool isBackAttack; // 빽어택으로 전투돌입인지 아닌지
 
 
+    public int[,] partyStats = new int[3, 2] { { 10,0},{20,0 },{30,0 } };
+    //공격력은 10,20,30 방어력은 다 0으로 초기화
+    //방어력은 그 숫자만큼 데미지를 덜받는다?
 
     public bool[] isLeader = { true,false,false };                  //누가 리더인지
     public int[] partyHP = Enumerable.Repeat(100,3).ToArray();          //파티원 개개인의 HP
     public int[] partySpeed = {10,20,30 };              //파티원 개개인의 speed
     public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
-    public bool questClear = true;
+    
 }
 public class DataController: MonoBehaviour
 {
@@ -55,19 +59,18 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != null)
         {
-            Destroy(instance.gameObject);
+            Destroy(this.gameObject);
         }
 
         for(int i = 0; i < 3; i++)
         {
             gameData.partyItems.Add(new List<GameObject>());
         }
-        DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
-
     }
 
     
@@ -94,12 +97,12 @@ public class DataController: MonoBehaviour
         theActionController = FindObjectOfType<ActionController>();
 
         //Player position
-        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
-        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+     //   gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
+     //   gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
 
         //Quest ~ing
-        gameData.questID = theQuestManager.questId;
-        gameData.questActionIndex = theQuestManager.questActionIndex;
+    //    gameData.questID = theQuestManager.questId;
+     //   gameData.questActionIndex = theQuestManager.questActionIndex;
 
         //BackAttack Battle ? true : false
         //gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
@@ -129,15 +132,37 @@ public class DataController: MonoBehaviour
         Debug.Log("저장");       
     }
 
-    public void SavePlayerPosRot()
+    public void SaveData()
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
-        //Player position
-        gameData.currentPosition = thePlayer.transform.position + Vector3.up; //플레이어좌표값.
+        theQuestManager = FindObjectOfType<QuestManager>();
+        // Player position
+        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
         gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
-        Debug.Log(gameData.currentPosition);
+        //Quest ~ing
+        gameData.questID = theQuestManager.questId;
+        gameData.questClear = theQuestManager.questComplete;
+        gameData.questActionIndex = theQuestManager.questActionIndex;
+
 
     }
+
+    //배틀 씬으로 전달 값
+    //myItems["포션"] : int 값으로 포션 개수 
+    //partyStats : int[,] 값으로 전투에 직접적 영향         [공격력,방어력]
+    //partyHP   : int[]
+    //partySpeed    : int[]
+
+    //partyMember : bool값, 죽은 멤버가 있을 경우 필요하지 않나
+    // isLeader: bool값, 리더에 따라 멤버들의 위치가 달라질 경우 전달
+
+
+
+
+
+
+
+
     /*  private void OnApplicationQuit()
       {
           SaveGameData();     

@@ -43,6 +43,8 @@ public class SceneLoad : MonoBehaviour
 
 
     private GameObject player;
+    private GameObject camera;
+    private QuestManager theQuestManager;
 
 
     private void OnEnable()
@@ -59,9 +61,25 @@ public class SceneLoad : MonoBehaviour
         if (scene.name == "06.Field")
         {
             player = GameObject.Find("Summons(Final)");
-            Debug.Log("캐릭터위치 : "+ DataController.instance.gameData.currentPosition);
+            camera = GameObject.Find("Camera");
+            theQuestManager = FindObjectOfType<QuestManager>();
+            
+            //플레이어 위치값
             player.transform.position = DataController.instance.gameData.currentPosition;
             player.transform.eulerAngles = DataController.instance.gameData.currentRotation;
+            //카메라 위치값
+            camera.transform.position = DataController.instance.gameData.currentPosition;
+            //퀘스트 진행도
+            theQuestManager.questId = DataController.instance.gameData.questID;
+            theQuestManager.questComplete = DataController.instance.gameData.questClear;
+            //if (theQuestManager.questComplete)
+            //{
+            theQuestManager.questActionIndex = ++DataController.instance.gameData.questActionIndex;
+            //}
+            //else
+                //theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
+
+
         }
     }
 
