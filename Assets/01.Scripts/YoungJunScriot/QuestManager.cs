@@ -141,7 +141,7 @@ public class QuestManager : MonoBehaviour
                     questObject[1].SetActive(false);
                 if (questActionIndex == 2 && questComplete)
                 {
-                    questObject[2].SetActive(true);
+                    questObject[2].SetActive(true); // 호두 위에 ? 아이콘
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                 }
                 break;
