@@ -55,17 +55,17 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
-            Destroy(instance.gameObject);
+            Destroy(this.gameObject);
         }
 
         for(int i = 0; i < 3; i++)
         {
             gameData.partyItems.Add(new List<GameObject>());
         }
-        DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
 
     }
@@ -97,7 +97,7 @@ public class DataController: MonoBehaviour
       //  gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
       //  gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
          
-        // Quest ~ing
+        //Quest ~ing
       //  gameData.questID = theQuestManager.questId;
       //  gameData.questActionIndex = theQuestManager.questActionIndex;
 
