@@ -169,6 +169,7 @@ public class TurnBattle : MonoBehaviour
                 }
                 break;
             case State.ActiveCheck:
+                
                 PlayerTargetDie();
                 Active = PlayList[0];
                 while (!Active.GetComponent<BattleCharacter>().TurnActive || Active.GetComponent<BattleCharacter>().State != STATE.Live)

@@ -55,17 +55,17 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != null)
         {
-            Destroy(instance.gameObject);
+            Destroy(this.gameObject);
         }
 
         for(int i = 0; i < 3; i++)
         {
             gameData.partyItems.Add(new List<GameObject>());
         }
-        DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath + gamedataFilename;
 
     }
@@ -94,12 +94,12 @@ public class DataController: MonoBehaviour
         theActionController = FindObjectOfType<ActionController>();
 
         //Player position
-        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
-        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+     //   gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
+     //   gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
 
         //Quest ~ing
-        gameData.questID = theQuestManager.questId;
-        gameData.questActionIndex = theQuestManager.questActionIndex;
+    //    gameData.questID = theQuestManager.questId;
+     //   gameData.questActionIndex = theQuestManager.questActionIndex;
 
         //BackAttack Battle ? true : false
         //gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
