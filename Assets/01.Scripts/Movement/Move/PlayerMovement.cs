@@ -152,11 +152,11 @@ public class PlayerMovement : MonoBehaviour
             StateProcess(); //캐릭터 교체
 
         }
-
+/*
         if (myCharacter == CHARACTER.Kong)
         {
             DashSkill();
-        }
+        }*/
 
 
     }
@@ -193,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }*/
 
-    void DashSkill()
+    /*void DashSkill()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -202,7 +202,7 @@ public class PlayerMovement : MonoBehaviour
             // drag 공기저항값을 역수로 뒤집어서 로그로 바꾸고 - 를 넣어줘서 값을 구한 후 우리가 구한 대시양을 곱해준다 < 자연스러운 대시를 위해(무슨 소리인지 모르겠다.)
             rigidbody.AddForce(dashPower, ForceMode.VelocityChange);
         }
-    }
+    }*/
 
     void PlayerMove()
     {

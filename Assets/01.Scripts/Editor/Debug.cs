@@ -48,7 +48,7 @@ public class DebugWindow : EditorWindow
     {
         for(int i = 0; i < TurnBattle.Inst.Enemy.Count; i++)
         {
-            TurnBattle.Inst.Enemy[i].GetComponent<BattleCharacter>().myHp = 0;
+            TurnBattle.Inst.Enemy[i].GetComponent<BattleCharacter>().myStat.curHP = 0;
         }
     }
     private static void ChangeText(string str)
