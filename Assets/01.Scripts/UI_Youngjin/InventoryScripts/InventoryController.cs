@@ -24,10 +24,10 @@ public class InventoryController : MonoBehaviour
         {
             if (obj.transform.childCount > 0)
             {
-                DataController.instance.gameData.myItem[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = 1;
+                obj.transform.GetChild(0).GetComponent<Pickup>().item.count = 1;
             }
         }
-        DataController.instance.gameData.myItem["포션"] = 2;
+        
     }
 
     void Update()
@@ -108,19 +108,16 @@ public class InventoryController : MonoBehaviour
             DataController.instance.gameData.savedInventory[mySlots[i].transform.GetChild(0).gameObject] = mySlots[i].transform.position;
                 //정렬된 위치값을 데이터로 저장
         }
-
-
-
-   
     }
 
 
     public void GetItem(GameObject theItem)
     {
-        if (DataController.instance.gameData.myItem.ContainsKey(theItem.GetComponent<Pickup>().item.itemName))
+        if (DataController.instance.gameData.savedInventory.ContainsKey(theItem))
         {
             Debug.Log("사과2");
-            DataController.instance.gameData.myItem[theItem.GetComponent<Pickup>().item.itemName]++;
+            theItem.GetComponent<Pickup>().item.count++;
+
         }                                       //이미 내 인벤토리에 있으면 숫자만 더함
        else
         {
@@ -135,8 +132,9 @@ public class InventoryController : MonoBehaviour
                         {
 
                             //GameObject obj = Instantiate(itemIcons[0], mySlots[i].transform.localPosition, Quaternion.identity);
-                            GameObject obj = Instantiate(curItem[0]);
-                            DataController.instance.gameData.myItem[curItem[0].GetComponent<Pickup>().item.itemName] = 1;
+                            GameObject obj = Instantiate(theItem);
+                            theItem.GetComponent<Pickup>().item.count++;
+                          //  DataController.instance.gameData.savedInventory[theItem] = 1;
                           //  curItem.Add(obj);
                             obj.transform.SetParent(mySlots[i].transform);
                             obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
@@ -174,10 +172,10 @@ public class InventoryController : MonoBehaviour
                     count.transform.SetParent(mySlots[i].transform.GetChild(0).transform);
                     count.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
-
-                    if (DataController.instance.gameData.myItem.ContainsKey(obj.GetComponent<Pickup>().item.itemName))
+                    
+                  if (DataController.instance.gameData.savedInventory.ContainsKey(obj))
                     {
-                        count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.myItem[obj.GetComponent<Pickup>().item.itemName].ToString();
+                        count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.savedInventory[obj].ToString();
                     }
                     //아이템의 개수를 UI로 표기
                     count.transform.localPosition = new Vector2(20, 20);
