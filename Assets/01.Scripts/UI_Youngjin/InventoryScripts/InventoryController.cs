@@ -11,10 +11,13 @@ public class InventoryController : MonoBehaviour
     public GameObject[] mySlots;
     public GameObject myInfoBox;
     public GameObject itemCount;
+   //datacontroller에 추가
+   //
+   public Dictionary<GameObject, int>curItems;
   // public  Dictionary<string, int> myItem = new Dictionary<string, int>();               //key는 item name, value는 개수
     public TMPro.TMP_Text countUI;
     public int defaultCount = 1;
-    public List<GameObject> curItem;
+    public List<GameObject> curItem=new List<GameObject>();
     bool v = true;
 
     private void Awake()
@@ -25,6 +28,7 @@ public class InventoryController : MonoBehaviour
             if (obj.transform.childCount > 0)
             {
                 obj.transform.GetChild(0).GetComponent<Pickup>().item.count = 1;
+                //curItems[obj] = obj.transform.GetChild(0).GetComponent<Pickup>().item.count;
             }
         }
         
@@ -48,11 +52,7 @@ public class InventoryController : MonoBehaviour
             myInfoBox.SetActive(false);
           
         }
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            GameObject test = null;
-            GetItem(test);
-        }
+
     }
     public void OnClickX()
     {
@@ -175,7 +175,7 @@ public class InventoryController : MonoBehaviour
                     
                   if (DataController.instance.gameData.savedInventory.ContainsKey(obj))
                     {
-                        count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.savedInventory[obj].ToString();
+                        count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = obj.GetComponent<Pickup>().item.count.ToString();
                     }
                     //아이템의 개수를 UI로 표기
                     count.transform.localPosition = new Vector2(20, 20);

@@ -66,10 +66,9 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
             DataController.instance.gameData.Ember.myUsedItems.Remove(selectedItem);
         }
 
-
         DataController.instance.gameData.savedInventory.Remove(selectedItem);
         Destroy(selectedItem);
-
+        
         myPanel.SetActive(false);
     }
     public void OnClickNoDiscard()
