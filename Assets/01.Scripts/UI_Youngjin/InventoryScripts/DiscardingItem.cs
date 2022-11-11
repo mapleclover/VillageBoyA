@@ -52,17 +52,18 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     public void OnClickYesDiscard()
     {
         GameObject selectedItem = this.transform.GetChild(0).gameObject;
-        if (DataController.instance.gameData.partyItems[0].Contains(selectedItem))
+
+        if (DataController.instance.gameData.Kong.myUsedItems.Contains(selectedItem))
         {
-            DataController.instance.gameData.partyItems[0].Remove(selectedItem);
+            DataController.instance.gameData.Kong.myUsedItems.Remove(selectedItem);
         }
-        else if (DataController.instance.gameData.partyItems[1].Contains(selectedItem))
+        else if (DataController.instance.gameData.Jin.myUsedItems.Contains(selectedItem))
         {
-            DataController.instance.gameData.partyItems[1].Remove(selectedItem);
+            DataController.instance.gameData.Jin.myUsedItems.Remove(selectedItem);
         }
-        else if (DataController.instance.gameData.partyItems[2].Contains(selectedItem))
+        else if (DataController.instance.gameData.Ember.myUsedItems.Contains(selectedItem))
         {
-            DataController.instance.gameData.partyItems[2].Remove(selectedItem);
+            DataController.instance.gameData.Ember.myUsedItems.Remove(selectedItem);
         }
 
 

@@ -8,7 +8,6 @@ public class QuestManager : MonoBehaviour
     public bool questComplete;
     public int questActionIndex; // 퀘스트npc대화순서 변수
     private Animator myAnim;
-    private ObjData theObjectData;
     public GameObject[] questObject;
 
     
@@ -37,6 +36,7 @@ public class QuestManager : MonoBehaviour
         myAnim = theComplete.GetComponent<Animator>();
         
     }
+
 
     private void GenerateData()
     {

@@ -1065,12 +1065,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501bbad0b1aa3a44b09d0fc92cdd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myStat:
+    orgData: {fileID: 11400000, guid: a839d144be277ed499439deb7ff30383, type: 2}
+    curHP: 0
+    Speed: 0
+    AttackDmg: []
+    Defend: 0
+    longAttack: 
   State: 0
-  _myhp: 100
   myHpBar: {fileID: 0}
-  speed: 20
   Skill: 0
-  longAttack: 000000
   myTarget: {fileID: 0}
   TurnActive: 0
   Canvas: {fileID: 0}
@@ -1078,10 +1082,6 @@ MonoBehaviour:
   Stunned: 1
   ActiveHeal: 0
   StunTurn: 1
-  SkillDmg:
-  - 10
-  - 20
-  - 30
 --- !u!136 &2378347433891683552
 CapsuleCollider:
   m_ObjectHideFlags: 0
