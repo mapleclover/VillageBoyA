@@ -52,6 +52,26 @@ public class InventoryController : MonoBehaviour
             myInfoBox.SetActive(false);
           
         }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            GetItem(curItem[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            GetItem(curItem[2]);
+        }
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            GetItem(curItem[3]);
+        }
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            GetItem(curItem[4]);
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            GetItem(curItem[5]);
+        }
 
     }
     public void OnClickX()
@@ -125,28 +145,42 @@ public class InventoryController : MonoBehaviour
             {
                 case 100:
                     //100: 사과
-                    Debug.Log("사과1");
-                    for (int i = 0; i < mySlots.Length; i++)
-                    {
-                        if (mySlots[i].transform.childCount == 0)       //빈 슬롯을 찾음
-                        {
-
-                            //GameObject obj = Instantiate(itemIcons[0], mySlots[i].transform.localPosition, Quaternion.identity);
-                            GameObject obj = Instantiate(theItem);
-                            theItem.GetComponent<Pickup>().item.count++;
-                          //  DataController.instance.gameData.savedInventory[theItem] = 1;
-                          //  curItem.Add(obj);
-                            obj.transform.SetParent(mySlots[i].transform);
-                            obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                            obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-                            obj.transform.localPosition = Vector2.zero;
-                            DataController.instance.gameData.savedInventory[obj] =mySlots[i].transform.localPosition;
-                            //Destroy(obj);
-                            break;
-                        }
-                    }
-
+                    Debug.Log("테스트아이템");
+                    ItemAppears(theItem);
                     break;
+                case 101:
+                    Debug.Log("사과");
+                    ItemAppears(theItem);
+                    break;
+                case 102:
+                    Debug.Log("박스");
+                    ItemAppears(theItem);
+                    break;
+                case 103:
+                    Debug.Log("포션");
+                    ItemAppears(theItem);
+                    break;
+                case 104:
+                    Debug.Log("별");
+                    ItemAppears(theItem);
+                    break;
+                case 105:
+                    Debug.Log("방패");
+                    ItemAppears(theItem);
+                    break;
+                case 106:
+                    Debug.Log("해골");
+                    ItemAppears(theItem);
+                    break;
+                case 107:
+                    Debug.Log("창");
+                    ItemAppears(theItem);
+                    break;
+                case 108:
+                    Debug.Log("검");
+                    ItemAppears(theItem);
+                    break;
+
             }
         }
         if (theItem.GetComponent<Pickup>().item.itemName == "포션")
@@ -155,6 +189,25 @@ public class InventoryController : MonoBehaviour
             //DataController.instance.gameData.savedInventory[theItem];
         }
        
+    }
+    public void ItemAppears(GameObject theItem)
+    {
+        for (int i = 0; i < mySlots.Length; i++)
+        {
+            if (mySlots[i].transform.childCount == 0)       //빈 슬롯을 찾음
+            {
+
+               
+                GameObject obj = Instantiate(theItem);
+                theItem.GetComponent<Pickup>().item.count++;
+                obj.transform.SetParent(mySlots[i].transform);
+                obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                obj.transform.localPosition = Vector2.zero;
+                DataController.instance.gameData.savedInventory[obj] = mySlots[i].transform.localPosition;
+                break;
+            }
+        }
     }
     public void ShowNumbertoUI()
     {
