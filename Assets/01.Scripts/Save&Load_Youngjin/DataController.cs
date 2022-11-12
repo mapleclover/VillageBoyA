@@ -18,7 +18,7 @@ public class GameData
 
    // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
    // public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
-    public Dictionary<GameObject, Vector3> savedInventory = new Dictionary<GameObject, Vector3>();          //아이템과 몇번째 슬롯인지 저장
+    public Dictionary<GameObject, int> savedInventory = new Dictionary<GameObject, int>();          //아이템과 몇번째 슬롯인지 저장
     //public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // 아이템과 개수
 
 
@@ -174,20 +174,19 @@ public class DataController: MonoBehaviour
 
     }
 
-    //배틀 씬으로 전달 값
-    //myItems["포션"] : int 값으로 포션 개수 
-    //gameData.Kong.strength    /   gameData.Jin.strength   /   gameData.Ember.strength
-    //gameData.Kong.defPower    /   gameData.Jin.defPower   /   gameData.Ember.defPower
-    //gameData.Kong.speed   /   gameData.Jin.speed  /   gameData.Ember.speed
-    //gameData.Kong.HP  /   gameData.Jin.HP /   gameData.Ember.HP
-    //gameData.Kong.isAlive /   gameData.Jin.isAlive    /   gameData.Ember.isAlive
-    
-    //partyStat의 kong,jin,ember
-
-
-
-
-
+    public void SavingSlots()
+    {
+        for(int i = 0; i < InventoryController.Instance.mySlots.Length; i++)
+        {
+            GameObject obj = InventoryController.Instance.mySlots[i];
+            if (obj.transform.childCount>0)
+            {
+                Debug.Log(obj.name);
+                gameData.savedInventory[obj.transform.GetChild(0).gameObject] = i;
+            }
+        }
+       
+    }
 
 
     /*  private void OnApplicationQuit()

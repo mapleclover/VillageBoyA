@@ -125,7 +125,7 @@ public class InventoryController : MonoBehaviour
         }
         for(int i = 0; i < count; i++)
         {
-            DataController.instance.gameData.savedInventory[mySlots[i].transform.GetChild(0).gameObject] = mySlots[i].transform.position;
+            DataController.instance.gameData.savedInventory[mySlots[i].transform.GetChild(0).gameObject] = i;
                 //정렬된 위치값을 데이터로 저장
         }
     }
@@ -137,6 +137,7 @@ public class InventoryController : MonoBehaviour
         {
             Debug.Log("사과2");
             theItem.GetComponent<Pickup>().item.count++;
+            DataController.instance.gameData.savedInventory[theItem]++;
 
         }                                       //이미 내 인벤토리에 있으면 숫자만 더함
        else
@@ -200,11 +201,11 @@ public class InventoryController : MonoBehaviour
                
                 GameObject obj = Instantiate(theItem);
                 theItem.GetComponent<Pickup>().item.count++;
-                obj.transform.SetParent(mySlots[i].transform);
+               obj.transform.SetParent(mySlots[i].transform);
                 obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                 obj.transform.localPosition = Vector2.zero;
-                DataController.instance.gameData.savedInventory[obj] = mySlots[i].transform.localPosition;
+                DataController.instance.gameData.savedInventory[obj] = i;
                 break;
             }
         }

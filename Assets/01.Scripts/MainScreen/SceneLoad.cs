@@ -45,6 +45,8 @@ public class SceneLoad : MonoBehaviour
     private GameObject player;
     private GameObject camera;
     private QuestManager theQuestManager;
+    private GameObject myInven;
+    private Transform mySlots;
 
 
     private void OnEnable()
@@ -81,6 +83,47 @@ public class SceneLoad : MonoBehaviour
 
 
         }
+       else if (scene.name == "10.FieldLYJ")
+        {
+            player = GameObject.Find("Summons(Final)");
+            camera = GameObject.Find("Camera");
+            myInven = GameObject.Find("Inventory");
+            mySlots = myInven.transform.GetChild(0);
+            Debug.Log(mySlots.name);
+            theQuestManager = FindObjectOfType<QuestManager>();
+
+            //플레이어 위치값
+            player.transform.position = DataController.instance.gameData.currentPosition;
+            player.transform.eulerAngles = DataController.instance.gameData.currentRotation;
+            //카메라 위치값
+            camera.transform.position = DataController.instance.gameData.currentPosition;
+            //퀘스트 진행도
+            theQuestManager.questId = DataController.instance.gameData.questID;
+            theQuestManager.questComplete = DataController.instance.gameData.questClear;
+            //if (theQuestManager.questComplete)
+            //{
+            theQuestManager.questActionIndex = ++DataController.instance.gameData.questActionIndex;
+
+
+        /*
+            for(int i = 0; i < 14; i++)
+            {
+                mySlots.transform.GetChild(i).DetachChildren();
+            }
+
+            */
+          foreach(KeyValuePair<GameObject,int> items in DataController.instance.gameData.savedInventory)
+            {
+                Debug.Log(items.Key);
+                items.Key.transform.SetParent(mySlots.transform.GetChild(items.Value));
+               items.Key.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                items.Key.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                items.Key.transform.localPosition = Vector2.zero;
+            }
+          
+        }
+
+        
     }
 
     public void ChangeScene(int i)
