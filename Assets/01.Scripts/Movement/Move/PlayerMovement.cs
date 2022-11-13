@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rigidbody; // 지우거나 주석하지 마세요
 
     [Header("Ability")]
-    public float speed = 3f;
+    public float speed = 6f;
     //[SerializeField] private float jumpHeight = 4f; //점프
     public float dash = 6f; // 달리기 속도 (대시 기능 나중에 구현할지 모르니 일단 이름은 이대로)
     public float rotSpeed = 10f; //deltatime 만 곱해주면 느리기 때문에 rotSpeed로 회전 속도를 조절 해 주자
@@ -142,27 +142,34 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckGround(); // 연속점프 감지
         HideStaminaBar(); // 스태미나 바 숨기기
-
         if (ground && !theManager.isAction)
         {
             //PlayerJump();
-            
+
             PlayerMove();
             SwitchingCharacter();
             StateProcess(); //캐릭터 교체
-            
+
 
         }
-        
-                /*
-                if (myCharacter == CHARACTER.Kong)
-                {
-                    DashSkill();
-                }*/
+        /*
+        if (myCharacter == CHARACTER.Kong)
+        {
+            DashSkill();
+        }*/
 
         PlayerRotation();
 
-       
+
+        if (ground && !theManager.isAction)
+        {
+            Dash();
+        }
+        else
+        {
+            DashCancel();
+        }
+
 
 
     }
@@ -173,14 +180,7 @@ public class PlayerMovement : MonoBehaviour
     //캐릭터의 부드러운 회전을 위해
     //물리적인 이동이나 회전을 할 때 쓰면 좋다
     {
-        if (ground && !theManager.isAction)
-        {
-            Dash();
-        }
-        else
-        {
-            DashCancel();
-        }
+
     }
 
  /*   void PlayerJump()
@@ -211,9 +211,9 @@ public class PlayerMovement : MonoBehaviour
     void PlayerMove()
     {
         // 이동과 카메라
-        dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
+        dir.x = Input.GetAxisRaw("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
                                              // A 와 D 키를 눌렀을 때 이동방향
-        dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
+        dir.z = Input.GetAxisRaw("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
         totalDist = dir.magnitude;
 
         // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
@@ -223,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         // 이동을 구현
-        GetComponent<Rigidbody>().MovePosition(this.transform.position + dir * speed * Time.deltaTime);
+        rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
         // 걷는 애니메이션
         if (totalDist > 0.0f)
         {
@@ -279,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (run) // 달리기
         {
-            GetComponent<Rigidbody>().MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
+            rigidbody.MovePosition(this.gameObject.transform.position + dir * dash * Time.deltaTime);
         }
 
         if (Mathf.Approximately(mySlider.value, 0f))
@@ -400,6 +400,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void CheckGround() // 연속점프 방지, 점프를 땅에 있을 때만
     {
+
+
         //레이캐스트를 사용
         RaycastHit hit;
 
