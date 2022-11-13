@@ -19,7 +19,7 @@ public class GameData
    // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
    // public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
     public Dictionary<GameObject, int> savedInventory = new Dictionary<GameObject, int>();          //아이템과 몇번째 슬롯인지 저장
-    //public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // 아이템과 개수
+    public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // 아이템과 개수
 
 
     public struct myPartyStats
@@ -35,6 +35,8 @@ public class GameData
     public myPartyStats Kong;
    public myPartyStats Jin;
     public myPartyStats Ember;
+
+
 
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
@@ -136,7 +138,16 @@ public class DataController: MonoBehaviour
        //BackAttack Battle ? true : false
         gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
 
-
+        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++)       //인벤토리 저장
+        {
+            GameObject obj = InventoryController.Instance.mySlots[i];
+            if (obj.transform.childCount > 0)
+            {
+                Debug.Log(obj.transform.GetChild(0).name);
+                if (!gameData.savedInventory.ContainsKey(obj.transform.GetChild(0).gameObject))
+                    gameData.savedInventory[obj.transform.GetChild(0).gameObject] = i;
+            }
+        }
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData=JsonUtility.ToJson(gameData);     //Json으로 변환
                                                             //  filePath = Application.persistentDataPath + gamedataFilename;
@@ -171,7 +182,6 @@ public class DataController: MonoBehaviour
         gameData.questClear = theQuestManager.questComplete;
         gameData.questActionIndex = theQuestManager.questActionIndex;
 
-
     }
 
     public void SavingSlots()
@@ -181,8 +191,9 @@ public class DataController: MonoBehaviour
             GameObject obj = InventoryController.Instance.mySlots[i];
             if (obj.transform.childCount>0)
             {
-                Debug.Log(obj.name);
-                gameData.savedInventory[obj.transform.GetChild(0).gameObject] = i;
+                GameObject thisitem = obj.transform.GetChild(0).gameObject;
+                if(!gameData.savedInventory.ContainsKey(thisitem))
+                    gameData.savedInventory[thisitem] = i;
             }
         }
        

@@ -133,11 +133,11 @@ public class InventoryController : MonoBehaviour
 
     public void GetItem(GameObject theItem)
     {
-        if (DataController.instance.gameData.savedInventory.ContainsKey(theItem))
+        if (DataController.instance.gameData.savedInventory.ContainsKey(theItem) || DataController.instance.gameData.myItemCount.ContainsKey(theItem.GetComponent<Pickup>().item.itemName))
         {
-            Debug.Log("사과2");
+            Debug.Log("이미있음");
             theItem.GetComponent<Pickup>().item.count++;
-            DataController.instance.gameData.savedInventory[theItem]++;
+            DataController.instance.gameData.myItemCount[theItem.GetComponent<Pickup>().item.itemName]++;
 
         }                                       //이미 내 인벤토리에 있으면 숫자만 더함
        else
@@ -184,11 +184,6 @@ public class InventoryController : MonoBehaviour
 
             }
         }
-        if (theItem.GetComponent<Pickup>().item.itemName == "포션")
-        {
-            // DataController.instance.gameData.myPotions++;
-            //DataController.instance.gameData.savedInventory[theItem];
-        }
        
     }
     public void ItemAppears(GameObject theItem)
@@ -200,12 +195,13 @@ public class InventoryController : MonoBehaviour
 
                
                 GameObject obj = Instantiate(theItem);
-                theItem.GetComponent<Pickup>().item.count++;
+               obj.GetComponent<Pickup>().item.count++;
                obj.transform.SetParent(mySlots[i].transform);
                 obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                 obj.transform.localPosition = Vector2.zero;
                 DataController.instance.gameData.savedInventory[obj] = i;
+                DataController.instance.gameData.myItemCount[obj.GetComponent <Pickup>().item.itemName] = 1;
                 break;
             }
         }

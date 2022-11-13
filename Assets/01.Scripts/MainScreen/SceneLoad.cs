@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
+
 
 public class SceneLoad : MonoBehaviour
 {
@@ -105,21 +108,16 @@ public class SceneLoad : MonoBehaviour
             theQuestManager.questActionIndex = ++DataController.instance.gameData.questActionIndex;
 
 
-        /*
-            for(int i = 0; i < 14; i++)
-            {
-                mySlots.transform.GetChild(i).DetachChildren();
-            }
+            Debug.Log(DataController.instance.gameData.savedInventory.Count);
 
-            */
-          foreach(KeyValuePair<GameObject,int> items in DataController.instance.gameData.savedInventory)
-            {
-                Debug.Log(items.Key);
+            foreach (KeyValuePair<GameObject,int>items in DataController.instance.gameData.savedInventory) { 
+                Debug.Log($"{items.Key}+{items.Value}");
                 items.Key.transform.SetParent(mySlots.transform.GetChild(items.Value));
-               items.Key.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                items.Key.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 items.Key.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                 items.Key.transform.localPosition = Vector2.zero;
             }
+         
           
         }
 

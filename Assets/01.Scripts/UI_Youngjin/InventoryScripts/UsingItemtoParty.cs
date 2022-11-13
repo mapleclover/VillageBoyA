@@ -49,6 +49,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
             if (temp.GetComponent<Pickup>().item.count>1)
             {
                temp.GetComponent<Pickup>().item.count--;       //포션이 2개 이상이면 destroy 대신 -1
+                DataController.instance.gameData.myItemCount[temp.GetComponent<Pickup>().item.itemName]--;
                 InventoryController.Instance.ShowNumbertoUI();
             }
             else
