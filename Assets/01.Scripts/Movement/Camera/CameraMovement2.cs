@@ -50,19 +50,21 @@ public class CameraMovement2 : MonoBehaviour
     void Update()
     {
         OnCursor();
+
+        // 카메라가 오브젝트를 따라감
+
+        transform.position = Vector3.MoveTowards(transform.position, objectToFollow.position, followSpeed * Time.deltaTime);
+        //transform.position = Vector3.Lerp(transform.position, objectToFollow.position, followSpeed * Time.deltaTime);\
+
+        // 최종 정해진 방향
+        finalDir = transform.TransformPoint(dirNormalized * maxDistance); // 방향 * 최대거리
+
     }
 
 
     // 업데이트가 끝난 다음에 실행
     void LateUpdate()
     {
-        // 카메라가 오브젝트를 따라감
-        
-        transform.position = Vector3.MoveTowards(transform.position, objectToFollow.position, followSpeed * Time.deltaTime);
-        //transform.position = Vector3.Lerp(transform.position, objectToFollow.position, followSpeed * Time.deltaTime);\
-
-        // 최종 정해진 방향
-        finalDir = transform.TransformPoint(dirNormalized * maxDistance); // 방향 * 최대거리
 
         //방해물의 오브젝트를 저장하는 변수
         //지금은 방해물이 너무 많아 껐습니다.
