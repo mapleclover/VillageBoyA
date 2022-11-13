@@ -150,13 +150,19 @@ public class PlayerMovement : MonoBehaviour
             PlayerMove();
             SwitchingCharacter();
             StateProcess(); //캐릭터 교체
+            
 
         }
-/*
-        if (myCharacter == CHARACTER.Kong)
-        {
-            DashSkill();
-        }*/
+        
+                /*
+                if (myCharacter == CHARACTER.Kong)
+                {
+                    DashSkill();
+                }*/
+
+        PlayerRotation();
+
+       
 
 
     }
@@ -167,8 +173,6 @@ public class PlayerMovement : MonoBehaviour
     //캐릭터의 부드러운 회전을 위해
     //물리적인 이동이나 회전을 할 때 쓰면 좋다
     {
-        PlayerRotation();
-
         if (ground && !theManager.isAction)
         {
             Dash();

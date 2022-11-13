@@ -57,7 +57,10 @@ public class CameraMovement2 : MonoBehaviour
     void LateUpdate()
     {
         // 카메라가 오브젝트를 따라감
+        
         transform.position = Vector3.MoveTowards(transform.position, objectToFollow.position, followSpeed * Time.deltaTime);
+        //transform.position = Vector3.Lerp(transform.position, objectToFollow.position, followSpeed * Time.deltaTime);\
+
         // 최종 정해진 방향
         finalDir = transform.TransformPoint(dirNormalized * maxDistance); // 방향 * 최대거리
 
