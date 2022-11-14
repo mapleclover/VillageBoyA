@@ -6,6 +6,7 @@ public class QuestManager : MonoBehaviour
 {
     public int questId;
     public bool questComplete;
+    private bool tempCheck; // 퀘스트컴플리트 저장용 임시변수
     public int questActionIndex; // 퀘스트npc대화순서 변수
     private Animator myAnim;
     public GameObject[] questObject;
@@ -59,8 +60,10 @@ public class QuestManager : MonoBehaviour
                 questActionIndex++;  //인덱스순서를주지않으면 A를거치고 B를가야하는데 A안거치고 B가도되기때문.
         }
         //Control Quest Object
-        ControlObject(scanObject);
+        tempCheck = questComplete;
         ControlPopup(scanObject);
+        ControlObject(scanObject);
+        
 
         //Talk Complete & Next Quest
         if (questActionIndex == questList[questId].npcId.Length)//npcId의배열? -> 퀘스트진행시 다뤄야할 대화
@@ -144,16 +147,17 @@ public class QuestManager : MonoBehaviour
                     questObject[1].SetActive(true);
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                 }
-                else if (questActionIndex == 1)
+                if (questActionIndex == 1 && tempCheck)
                 {
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                 }
-                else if(questActionIndex == 1 && !questComplete)
+                if(questActionIndex == 1 && !tempCheck)
                     questObject[1].SetActive(false);
-                else if (questActionIndex == 2 && questComplete)
+                if (questActionIndex == 2)
                 {
                     questObject[2].SetActive(true); // 호두 위에 ? 아이콘
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
+                    questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
                 }
                 break;
         }
@@ -195,14 +199,16 @@ public class QuestManager : MonoBehaviour
                 {
                     questPopupText.text = "클레와 대화하기";
                 }
-                if (questActionIndex == 1)
+                if (questActionIndex == 1 && tempCheck)
                 {
                     questComplete = false;
                     questPopupText.text = "호두와 대화하기";
-                    myAnim.SetBool("isComplete", false);
                 }
-                if(questActionIndex == 1 && !questComplete)
+                if (questActionIndex == 1 && !tempCheck)
+                {
+                    myAnim.SetBool("isComplete", false);
                     questPopupText.text = "여우 잡아오기";
+                }
                 if (questActionIndex == 2)
                     questPopupText.text = "호두에게 가기";
                 if (questActionIndex == 3)

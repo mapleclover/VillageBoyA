@@ -125,7 +125,8 @@ public class InventoryController : MonoBehaviour
         }
         for(int i = 0; i < count; i++)
         {
-            DataController.instance.gameData.savedInventory[mySlots[i].transform.GetChild(0).gameObject] = i;
+            DataController.instance.gameData.savedInventory[mySlots[i].transform.GetChild(0).gameObject.GetComponent<Pickup>().item.itemName] = i;
+
                 //정렬된 위치값을 데이터로 저장
         }
     }
@@ -133,7 +134,7 @@ public class InventoryController : MonoBehaviour
 
     public void GetItem(GameObject theItem)
     {
-        if (DataController.instance.gameData.savedInventory.ContainsKey(theItem) || DataController.instance.gameData.myItemCount.ContainsKey(theItem.GetComponent<Pickup>().item.itemName))
+        if ( DataController.instance.gameData.myItemCount.ContainsKey(theItem.GetComponent<Pickup>().item.itemName))
         {
             Debug.Log("이미있음");
             theItem.GetComponent<Pickup>().item.count++;
@@ -200,7 +201,7 @@ public class InventoryController : MonoBehaviour
                 obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                 obj.transform.localPosition = Vector2.zero;
-                DataController.instance.gameData.savedInventory[obj] = i;
+                DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName] = i;
                 DataController.instance.gameData.myItemCount[obj.GetComponent <Pickup>().item.itemName] = 1;
                 break;
             }
@@ -223,9 +224,9 @@ public class InventoryController : MonoBehaviour
                     count.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
                     
-                  if (DataController.instance.gameData.savedInventory.ContainsKey(obj))
+                  if (DataController.instance.gameData.savedInventory.ContainsKey(obj.GetComponent<Pickup>().item.itemName))
                     {
-                        count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = obj.GetComponent<Pickup>().item.count.ToString();
+                        count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName].ToString();
                     }
                     //아이템의 개수를 UI로 표기
                     count.transform.localPosition = new Vector2(20, 20);
