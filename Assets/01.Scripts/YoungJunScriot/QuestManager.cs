@@ -83,7 +83,7 @@ public class QuestManager : MonoBehaviour
     }
 
    
-    private void ControlObject(GameObject scanObject)
+    public void ControlObject(GameObject scanObject = null)
     {
         //questObject[0] = 사과
         //questObject[1] = ! 아이콘
@@ -101,7 +101,7 @@ public class QuestManager : MonoBehaviour
                     questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
                     questObject[4].transform.position = new Vector3(291.0f, 1.1f, 222.0f); // goal지접이동
                 }
-                if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
+                else if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
                 {                   
                     questObject[1].SetActive(false);
                     questObject[0].SetActive(true); // 사과 1 
@@ -109,14 +109,20 @@ public class QuestManager : MonoBehaviour
                 }
                 break;
             case 20:
-                if (questActionIndex == 1)
+                if (questActionIndex == 0) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
+                {
+                    questObject[1].SetActive(false);
+                    questObject[0].SetActive(true); // 사과 1 
+                    questObject[3].SetActive(true); // 사과 2
+                }
+                else if (questActionIndex == 1)
                 {                    
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
                         Destroy(scanObject); // 사과
                     }
                 }
-                if(questActionIndex == 2)
+                else if(questActionIndex == 2)
                 {                  
                     questObject[2].SetActive(true); // ? 아이콘
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
@@ -125,21 +131,26 @@ public class QuestManager : MonoBehaviour
                         Destroy(scanObject); // 사과
                     }
                 }
-                if(questActionIndex == 3)
+                else if(questActionIndex == 3)
                 {                   
                     questObject[2].SetActive(false); // ? 사라지게.                    
                     questObject[4].SetActive(true);                 
                     Goal.goalCounting++; 
                 }
                 break;
-            case 30:                          
-                if(questActionIndex == 1)
+            case 30:
+                if (questActionIndex == 0)
+                {
+                    questObject[1].SetActive(true);
+                    questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
+                }
+                else if (questActionIndex == 1)
                 {
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                 }
-                if(questActionIndex == 1 && !questComplete)
+                else if(questActionIndex == 1 && !questComplete)
                     questObject[1].SetActive(false);
-                if (questActionIndex == 2 && questComplete)
+                else if (questActionIndex == 2 && questComplete)
                 {
                     questObject[2].SetActive(true); // 호두 위에 ? 아이콘
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
@@ -148,7 +159,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    private void ControlPopup(GameObject scanObject)
+    public void ControlPopup(GameObject scanObject = null)
     {
         // myAnim => 퀘스트완료깜빡이.
         switch (questId)
@@ -180,6 +191,10 @@ public class QuestManager : MonoBehaviour
                 }
                 break;
             case 30:
+                if (questActionIndex == 0)
+                {
+                    questPopupText.text = "클레와 대화하기";
+                }
                 if (questActionIndex == 1)
                 {
                     questComplete = false;

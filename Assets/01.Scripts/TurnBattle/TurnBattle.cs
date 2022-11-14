@@ -200,6 +200,7 @@ public class TurnBattle : MonoBehaviour
                             if (SceneLoad.Instance.MonsterType == "Fox")
                             {
                                 DataController.instance.gameData.questClear = true;
+                                DataController.instance.gameData.questActionIndex += 1;
                             }
                         }
                         SceneLoad.Instance.ChangeScene("06.Field");

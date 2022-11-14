@@ -79,10 +79,12 @@ public class SceneLoad : MonoBehaviour
             theQuestManager.questComplete = DataController.instance.gameData.questClear;
             //if (theQuestManager.questComplete)
             //{
-            theQuestManager.questActionIndex = ++DataController.instance.gameData.questActionIndex;
+            theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
+            theQuestManager.ControlObject();
+            theQuestManager.ControlPopup();
             //}
             //else
-                //theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
+            //theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
 
 
         }

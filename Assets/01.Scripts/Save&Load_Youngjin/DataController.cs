@@ -41,7 +41,7 @@ public class GameData
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
     public int questID = 30; // 퀘스트순서
-    public int questActionIndex; // 퀘스트대화순서.
+    public int questActionIndex = 0; // 퀘스트대화순서.
     public bool questClear = true; // 퀘스트클리어 유무
     public bool isBackAttack; // 빽어택으로 전투돌입인지 아닌지
 
