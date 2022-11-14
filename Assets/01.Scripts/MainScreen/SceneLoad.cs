@@ -68,7 +68,7 @@ public class SceneLoad : MonoBehaviour
             player = GameObject.Find("Summons(Final)");
             camera = GameObject.Find("Camera");
             theQuestManager = FindObjectOfType<QuestManager>();
-            
+
             //플레이어 위치값
             player.transform.position = DataController.instance.gameData.currentPosition;
             player.transform.eulerAngles = DataController.instance.gameData.currentRotation;
@@ -88,11 +88,11 @@ public class SceneLoad : MonoBehaviour
 
 
         }
-       else if (scene.name == "10.FieldLYJ")
+        else if (scene.name == "10.Field_LYJ")
         {
             player = GameObject.Find("Summons(Final)");
             camera = GameObject.Find("Camera");
-            myInven = GameObject.Find("Inventory");
+            myInven = GameObject.Find("Inventory 1");
             mySlots = myInven.transform.GetChild(0);
             Debug.Log(mySlots.name);
             theQuestManager = FindObjectOfType<QuestManager>();
@@ -112,17 +112,38 @@ public class SceneLoad : MonoBehaviour
 
             Debug.Log(DataController.instance.gameData.savedInventory.Count);
 
-            foreach (KeyValuePair<GameObject,int>items in DataController.instance.gameData.savedInventory) { 
-                Debug.Log($"{items.Key}+{items.Value}");
-                items.Key.transform.SetParent(mySlots.transform.GetChild(items.Value));
-                items.Key.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                items.Key.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-                items.Key.transform.localPosition = Vector2.zero;
+            /*     foreach (KeyValuePair<string,int>items in DataController.instance.gameData.savedInventory) {
+                     if (items.Key != null)
+                     {
+                         Debug.Log($"{items.Key}+{items.Value}");
+                         items.Key.transform.SetParent(mySlots.transform.GetChild(items.Value));
+                         items.Key.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                         items.Key.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                         items.Key.transform.localPosition = Vector2.zero;
+                     }
+                     else
+                     {
+                         Debug.Log("null");
+                     }
+                 }
+            */
+        foreach (KeyValuePair<string, int> items in DataController.instance.gameData.savedInventory)
+        {
+            for (int i = 0; i < InventoryController.Instance.curItem.Count; i++)
+            {
+                    if (InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.itemName == items.Key)
+                    {
+                        GameObject obj = Instantiate(InventoryController.Instance.curItem[i]);
+                        obj.transform.SetParent(mySlots.transform.GetChild(items.Value));
+                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                        obj.transform.localPosition = Vector2.zero;
+                    }
             }
-         
-          
         }
 
+        
+    }
         
     }
 

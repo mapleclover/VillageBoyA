@@ -66,7 +66,8 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
             DataController.instance.gameData.Ember.myUsedItems.Remove(selectedItem);
         }
 
-        DataController.instance.gameData.savedInventory.Remove(selectedItem);
+        DataController.instance.gameData.savedInventory.Remove(selectedItem.GetComponent<Pickup>().item.itemName);
+
         DataController.instance.gameData.myItemCount[selectedItem.GetComponent<Pickup>().item.itemName]--;
         Destroy(selectedItem);
         

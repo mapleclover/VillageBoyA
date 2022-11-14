@@ -16,10 +16,11 @@ public class GameData
     public Vector3 currentPosition = new Vector3(-136, 0, -90);          //현재 캐릭터 위치
     public Vector3 currentRotation;
 
-   // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
+  // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
    // public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
-    public Dictionary<GameObject, int> savedInventory = new Dictionary<GameObject, int>();          //아이템과 몇번째 슬롯인지 저장
+    public Dictionary<string, int> savedInventory = new Dictionary<string, int>();          //아이템과 몇번째 슬롯인지 저장
     public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // 아이템과 개수
+   
 
 
     public struct myPartyStats
@@ -57,7 +58,6 @@ public class DataController: MonoBehaviour
     public int nowSlot;
     public  GameData gameData=new GameData();
     public static DataController instance;
-
     private PlayerMovement thePlayer;
     private QuestManager theQuestManager;
     private ActionController theActionController;
@@ -69,13 +69,14 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else if (instance != null)
         {
             Destroy(this.gameObject);
+            return;
         }
-      //  gameData.myInventory = new List<GameData.myPartyItems>();
+        DontDestroyOnLoad(gameObject);
+        //  gameData.myInventory = new List<GameData.myPartyItems>();
 
         gameData.Kong.isLeader = true;
         gameData.Kong.strength = 10;
@@ -144,8 +145,8 @@ public class DataController: MonoBehaviour
             if (obj.transform.childCount > 0)
             {
                 Debug.Log(obj.transform.GetChild(0).name);
-                if (!gameData.savedInventory.ContainsKey(obj.transform.GetChild(0).gameObject))
-                    gameData.savedInventory[obj.transform.GetChild(0).gameObject] = i;
+                if (!gameData.savedInventory.ContainsKey(obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName))
+                    gameData.savedInventory[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = i;
             }
         }
         gameData.savedTime = DateTime.Now.ToString();
@@ -181,7 +182,7 @@ public class DataController: MonoBehaviour
         gameData.questID = theQuestManager.questId;
         gameData.questClear = theQuestManager.questComplete;
         gameData.questActionIndex = theQuestManager.questActionIndex;
-
+      
     }
 
     public void SavingSlots()
@@ -192,8 +193,11 @@ public class DataController: MonoBehaviour
             if (obj.transform.childCount>0)
             {
                 GameObject thisitem = obj.transform.GetChild(0).gameObject;
-                if(!gameData.savedInventory.ContainsKey(thisitem))
-                    gameData.savedInventory[thisitem] = i;
+                if(!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName))gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
+
+                 //DontDestroyOnLoad(thisitem);
+
+                Debug.Log($"{thisitem.name} 저장됨");
             }
         }
        
