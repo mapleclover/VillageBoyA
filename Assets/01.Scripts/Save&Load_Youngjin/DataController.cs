@@ -31,7 +31,7 @@ public class GameData
         public int speed;  //속도
         public int HP;  //체력
         public bool isAlive; //생존 여부
-        public List<GameObject> myUsedItems;
+        public List<string> myUsedItems;
     }
     public myPartyStats Kong;
    public myPartyStats Jin;
@@ -84,7 +84,7 @@ public class DataController: MonoBehaviour
         gameData.Kong.speed = 10;
         gameData.Kong.HP = 100;
         gameData.Kong.isAlive = true;
-        gameData.Kong.myUsedItems = new List<GameObject>();
+        gameData.Kong.myUsedItems = new List<string>();
 
         gameData.Jin.isLeader = false;
         gameData.Jin.strength = 20;
@@ -92,7 +92,7 @@ public class DataController: MonoBehaviour
         gameData.Jin.speed = 20;
         gameData.Jin.HP = 100;
         gameData.Jin.isAlive = true;
-        gameData.Jin.myUsedItems = new List<GameObject>();
+        gameData.Jin.myUsedItems = new List<string>();
 
         gameData.Ember.isLeader = false;
         gameData.Ember.strength = 30;
@@ -100,7 +100,7 @@ public class DataController: MonoBehaviour
         gameData.Ember.speed = 30;
         gameData.Ember.HP = 100;
         gameData.Ember.isAlive = true;
-        gameData.Ember.myUsedItems = new List<GameObject>();
+        gameData.Ember.myUsedItems = new List<string>();
 
         filePath = Application.persistentDataPath + gamedataFilename;
     }
@@ -182,26 +182,23 @@ public class DataController: MonoBehaviour
         gameData.questID = theQuestManager.questId;
         gameData.questClear = theQuestManager.questComplete;
         gameData.questActionIndex = theQuestManager.questActionIndex;
-      
-    }
-
-    public void SavingSlots()
-    {
-        for(int i = 0; i < InventoryController.Instance.mySlots.Length; i++)
+        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++)
         {
             GameObject obj = InventoryController.Instance.mySlots[i];
-            if (obj.transform.childCount>0)
+            if (obj.transform.childCount > 0)
             {
                 GameObject thisitem = obj.transform.GetChild(0).gameObject;
-                if(!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName))gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
+                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName)) gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
 
-                 //DontDestroyOnLoad(thisitem);
+                //DontDestroyOnLoad(thisitem);
 
                 Debug.Log($"{thisitem.name} 저장됨");
             }
         }
-       
+
     }
+
+   
 
 
     /*  private void OnApplicationQuit()

@@ -203,8 +203,7 @@ public class TurnBattle : MonoBehaviour
                                 DataController.instance.gameData.questActionIndex += 1;
                             }
                         }
-                       // SceneLoad.Instance.ChangeScene("06.Field");
-                         SceneLoad.Instance.ChangeScene("10.Field_LYJ");
+                        SceneLoad.Instance.ChangeScene("06.Field");
                     }
                 }
 
