@@ -14,6 +14,7 @@ public class InventoryController : MonoBehaviour
     public GameObject myInfoBox;
     public GameObject itemCount;
     public TMPro.TMP_Text myGold;
+    public GameObject myMenu;
    //datacontroller에 추가
    //
    public Dictionary<GameObject, int>curItems;
@@ -27,7 +28,6 @@ public class InventoryController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        DataController.instance.gameData.gold = 0;
         foreach (GameObject obj in mySlots)
         {
             if (obj.transform.childCount > 0)
@@ -52,7 +52,12 @@ public class InventoryController : MonoBehaviour
                 ShowNumbertoUI();
                 ShowMyGold();
             }
-            myInventory.SetActive(v);
+            if(!myMenu.activeSelf)myInventory.SetActive(v);
+            else
+            {
+                v = false;
+                myInventory.SetActive(v);
+            }
             if (v) v = false;
             else v = true;          //인벤토리 열기
             myInfoBox.SetActive(false);
