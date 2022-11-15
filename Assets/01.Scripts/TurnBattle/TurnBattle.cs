@@ -44,10 +44,10 @@ public class TurnBattle : MonoBehaviour
     public int BattleTurn = 0;
     int Check = 0;
     bool VictoryCheck;
-    bool FastSpeedCheck;
-    int Skill = 0;
+    bool FastSpeedCheck;    
     Vector3 pos;
     Vector3 pos2;
+    public int Gold=0;
     public GameObject speedChanger;
     public enum State
     {
@@ -121,10 +121,7 @@ public class TurnBattle : MonoBehaviour
                     }
                     GameOverCanvas.SetActive(true);
                     GameOverTxt.text = "승 리";
-                    if (Input.anyKey)
-                    {
 
-                    }
                 }
                 else if (!VictoryCheck)
                 {
@@ -222,7 +219,10 @@ public class TurnBattle : MonoBehaviour
     }
     void Start()
     {
-        HealingPotion = DataController.instance.gameData.myItemCount["포션"];
+        if (DataController.instance.gameData.myItemCount.ContainsKey("포션"))
+            HealingPotion = DataController.instance.gameData.myItemCount["포션"]; //포션
+        else HealingPotion = 0;
+
         for (int i = 0; i < Player.Count; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);

@@ -101,8 +101,7 @@ public class DataController: MonoBehaviour
         gameData.Ember.speed = 30;
         gameData.Ember.HP = 100;
         gameData.Ember.isAlive = true;
-        gameData.Ember.myUsedItems = new List<string>();
-
+        gameData.Ember.myUsedItems = new List<string>();        
         filePath = Application.persistentDataPath + gamedataFilename;
     }
 

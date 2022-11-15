@@ -21,6 +21,7 @@ public struct BattleCharacterStat
         {
             _curHP = value;
             if (_curHP < 0.0f) _curHP = 0.0f;
+            if (_curHP > orgData.HP) _curHP = orgData.HP;
         }
     }
     public float Speed;
@@ -58,6 +59,8 @@ public class BattleCharacter : CharacterProperty
     public bool ActiveHeal=false;
     public int StunTurn = 1;    
     GameObject Stun;
+
+    
     void ChangeState(STATE s)
     {
         if (State == s) return;
@@ -85,6 +88,7 @@ public class BattleCharacter : CharacterProperty
                 if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {                    
                     Invoke("SetActiveFalse", 2.0f);
+                    TurnBattle.Inst.Gold += 5;
                 }
                 break;
         }
