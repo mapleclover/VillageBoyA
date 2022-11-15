@@ -14,9 +14,13 @@ public class IconManager : MonoBehaviour
         my_Icon.Initialize(transform, Color.green);
     }
 
+  
+
     // Update is called once per frame
     void Update()
     {
         
     }
+
+    
 }

@@ -11,8 +11,7 @@ public class QuestManager : MonoBehaviour
     private Animator myAnim;
     public GameObject[] questObject;
 
-    
-    
+   
 
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
@@ -99,6 +98,7 @@ public class QuestManager : MonoBehaviour
                 if(questActionIndex == 1)
                 {
                     questObject[1].SetActive(true); // ! 아이콘                  
+                    
                     //questObject[2].SetActive(true); // ? 아이콘
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
