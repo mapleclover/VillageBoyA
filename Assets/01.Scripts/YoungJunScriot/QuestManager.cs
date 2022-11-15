@@ -11,7 +11,7 @@ public class QuestManager : MonoBehaviour
     private Animator myAnim;
     public GameObject[] questObject;
 
-   
+    MinimapIcon my_Icon = null;
 
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
@@ -98,6 +98,7 @@ public class QuestManager : MonoBehaviour
         //questObject[3] = 사과2
         //questObject[4] = 듀토리얼 goal
         //questObject[5] = 미니맵 ! 아이콘
+        //questObject[6] = 미니맵 ? 아이콘 
         switch (questId)
         {
             case 10:
@@ -150,19 +151,38 @@ public class QuestManager : MonoBehaviour
                 break;
             case 30:
                 if (questActionIndex == 0)
-                {
-                    questObject[1].SetActive(true);
+                { 
+                    questObject[1].SetActive(true);               
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
+                    // 미니맵 ! 아이콘
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
+                    //GameObject obj = Instantiate(Resources.Load("Prefabs/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    // obj.GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
                 }
                 if (questActionIndex == 1 && tempCheck)
-                {
+                { 
+                    Destroy(questObject[5]);
+
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
+
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
+
                 }
-                if(questActionIndex == 1 && scanObject == Hodu_2000)
-                    questObject[1].SetActive(false);
-                if (questActionIndex == 2)
+                if (questActionIndex == 1 && scanObject == Hodu_2000)
                 {
+                    questObject[1].SetActive(false);
+                    Destroy(questObject[5]);
+                }   
+                    
+                                          
+                if (questActionIndex == 2)
+                {                  
                     questObject[2].SetActive(true); // 호두 위에 ? 아이콘
+
+                  
+
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
                 }
