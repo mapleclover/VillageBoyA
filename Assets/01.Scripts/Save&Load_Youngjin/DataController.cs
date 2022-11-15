@@ -5,6 +5,7 @@ using System.IO;        //폴더 안 저장된 파일 확인
 using System.Linq;
 using TMPro;
 using UnityEngine;
+[Serializable]
 public class GameData
 {                                                                                                               //모든 배열은 0이 콩 1이 진 2가 앰버
     public int myProgress = 0;          //진행도
@@ -21,7 +22,7 @@ public class GameData
     public Dictionary<string, int> savedInventory = new Dictionary<string, int>();          //아이템과 몇번째 슬롯인지 저장
     public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // 아이템과 개수
    
-
+    //포션 개수: DataController.instance.gameData.myItemCount["포션"]
 
     public struct myPartyStats
     {
