@@ -117,16 +117,19 @@ public class SceneLoad : MonoBehaviour
                             
                             //UI에 표시
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items);
+                            break;
                         }
                         else if (DataController.instance.gameData.Jin.myUsedItems.Contains(items.Key))
                         {
                             //UI에 표시
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, items);
+                            break;
                         }
                         else if (DataController.instance.gameData.Ember.myUsedItems.Contains(items.Key))
                         {
                             //UI에 표시
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i,items);
+                            break;
                         }
                     }
                 }

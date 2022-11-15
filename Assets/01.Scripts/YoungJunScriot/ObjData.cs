@@ -13,13 +13,13 @@ public class ObjData : MonoBehaviour
 
     MinimapIcon my_Icon = null;
 
-    void Start()
+  /*  void Start()
     {
         GameObject obj = Instantiate(Resources.Load("Prefabs/NpcIcon"), SceneData.Inst.Minimap) as GameObject;
         my_Icon = obj.GetComponent<MinimapIcon>();
         my_Icon.Initialize(transform, Color.yellow);
     }
-
+  */
     void Update()
     {
         
