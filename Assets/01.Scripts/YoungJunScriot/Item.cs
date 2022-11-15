@@ -12,6 +12,7 @@ public class Item : ScriptableObject
     public int itemPrice;
     public Sprite itemImage;
     public int value;
+    public int[] AP;
 
 
     public enum NpcType
