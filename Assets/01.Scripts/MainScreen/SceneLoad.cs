@@ -10,7 +10,6 @@ using static UnityEditor.Progress;
 public class SceneLoad : MonoBehaviour
 {
     private static SceneLoad instance = null;
-
     private void Awake()
     {
         if (null == instance)
@@ -139,9 +138,10 @@ public class SceneLoad : MonoBehaviour
                 if (DataController.instance.gameData.victoryComplete[i])
                 {
                     InventoryController.Instance.GetItem(InventoryController.Instance.curItem[8]);
+                    DataController.instance.gameData.victoryComplete[i] = false;
                 }
             }
-
+            
         }
         else if(scene.name == "H_H")
         {

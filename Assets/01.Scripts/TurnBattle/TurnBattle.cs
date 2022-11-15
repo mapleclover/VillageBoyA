@@ -29,8 +29,10 @@ public class TurnBattle : MonoBehaviour
     public Button AttackStartButton;
     public Button RunButton;
     public static TurnBattle Inst = null;
+
     public GameObject GameOverCanvas;
-    public TMPro.TMP_Text GameOverTxt = null;
+    public GameObject VictoryImage;
+    public GameObject LoseImage;
     public Slider[] CharacterHpbar;
     public Slider EnemyHpbar;
     public List<Slider> EnHpbar;
@@ -49,6 +51,10 @@ public class TurnBattle : MonoBehaviour
     Vector3 pos2;
     public int Gold=0;
     public GameObject speedChanger;
+
+    public GameObject[] victoryItemSlots;
+    public GameObject[] myVictoryItems;
+
     public enum State
     {
         Create, Choice, ActiveCheck, Battle, End, GameOver
@@ -120,13 +126,22 @@ public class TurnBattle : MonoBehaviour
                         act.GetComponent<Animator>().SetTrigger("Victory");
                     }
                     GameOverCanvas.SetActive(true);
-                    GameOverTxt.text = "½Â ¸®";
 
+                    if (SceneLoad.Instance.MonsterType == "Fox")
+                    {
+                        GameObject obj = Instantiate(myVictoryItems[0]);
+                        obj.transform.SetParent(victoryItemSlots[0].transform);
+                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                        obj.transform.localPosition = Vector2.zero;
+                    }
+                    VictoryImage.SetActive(true);
                 }
                 else if (!VictoryCheck)
                 {
                     GameOverCanvas.SetActive(true);
-                    GameOverTxt.text = "ÆÐ ¹è";
+                    LoseImage.SetActive(true);
+                    
                 }
                 break;
         }
@@ -187,24 +202,7 @@ public class TurnBattle : MonoBehaviour
                 break;
             case State.End:
                 break;
-            case State.GameOver:
-                if (Input.anyKey)
-                {
-                    if (VictoryCheck)
-                    {
-                        if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
-                        {
-                            if (SceneLoad.Instance.MonsterType == "Fox")
-                            {
-                                DataController.instance.gameData.questClear = true;
-                                DataController.instance.gameData.questActionIndex += 1;
-                                DataController.instance.gameData.victoryComplete[0] = true;
-                            }
-                        }
-                        SceneLoad.Instance.ChangeScene("06.Field");
-                    }
-                }
-
+            case State.GameOver:                
                 break;
         }
     }
@@ -268,6 +266,24 @@ public class TurnBattle : MonoBehaviour
 
         FollowEnemyHpbar();
 
+    }
+    public void VictoryOk()
+    {
+        if (VictoryCheck)
+        {
+            if (DataController.instance.gameData.questID == 30 &&DataController.instance.gameData.questActionIndex == 1)
+            {
+                if (SceneLoad.Instance.MonsterType == "Fox")
+                {
+                    DataController.instance.gameData.questClear = true;
+                    DataController.instance.gameData.questActionIndex += 1;
+                    DataController.instance.gameData.victoryComplete[0] = true;
+                    DataController.instance.gameData.gold += 15;
+                }
+
+            }
+            SceneLoad.Instance.ChangeScene("06.Field");
+        }
     }
     void InstantiatePlayerCharacter()
     {

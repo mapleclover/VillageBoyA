@@ -48,6 +48,7 @@ public class Monster : CharacterMoveMent
             case STATE.BATTLE:
                 break;
             case STATE.DEAD:
+                this.gameObject.SetActive(false);
                 break;
         }
     }
@@ -68,6 +69,7 @@ public class Monster : CharacterMoveMent
                 theEnemyAI.ChaseTarget(myTarget);
                 break;
             case STATE.DEAD:
+                
                 break;
         }
     }
@@ -79,8 +81,13 @@ public class Monster : CharacterMoveMent
     }
 
     // Start is called before the first frame update
-    public void Start()
+    //public void Start()
+    //{
+        
+    //}
+    private void OnEnable()
     {
+        Debug.Log("гоюл");
         startPos = this.transform.position;
         ChangeState(STATE.IDLE);
     }
