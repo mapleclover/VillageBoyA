@@ -1009,6 +1009,7 @@ GameObject:
   - component: {fileID: 2378347433891683553}
   - component: {fileID: 2378347433891683552}
   - component: {fileID: 2378347433891683559}
+  - component: {fileID: -5150035525010993542}
   m_Layer: 30
   m_Name: Fox
   m_TagString: Untagged
@@ -1067,7 +1068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myStat:
     orgData: {fileID: 11400000, guid: a839d144be277ed499439deb7ff30383, type: 2}
-    curHP: 0
+    _curHP: 0
     Speed: 0
     AttackDmg: []
     Defend: 0
@@ -1112,6 +1113,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-5150035525010993542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2378347433891683548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acdf88948f1b98e4ebf1342ad52efa47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npc: {fileID: 0}
+  item: {fileID: 0}
+  enemy: {fileID: 11400000, guid: fbb8f7b042287494184a975130a0fba0, type: 2}
 --- !u!1 &2378347433935055405
 GameObject:
   m_ObjectHideFlags: 0

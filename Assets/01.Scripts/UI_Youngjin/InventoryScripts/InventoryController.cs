@@ -22,6 +22,7 @@ public class InventoryController : MonoBehaviour
     public int defaultCount = 1;
     public List<GameObject> curItem=new List<GameObject>();
     bool v = true;
+    Vector3 currentRotation;
 
     private void Awake()
     {
@@ -191,6 +192,9 @@ public class InventoryController : MonoBehaviour
                     ItemAppears(theItem);
                     break;
                 case "Ä®":
+                    ItemAppears(theItem);
+                    break;
+                case "¿©¿ì²¿¸®":
                     ItemAppears(theItem);
                     break;
 
