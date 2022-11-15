@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class ShopManager : MonoBehaviour
@@ -26,11 +22,12 @@ public class ShopManager : MonoBehaviour
             {
                 PurchasePanel.SetActive(false);
             }
-            else if(MainPanel.activeSelf)
+            else if (MainPanel.activeSelf)
             {
                 MainPanel.SetActive(false);
             }
         }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!MainPanel.activeSelf)
@@ -40,9 +37,8 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void DecideAmountToBuy(int price)
+    public void DecideAmountToBuy(string itemName)
     {
-        PricePerOne = price;
         PurchasePanel.SetActive(true);
     }
 

@@ -133,6 +133,28 @@ public class SceneLoad : MonoBehaviour
             }
 
         }
+        else if(scene.name == "H_H")
+        {
+            player = GameObject.Find("Summons(Final)");
+            camera = GameObject.Find("Camera");
+            myInven = GameObject.Find("Inventory 1");
+            mySlots = myInven.transform.GetChild(0);
+            theQuestManager = FindObjectOfType<QuestManager>();
+
+            //플레이어 위치값
+            player.transform.position = DataController.instance.gameData.currentPosition;
+            player.transform.eulerAngles = DataController.instance.gameData.currentRotation;
+            //카메라 위치값
+            camera.transform.position = DataController.instance.gameData.currentPosition;
+            //퀘스트 진행도
+            theQuestManager.questId = DataController.instance.gameData.questID;
+            theQuestManager.questComplete = DataController.instance.gameData.questClear;
+            //if (theQuestManager.questComplete)
+            //{
+            theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
+            theQuestManager.ControlObject();
+            theQuestManager.ControlPopup();
+        }
    
     }
     void ShowPortrait(GameObject portrait,int i,KeyValuePair<string,int>items)
