@@ -198,6 +198,7 @@ public class TurnBattle : MonoBehaviour
                             {
                                 DataController.instance.gameData.questClear = true;
                                 DataController.instance.gameData.questActionIndex += 1;
+                                DataController.instance.gameData.victoryComplete[0] = true;
                             }
                         }
                         SceneLoad.Instance.ChangeScene("06.Field");
