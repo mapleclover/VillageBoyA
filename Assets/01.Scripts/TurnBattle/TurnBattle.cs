@@ -40,7 +40,7 @@ public class TurnBattle : MonoBehaviour
     string PlayerCharacterName;
     string EnemyCharacterName;
     int x;
-    public int HealingPotion = 0;
+    public int HealingPotion;
     public int BattleTurn = 0;
     int Check = 0;
     bool VictoryCheck;
@@ -222,6 +222,7 @@ public class TurnBattle : MonoBehaviour
     }
     void Start()
     {
+        HealingPotion = DataController.instance.gameData.myItemCount["포션"];
         for (int i = 0; i < Player.Count; ++i) //플레이어갯수만큼 추가
         {
             PlayerSpeedCheck.Add(Player[i]);
