@@ -10,6 +10,7 @@ public class PointerInfo : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
 
     Vector2 pos = Vector2.zero;
     Vector2 dragOffset = Vector2.zero;
+    
     public static PointerInfo instance = null;
     private void Awake()
     {
@@ -17,9 +18,11 @@ public class PointerInfo : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Quaternion q = Quaternion.Euler(0, -90, 0);
         instance = this;
         AboutItem.instance.pointerenter(instance);
-
+        Vector3 vec;
+        vec = q.ToEulerAngles();
     }
     public void OnPointerExit(PointerEventData eventData)
     {

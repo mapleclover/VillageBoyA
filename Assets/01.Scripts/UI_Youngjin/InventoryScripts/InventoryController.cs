@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Playables;
+
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController Instance;
@@ -11,6 +13,7 @@ public class InventoryController : MonoBehaviour
     public GameObject[] mySlots;
     public GameObject myInfoBox;
     public GameObject itemCount;
+    public TMPro.TMP_Text myGold;
    //datacontroller¿¡ Ãß°¡
    //
    public Dictionary<GameObject, int>curItems;
@@ -19,11 +22,13 @@ public class InventoryController : MonoBehaviour
     public int defaultCount = 1;
     public List<GameObject> curItem=new List<GameObject>();
     bool v = true;
+    Vector3 currentRotation;
 
     private void Awake()
     {
         Instance = this;
-       foreach(GameObject obj in mySlots)
+        DataController.instance.gameData.gold = 0;
+        foreach (GameObject obj in mySlots)
         {
             if (obj.transform.childCount > 0)
             {
@@ -45,7 +50,7 @@ public class InventoryController : MonoBehaviour
                 //  myItem["ÇØ°ñ"]++;
                 //ÇØ°ñ·Î Å×½ºÆ®
                 ShowNumbertoUI();
-              
+                ShowMyGold();
             }
             myInventory.SetActive(v);
             if (v) v = false;
@@ -189,6 +194,9 @@ public class InventoryController : MonoBehaviour
                 case "Ä®":
                     ItemAppears(theItem);
                     break;
+                case "¿©¿ì²¿¸®":
+                    ItemAppears(theItem);
+                    break;
 
             }
         }
@@ -246,6 +254,10 @@ public class InventoryController : MonoBehaviour
                 }
             }
         }
+    }
+    public void ShowMyGold()
+    {
+        myGold.text = $"x{DataController.instance.gameData.gold}";
     }
     
 }

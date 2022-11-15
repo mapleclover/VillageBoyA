@@ -10,7 +10,6 @@ using static UnityEditor.Progress;
 public class SceneLoad : MonoBehaviour
 {
     private static SceneLoad instance = null;
-
     private void Awake()
     {
         if (null == instance)
@@ -117,21 +116,32 @@ public class SceneLoad : MonoBehaviour
                             
                             //UI에 표시
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items);
+                            break;
                         }
                         else if (DataController.instance.gameData.Jin.myUsedItems.Contains(items.Key))
                         {
                             //UI에 표시
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, items);
+                            break;
                         }
                         else if (DataController.instance.gameData.Ember.myUsedItems.Contains(items.Key))
                         {
                             //UI에 표시
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i,items);
+                            break;
                         }
                     }
                 }
             }
-
+            for(int i = 0; i < DataController.instance.gameData.victoryComplete.Length; i++)
+            {
+                if (DataController.instance.gameData.victoryComplete[i])
+                {
+                    InventoryController.Instance.GetItem(InventoryController.Instance.curItem[8]);
+                    DataController.instance.gameData.victoryComplete[i] = false;
+                }
+            }
+            
         }
         else if(scene.name == "H_H")
         {
