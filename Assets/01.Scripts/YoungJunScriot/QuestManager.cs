@@ -11,8 +11,7 @@ public class QuestManager : MonoBehaviour
     private Animator myAnim;
     public GameObject[] questObject;
 
-    
-    
+   
 
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
@@ -53,17 +52,22 @@ public class QuestManager : MonoBehaviour
     // 대화가끝이났을때 인덱스증가함수.
     public string CheckQuest(int id, GameObject scanObject)
     {
+        tempCheck = questComplete;
         //Next Talk Target(NPC)
-        if (questComplete)
+        if (tempCheck)
         {
             if (id == questList[questId].npcId[questActionIndex]) // 현재진행중인 퀘스트id의 npc아이디체크.
-                questActionIndex++;  //인덱스순서를주지않으면 A를거치고 B를가야하는데 A안거치고 B가도되기때문.
+            {
+                questActionIndex++;  //인덱스순서를주지않으면 A를거치고 B를가야하는데 A안거치고 B가도되기때문.  
+            }
         }
-        //Control Quest Object
-        tempCheck = questComplete;
         ControlPopup(scanObject);
         ControlObject(scanObject);
-        
+
+        //Control Quest Object
+
+
+
 
         //Talk Complete & Next Quest
         if (questActionIndex == questList[questId].npcId.Length)//npcId의배열? -> 퀘스트진행시 다뤄야할 대화
@@ -93,12 +97,14 @@ public class QuestManager : MonoBehaviour
         //questObject[2] = ? 아이콘
         //questObject[3] = 사과2
         //questObject[4] = 듀토리얼 goal
+        //questObject[5] = 미니맵 ! 아이콘
         switch (questId)
         {
             case 10:
                 if(questActionIndex == 1)
                 {
                     questObject[1].SetActive(true); // ! 아이콘                  
+                    
                     //questObject[2].SetActive(true); // ? 아이콘
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
@@ -128,6 +134,7 @@ public class QuestManager : MonoBehaviour
                 else if(questActionIndex == 2)
                 {                  
                     questObject[2].SetActive(true); // ? 아이콘
+
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
@@ -151,7 +158,7 @@ public class QuestManager : MonoBehaviour
                 {
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                 }
-                if(questActionIndex == 1 && !tempCheck)
+                if(questActionIndex == 1 && scanObject == Hodu_2000)
                     questObject[1].SetActive(false);
                 if (questActionIndex == 2)
                 {
@@ -201,10 +208,11 @@ public class QuestManager : MonoBehaviour
                 }
                 if (questActionIndex == 1 && tempCheck)
                 {
-                    questComplete = false;
-                    questPopupText.text = "호두와 대화하기";
+                     questPopupText.text = "호두와 대화하기";
+                     
+                     questComplete = false;
                 }
-                if (questActionIndex == 1 && !tempCheck)
+                if (questActionIndex == 1 && scanObject == Hodu_2000)
                 {
                     myAnim.SetBool("isComplete", false);
                     questPopupText.text = "여우 잡아오기";

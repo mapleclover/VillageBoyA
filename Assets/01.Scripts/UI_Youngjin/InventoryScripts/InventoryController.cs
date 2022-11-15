@@ -27,7 +27,8 @@ public class InventoryController : MonoBehaviour
         {
             if (obj.transform.childCount > 0)
             {
-                obj.transform.GetChild(0).GetComponent<Pickup>().item.count = 1;
+                DataController.instance.gameData.myItemCount[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName]= 1;
+                
                 //curItems[obj] = obj.transform.GetChild(0).GetComponent<Pickup>().item.count;
             }
         }
@@ -37,7 +38,7 @@ public class InventoryController : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab)||Input.GetKeyDown(KeyCode.I))
         {
             if (v)
             {
@@ -72,6 +73,19 @@ public class InventoryController : MonoBehaviour
         {
             GetItem(curItem[5]);
         }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            GetItem(curItem[6]);
+        }
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            GetItem(curItem[7]);
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            GetItem(curItem[0]);
+        }
+
 
     }
     public void OnClickX()
@@ -137,49 +151,42 @@ public class InventoryController : MonoBehaviour
         if ( DataController.instance.gameData.myItemCount.ContainsKey(theItem.GetComponent<Pickup>().item.itemName))
         {
             Debug.Log("이미있음");
-            theItem.GetComponent<Pickup>().item.count++;
             DataController.instance.gameData.myItemCount[theItem.GetComponent<Pickup>().item.itemName]++;
+            ShowNumbertoUI();
 
         }                                       //이미 내 인벤토리에 있으면 숫자만 더함
        else
         {
-            switch (theItem.GetComponent<ObjData>().id)             //내 인벤토리에 없으면 추가
+            switch (theItem.GetComponent<Pickup>().item.itemName)             //내 인벤토리에 없으면 추가
             {
-                case 100:
+             /*   case "사과":
                     //100: 사과
                     Debug.Log("테스트아이템");
                     ItemAppears(theItem);
                     break;
-                case 101:
-                    Debug.Log("사과");
+             */
+                case "사과":
                     ItemAppears(theItem);
                     break;
-                case 102:
-                    Debug.Log("박스");
+                case "박스":
                     ItemAppears(theItem);
                     break;
-                case 103:
-                    Debug.Log("포션");
+                case "도끼":
                     ItemAppears(theItem);
                     break;
-                case 104:
-                    Debug.Log("별");
+                case "포션":
                     ItemAppears(theItem);
                     break;
-                case 105:
-                    Debug.Log("방패");
+                case "방패":
                     ItemAppears(theItem);
                     break;
-                case 106:
-                    Debug.Log("해골");
+                case "해골":
                     ItemAppears(theItem);
                     break;
-                case 107:
-                    Debug.Log("창");
+                case "창":
                     ItemAppears(theItem);
                     break;
-                case 108:
-                    Debug.Log("검");
+                case "칼":
                     ItemAppears(theItem);
                     break;
 
@@ -187,6 +194,7 @@ public class InventoryController : MonoBehaviour
         }
        
     }
+
     public void ItemAppears(GameObject theItem)
     {
         for (int i = 0; i < mySlots.Length; i++)
@@ -196,7 +204,7 @@ public class InventoryController : MonoBehaviour
 
                
                 GameObject obj = Instantiate(theItem);
-               obj.GetComponent<Pickup>().item.count++;
+               
                obj.transform.SetParent(mySlots[i].transform);
                 obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
