@@ -97,6 +97,7 @@ public class QuestManager : MonoBehaviour
         //questObject[2] = ? 아이콘
         //questObject[3] = 사과2
         //questObject[4] = 듀토리얼 goal
+        //questObject[5] = 미니맵 ! 아이콘
         switch (questId)
         {
             case 10:
@@ -133,6 +134,7 @@ public class QuestManager : MonoBehaviour
                 else if(questActionIndex == 2)
                 {                  
                     questObject[2].SetActive(true); // ? 아이콘
+
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
