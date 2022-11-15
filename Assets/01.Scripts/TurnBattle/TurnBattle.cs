@@ -51,6 +51,10 @@ public class TurnBattle : MonoBehaviour
     Vector3 pos2;
     public int Gold=0;
     public GameObject speedChanger;
+
+    public GameObject[] victoryItemSlots;
+    public GameObject[] myVictoryItems;
+
     public enum State
     {
         Create, Choice, ActiveCheck, Battle, End, GameOver
@@ -122,8 +126,16 @@ public class TurnBattle : MonoBehaviour
                         act.GetComponent<Animator>().SetTrigger("Victory");
                     }
                     GameOverCanvas.SetActive(true);
-                    VictoryImage.SetActive(true);
 
+                    if (SceneLoad.Instance.MonsterType == "Fox")
+                    {
+                        GameObject obj = Instantiate(myVictoryItems[0]);
+                        obj.transform.SetParent(victoryItemSlots[0].transform);
+                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                        obj.transform.localPosition = Vector2.zero;
+                    }
+                    VictoryImage.SetActive(true);
                 }
                 else if (!VictoryCheck)
                 {
@@ -266,6 +278,7 @@ public class TurnBattle : MonoBehaviour
                     DataController.instance.gameData.questClear = true;
                     DataController.instance.gameData.questActionIndex += 1;
                     DataController.instance.gameData.victoryComplete[0] = true;
+                    DataController.instance.gameData.gold += 15;
                 }
 
             }
