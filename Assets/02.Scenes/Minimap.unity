@@ -1293,7 +1293,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1320404926}
   m_FillRect: {fileID: 734375942}
   m_HandleRect: {fileID: 1320404925}
@@ -4871,7 +4871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Minimap: {fileID: 905707325791509859}
-  canVas: {fileID: 1279694521}
+  Canvas: {fileID: 0}
 --- !u!1 &1679093429
 GameObject:
   m_ObjectHideFlags: 0
@@ -34622,6 +34622,7 @@ MonoBehaviour:
   viewAngle: 0
   viewDistance: 0
   _backAttackAngle: 0
+  isBackAttack: 0
   isBattle: 0
   layerMask:
     serializedVersion: 2
@@ -34634,6 +34635,7 @@ MonoBehaviour:
   itemTextBackground: {fileID: 0}
   enemyextBackground: {fileID: 0}
   theManager: {fileID: 0}
+  thePicture: {fileID: 0}
   theGoal: {fileID: 0}
 --- !u!20 &7000753329841568235
 Camera:

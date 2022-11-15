@@ -16,26 +16,37 @@ public class GameData
     public Vector3 currentPosition = new Vector3(-136, 0, -90);          //현재 캐릭터 위치
     public Vector3 currentRotation;
 
-   // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
-    public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
-    public Dictionary<GameObject, Vector3> savedInventory = new Dictionary<GameObject, Vector3>();          //아이템과 몇번째 슬롯인지 저장
-    public Dictionary<string, int> myItem = new Dictionary<string, int>();      // 아이템과 개수
+  // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
+   // public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
+    public Dictionary<string, int> savedInventory = new Dictionary<string, int>();          //아이템과 몇번째 슬롯인지 저장
+    public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // 아이템과 개수
+   
+
+
+    public struct myPartyStats
+    {
+       public  bool isLeader;  //리더 유무
+        public int strength;   //공격력
+        public int defPower;   //방어력
+        public int speed;  //속도
+        public int HP;  //체력
+        public bool isAlive; //생존 여부
+        public List<string> myUsedItems;
+    }
+    public myPartyStats Kong;
+   public myPartyStats Jin;
+    public myPartyStats Ember;
+
+
+
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도
     public int questID = 30; // 퀘스트순서
-    public int questActionIndex; // 퀘스트대화순서.
+    public int questActionIndex = 0; // 퀘스트대화순서.
     public bool questClear = true; // 퀘스트클리어 유무
     public bool isBackAttack; // 빽어택으로 전투돌입인지 아닌지
 
-
-    public int[,] partyStats = new int[3, 2] { { 10,0},{20,0 },{30,0 } };
-    //공격력은 10,20,30 방어력은 다 0으로 초기화
-    //방어력은 그 숫자만큼 데미지를 덜받는다?
-
-    public bool[] isLeader = { true,false,false };                  //누가 리더인지
-    public int[] partyHP = Enumerable.Repeat(100,3).ToArray();          //파티원 개개인의 HP
-    public int[] partySpeed = {10,20,30 };              //파티원 개개인의 speed
-    public bool[] partyMember = Enumerable.Repeat(false, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
+    public bool[] partyMember = Enumerable.Repeat(true, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
     
 }
 public class DataController: MonoBehaviour
@@ -47,29 +58,50 @@ public class DataController: MonoBehaviour
     public int nowSlot;
     public  GameData gameData=new GameData();
     public static DataController instance;
-
     private PlayerMovement thePlayer;
     private QuestManager theQuestManager;
     private ActionController theActionController;
    
     private void Awake()
     {
-        
+
         // File.Delete(filePath);
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else if (instance != null)
         {
             Destroy(this.gameObject);
+            return;
         }
+        DontDestroyOnLoad(gameObject);
+        //  gameData.myInventory = new List<GameData.myPartyItems>();
 
-        for(int i = 0; i < 3; i++)
-        {
-            gameData.partyItems.Add(new List<GameObject>());
-        }
+        gameData.Kong.isLeader = true;
+        gameData.Kong.strength = 10;
+        gameData.Kong.defPower = 0;
+        gameData.Kong.speed = 10;
+        gameData.Kong.HP = 100;
+        gameData.Kong.isAlive = true;
+        gameData.Kong.myUsedItems = new List<string>();
+
+        gameData.Jin.isLeader = false;
+        gameData.Jin.strength = 20;
+        gameData.Jin.defPower = 0;
+        gameData.Jin.speed = 20;
+        gameData.Jin.HP = 100;
+        gameData.Jin.isAlive = true;
+        gameData.Jin.myUsedItems = new List<string>();
+
+        gameData.Ember.isLeader = false;
+        gameData.Ember.strength = 30;
+        gameData.Ember.defPower = 0;
+        gameData.Ember.speed = 30;
+        gameData.Ember.HP = 100;
+        gameData.Ember.isAlive = true;
+        gameData.Ember.myUsedItems = new List<string>();
+
         filePath = Application.persistentDataPath + gamedataFilename;
     }
 
@@ -97,18 +129,27 @@ public class DataController: MonoBehaviour
         theActionController = FindObjectOfType<ActionController>();
 
         //Player position
-     //   gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
-     //   gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
+        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
+        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
 
         //Quest ~ing
-    //    gameData.questID = theQuestManager.questId;
-     //   gameData.questActionIndex = theQuestManager.questActionIndex;
+        gameData.questID = theQuestManager.questId;
+        gameData.questActionIndex = theQuestManager.questActionIndex;
 
-        //BackAttack Battle ? true : false
-        //gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
+       //BackAttack Battle ? true : false
+        gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
 
-
-        //gameData.savedTime = DateTime.Now.ToString();
+        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++)       //인벤토리 저장
+        {
+            GameObject obj = InventoryController.Instance.mySlots[i];
+            if (obj.transform.childCount > 0)
+            {
+                Debug.Log(obj.transform.GetChild(0).name);
+                if (!gameData.savedInventory.ContainsKey(obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName))
+                    gameData.savedInventory[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = i;
+            }
+        }
+        gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData=JsonUtility.ToJson(gameData);     //Json으로 변환
                                                             //  filePath = Application.persistentDataPath + gamedataFilename;
         File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
@@ -123,8 +164,6 @@ public class DataController: MonoBehaviour
    
   public void SaveGameDataByESC(int curSlot)
     {
-        gameData.isLeader[0] = false;
-        gameData.isLeader[1] = true;
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData = JsonUtility.ToJson(gameData);     
                                                              
@@ -143,24 +182,23 @@ public class DataController: MonoBehaviour
         gameData.questID = theQuestManager.questId;
         gameData.questClear = theQuestManager.questComplete;
         gameData.questActionIndex = theQuestManager.questActionIndex;
+        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++)
+        {
+            GameObject obj = InventoryController.Instance.mySlots[i];
+            if (obj.transform.childCount > 0)
+            {
+                GameObject thisitem = obj.transform.GetChild(0).gameObject;
+                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName)) gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
 
+                //DontDestroyOnLoad(thisitem);
+
+                Debug.Log($"{thisitem.name} 저장됨");
+            }
+        }
 
     }
 
-    //배틀 씬으로 전달 값
-    //myItems["포션"] : int 값으로 포션 개수 
-    //partyStats : int[,] 값으로 전투에 직접적 영향         [공격력,방어력]
-    //partyHP   : int[]
-    //partySpeed    : int[]
-
-    //partyMember : bool값, 죽은 멤버가 있을 경우 필요하지 않나
-    // isLeader: bool값, 리더에 따라 멤버들의 위치가 달라질 경우 전달
-
-
-
-
-
-
+   
 
 
     /*  private void OnApplicationQuit()

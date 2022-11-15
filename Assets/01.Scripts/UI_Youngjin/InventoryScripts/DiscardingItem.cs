@@ -52,23 +52,25 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     public void OnClickYesDiscard()
     {
         GameObject selectedItem = this.transform.GetChild(0).gameObject;
-        if (DataController.instance.gameData.partyItems[0].Contains(selectedItem))
+        string thisname = selectedItem.GetComponent<Pickup>().item.itemName;
+        if (DataController.instance.gameData.Kong.myUsedItems.Contains(thisname))
         {
-            DataController.instance.gameData.partyItems[0].Remove(selectedItem);
+            DataController.instance.gameData.Kong.myUsedItems.Remove(thisname);
         }
-        else if (DataController.instance.gameData.partyItems[1].Contains(selectedItem))
+        else if (DataController.instance.gameData.Jin.myUsedItems.Contains(thisname))
         {
-            DataController.instance.gameData.partyItems[1].Remove(selectedItem);
+            DataController.instance.gameData.Jin.myUsedItems.Remove(thisname);
         }
-        else if (DataController.instance.gameData.partyItems[2].Contains(selectedItem))
+        else if (DataController.instance.gameData.Ember.myUsedItems.Contains(thisname))
         {
-            DataController.instance.gameData.partyItems[2].Remove(selectedItem);
+            DataController.instance.gameData.Ember.myUsedItems.Remove(thisname);
         }
 
+        DataController.instance.gameData.savedInventory.Remove(selectedItem.GetComponent<Pickup>().item.itemName);
 
-        DataController.instance.gameData.savedInventory.Remove(selectedItem);
+        DataController.instance.gameData.myItemCount[selectedItem.GetComponent<Pickup>().item.itemName]--;
         Destroy(selectedItem);
-
+        
         myPanel.SetActive(false);
     }
     public void OnClickNoDiscard()

@@ -238,11 +238,13 @@ public class ActionController : MonoBehaviour
 
                 DataController.instance.SaveData();
                 SceneLoad.Instance.ToBattleScene(isBackAttack, hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2,4) 
-                                                                   ,hitInfo.transform.GetComponent<Pickup>().enemy.monsterSpeed) ;
+                                                                   ,hitInfo.transform.GetComponent<Pickup>().enemy.Speed) ;
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************
-                
+
                 //SceneLoad.Instance.ChangeScene(4);
+
+                //int myPotions, int KongStrength,int JinStrength,int EmberStrength,int KongDef, int JinDef, int EmberDef, int KongSpeed, int JinSpeed,int EmberSpeed, int KongHP, int JinHP, int EmberHP, int KongisAlive,int JinisAlive,int EmberisAlive
             }
         }
         else if (theManager.isAction)

@@ -64,6 +64,7 @@ public class Monster : CharacterMoveMent
                 myAnim.SetBool("IsWalking", true);
                 break;
             case STATE.BATTLE:
+                myAnim.SetBool("IsWalking", true);
                 theEnemyAI.ChaseTarget(myTarget);
                 break;
             case STATE.DEAD:

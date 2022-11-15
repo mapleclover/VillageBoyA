@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
+
 
 public class SceneLoad : MonoBehaviour
 {
@@ -45,6 +48,8 @@ public class SceneLoad : MonoBehaviour
     private GameObject player;
     private GameObject camera;
     private QuestManager theQuestManager;
+    private GameObject myInven;
+    private Transform mySlots;
 
 
     private void OnEnable()
@@ -62,8 +67,10 @@ public class SceneLoad : MonoBehaviour
         {
             player = GameObject.Find("Summons(Final)");
             camera = GameObject.Find("Camera");
+            myInven = GameObject.Find("Inventory 1");
+            mySlots = myInven.transform.GetChild(0);
             theQuestManager = FindObjectOfType<QuestManager>();
-            
+
             //플레이어 위치값
             player.transform.position = DataController.instance.gameData.currentPosition;
             player.transform.eulerAngles = DataController.instance.gameData.currentRotation;
@@ -74,13 +81,36 @@ public class SceneLoad : MonoBehaviour
             theQuestManager.questComplete = DataController.instance.gameData.questClear;
             //if (theQuestManager.questComplete)
             //{
-            theQuestManager.questActionIndex = ++DataController.instance.gameData.questActionIndex;
+            theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
+            theQuestManager.ControlObject();
+            theQuestManager.ControlPopup();
             //}
             //else
-                //theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
-
+            //theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
+            foreach (KeyValuePair<string, int> items in DataController.instance.gameData.savedInventory)
+            {
+                for (int i = 0; i < InventoryController.Instance.curItem.Count; i++)
+                {
+                    if (InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.itemName == items.Key)
+                    {
+                        GameObject obj = Instantiate(InventoryController.Instance.curItem[i]);
+                        obj.transform.SetParent(mySlots.transform.GetChild(items.Value));
+                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                        obj.transform.localPosition = Vector2.zero;
+                    }
+                    if (InventoryController.Instance.curItem[i].layer == 7)
+                    {
+                        if (DataController.instance.gameData.Kong.myUsedItems.Contains(items.Key))
+                        {
+                            //UI에 표시
+                        }
+                    }
+                }
+            }
 
         }
+   
     }
 
     public void ChangeScene(int i)
@@ -100,6 +130,7 @@ public class SceneLoad : MonoBehaviour
 
     public void ToBattleScene(bool backAttack, string monsterType , int monsterCount, int monsterSpeed)
     {
+       
         BackAttack = backAttack;
         MonsterType = monsterType;
         MonsterCount = monsterCount;

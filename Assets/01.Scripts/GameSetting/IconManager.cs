@@ -1,26 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class IconManager : MonoBehaviour
 {
-    public IconManager myIconManager;
-    public void Initialize(Transform target, Color color)
+
+    MinimapIcon my_Icon = null;
+    // Start is called before the first frame update
+    void Start()
     {
-        StartCoroutine(Following(target, color));
+        GameObject obj = Instantiate(Resources.Load("Prefabs/MinimapIcon"), SceneData.Inst.Minimap) as GameObject;
+        my_Icon = obj.GetComponent<MinimapIcon>();
+        my_Icon.Initialize(transform, Color.green);
     }
-    public IEnumerator Following(Transform target, Color color)
+
+    // Update is called once per frame
+    void Update()
     {
-        Vector2 size = transform.parent.GetComponent<RectTransform>().sizeDelta;
-        RectTransform rt = GetComponent<RectTransform>();
-        Debug.Log(Camera.allCameras[1].name);
-        while (target != null)
-        {
-            
-            Vector3 pos = Camera.allCameras[1].WorldToViewportPoint(target.position);
-            rt.anchoredPosition = pos * size;
-            yield return null;
-        }
+        
     }
 }

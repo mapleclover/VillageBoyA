@@ -6,9 +6,9 @@ public class QuestManager : MonoBehaviour
 {
     public int questId;
     public bool questComplete;
+    private bool tempCheck; // 퀘스트컴플리트 저장용 임시변수
     public int questActionIndex; // 퀘스트npc대화순서 변수
     private Animator myAnim;
-    private ObjData theObjectData;
     public GameObject[] questObject;
 
     
@@ -38,6 +38,7 @@ public class QuestManager : MonoBehaviour
         
     }
 
+
     private void GenerateData()
     {
         questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
@@ -59,8 +60,10 @@ public class QuestManager : MonoBehaviour
                 questActionIndex++;  //인덱스순서를주지않으면 A를거치고 B를가야하는데 A안거치고 B가도되기때문.
         }
         //Control Quest Object
-        ControlObject(scanObject);
+        tempCheck = questComplete;
         ControlPopup(scanObject);
+        ControlObject(scanObject);
+        
 
         //Talk Complete & Next Quest
         if (questActionIndex == questList[questId].npcId.Length)//npcId의배열? -> 퀘스트진행시 다뤄야할 대화
@@ -83,7 +86,7 @@ public class QuestManager : MonoBehaviour
     }
 
    
-    private void ControlObject(GameObject scanObject)
+    public void ControlObject(GameObject scanObject = null)
     {
         //questObject[0] = 사과
         //questObject[1] = ! 아이콘
@@ -101,7 +104,7 @@ public class QuestManager : MonoBehaviour
                     questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
                     questObject[4].transform.position = new Vector3(291.0f, 1.1f, 222.0f); // goal지접이동
                 }
-                if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
+                else if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
                 {                   
                     questObject[1].SetActive(false);
                     questObject[0].SetActive(true); // 사과 1 
@@ -109,14 +112,20 @@ public class QuestManager : MonoBehaviour
                 }
                 break;
             case 20:
-                if (questActionIndex == 1)
+                if (questActionIndex == 0) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
+                {
+                    questObject[1].SetActive(false);
+                    questObject[0].SetActive(true); // 사과 1 
+                    questObject[3].SetActive(true); // 사과 2
+                }
+                else if (questActionIndex == 1)
                 {                    
                     if (scanObject.GetComponent<ObjData>().id == 100)
                     {
                         Destroy(scanObject); // 사과
                     }
                 }
-                if(questActionIndex == 2)
+                else if(questActionIndex == 2)
                 {                  
                     questObject[2].SetActive(true); // ? 아이콘
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
@@ -125,30 +134,36 @@ public class QuestManager : MonoBehaviour
                         Destroy(scanObject); // 사과
                     }
                 }
-                if(questActionIndex == 3)
+                else if(questActionIndex == 3)
                 {                   
                     questObject[2].SetActive(false); // ? 사라지게.                    
                     questObject[4].SetActive(true);                 
                     Goal.goalCounting++; 
                 }
                 break;
-            case 30:                          
-                if(questActionIndex == 1)
+            case 30:
+                if (questActionIndex == 0)
+                {
+                    questObject[1].SetActive(true);
+                    questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
+                }
+                if (questActionIndex == 1 && tempCheck)
                 {
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                 }
-                if(questActionIndex == 1 && !questComplete)
+                if(questActionIndex == 1 && !tempCheck)
                     questObject[1].SetActive(false);
-                if (questActionIndex == 2 && questComplete)
+                if (questActionIndex == 2)
                 {
                     questObject[2].SetActive(true); // 호두 위에 ? 아이콘
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
+                    questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
                 }
                 break;
         }
     }
 
-    private void ControlPopup(GameObject scanObject)
+    public void ControlPopup(GameObject scanObject = null)
     {
         // myAnim => 퀘스트완료깜빡이.
         switch (questId)
@@ -180,14 +195,20 @@ public class QuestManager : MonoBehaviour
                 }
                 break;
             case 30:
-                if (questActionIndex == 1)
+                if (questActionIndex == 0)
+                {
+                    questPopupText.text = "클레와 대화하기";
+                }
+                if (questActionIndex == 1 && tempCheck)
                 {
                     questComplete = false;
                     questPopupText.text = "호두와 대화하기";
-                    myAnim.SetBool("isComplete", false);
                 }
-                if(questActionIndex == 1 && !questComplete)
+                if (questActionIndex == 1 && !tempCheck)
+                {
+                    myAnim.SetBool("isComplete", false);
                     questPopupText.text = "여우 잡아오기";
+                }
                 if (questActionIndex == 2)
                     questPopupText.text = "호두에게 가기";
                 if (questActionIndex == 3)

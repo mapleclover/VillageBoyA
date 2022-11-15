@@ -8,7 +8,15 @@ public class EnemySC : ScriptableObject
     public string enemyName;
     public EnemyType enemyType;
     public float moveSpeed;
-    public int monsterSpeed;
+    [field: SerializeField] public float HP
+    {
+        get;
+        private set;
+    }
+    public int Speed;
+    public float[] AttackDmg = new float[3];
+    public float Defend;
+    public bool[] longAttack = new bool[3];
     public GameObject enemyPrefab;
     
 
@@ -19,3 +27,4 @@ public class EnemySC : ScriptableObject
         Boss
     }
 }
+
