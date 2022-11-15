@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Playables;
+
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController Instance;
@@ -11,6 +13,7 @@ public class InventoryController : MonoBehaviour
     public GameObject[] mySlots;
     public GameObject myInfoBox;
     public GameObject itemCount;
+    public TMPro.TMP_Text myGold;
    //datacontroller에 추가
    //
    public Dictionary<GameObject, int>curItems;
@@ -23,7 +26,8 @@ public class InventoryController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-       foreach(GameObject obj in mySlots)
+        DataController.instance.gameData.gold = 0;
+        foreach (GameObject obj in mySlots)
         {
             if (obj.transform.childCount > 0)
             {
@@ -45,7 +49,7 @@ public class InventoryController : MonoBehaviour
                 //  myItem["해골"]++;
                 //해골로 테스트
                 ShowNumbertoUI();
-              
+                ShowMyGold();
             }
             myInventory.SetActive(v);
             if (v) v = false;
@@ -246,6 +250,10 @@ public class InventoryController : MonoBehaviour
                 }
             }
         }
+    }
+    public void ShowMyGold()
+    {
+        myGold.text = $"x{DataController.instance.gameData.gold}";
     }
     
 }
