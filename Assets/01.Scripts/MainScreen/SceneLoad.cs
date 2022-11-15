@@ -134,6 +134,13 @@ public class SceneLoad : MonoBehaviour
                     }
                 }
             }
+            for(int i = 0; i < DataController.instance.gameData.victoryComplete.Length; i++)
+            {
+                if (DataController.instance.gameData.victoryComplete[i])
+                {
+                    InventoryController.Instance.GetItem(InventoryController.Instance.curItem[8]);
+                }
+            }
 
         }
         else if(scene.name == "H_H")

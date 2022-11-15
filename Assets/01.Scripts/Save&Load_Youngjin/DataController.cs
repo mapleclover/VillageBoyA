@@ -11,7 +11,7 @@ public class GameData
     public int myProgress = 0;          //진행도
     public string savedTime;            //저장한 시간
     public string mapName = "FirstVillage";           //현재 마을
-
+    public bool[] victoryComplete = Enumerable.Repeat(false, 6).ToArray();
 
 
     public Vector3 currentPosition = new Vector3(-136, 0, -90);          //현재 캐릭터 위치

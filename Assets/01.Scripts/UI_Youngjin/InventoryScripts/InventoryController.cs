@@ -193,6 +193,9 @@ public class InventoryController : MonoBehaviour
                 case "Ä®":
                     ItemAppears(theItem);
                     break;
+                case "¿©¿ì²¿¸®":
+                    ItemAppears(theItem);
+                    break;
 
             }
         }
