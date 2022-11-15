@@ -46,9 +46,9 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
             }
             myText.text = $"{this.transform.name} has gained +{temp.GetComponent<Pickup>().item.value}hp!";      //회복됐다는 알림
             StartCoroutine(UsedPotion());
-            if (temp.GetComponent<Pickup>().item.count > 1 && DataController.instance.gameData.myItemCount[temp.GetComponent<Pickup>().item.itemName]>1)
+            if ( DataController.instance.gameData.myItemCount[temp.GetComponent<Pickup>().item.itemName]>1)
             {
-               temp.GetComponent<Pickup>().item.count--;       //포션이 2개 이상이면 destroy 대신 -1
+                   //포션이 2개 이상이면 destroy 대신 -1
                 DataController.instance.gameData.myItemCount[temp.GetComponent<Pickup>().item.itemName]--;
                 InventoryController.Instance.ShowNumbertoUI();
             }
