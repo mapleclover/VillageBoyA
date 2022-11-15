@@ -259,15 +259,15 @@ public class TurnBattle : MonoBehaviour
     {
         if (VictoryCheck)
         {
-            if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
+            if (DataController.instance.gameData.questID == 30 &&DataController.instance.gameData.questActionIndex == 1)
             {
                 if (SceneLoad.Instance.MonsterType == "Fox")
                 {
                     DataController.instance.gameData.questClear = true;
                     DataController.instance.gameData.questActionIndex += 1;
                     DataController.instance.gameData.victoryComplete[0] = true;
-                    
                 }
+
             }
             SceneLoad.Instance.ChangeScene("06.Field");
         }
