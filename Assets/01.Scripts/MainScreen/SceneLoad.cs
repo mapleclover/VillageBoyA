@@ -208,6 +208,7 @@ public class SceneLoad : MonoBehaviour
         MonsterSpeed = monsterSpeed;
         if (!isChange)
         {
+            StopAllCoroutines();
             StartCoroutine(Loading("05.Battle"));
         }
     }
