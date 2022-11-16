@@ -129,11 +129,13 @@ public class TurnBattle : MonoBehaviour
 
                     if (SceneLoad.Instance.MonsterType == "Fox")
                     {
-                        GameObject obj = Instantiate(myVictoryItems[0]);
-                        obj.transform.SetParent(victoryItemSlots[0].transform);
-                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-                        obj.transform.localPosition = Vector2.zero;
+                       GameObject obj = Instantiate(myVictoryItems[0]);
+                        RawImage img = obj.GetComponentInChildren<RawImage>();
+                        img.transform.SetParent(victoryItemSlots[0].transform);
+                      img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        img.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                       img.transform.localPosition = Vector2.zero;
+                        Destroy(obj);
                     }
                     VictoryImage.SetActive(true);
                 }
