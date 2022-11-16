@@ -63,18 +63,14 @@ public class ShopManager : MonoBehaviour
 
     public void BuyItem(int count)
     {
-<<<<<<< HEAD
-        GoldAmount -= cost;
+
         GoldText.text = "소유 골드 : " + GoldAmount.ToString();
-        //여기에 인벤토리에 산 아이템 추가하는 기능 추가
-        //Add(itemList[itemIndex]);
-        DataController.instance.gameData.gold -= cost;
-        InventoryController.Instance.GetItem(itemList[itemIndex].itemPrefab);
-=======
         GoldAmount -= count * itemList[itemIndex].itemPrice;
         GoldText.text = $"소유 골드 : {GoldAmount}";
         //여기에 인벤토리에 산 아이템만큼 추가하는 기능 추가
         //Add(itemList[itemIndex] * count);
->>>>>>> d77e0a65a479f78ed06f01dcaf6d9f20586565eb
+        DataController.instance.gameData.gold =GoldAmount;
+        InventoryController.Instance.GetItem(itemList[itemIndex].itemPrefab);
+        DataController.instance.gameData.myItemCount[itemList[itemIndex].itemName] = count;
     }
 }
