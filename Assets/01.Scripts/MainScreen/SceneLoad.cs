@@ -271,6 +271,7 @@ public class SceneLoad : MonoBehaviour
         {
             GameObject monster = GameObject.Find(battleResult.Name);
             monster.GetComponent<Monster>().ChangeState(Monster.STATE.DEAD);
+            StopAllCoroutines();
             StartCoroutine(MonsterRegeneration(monster));
         }
     }
