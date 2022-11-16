@@ -284,7 +284,9 @@ public class TurnBattle : MonoBehaviour
                 }
 
             }
+            SceneLoad.Instance.battleResult.victory = true;
             SceneLoad.Instance.ChangeScene("06.Field");
+
         }
     }
     void InstantiatePlayerCharacter()

@@ -267,9 +267,9 @@ public class SceneLoad : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;            
         }
 
-        //if(battleResult.victory)
-        //{
-        //    GameObject.Find(battleResult.Name).GetComponent
-        //}
+        if (battleResult.victory)
+        {
+            GameObject.Find(battleResult.Name).GetComponent<Monster>().ChangeState(Monster.STATE.DEAD);
+        }
     }
 }
