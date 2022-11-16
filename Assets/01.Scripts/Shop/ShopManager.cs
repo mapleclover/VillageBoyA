@@ -17,7 +17,7 @@ public class ShopManager : MonoBehaviour
 
     private void OpenUpShop()
     {
-        //GoldAmount = DataController.instance.gameData.gold;
+        GoldAmount = DataController.instance.gameData.gold;
         GoldText.text = $"소유 골드 : {GoldAmount}";
     }
 
