@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ShopManager : MonoBehaviour
 {
@@ -66,5 +67,7 @@ public class ShopManager : MonoBehaviour
         GoldText.text = "소유 골드 : " + GoldAmount.ToString();
         //여기에 인벤토리에 산 아이템 추가하는 기능 추가
         //Add(itemList[itemIndex]);
+        DataController.instance.gameData.gold -= cost;
+        InventoryController.Instance.GetItem(itemList[itemIndex].itemPrefab);
     }
 }
