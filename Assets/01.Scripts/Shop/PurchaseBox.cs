@@ -56,7 +56,7 @@ public class PurchaseBox : MonoBehaviour
 
     public void DecideBuy()
     {
-        myShopManager.BuyItem(totalCost);
+        myShopManager.BuyItem((int)QuantitySlider.value);
         this.gameObject.SetActive(false);
     }
 
