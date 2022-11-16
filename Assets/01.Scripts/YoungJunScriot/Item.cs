@@ -1,14 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ItemLevel //°­È­ ·¹º§ 5±îÁö
+[Serializable]
+public struct ItemDataSample
+{
+    public Item orgData;
+    public ItemLevel level;
+    public float GetUpgradeProb()
+    {
+        return orgData.possibility[(int)level];
+    }
+}
+
+public enum ItemLevel //ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½
 {
     Level_1, Level_2, Level_3, Level_4, Level_5
 }
 
-public enum EnhanceableItem // °­È­ °¡´É ¾ÆÀÌÅÛÀÎÁö
+public enum EnhanceableItem // ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
     Possible, Impossible
 }
@@ -25,28 +37,28 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public int value;
 
-    // °­È­ ---------------------------------
+    // ï¿½ï¿½È­ ---------------------------------
 
     [Header("------Enhancement-------")]
-    // ¿ÜºÎ¼öÁ¤ºÒ°¡
+    // ï¿½ÜºÎ¼ï¿½ï¿½ï¿½ï¿½Ò°ï¿½
     [SerializeField] EnhanceableItem _enhanceableItem;
-    public EnhanceableItem enhanceableItem // °­È­ °¡´É ÇÑ ¾ÆÀÌÅÛÀÎÁö
+    public EnhanceableItem enhanceableItem // ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         get => _enhanceableItem;
     }
-    [SerializeField] float[] _possibility; // È®·ü
+    [SerializeField] float[] _possibility; // È®ï¿½ï¿½
     public float[] possibility
     {
         get => _possibility;
     }
 
-    // ¿ÜºÎ¼öÁ¤
-    public int[] AP; // °ø°Ý·Â
-    public int[] EnchantCost; // °­È­ºñ¿ë
-    public ItemLevel itemLevel; // ¾ÆÀÌÅÛ ·¹º§ 5±îÁö ¼³Á¤
+    // ï¿½ÜºÎ¼ï¿½ï¿½ï¿½
+    public int[] AP; // ï¿½ï¿½ï¿½Ý·ï¿½
+    public int[] EnchantCost; // ï¿½ï¿½È­ï¿½ï¿½ï¿½
+    public ItemLevel itemLevel; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public bool CheckSuccess(int level)
     {
-        float rnd = Random.Range(0f, 100f);
+        float rnd = UnityEngine.Random.Range(0f, 100f);
         if (rnd < _possibility[level])
         {
             return true;
@@ -54,7 +66,7 @@ public class Item : ScriptableObject
         return false;
     }
 
-    // °­È­ ----------------------------------
+    // ï¿½ï¿½È­ ----------------------------------
 
 
     
