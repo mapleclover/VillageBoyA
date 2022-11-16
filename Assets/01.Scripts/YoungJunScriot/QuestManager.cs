@@ -181,7 +181,8 @@ public class QuestManager : MonoBehaviour
                 {                  
                     questObject[2].SetActive(true); // 호두 위에 ? 아이콘
 
-                  
+                    questObject[6] = Instantiate(Resources.Load("Prefabs/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[6].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
 
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);

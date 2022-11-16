@@ -1,7 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+[Serializable]
+public struct ItemDataSample
+{
+    public Item orgData;
+    public ItemLevel level;
+    public float GetUpgradeProb()
+    {
+        return orgData.possibility[(int)level];
+    }
+}
 
 public enum ItemLevel //강화 레벨 5까지
 {
@@ -27,6 +39,7 @@ public class Item : ScriptableObject
 
     // 강화 ---------------------------------
 
+    [Header("------Enhancement-------")]
     // 외부수정불가
     [SerializeField] EnhanceableItem _enhanceableItem;
     public EnhanceableItem enhanceableItem // 강화 가능 한 아이템인지
@@ -43,8 +56,6 @@ public class Item : ScriptableObject
     public int[] AP; // 공격력
     public int[] EnchantCost; // 강화비용
     public ItemLevel itemLevel; // 아이템 레벨 5까지 설정
-     
-
     public bool CheckSuccess(int level)
     {
         float rnd = Random.Range(0f, 100f);
@@ -57,6 +68,8 @@ public class Item : ScriptableObject
 
     // 강화 ----------------------------------
 
+
+    
     public enum NpcType
     {
         Weapon,

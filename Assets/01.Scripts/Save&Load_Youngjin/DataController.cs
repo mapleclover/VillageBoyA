@@ -1,131 +1,128 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+using System.Collections.Generic;                                           
+using System.IO;        //Æú´õ ¾È ÀúÀåµÈ ÆÄÀÏ È®ÀÎ
 using System.Linq;
 using TMPro;
 using UnityEngine;
-
 [Serializable]
 public class GameData
-{
-    //ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ 2ï¿½ï¿½ ï¿½Ú¹ï¿½
-    public int myProgress = 0; //ï¿½ï¿½ï¿½àµµ
-    public string savedTime; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
-    public string mapName = "FirstVillage"; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+{                                                                                                               //¸ðµç ¹è¿­Àº 0ÀÌ Äá 1ÀÌ Áø 2°¡ ¾Ú¹ö
+    public int myProgress = 0;          //ÁøÇàµµ
+    public string savedTime;            //ÀúÀåÇÑ ½Ã°£
+    public string mapName = "FirstVillage";           //ÇöÀç ¸¶À»
     public bool[] victoryComplete = Enumerable.Repeat(false, 6).ToArray();
 
 
-    public Vector3 currentPosition = new Vector3(-136, 0, -90); //ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    public Vector3 currentPosition = new Vector3(-136, 0, -90);          //ÇöÀç Ä³¸¯ÅÍ À§Ä¡
     public Vector3 currentRotation;
 
-    public Dictionary<string, int> savedInventory = new Dictionary<string, int>(); //ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-    public Dictionary<string, int> myItemCount = new Dictionary<string, int>(); // ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½
-    public int gold = 0;
+    public Dictionary<string, int> savedInventory = new Dictionary<string, int>();          //¾ÆÀÌÅÛ°ú ¸î¹øÂ° ½½·ÔÀÎÁö ÀúÀå
+    public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // ¾ÆÀÌÅÛ°ú °³¼ö
+    public int gold=0;
 
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½È­ È½ï¿½ï¿½, ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    //¾ÆÀÌÅÛ ±¸Á¶Ã¼: ½½·Ô ¹øÈ£, °³¼ö, °­È­ È½¼ö, °­È­µÈ ½ºÅÈ
 
-    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: DataController.instance.gameData.myItemCount["ï¿½ï¿½ï¿½ï¿½"]
+    //Æ÷¼Ç °³¼ö: DataController.instance.gameData.myItemCount["Æ÷¼Ç"]
 
     public struct myPartyStats
     {
-        public bool isLeader; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-        public int strength; //ï¿½ï¿½ï¿½Ý·ï¿½
-        public int defPower; //ï¿½ï¿½ï¿½ï¿½
-        public int speed; //ï¿½Óµï¿½
-        public int HP; //Ã¼ï¿½ï¿½
-        public bool isAlive; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+       public  bool isLeader;  //¸®´õ À¯¹«
+        public int strength;   //°ø°Ý·Â
+        public int defPower;   //¹æ¾î·Â
+        public int speed;  //¼Óµµ
+        public int HP;  //Ã¼·Â
+        public bool isAlive; //»ýÁ¸ ¿©ºÎ
         public List<string> myUsedItems;
     }
-
     public myPartyStats Kong;
-    public myPartyStats Jin;
+   public myPartyStats Jin;
     public myPartyStats Ember;
 
 
-    //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½àµµ
-    public int questID = 30; // ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½
-    public int questActionIndex = 0; // ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½.
-    public bool questClear = true; // ï¿½ï¿½ï¿½ï¿½Æ®Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-    public bool isBackAttack; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ï¿½ï¿½
 
-    public bool[]
-        partyMember = Enumerable.Repeat(true, 3).ToArray(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ç¸ï¿½ TRUEï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ false?
+
+    //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //Äù½ºÆ® ÁøÇàµµ
+    public int questID = 30; // Äù½ºÆ®¼ø¼­
+    public int questActionIndex = 0; // Äù½ºÆ®´ëÈ­¼ø¼­.
+    public bool questClear = true; // Äù½ºÆ®Å¬¸®¾î À¯¹«
+    public bool isBackAttack; // »ª¾îÅÃÀ¸·Î ÀüÅõµ¹ÀÔÀÎÁö ¾Æ´ÑÁö
+
+    public bool[] partyMember = Enumerable.Repeat(true, 3).ToArray(); //°ÔÀÓ Áß¿¡ ÆÄÆ¼¿øÀÌ Ãß°¡µÇ¸é TRUE·Î ¹Ù²ãÁà¾ßÇÔ, Á×À¸¸é false?
+    
 }
-
-public class DataController : MonoBehaviour
+public class DataController: MonoBehaviour
 {
-    // static GameObject _container;
-    public string gamedataFilename = "VillageBoyA.json"; //.json ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+    
+   // static GameObject _container;
+    public string gamedataFilename = "VillageBoyA.json";       //.json ¾Õ¿¡ °ÔÀÓ µ¥ÀÌÅÍ ÆÄÀÏ ÀÌ¸§ ¼³Á¤
     public string filePath;
     public int nowSlot;
-    public GameData gameData = new GameData();
+    public  GameData gameData=new GameData();
     public static DataController instance;
     private PlayerMovement thePlayer;
     private QuestManager theQuestManager;
     private ActionController theActionController;
-
+   
     private void Awake()
     {
+
         // File.Delete(filePath);
         if (instance == null)
         {
             instance = this;
+            gameData.Kong.isLeader = true;
+            gameData.Kong.strength = 10;
+            gameData.Kong.defPower = 0;
+            gameData.Kong.speed = 10;
+            gameData.Kong.HP = 100;
+            gameData.Kong.isAlive = true;
+            gameData.Kong.myUsedItems = new List<string>();
+
+            gameData.Jin.isLeader = false;
+            gameData.Jin.strength = 20;
+            gameData.Jin.defPower = 0;
+            gameData.Jin.speed = 20;
+            gameData.Jin.HP = 100;
+            gameData.Jin.isAlive = true;
+            gameData.Jin.myUsedItems = new List<string>();
+
+            gameData.Ember.isLeader = false;
+            gameData.Ember.strength = 30;
+            gameData.Ember.defPower = 0;
+            gameData.Ember.speed = 30;
+            gameData.Ember.HP = 100;
+            gameData.Ember.isAlive = true;
+            gameData.Ember.myUsedItems = new List<string>();
         }
         else if (instance != null)
         {
             Destroy(this.gameObject);
             return;
         }
-
         DontDestroyOnLoad(gameObject);
         //  gameData.myInventory = new List<GameData.myPartyItems>();
-
-        gameData.Kong.isLeader = true;
-        gameData.Kong.strength = 10;
-        gameData.Kong.defPower = 0;
-        gameData.Kong.speed = 10;
-        gameData.Kong.HP = 100;
-        gameData.Kong.isAlive = true;
-        gameData.Kong.myUsedItems = new List<string>();
-
-        gameData.Jin.isLeader = false;
-        gameData.Jin.strength = 20;
-        gameData.Jin.defPower = 0;
-        gameData.Jin.speed = 20;
-        gameData.Jin.HP = 100;
-        gameData.Jin.isAlive = true;
-        gameData.Jin.myUsedItems = new List<string>();
-
-        gameData.Ember.isLeader = false;
-        gameData.Ember.strength = 30;
-        gameData.Ember.defPower = 0;
-        gameData.Ember.speed = 30;
-        gameData.Ember.HP = 100;
-        gameData.Ember.isAlive = true;
-        gameData.Ember.myUsedItems = new List<string>();
-        filePath = Application.persistentDataPath + gamedataFilename;
-
-        gameData.gold = 0;
+            filePath = Application.persistentDataPath + gamedataFilename;
+ 
     }
 
+    
 
     public void LoadGameData()
     {
-        if (File.Exists(filePath + nowSlot.ToString()))
+        if (File.Exists(filePath+nowSlot.ToString()))
         {
-            Debug.Log("ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½");
-            string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
-            gameData = JsonUtility.FromJson<GameData>(FromJsonData); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½
-            //Jsonï¿½ï¿½ dataÅ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.Log("ºÒ·¯¿À±â");
+            string FromJsonData=File.ReadAllText(filePath+nowSlot.ToString());
+            gameData = JsonUtility.FromJson<GameData>(FromJsonData);   //ÆÄÀÏÀÌ ÀÖÀ¸¸é ºÒ·¯¿È
+               //JsonÀ» dataÅ¬·¡½º·Î º¹±¸
         }
         else
         {
-            Debug.Log("ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
-            gameData = new GameData(); //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Debug.Log("»õ·Î¿î ÆÄÀÏ »ý¼º");
+            gameData = new GameData();     //ÀúÀåµÈ ÆÄÀÏÀÌ ¾øÀ¸¸é »õ·Î ¸¸µê
         }
     }
-
     public void SaveGameData()
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
@@ -133,49 +130,46 @@ public class DataController : MonoBehaviour
         theActionController = FindObjectOfType<ActionController>();
 
         //Player position
-        gameData.currentPosition = thePlayer.transform.position; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½.
-        gameData.currentRotation = thePlayer.transform.eulerAngles; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ rotï¿½ï¿½.
+        gameData.currentPosition = thePlayer.transform.position; //ÇÃ·¹ÀÌ¾îÁÂÇ¥°ª.
+        gameData.currentRotation = thePlayer.transform.eulerAngles; // ÇÃ·¹ÀÌ¾î rot°ª.
 
         //Quest ~ing
         gameData.questID = theQuestManager.questId;
         gameData.questActionIndex = theQuestManager.questActionIndex;
 
-        //BackAttack Battle ? true : false
-        gameData.isBackAttack = theActionController.isBackAttack; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
+       //BackAttack Battle ? true : false
+        gameData.isBackAttack = theActionController.isBackAttack; // »ª¾îÅÃÀ¸·Î ÀüÅõµ¹ÀÔÀÎ°¡?
 
-        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++) //ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½
+        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++)       //ÀÎº¥Åä¸® ÀúÀå
         {
             GameObject obj = InventoryController.Instance.mySlots[i];
             if (obj.transform.childCount > 0)
             {
                 Debug.Log(obj.transform.GetChild(0).name);
-                if (!gameData.savedInventory.ContainsKey(obj.transform.GetChild(0).GetComponent<Pickup>().item
-                        .itemName))
+                if (!gameData.savedInventory.ContainsKey(obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName))
                     gameData.savedInventory[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = i;
             }
         }
-
         gameData.savedTime = DateTime.Now.ToString();
-        string ToJsonData = JsonUtility.ToJson(gameData); //Jsonï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
-        //  filePath = Application.persistentDataPath + gamedataFilename;
+        string ToJsonData=JsonUtility.ToJson(gameData);     //JsonÀ¸·Î º¯È¯
+                                                            //  filePath = Application.persistentDataPath + gamedataFilename;
         File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
-        Debug.Log("ï¿½ï¿½ï¿½ï¿½"); //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î¾¸
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+        Debug.Log("ÀúÀå");        //ÀúÀåµÈ ÆÄÀÏÀÌ ÀÖÀ¸¸é µ¤¾î¾¸
+                                 //°ÔÀÓ ½ÇÇà ÈÄ ÀúÀåµÈ ÆÄÀÏ ¾øÀ¸¸é µ¥ÀÌÅÍ ÆÄÀÏÀ» ¸¸µé±â ¶§¹®¿¡ °è¼Ó µ¤¾î ¾¸
     }
-
     public void DataClear()
     {
         nowSlot = -1;
         gameData = new GameData();
     }
-
-    public void SaveGameDataByESC(int curSlot)
+   
+  public void SaveGameDataByESC(int curSlot)
     {
         gameData.savedTime = DateTime.Now.ToString();
-        string ToJsonData = JsonUtility.ToJson(gameData);
-
+        string ToJsonData = JsonUtility.ToJson(gameData);     
+                                                             
         File.WriteAllText(filePath + curSlot.ToString(), ToJsonData);
-        Debug.Log("ï¿½ï¿½ï¿½ï¿½");
+        Debug.Log("ÀúÀå");       
     }
 
     public void SaveData()
@@ -183,8 +177,8 @@ public class DataController : MonoBehaviour
         thePlayer = FindObjectOfType<PlayerMovement>();
         theQuestManager = FindObjectOfType<QuestManager>();
         // Player position
-        gameData.currentPosition = thePlayer.transform.position; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½.
-        gameData.currentRotation = thePlayer.transform.eulerAngles; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ rotï¿½ï¿½.
+        gameData.currentPosition = thePlayer.transform.position; //ÇÃ·¹ÀÌ¾îÁÂÇ¥°ª.
+        gameData.currentRotation = thePlayer.transform.eulerAngles; // ÇÃ·¹ÀÌ¾î rot°ª.
         //Quest ~ing
         gameData.questID = theQuestManager.questId;
         gameData.questClear = theQuestManager.questComplete;
@@ -195,23 +189,25 @@ public class DataController : MonoBehaviour
             if (obj.transform.childCount > 0)
             {
                 GameObject thisitem = obj.transform.GetChild(0).gameObject;
-                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName))
-                    gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
+                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName)) gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
 
                 //DontDestroyOnLoad(thisitem);
 
-                Debug.Log($"{thisitem.name} ï¿½ï¿½ï¿½ï¿½ï¿½");
+                Debug.Log($"{thisitem.name} ÀúÀåµÊ");
             }
         }
+
     }
+
+   
 
 
     /*  private void OnApplicationQuit()
       {
           SaveGameData();     
-      }                           // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
+      }                           // °ÔÀÓ Á¾·á ½Ã ÀÚµ¿ ÀúÀå
     */
 
-    //ï¿½Ù¸ï¿½ ï¿½ÎºÐ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¾ßµï¿½ ï¿½ï¿½ï¿½
+    //´Ù¸¥ ºÎºÐ¿¡¼­ ÀúÀåÀ» ÇØ¾ßµÉ °æ¿ì
     // DataController.Instance.SaveGameData();
 }

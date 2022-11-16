@@ -15,7 +15,7 @@ public class AboutItem : MonoBehaviour
     Vector2 dragOffset = Vector2.zero;
     private void Awake()
     {
-          instance = this;
+        instance = this;
     }
     public void pointerenter(PointerInfo temp)
     {
@@ -32,9 +32,9 @@ public class AboutItem : MonoBehaviour
                 break;
 
         }
-       myInfoText.text = $"<size=36><b>{PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName}</size></b> \n\n {temp.transform.GetComponent<Pickup>().item.itemInfo} ";
+        myInfoText.text = $"<size=36><b>{PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName}</size></b> \n\n {temp.transform.GetComponent<Pickup>().item.itemInfo} ";
         pos.x = temp.transform.parent.localPosition.x;
-        pos.y =temp.transform.parent.localPosition.y + 170;
+        pos.y = temp.transform.parent.localPosition.y + 170;
         myInfoBox.transform.localPosition = pos;
 
         //  myInfoBox.transform.SetParent(this.transform);
@@ -47,13 +47,13 @@ public class AboutItem : MonoBehaviour
     public void pointerclick()
     {
         Transform clickedItem = PointerInfo.instance.transform;
-      //  instance = this;
+        //  instance = this;
         if (clickedItem.gameObject.layer == 7 || clickedItem.gameObject.layer == 8)
         {
             myPanel.SetActive(true);
             pos.x = clickedItem.parent.localPosition.x;
             pos.y = clickedItem.parent.localPosition.y + 150;
-           myParty.transform.localPosition = pos;
+            myParty.transform.localPosition = pos;
             myInfoBox.SetActive(false);
             myParty.SetActive(true);
         }
