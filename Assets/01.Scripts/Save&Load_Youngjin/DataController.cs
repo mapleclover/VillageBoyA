@@ -71,6 +71,30 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            gameData.Kong.isLeader = true;
+            gameData.Kong.strength = 10;
+            gameData.Kong.defPower = 0;
+            gameData.Kong.speed = 10;
+            gameData.Kong.HP = 100;
+            gameData.Kong.isAlive = true;
+            gameData.Kong.myUsedItems = new List<string>();
+
+            gameData.Jin.isLeader = false;
+            gameData.Jin.strength = 20;
+            gameData.Jin.defPower = 0;
+            gameData.Jin.speed = 20;
+            gameData.Jin.HP = 100;
+            gameData.Jin.isAlive = true;
+            gameData.Jin.myUsedItems = new List<string>();
+
+            gameData.Ember.isLeader = false;
+            gameData.Ember.strength = 30;
+            gameData.Ember.defPower = 0;
+            gameData.Ember.speed = 30;
+            gameData.Ember.HP = 100;
+            gameData.Ember.isAlive = true;
+            gameData.Ember.myUsedItems = new List<string>();
+            gameData.gold = 0;
         }
         else if (instance != null)
         {
@@ -79,33 +103,8 @@ public class DataController: MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
         //  gameData.myInventory = new List<GameData.myPartyItems>();
-
-        gameData.Kong.isLeader = true;
-        gameData.Kong.strength = 10;
-        gameData.Kong.defPower = 0;
-        gameData.Kong.speed = 10;
-        gameData.Kong.HP = 100;
-        gameData.Kong.isAlive = true;
-        gameData.Kong.myUsedItems = new List<string>();
-
-        gameData.Jin.isLeader = false;
-        gameData.Jin.strength = 20;
-        gameData.Jin.defPower = 0;
-        gameData.Jin.speed = 20;
-        gameData.Jin.HP = 100;
-        gameData.Jin.isAlive = true;
-        gameData.Jin.myUsedItems = new List<string>();
-
-        gameData.Ember.isLeader = false;
-        gameData.Ember.strength = 30;
-        gameData.Ember.defPower = 0;
-        gameData.Ember.speed = 30;
-        gameData.Ember.HP = 100;
-        gameData.Ember.isAlive = true;
-        gameData.Ember.myUsedItems = new List<string>();        
-        filePath = Application.persistentDataPath + gamedataFilename;
-
-        gameData.gold = 0;
+            filePath = Application.persistentDataPath + gamedataFilename;
+ 
     }
 
     
