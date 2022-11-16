@@ -11,9 +11,11 @@ using UnityEngine.Events;
 using static UnityEditor.PlayerSettings;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using static EnemySC;
 
 public class TurnBattle : MonoBehaviour
 {
+    public static TurnBattle Inst = null;
     public Transform PlayerParent;
     public List<GameObject> Player;
     public Transform EnemyParent;
@@ -25,18 +27,20 @@ public class TurnBattle : MonoBehaviour
     public GameObject SelectedCharacterTarget;
     public GameObject mySelectRing;
     public GameObject mySelectTargetRing;
-    public Button[] CharacterButton;
-    public Button AttackStartButton;
-    public Button RunButton;
-    public static TurnBattle Inst = null;
+
+    public TMPro.TMP_Text RewardGold;
 
     public GameObject GameOverCanvas;
     public GameObject VictoryImage;
     public GameObject LoseImage;
+
     public Slider[] CharacterHpbar;
     public Slider EnemyHpbar;
     public List<Slider> EnHpbar;
 
+    public Button[] CharacterButton;
+    public Button AttackStartButton;
+    public Button RunButton;
 
     int runPercentage = 50;
     string PlayerCharacterName;
@@ -48,8 +52,7 @@ public class TurnBattle : MonoBehaviour
     bool VictoryCheck;
     bool FastSpeedCheck;    
     Vector3 pos;
-    Vector3 pos2;
-    public int Gold=0;
+    Vector3 pos2;    
     public GameObject speedChanger;
 
     public GameObject[] victoryItemSlots;
@@ -117,24 +120,21 @@ public class TurnBattle : MonoBehaviour
             case State.End:
                 break;
             case State.GameOver:
-                speedChanger.SetActive(false);
-                Time.timeScale = 1.0f;
+                speedChanger.SetActive(false);                
                 if (VictoryCheck)
                 {
-                    foreach (GameObject act in Player)
-                    {
-                        act.GetComponent<Animator>().SetTrigger("Victory");
-                    }
+                    foreach (GameObject act in Player) act.GetComponent<Animator>().SetTrigger("Victory");                    
                     GameOverCanvas.SetActive(true);
 
                     if (SceneLoad.Instance.MonsterType == "Fox")
                     {
-                       GameObject obj = Instantiate(myVictoryItems[0]);
+                        GameObject obj = Instantiate(myVictoryItems[0]);
                         RawImage img = obj.GetComponentInChildren<RawImage>();
                         img.transform.SetParent(victoryItemSlots[0].transform);
-                      img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                         img.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-                       img.transform.localPosition = Vector2.zero;
+                        img.transform.localPosition = Vector2.zero;
+                        RewardGold.text = $"{5*Enemy.Count}";
                         Destroy(obj);
                     }
                     VictoryImage.SetActive(true);
@@ -212,7 +212,7 @@ public class TurnBattle : MonoBehaviour
     {
         Inst = this;
         Cursor.visible = true; // 커서안보이는거 트루로
-        Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제
+        Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제        
         EnemyCharacterName = SceneLoad.Instance.MonsterType;
         InstantiateEnemy();
         InstantiatePlayerCharacter();
@@ -280,7 +280,7 @@ public class TurnBattle : MonoBehaviour
                     DataController.instance.gameData.questClear = true;
                     DataController.instance.gameData.questActionIndex += 1;
                     DataController.instance.gameData.victoryComplete[0] = true;
-                    DataController.instance.gameData.gold += 15;
+                    DataController.instance.gameData.gold += 5*Enemy.Count;
                 }
 
             }
@@ -320,10 +320,12 @@ public class TurnBattle : MonoBehaviour
     }
     void InstantiateEnemy()
     {
+        
         for (int i = 0; i < SceneLoad.Instance.MonsterCount; ++i)
         {
             GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{EnemyCharacterName}"), EnemyParent) as GameObject;
             Vector3 pos = new Vector3(-2 + (2 * i), 0, 0);
+            if (obj.GetComponent<BattleCharacter>().myStat.orgData.enemyType == EnemyType.Boss) pos = Vector3.zero;
             obj.transform.localPosition = pos;
             Enemy.Add(obj);
             Enemy[i].GetComponent<BattleCharacter>().myStat.Speed = SceneLoad.Instance.MonsterSpeed;
@@ -335,6 +337,7 @@ public class TurnBattle : MonoBehaviour
             EnHpbar[i].transform.position = pos2;
             Enemy[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
             Enemy[i].GetComponent<BattleCharacter>().Stunned = SceneLoad.Instance.BackAttack;
+            if (obj.GetComponent<BattleCharacter>().myStat.orgData.enemyType == EnemyType.Boss) break;
         }
     }
 
@@ -410,7 +413,6 @@ public class TurnBattle : MonoBehaviour
                 }
             }
             //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
-
             SelectedCharacterAttack.Inst.myAttack.SetActive(false);
             SelectedCharacterAttack.Inst.mySelectAttack.SetActive(false);
             SelectedCharacterAttack.Inst.myActiveAttack.SetActive(true);
@@ -441,8 +443,6 @@ public class TurnBattle : MonoBehaviour
         SelectedCharacterAttack.Inst.mySelectAttack.SetActive(false);
         SelectedCharacterAttack.Inst.myActiveAttack.SetActive(true);
         SelectedCharacter = null;
-
-
     }
     IEnumerator HealingActive()
     {
@@ -450,7 +450,6 @@ public class TurnBattle : MonoBehaviour
         Active.GetComponent<BattleCharacter>().TurnActive = false;
         yield return new WaitForSeconds(1.0f);
         ChangeState(State.ActiveCheck);
-
     }
 
     IEnumerator Attack(Vector3 gos, Vector3 gos2, bool v = false) //공격
