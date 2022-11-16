@@ -290,8 +290,22 @@ public class TurnBattle : MonoBehaviour
 
             }            
             SceneLoad.Instance.battleResult.victory = true;
+            for (int i = 0; i < Player.Count; ++i)
+            {
+                switch (i)
+                {
+                    case 0:
+                        DataController.instance.gameData.Kong.HP = (int)Player[0].GetComponent<BattleCharacter>().myStat.curHP;
+                        break;
+                    case 1:
+                        DataController.instance.gameData.Jin.HP = (int)Player[1].GetComponent<BattleCharacter>().myStat.curHP;
+                        break;
+                    case 2:
+                        DataController.instance.gameData.Ember.HP = (int)Player[2].GetComponent<BattleCharacter>().myStat.curHP;
+                        break;
+                }
+            }
             SceneLoad.Instance.ChangeScene("06.Field");
-
         }
     }
     void InstantiatePlayerCharacter()
