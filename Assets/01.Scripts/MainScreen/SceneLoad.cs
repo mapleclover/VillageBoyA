@@ -269,7 +269,15 @@ public class SceneLoad : MonoBehaviour
 
         if (battleResult.victory)
         {
-            GameObject.Find(battleResult.Name).GetComponent<Monster>().ChangeState(Monster.STATE.DEAD);
+            GameObject monster = GameObject.Find(battleResult.Name);
+            monster.GetComponent<Monster>().ChangeState(Monster.STATE.DEAD);
+            StartCoroutine(MonsterRegeneration(monster));
         }
+    }
+    IEnumerator MonsterRegeneration(GameObject monster)
+    {
+        Debug.Log(monster);
+        yield return new WaitForSeconds(20.0f);
+        monster.SetActive(true);
     }
 }

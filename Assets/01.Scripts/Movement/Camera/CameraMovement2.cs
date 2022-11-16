@@ -19,6 +19,10 @@ public class CameraMovement2 : MonoBehaviour
 
     [Header("Inventory")]
     public GameObject myInventory;
+    public GameObject myESC;
+    public GameObject mySave;
+    public GameObject myLoad;
+    public GameObject askingUI;
 
 
     [Header("MainCamera")]
@@ -82,7 +86,7 @@ public class CameraMovement2 : MonoBehaviour
     }
     void OnCursor()
     {
-        if (myInventory.activeSelf)
+        if (myInventory.activeSelf||myESC.activeSelf||mySave.activeSelf||myLoad.activeSelf||askingUI.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
         }
