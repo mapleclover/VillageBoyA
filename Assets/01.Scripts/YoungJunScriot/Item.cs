@@ -4,23 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
-public struct ItemDataSample
-{
-    public Item orgData;
-    public ItemLevel level;
-    public float GetUpgradeProb()
-    {
-        return orgData.possibility[(int)level];
-    }
-}
 
-public enum ItemLevel //��ȭ ���� 5����
-{
-    Level_1, Level_2, Level_3, Level_4, Level_5
-}
 
-public enum EnhanceableItem // ��ȭ ���� ����������
+
+public enum EnhanceableItem // 강화 가능한 아이템인지
 {
     Possible, Impossible
 }
@@ -37,36 +24,20 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public int value;
 
-    // ��ȭ ---------------------------------
+    // 강화 ---------------------------------
 
     [Header("------Enhancement-------")]
-    // �ܺμ����Ұ�
+    
     [SerializeField] EnhanceableItem _enhanceableItem;
-    public EnhanceableItem enhanceableItem // ��ȭ ���� �� ����������
+    public EnhanceableItem enhanceableItem // 강화 가능 아이템
     {
         get => _enhanceableItem;
     }
-    [SerializeField] float[] _possibility; // Ȯ��
-    public float[] possibility
-    {
-        get => _possibility;
-    }
 
-    // �ܺμ���
-    public int[] AP; // ���ݷ�
-    public int[] EnchantCost; // ��ȭ���
-    public ItemLevel itemLevel; // ������ ���� 5���� ����
-    public bool CheckSuccess(int level)
-    {
-        float rnd = UnityEngine.Random.Range(0f, 100f);
-        if (rnd < _possibility[level])
-        {
-            return true;
-        }
-        return false;
-    }
 
-    // ��ȭ ----------------------------------
+
+
+    // 강화 ----------------------------------
 
 
     

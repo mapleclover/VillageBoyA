@@ -3,13 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class ItemStat
+{
+    public EnhanceableItems Data;
+    public int Level;
+}
+
 public class EnhancementController : PointerInfo
 {
+
     public GameObject myUI;
 
     public RectTransform myInventory;
     public GameObject setMyInventory;
     public bool onOff = false;
+
+    public EnhanceableItems myItems;
+    public EnhanceableItems.ItemLevel itemlevel;
+
+
 
     Vector2 invenPos = new Vector2(200f, 0);
     // Start is called before the first frame update
@@ -23,6 +35,24 @@ public class EnhancementController : PointerInfo
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            // EnchantCost 만큼 골드 떨어트리자
+
+            if (myItems.CheckSuccess((int)itemlevel))
+            {
+                itemlevel++;
+                Debug.Log("성공");
+
+                Debug.Log(myItems.EnchantCost[(int)itemlevel]);
+                Debug.Log(myItems.AP[(int)itemlevel]);
+                Debug.Log(myItems.possibility[(int)itemlevel]);
+            }
+            else
+            {
+                Debug.Log("실패");
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
