@@ -60,11 +60,11 @@ public class ShopManager : MonoBehaviour
         PurchasePanel.GetComponent<PurchaseBox>().ShowValues();
     }
 
-    public void BuyItem(int cost)
+    public void BuyItem(int count)
     {
-        GoldAmount -= cost;
-        GoldText.text = "소유 골드 : " + GoldAmount.ToString();
-        //여기에 인벤토리에 산 아이템 추가하는 기능 추가
-        //Add(itemList[itemIndex]);
+        GoldAmount -= count * itemList[itemIndex].itemPrice;
+        GoldText.text = $"소유 골드 : {GoldAmount}";
+        //여기에 인벤토리에 산 아이템만큼 추가하는 기능 추가
+        //Add(itemList[itemIndex] * count);
     }
 }
