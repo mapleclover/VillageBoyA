@@ -128,14 +128,18 @@ public class TurnBattle : MonoBehaviour
 
                     if (SceneLoad.Instance.MonsterType == "Fox")
                     {
-                        GameObject obj = Instantiate(myVictoryItems[0]);
-                        RawImage img = obj.GetComponentInChildren<RawImage>();
-                        img.transform.SetParent(victoryItemSlots[0].transform);
-                        img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                        img.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-                        img.transform.localPosition = Vector2.zero;
+                        if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
+                        {
+                            GameObject obj = Instantiate(myVictoryItems[0]);
+                            RawImage img = obj.GetComponentInChildren<RawImage>();
+                            img.transform.SetParent(victoryItemSlots[0].transform);
+                            img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                            img.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                            img.transform.localPosition = Vector2.zero;
+                            Destroy(obj);
+                        }
                         RewardGold.text = $"{5*Enemy.Count}";
-                        Destroy(obj);
+                        
                     }
                     VictoryImage.SetActive(true);
                 }
@@ -273,18 +277,21 @@ public class TurnBattle : MonoBehaviour
     {
         if (VictoryCheck)
         {
-            if (DataController.instance.gameData.questID == 30 &&DataController.instance.gameData.questActionIndex == 1)
+            if (SceneLoad.Instance.MonsterType == "Fox")
             {
-                if (SceneLoad.Instance.MonsterType == "Fox")
+                if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
                 {
                     DataController.instance.gameData.questClear = true;
                     DataController.instance.gameData.questActionIndex += 1;
                     DataController.instance.gameData.victoryComplete[0] = true;
-                    DataController.instance.gameData.gold += 5*Enemy.Count;
+                    
                 }
+                DataController.instance.gameData.gold += 5 * Enemy.Count;
 
-            }
+            }            
+            SceneLoad.Instance.battleResult.victory = true;
             SceneLoad.Instance.ChangeScene("06.Field");
+
         }
     }
     void InstantiatePlayerCharacter()

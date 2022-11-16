@@ -190,9 +190,18 @@ public class SceneLoad : MonoBehaviour
         }
     }
 
-    public void ToBattleScene(bool backAttack, string monsterType , int monsterCount, int monsterSpeed)
+    public struct BattleResultData
     {
-       
+        public string Name;
+        public bool victory;
+    }
+    public BattleResultData battleResult = new BattleResultData();
+
+    public void ToBattleScene(string Name,bool backAttack, string monsterType , int monsterCount, int monsterSpeed)
+    {
+        battleResult.Name = Name;
+        battleResult.victory = false;
+
         BackAttack = backAttack;
         MonsterType = monsterType;
         MonsterCount = monsterCount;
@@ -255,7 +264,20 @@ public class SceneLoad : MonoBehaviour
                 ao.allowSceneActivation = true;
             }
             yield return null;
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.None;            
         }
+
+        if (battleResult.victory)
+        {
+            GameObject monster = GameObject.Find(battleResult.Name);
+            monster.GetComponent<Monster>().ChangeState(Monster.STATE.DEAD);
+            StartCoroutine(MonsterRegeneration(monster));
+        }
+    }
+    IEnumerator MonsterRegeneration(GameObject monster)
+    {
+        Debug.Log(monster);
+        yield return new WaitForSeconds(20.0f);
+        monster.SetActive(true);
     }
 }

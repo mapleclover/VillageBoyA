@@ -22,7 +22,7 @@ public class DebugWindow : EditorWindow
     [MenuItem("AutoTextFix/LoadScene/배틀씬넘기기")]
     static void ToInfinityAndBeyond()
     {
-        SceneLoad.Instance.ToBattleScene(true, "Fox", 3, 10);
+        SceneLoad.Instance.ToBattleScene("Fox", true, "Fox", 3, 10);
     }
 
     [MenuItem("AutoTextFix/Debug")]
