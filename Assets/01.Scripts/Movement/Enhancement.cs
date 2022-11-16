@@ -37,7 +37,7 @@ public class Enhancement : MonoBehaviour
 
     void Update()
     {
-
+/*
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (v)
@@ -52,8 +52,10 @@ public class Enhancement : MonoBehaviour
             else v = true;          //인벤토리 열기
             myInfoBox.SetActive(false);
           
-        }
-        if (Input.GetKeyDown(KeyCode.F1))
+        }*/
+
+
+       /* if (Input.GetKeyDown(KeyCode.F1))
         {
             GetItem(curItem[1]);
         }
@@ -72,13 +74,13 @@ public class Enhancement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F5))
         {
             GetItem(curItem[5]);
-        }
+        }*/
 
     }
-    public void OnClickX()
+    /*public void OnClickX()
     {
         myPanel.SetActive(false);
-    }
+    }*/
     public void OnClickSort()
     {
        Vector2 temp=Vector2.zero;

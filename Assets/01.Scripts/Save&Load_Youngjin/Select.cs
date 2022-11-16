@@ -61,7 +61,7 @@ public class Select : MonoBehaviour
             savefile[DataController.instance.nowSlot] = true;
             DataController.instance.SaveGameData(); //입력한 이름 복사 후 현재 정보 저장
         }
-        SceneManager.LoadScene(8);  //게임씬으로 이동
+        SceneManager.LoadScene(6);  //게임씬으로 이동
     }
     public void ShowUI()
     {

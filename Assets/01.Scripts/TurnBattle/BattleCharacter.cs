@@ -70,14 +70,8 @@ public class BattleCharacter : CharacterProperty
             case STATE.Live:
                 break;
             case STATE.Stunned:
-                if (Stun == null)
-                {
-                    Stun = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Stun"));
-                }
-                else
-                {
-                    Stun.SetActive(true);
-                }
+                if (Stun == null) Stun = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Stun"));                
+                else Stun.SetActive(true);
                 Vector3 pos = transform.position; //타겟위치
                 pos.y += 1.0f; // 위치에서 2만큼 y위로이동                
                 Stun.transform.position = pos;
@@ -85,11 +79,7 @@ public class BattleCharacter : CharacterProperty
                 break;
             case STATE.Die:
                 myAnim.SetBool("Death",true);
-                if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
-                {                    
-                    Invoke("SetActiveFalse", 2.0f);
-                    TurnBattle.Inst.Gold += 5;
-                }
+                if (gameObject.layer == LayerMask.NameToLayer("Enemy")) Invoke("SetActiveFalse", 2.0f);
                 break;
         }
     }
@@ -97,11 +87,9 @@ public class BattleCharacter : CharacterProperty
     {
         switch (State)
         {
-            case STATE.Live:
-               
+            case STATE.Live:               
                 if (Stunned)
-                {
-                    
+                {                    
                     ChangeState(STATE.Stunned);
                     StunCheck = TurnBattle.Inst.BattleTurn;
                     Stunned = false;
@@ -124,7 +112,8 @@ public class BattleCharacter : CharacterProperty
         callData();
         Canvas = GameObject.Find("Canvas");
         longAttackCheck = myStat.longAttack[0];
-        maxHp = myStat.curHP;
+        maxHp = myStat.orgData.HP;
+        
     }
     void Start()
     {
@@ -143,16 +132,21 @@ public class BattleCharacter : CharacterProperty
 
     void callData()
     {
-        /*public float curHP;
-    public float Speed;
-    public float[] AttackDmg;
-    public float Defend;
-    public bool[] longAttack;*/
-        myStat.curHP = myStat.orgData.HP;
+        if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            myStat.curHP = myStat.orgData.HP;
+        }
+        else if(gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            if(this.gameObject.name == "KongForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Kong.HP;
+            if (this.gameObject.name == "JinForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Jin.HP;
+            if (this.gameObject.name == "EmberForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Ember.HP;
+        }
         myStat.Speed = myStat.orgData.Speed;
         myStat.AttackDmg = myStat.orgData.AttackDmg;
         myStat.Defend = myStat.orgData.Defend;
         myStat.longAttack = myStat.orgData.longAttack;
+
     }
     public void ValuemyHpmaxHP()
     {
@@ -179,16 +173,13 @@ public class BattleCharacter : CharacterProperty
         switch (rnd)
         {
             case 0:
-                myAnim.SetTrigger("Attack");
-                //OnTargetDamage(10.0f);
+                myAnim.SetTrigger("Attack");                
                 break;
             case 1:
-                myAnim.SetTrigger("Attack2");
-                //OnTargetDamage(20.0f);
+                myAnim.SetTrigger("Attack2");                
                 break;
             case 2:
-                myAnim.SetTrigger("Attack3");
-                //OnTargetDamage(30.0f);
+                myAnim.SetTrigger("Attack3");                
                 break;
             default:
                 break;

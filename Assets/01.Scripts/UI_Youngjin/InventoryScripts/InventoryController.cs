@@ -63,6 +63,14 @@ public class InventoryController : MonoBehaviour
             myInfoBox.SetActive(false);
           
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (myInventory.activeSelf)
+            {
+                v = false;
+                myInventory.SetActive(v);
+            }
+        }
         if (Input.GetKeyDown(KeyCode.F1))
         {
             GetItem(curItem[1]);
