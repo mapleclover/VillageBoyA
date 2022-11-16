@@ -1,7 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+[Serializable]
+public struct ItemDataSample
+{
+    public Item orgData;
+    public ItemLevel level;
+    public float GetUpgradeProb()
+    {
+        return orgData.possibility[(int)level];
+    }
+}
 
 public enum ItemLevel //강화 레벨 5까지
 {

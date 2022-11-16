@@ -94,7 +94,6 @@ public class DataController: MonoBehaviour
             gameData.Ember.HP = 100;
             gameData.Ember.isAlive = true;
             gameData.Ember.myUsedItems = new List<string>();
-            gameData.gold = 0;
         }
         else if (instance != null)
         {
