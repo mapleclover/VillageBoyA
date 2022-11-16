@@ -87,7 +87,6 @@ public class Monster : CharacterMoveMent
     //}
     private void OnEnable()
     {
-        Debug.Log("гоюл");
         startPos = this.transform.position;
         ChangeState(STATE.IDLE);
     }
