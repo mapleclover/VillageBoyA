@@ -237,7 +237,7 @@ public class ActionController : MonoBehaviour
                 isBattle = false;
 
                 DataController.instance.SaveData();
-                SceneLoad.Instance.ToBattleScene(isBackAttack, hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2,4) 
+                SceneLoad.Instance.ToBattleScene(hitInfo.transform.name , isBackAttack, hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2,4) 
                                                                    ,hitInfo.transform.GetComponent<Pickup>().enemy.Speed) ;
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************

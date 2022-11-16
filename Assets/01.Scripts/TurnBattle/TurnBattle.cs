@@ -132,7 +132,7 @@ public class TurnBattle : MonoBehaviour
                        GameObject obj = Instantiate(myVictoryItems[0]);
                         RawImage img = obj.GetComponentInChildren<RawImage>();
                         img.transform.SetParent(victoryItemSlots[0].transform);
-                      img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                       img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                         img.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                        img.transform.localPosition = Vector2.zero;
                         Destroy(obj);
@@ -284,6 +284,7 @@ public class TurnBattle : MonoBehaviour
                 }
 
             }
+            SceneLoad.Instance.battleResult.victory = true;
             SceneLoad.Instance.ChangeScene("06.Field");
         }
     }
