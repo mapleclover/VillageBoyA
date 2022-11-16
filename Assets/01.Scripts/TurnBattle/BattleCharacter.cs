@@ -112,7 +112,8 @@ public class BattleCharacter : CharacterProperty
         callData();
         Canvas = GameObject.Find("Canvas");
         longAttackCheck = myStat.longAttack[0];
-        maxHp = myStat.curHP;
+        maxHp = myStat.orgData.HP;
+        
     }
     void Start()
     {
@@ -130,12 +131,22 @@ public class BattleCharacter : CharacterProperty
     }
 
     void callData()
-    {        
-        myStat.curHP = myStat.orgData.HP;
+    {
+        if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            myStat.curHP = myStat.orgData.HP;
+        }
+        else if(gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            if(this.gameObject.name == "KongForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Kong.HP;
+            if (this.gameObject.name == "JinForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Jin.HP;
+            if (this.gameObject.name == "EmberForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Ember.HP;
+        }
         myStat.Speed = myStat.orgData.Speed;
         myStat.AttackDmg = myStat.orgData.AttackDmg;
         myStat.Defend = myStat.orgData.Defend;
         myStat.longAttack = myStat.orgData.longAttack;
+
     }
     public void ValuemyHpmaxHP()
     {

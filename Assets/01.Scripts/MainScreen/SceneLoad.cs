@@ -208,6 +208,7 @@ public class SceneLoad : MonoBehaviour
         MonsterSpeed = monsterSpeed;
         if (!isChange)
         {
+            StopAllCoroutines();
             StartCoroutine(Loading("05.Battle"));
         }
     }
@@ -271,6 +272,7 @@ public class SceneLoad : MonoBehaviour
         {
             GameObject monster = GameObject.Find(battleResult.Name);
             monster.GetComponent<Monster>().ChangeState(Monster.STATE.DEAD);
+            StopAllCoroutines();
             StartCoroutine(MonsterRegeneration(monster));
         }
     }
