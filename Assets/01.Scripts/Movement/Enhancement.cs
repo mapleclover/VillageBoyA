@@ -28,7 +28,7 @@ public class Enhancement : MonoBehaviour
         {
             if (obj.transform.childCount > 0)
             {
-                obj.transform.GetChild(0).GetComponent<Pickup>().item.count = 1;
+                DataController.instance.gameData.myItemCount[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = 1;
                 //curItems[obj] = obj.transform.GetChild(0).GetComponent<Pickup>().item.count;
             }
         }
@@ -138,7 +138,6 @@ public class Enhancement : MonoBehaviour
         if ( DataController.instance.gameData.myItemCount.ContainsKey(theItem.GetComponent<Pickup>().item.itemName))
         {
             Debug.Log("이미있음");
-            theItem.GetComponent<Pickup>().item.count++;
             DataController.instance.gameData.myItemCount[theItem.GetComponent<Pickup>().item.itemName]++;
 
         }                                       //이미 내 인벤토리에 있으면 숫자만 더함
@@ -197,7 +196,6 @@ public class Enhancement : MonoBehaviour
 
                
                 GameObject obj = Instantiate(theItem);
-               obj.GetComponent<Pickup>().item.count++;
                obj.transform.SetParent(mySlots[i].transform);
                 obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);

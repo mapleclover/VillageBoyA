@@ -11,17 +11,16 @@ public class GameData
     public int myProgress = 0;          //진행도
     public string savedTime;            //저장한 시간
     public string mapName = "FirstVillage";           //현재 마을
-
+    public bool[] victoryComplete = Enumerable.Repeat(false, 6).ToArray();
 
 
     public Vector3 currentPosition = new Vector3(-136, 0, -90);          //현재 캐릭터 위치
     public Vector3 currentRotation;
 
-  // public List<GameObject> currentItems = new List<GameObject>();          //현재까지 얻은 아이템
-   // public List<List<GameObject>> partyItems=new List<List<GameObject>>();          //파티원마다 장착한 장비
     public Dictionary<string, int> savedInventory = new Dictionary<string, int>();          //아이템과 몇번째 슬롯인지 저장
     public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // 아이템과 개수
-   
+    public int gold=0;
+
     //아이템 구조체: 슬롯 번호, 개수, 강화 횟수, 강화된 스탯
 
     //포션 개수: DataController.instance.gameData.myItemCount["포션"]
@@ -105,6 +104,8 @@ public class DataController: MonoBehaviour
         gameData.Ember.isAlive = true;
         gameData.Ember.myUsedItems = new List<string>();        
         filePath = Application.persistentDataPath + gamedataFilename;
+
+        gameData.gold = 0;
     }
 
     

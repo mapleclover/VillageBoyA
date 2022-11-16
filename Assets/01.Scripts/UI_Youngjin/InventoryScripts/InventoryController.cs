@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Playables;
+
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController Instance;
@@ -11,6 +13,8 @@ public class InventoryController : MonoBehaviour
     public GameObject[] mySlots;
     public GameObject myInfoBox;
     public GameObject itemCount;
+    public TMPro.TMP_Text myGold;
+    public GameObject myMenu;
    //datacontroller에 추가
    //
    public Dictionary<GameObject, int>curItems;
@@ -19,11 +23,12 @@ public class InventoryController : MonoBehaviour
     public int defaultCount = 1;
     public List<GameObject> curItem=new List<GameObject>();
     bool v = true;
+    Vector3 currentRotation;
 
     private void Awake()
     {
         Instance = this;
-       foreach(GameObject obj in mySlots)
+        foreach (GameObject obj in mySlots)
         {
             if (obj.transform.childCount > 0)
             {
@@ -45,9 +50,14 @@ public class InventoryController : MonoBehaviour
                 //  myItem["해골"]++;
                 //해골로 테스트
                 ShowNumbertoUI();
-              
+                ShowMyGold();
             }
-            myInventory.SetActive(v);
+            if(!myMenu.activeSelf)myInventory.SetActive(v);
+            else
+            {
+                v = false;
+                myInventory.SetActive(v);
+            }
             if (v) v = false;
             else v = true;          //인벤토리 열기
             myInfoBox.SetActive(false);
@@ -189,6 +199,9 @@ public class InventoryController : MonoBehaviour
                 case "칼":
                     ItemAppears(theItem);
                     break;
+                case "여우꼬리":
+                    ItemAppears(theItem);
+                    break;
 
             }
         }
@@ -246,6 +259,10 @@ public class InventoryController : MonoBehaviour
                 }
             }
         }
+    }
+    public void ShowMyGold()
+    {
+        myGold.text = $"x{DataController.instance.gameData.gold}";
     }
     
 }
