@@ -74,6 +74,6 @@ public class ShopManager : MonoBehaviour
         //Add(itemList[itemIndex] * count);
         DataController.instance.gameData.gold =GoldAmount;
         InventoryController.Instance.GetItem(itemList[itemIndex].itemPrefab);
-        DataController.instance.gameData.myItemCount[itemList[itemIndex].itemName] = count;
+        DataController.instance.gameData.myItemCount[itemList[itemIndex].itemName] += count-1;
     }
 }
