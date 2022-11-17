@@ -10,6 +10,7 @@ public class ShopManager : MonoBehaviour
     //UI패널 
     public GameObject PurchasePanel;
     public GameObject MainPanel;
+    public GameObject myInventory;
     //상점아이템판매리스트
     public Item[] itemList;
     //아이템선택되었을때 무슨아이템이 선택되었는지, 가격은 얼마인지 담을 변수
@@ -37,12 +38,14 @@ public class ShopManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
-        {
+        {       
             if (!MainPanel.activeSelf)
             {
                 MainPanel.SetActive(true);
+                myInventory.SetActive(false);
                 OpenUpShop();
             }
+
         }
     }
 
@@ -71,6 +74,6 @@ public class ShopManager : MonoBehaviour
         //Add(itemList[itemIndex] * count);
         DataController.instance.gameData.gold =GoldAmount;
         InventoryController.Instance.GetItem(itemList[itemIndex].itemPrefab);
-        DataController.instance.gameData.myItemCount[itemList[itemIndex].itemName] = count;
+        DataController.instance.gameData.myItemCount[itemList[itemIndex].itemName] += count-1;
     }
 }
