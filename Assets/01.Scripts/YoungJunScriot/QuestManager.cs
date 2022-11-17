@@ -43,6 +43,7 @@ public class QuestManager : MonoBehaviour
         questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
         questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000 }));
         questList.Add(30, new QuestData("여우 사냥", new int[] { 1000, 2000, 2000, 2000 }));
+        questList.Add(40, new QuestData("골렘 사냥", new int[] { }));
     }
 
     public int GetQuestTalkIndex(int id)
@@ -71,7 +72,13 @@ public class QuestManager : MonoBehaviour
 
         //Talk Complete & Next Quest
         if (questActionIndex == questList[questId].npcId.Length)//npcId의배열? -> 퀘스트진행시 다뤄야할 대화
+        {
+            if(questId == 30)
+            {
+                DataController.instance.gameData.gold += 100;
+            }
             NextQuest();
+        }
 
         //Quest Name Return
         return questList[questId].questName;
