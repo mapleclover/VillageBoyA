@@ -100,11 +100,8 @@ public class SceneLoad : MonoBehaviour
                         obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                         obj.transform.localPosition = Vector2.zero;
                         if (obj.transform.childCount > 1)
-                        {
-                            while (obj.transform.childCount > 1)
-                            {
-                                Destroy(obj.transform.GetChild(1));
-                            }
+                        {                           
+                            Destroy(obj.transform.GetChild(1));                           
                         }
                     }
 
@@ -170,7 +167,7 @@ public class SceneLoad : MonoBehaviour
     void ShowPortrait(GameObject portrait,int i,KeyValuePair<string,int>items)
     {
         portrait.GetComponent<RectTransform>().sizeDelta = new Vector2(20, 20);
-        portrait.transform.SetParent(mySlots.transform.GetChild(items.Value));
+        portrait.transform.SetParent(mySlots.transform.GetChild(items.Value).transform.GetChild(0));
         portrait.transform.localPosition = new Vector2(InventoryController.Instance.curItem[i].transform.localPosition.x+20, InventoryController.Instance.curItem[i].transform.localPosition.y-20);
         portrait.GetComponent<RawImage>().raycastTarget = false;
     }

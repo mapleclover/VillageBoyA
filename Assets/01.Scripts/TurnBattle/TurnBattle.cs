@@ -134,7 +134,7 @@ public class TurnBattle : MonoBehaviour
                             RawImage img = obj.GetComponentInChildren<RawImage>();
                             img.transform.SetParent(victoryItemSlots[0].transform);
                             img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                            img.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                            img.GetComponent<RectTransform>().sizeDelta = new Vector2(100,100);
                             img.transform.localPosition = Vector2.zero;
                             Destroy(obj);
                         }
