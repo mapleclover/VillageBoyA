@@ -79,11 +79,11 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     {
                         DataController.instance.gameData.Kong.myUsedItems.Remove(thisname);
 
-                        if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.NpcType.Weapon)
+                        if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.ItemType.Weapon)
                         {
                             DataController.instance.gameData.Kong.strength -= thisEquipment.GetComponent<Pickup>().item.value;
                         }
-                        else if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.NpcType.Armor)                  //더해진 스탯을 원래대로 되돌림
+                        else if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.ItemType.Armor)                  //더해진 스탯을 원래대로 되돌림
                         {
                             DataController.instance.gameData.Kong.defPower -= thisEquipment.GetComponent<Pickup>().item.value;
                         }                                                                                                                               
@@ -92,11 +92,11 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     else if (DataController.instance.gameData.Jin.myUsedItems.Contains(thisname))        //진이 장착했으면
                     {
                         DataController.instance.gameData.Jin.myUsedItems.Remove(thisname);
-                        if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.NpcType.Weapon)
+                        if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.ItemType.Weapon)
                         {
                             DataController.instance.gameData.Jin.strength -= thisEquipment.GetComponent<Pickup>().item.value;
                         }
-                        else if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.NpcType.Armor)
+                        else if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.ItemType.Armor)
                         {
                             DataController.instance.gameData.Jin.defPower -= thisEquipment.GetComponent<Pickup>().item.value;
                         }
@@ -104,11 +104,11 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     else if (DataController.instance.gameData.Ember.myUsedItems.Contains(thisname))        //앰버가 장착했으면
                     {
                         DataController.instance.gameData.Ember.myUsedItems.Remove(thisname);
-                        if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.NpcType.Weapon)
+                        if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.ItemType.Weapon)
                         {
                             DataController.instance.gameData.Ember.strength -= thisEquipment.GetComponent<Pickup>().item.value;
                         }
-                        else if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.NpcType.Armor)
+                        else if (thisEquipment.GetComponent<Pickup>().item.itemType == Item.ItemType.Armor)
                         {
                             DataController.instance.gameData.Ember.defPower -= thisEquipment.GetComponent<Pickup>().item.value;
                         }
@@ -123,11 +123,11 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 {
                     case "MainCharacter":
                         DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
-                        if (clickedEquip.GetComponent<Pickup>().item.itemType ==Item.NpcType.Weapon)
+                        if (clickedEquip.GetComponent<Pickup>().item.itemType ==Item.ItemType.Weapon)
                         {
                             DataController.instance.gameData.Kong.strength += clickedEquip.GetComponent<Pickup>().item.value;
                         }
-                        else if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.NpcType.Armor)
+                        else if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.ItemType.Armor)
                         {
                             DataController.instance.gameData.Kong.defPower += clickedEquip.GetComponent<Pickup>().item.value;
                         }
@@ -135,22 +135,22 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                         break;
                     case "Jin":
                         DataController.instance.gameData.Jin.myUsedItems.Add(thisname);
-                        if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.NpcType.Weapon)
+                        if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.ItemType.Weapon)
                         {
                             DataController.instance.gameData.Jin.strength += clickedEquip.GetComponent<Pickup>().item.value;
                         }
-                        else if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.NpcType.Armor)
+                        else if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.ItemType.Armor)
                         {
                             DataController.instance.gameData.Jin.defPower += clickedEquip.GetComponent<Pickup>().item.value;
                         }
                         break;
                     case "Ember":
                         DataController.instance.gameData.Ember.myUsedItems.Add(thisname);
-                        if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.NpcType.Weapon)
+                        if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.ItemType.Weapon)
                         {
                             DataController.instance.gameData.Ember.strength += clickedEquip.GetComponent<Pickup>().item.value;
                         }
-                        else if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.NpcType.Armor)
+                        else if (clickedEquip.GetComponent<Pickup>().item.itemType == Item.ItemType.Armor)
                         {
                             DataController.instance.gameData.Ember.defPower += clickedEquip.GetComponent<Pickup>().item.value;
                         }

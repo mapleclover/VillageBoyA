@@ -32,7 +32,7 @@ public enum EnhanceableItem // 강화 가능한 아이템인지
 public class Item : ScriptableObject
 {
     public string itemName;
-    public NpcType itemType;
+    public ItemType itemType;
     public GameObject itemPrefab;
     public string itemInfo;
     public int itemPrice;
@@ -84,8 +84,8 @@ public class Item : ScriptableObject
     // 강화 ----------------------------------
 
 
-
-    public enum NpcType
+    
+    public enum ItemType
     {
         Weapon,
         Armor,      
