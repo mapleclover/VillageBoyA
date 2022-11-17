@@ -139,8 +139,8 @@ public class TurnBattle : MonoBehaviour
                             Destroy(obj);
                         }
                         RewardGold.text = $"{5*Enemy.Count}";
-                        
                     }
+                    
                     VictoryImage.SetActive(true);
                 }
                 else if (!VictoryCheck)
@@ -287,8 +287,17 @@ public class TurnBattle : MonoBehaviour
                     
                 }
                 DataController.instance.gameData.gold += 5 * Enemy.Count;
-
-            }            
+            }
+            if (SceneLoad.Instance.MonsterType == "BossFox")
+            {
+                if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 2)
+                {
+                    DataController.instance.gameData.questClear = true;
+                    DataController.instance.gameData.questActionIndex += 1;
+                    DataController.instance.gameData.victoryComplete[0] = true;
+                }
+                DataController.instance.gameData.gold += 30 * Enemy.Count;
+            }
             SceneLoad.Instance.battleResult.victory = true;
             for (int i = 0; i < Player.Count; ++i)
             {
