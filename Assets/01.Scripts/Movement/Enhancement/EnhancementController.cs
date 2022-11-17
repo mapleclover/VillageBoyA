@@ -37,8 +37,8 @@ public class EnhancementController : PointerInfo
     void Update()
     {
 
-        if(myItems.enhanceableItem == Item.EnhanceableItem.Possible)
-        {
+        //if(myItems.enhanceableItem == Item.EnhanceableItem.Possible)
+        
             if (Input.GetKeyDown(KeyCode.L))
             {
                 // EnchantCost ¸¸Å­ °ñµå ¶³¾îÆ®¸®ÀÚ
@@ -59,7 +59,7 @@ public class EnhancementController : PointerInfo
             }
 
 
-        }
+        
 
 
 
