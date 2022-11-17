@@ -140,7 +140,20 @@ public class TurnBattle : MonoBehaviour
                         }
                         RewardGold.text = $"{5*Enemy.Count}";
                     }
-                    
+                   else if (SceneLoad.Instance.MonsterType == "BossFox")
+                    {
+                        if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 2)
+                        {
+                            GameObject obj = Instantiate(myVictoryItems[1]);
+                            RawImage img = obj.GetComponentInChildren<RawImage>();
+                            img.transform.SetParent(victoryItemSlots[0].transform);
+                            img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                            img.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
+                            img.transform.localPosition = Vector2.zero;
+                            Destroy(obj);
+                        }
+                        RewardGold.text = $"{30 * Enemy.Count}";
+                    }
                     VictoryImage.SetActive(true);
                 }
                 else if (!VictoryCheck)
@@ -294,7 +307,7 @@ public class TurnBattle : MonoBehaviour
                 {
                     DataController.instance.gameData.questClear = true;
                     DataController.instance.gameData.questActionIndex += 1;
-                    DataController.instance.gameData.victoryComplete[0] = true;
+                    DataController.instance.gameData.victoryComplete[1] = true;
                 }
                 DataController.instance.gameData.gold += 30 * Enemy.Count;
             }
