@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public struct ItemDataSample
+public struct SaveItemStat
 {
     public Item orgData;
     //public ItemLevel level;
@@ -10,18 +10,6 @@ public struct ItemDataSample
         return orgData.possibility[(int)level];
     }
 }
-
-public enum ItemLevel // 아이템레벨
-{
-    Level_1, Level_2, Level_3, Level_4, Level_5
-}
-
-public enum EnhanceableItem // 강화 가능한 아이템인지
-{
-    Possible, Impossible
-}
-
-
 
 
 [CreateAssetMenu(fileName = "new item", menuName = "ScriptableObject/Item")]
@@ -36,6 +24,11 @@ public class Item : ScriptableObject
     public int value;
 
     // 강화 ---------------------------------
+
+    public enum EnhanceableItem // 강화 가능한 아이템인지
+    {
+        Possible, Impossible
+    }
 
     [Header("------Enhancement-------")]
     

@@ -29,7 +29,7 @@ public class EnhancementController : PointerInfo
     {
         myInventory = myInventory.GetComponent<RectTransform>();
         myInventory.localPosition = new Vector2(0f, 0f);
-        myItems = mySlot.GetComponent<Item>();
+        //myItems = mySlot.GetComponentInChildren<Item>();
 
     }
 
@@ -37,8 +37,8 @@ public class EnhancementController : PointerInfo
     void Update()
     {
 
-        //if(myItems.enhanceableItem == Item.EnhanceableItem.Possible)
-        
+        if(myItems.enhanceableItem == Item.EnhanceableItem.Possible)
+        {
             if (Input.GetKeyDown(KeyCode.L))
             {
                 // EnchantCost ¸¸Å­ °ñµå ¶³¾îÆ®¸®ÀÚ
@@ -59,12 +59,7 @@ public class EnhancementController : PointerInfo
             }
 
 
-        
-
-
-
-
-
+        }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
