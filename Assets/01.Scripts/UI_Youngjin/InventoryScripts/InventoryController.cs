@@ -22,7 +22,7 @@ public class InventoryController : MonoBehaviour
     public TMPro.TMP_Text countUI;
     public int defaultCount = 1;
     public List<GameObject> curItem=new List<GameObject>();
-    bool v = true;
+   public bool v = true;
     Vector3 currentRotation;
 
     private void Awake()
