@@ -32,7 +32,7 @@ public class ShopButton : MonoBehaviour
         }
         if (DataController.instance.gameData.savedInventory.ContainsKey(myItem.itemName))
         {
-            if(myItem.itemType!=Item.NpcType.Ingredient)
+            if(myItem.itemType!=Item.ItemType.Ingredient)
             this.GetComponent<Button>().interactable = false;
         }
     }

@@ -25,17 +25,17 @@ public class AboutItem : MonoBehaviour
                 myInfoBox.GetComponent<Image>().color = Color.yellow;
                 break;
             case 8:
-                myInfoBox.GetComponent<Image>().color = Color.grey;
+                myInfoBox.GetComponent<Image>().color = Color.green;
                 break;
             case 9:
-                myInfoBox.GetComponent<Image>().color = Color.green;
+                myInfoBox.GetComponent<Image>().color = Color.grey;
                 break;
 
         }
-        myInfoText.text = $"<size=36><b>{PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName}</size></b> \n\n {temp.transform.GetComponent<Pickup>().item.itemInfo} ";
-        pos.x = temp.transform.parent.localPosition.x;
-        pos.y = temp.transform.parent.localPosition.y + 170;
-        myInfoBox.transform.localPosition = pos;
+        myInfoText.text = $"<size=36><b>{PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName}</size></b> \n {temp.transform.GetComponent<Pickup>().item.itemInfo} ";
+     //   pos.x = temp.transform.parent.localPosition.x;
+     //  pos.y = temp.transform.parent.localPosition.y +200;
+     //   myInfoBox.transform.localPosition = pos;
 
         //  myInfoBox.transform.SetParent(this.transform);
         myInfoBox.SetActive(true);
