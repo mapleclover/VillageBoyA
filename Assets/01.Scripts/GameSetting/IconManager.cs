@@ -9,7 +9,7 @@ public class IconManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject obj = Instantiate(Resources.Load("Prefabs/EnemyIcon"), SceneData.Inst.Minimap) as GameObject;
+        GameObject obj = Instantiate(Resources.Load("Prefabs/MinimapIcon"), SceneData.Inst.Minimap) as GameObject;
         my_Icon = obj.GetComponent<MinimapIcon>();
         my_Icon.Initialize(transform, Color.green);
     }

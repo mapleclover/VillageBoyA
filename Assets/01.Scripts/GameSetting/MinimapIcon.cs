@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class MinimapIcon : MonoBehaviour
 {
-    /*
-  //  public GameObject directionIndicator = null;
+   /* 
+    public GameObject directionIndicator = null;
     public Sprite[] IconImages;
 
 
