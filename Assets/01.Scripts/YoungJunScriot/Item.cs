@@ -4,26 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
-public struct ItemDataSample
-{
-    public Item orgData;
-    //public ItemLevel level;
-    public float GetUpgradeProb(int level)
-    {
-        return orgData.possibility[(int)level];
-    }
-}
 
-public enum ItemLevel // 아이템레벨
-{
-    Level_1, Level_2, Level_3, Level_4, Level_5
-}
 
-public enum EnhanceableItem // 강화 가능한 아이템인지
-{
-    Possible, Impossible
-}
+
 
 
 
@@ -39,7 +22,12 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public int value;
 
-    // 강화 ---------------------------------
+    // 강화 ------------------------------------
+
+    public enum EnhanceableItem // 강화 가능한 아이템인지
+    {
+        Possible, Impossible
+    }
 
     [Header("------Enhancement-------")]
     
@@ -49,17 +37,20 @@ public class Item : ScriptableObject
         get => _enhanceableItem;
     }
 
-    public enum ItemLevel // 아이템레벨
-    {
-        Level_1, Level_2, Level_3, Level_4, Level_5
-    }
-
 
     //public int itemLevel; // 아이템레벨
 
     public int[] AP; // 공격력
     public int[] EnchantCost; // 비용
 
+    public int GetAP(int lv)
+    {
+        return AP[lv - 1];
+    }
+    public int GetEnchantCost(int lv)
+    {
+        return EnchantCost[lv - 1];
+    }
 
 
     [SerializeField] float[] _possibility; // 확률
@@ -77,7 +68,6 @@ public class Item : ScriptableObject
         }
         return false;
     }
-
 
 
 
