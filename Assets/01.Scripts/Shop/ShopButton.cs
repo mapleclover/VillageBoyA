@@ -30,6 +30,11 @@ public class ShopButton : MonoBehaviour
         {
             this.GetComponent<Button>().interactable = true;
         }
+        if (DataController.instance.gameData.savedInventory.ContainsKey(myItem.itemName))
+        {
+            if(myItem.itemType!=Item.NpcType.Ingredient)
+            this.GetComponent<Button>().interactable = false;
+        }
     }
 
     void OnClick()
