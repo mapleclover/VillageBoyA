@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "new enemy", menuName = "new enemy/enemy")]
+[CreateAssetMenu(fileName = "new enemy", menuName = "ScriptableObject/Enemy")]
 public class EnemySC : ScriptableObject
 {
     public string enemyName;
@@ -23,29 +18,26 @@ public class EnemySC : ScriptableObject
     public bool[] longAttack = new bool[3];
     public GameObject enemyPrefab;
 
-    //public Sprite[] IconImages;
+    public Sprite[] IconImages;
+    MinimapIcon myEnemy = null;
 
     public enum EnemyType
     {
         normal,
         Boss
     }
-    /*
-    public EnemyType EnemyIcon = EnemyType.normal;
-
+    public EnemyType enemyIcon = EnemyType.normal;
     public void ChangeState(EnemyType s)
     {
-        if (EnemyIcon == s) return;
-        EnemyIcon = s;
+        if (enemyIcon == s) return;
+        enemyIcon = s;
 
-        switch (EnemyIcon)
+        switch (enemyIcon)
         {
-            case EnemyType.normal:
-                
+            case EnemyType.normal:            
                 break;
-            case EnemyType.Boss:
-                
+            case EnemyType.Boss:               
                 break;
         }
-    }*/
+    }
 }

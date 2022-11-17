@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ItemStat
 {
     public EnhanceableItems Data;
-    public int Level;
+    public int Level; // 나중에 꼭 지워
 }
 
 public class EnhancementController : PointerInfo
@@ -18,10 +18,10 @@ public class EnhancementController : PointerInfo
     public GameObject setMyInventory;
     public bool onOff = false;
 
-    public EnhanceableItems myItems;
-    public EnhanceableItems.ItemLevel itemlevel;
+    public GameObject mySlot;
 
-
+    public Item myItems;
+    public SaveItemData myItemlevel;
 
     Vector2 invenPos = new Vector2(200f, 0);
     // Start is called before the first frame update
@@ -29,30 +29,42 @@ public class EnhancementController : PointerInfo
     {
         myInventory = myInventory.GetComponent<RectTransform>();
         myInventory.localPosition = new Vector2(0f, 0f);
+        myItems = mySlot.GetComponent<Item>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+
+        if(myItems.enhanceableItem == Item.EnhanceableItem.Possible)
         {
-            // EnchantCost 만큼 골드 떨어트리자
-
-            if (myItems.CheckSuccess((int)itemlevel))
+            if (Input.GetKeyDown(KeyCode.L))
             {
-                itemlevel++;
-                Debug.Log("성공");
+                // EnchantCost 만큼 골드 떨어트리자
 
-                Debug.Log(myItems.EnchantCost[(int)itemlevel]);
-                Debug.Log(myItems.AP[(int)itemlevel]);
-                Debug.Log(myItems.possibility[(int)itemlevel]);
+                if (myItems.CheckSuccess(myItemlevel.Itemlevel))
+                {
+                    myItemlevel.Itemlevel++;
+                    Debug.Log("성공");
+
+                    Debug.Log(myItems.EnchantCost[myItemlevel.Itemlevel]);
+                    Debug.Log(myItems.AP[myItemlevel.Itemlevel]);
+                    Debug.Log(myItems.possibility[myItemlevel.Itemlevel]);
+                }
+                else
+                {
+                    Debug.Log("실패");
+                }
             }
-            else
-            {
-                Debug.Log("실패");
-            }
+
+
         }
+
+
+
+
+
 
         if (Input.GetKeyDown(KeyCode.C))
         {
