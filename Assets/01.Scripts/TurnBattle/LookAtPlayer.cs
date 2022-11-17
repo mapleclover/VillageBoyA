@@ -24,7 +24,7 @@ public class LookAtPlayer : MonoBehaviour
     void PlayerCheck()
     {
         Collider[] col = Physics.OverlapSphere(transform.position, 5.0f, PlayerMask);
-        if (Physics.OverlapSphereNonAlloc(transform.position, 5.0f,col,PlayerMask)==1)
+        if (Physics.OverlapSphereNonAlloc(transform.position, 5.0f,col,PlayerMask) > 0)
         {
             myTarget = col[0].gameObject;
             Quaternion rot = Quaternion.LookRotation((myTarget.transform.position - transform.position).normalized);

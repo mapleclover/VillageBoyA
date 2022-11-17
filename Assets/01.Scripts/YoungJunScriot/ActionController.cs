@@ -124,13 +124,13 @@ public class ActionController : MonoBehaviour
                         }
                         else //거리안맞을떄지움.
                         {
-                            NpcInfoDisappear();
+                            //NpcInfoDisappear();
                             ItemInfoDisappear();
                         }
                     }
                     else //각도 안맞을대 지움.
                     {
-                        NpcInfoDisappear();
+                        //NpcInfoDisappear();
                         ItemInfoDisappear();
                     }
                 }
