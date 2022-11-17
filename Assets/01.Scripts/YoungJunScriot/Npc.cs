@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// ¹Ú¿µÁØ Npc ½ºÅ©¸³ÅÍºí.
+// ï¿½Ú¿ï¿½ï¿½ï¿½ Npc ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½.
 
-[CreateAssetMenu(fileName = "new Npc",menuName = "new Npc/npc")]
+[CreateAssetMenu(fileName = "new Npc", menuName = "ScriptableObject/NPC")]
 public class Npc : ScriptableObject
 {
 

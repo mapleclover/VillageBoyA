@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-[Serializable]
+[System.Serializable]
 public struct ItemDataSample
 {
     public Item orgData;
@@ -28,7 +24,7 @@ public enum EnhanceableItem // 강화 가능한 아이템인지
 
 
 
-[CreateAssetMenu(fileName = "new item", menuName = "new item/item")]
+[CreateAssetMenu(fileName = "new item", menuName = "ScriptableObject/Item")]
 public class Item : ScriptableObject
 {
     public string itemName;
