@@ -162,7 +162,7 @@ public class QuestManager : MonoBehaviour
                     questObject[1].SetActive(true);
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     // 미니맵 ! 아이콘
-                    questObject[5] = Instantiate(Resources.Load("Prefabs/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[5].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
                     //GameObject obj = Instantiate(Resources.Load("Prefabs/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     // obj.GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
@@ -173,7 +173,7 @@ public class QuestManager : MonoBehaviour
 
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
 
-                    questObject[5] = Instantiate(Resources.Load("Prefabs/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[5].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
 
                 }
@@ -186,7 +186,7 @@ public class QuestManager : MonoBehaviour
                 {
                     questObject[2].SetActive(true); // 호두 위에 ? 아이콘
 
-                    questObject[6] = Instantiate(Resources.Load("Prefabs/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[6] = Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[6].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
 
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MinimapIcon : MonoBehaviour
 {
-   /* 
+   /*
     public GameObject directionIndicator = null;
     public Sprite[] IconImages;
 
@@ -98,7 +98,7 @@ public class MinimapIcon : MonoBehaviour
         
     }*/
     
-    public void Initialize(Transform target, Color color)
+    public void Initialize(Transform  target, Color color)
     {
         StartCoroutine(Following(target, color));
     }
