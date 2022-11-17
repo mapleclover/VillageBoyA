@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour
     public int GoldAmount = 1000;
     //UI패널 
     public GameObject PurchasePanel;
+    public GameObject EquipPurchasePanel;
     public GameObject MainPanel;
     public GameObject myInventory;
     //상점아이템판매리스트
@@ -31,7 +32,11 @@ public class ShopManager : MonoBehaviour
             {
                 PurchasePanel.SetActive(false);
             }
-            else if (MainPanel.activeSelf)
+            else if(EquipPurchasePanel.activeSelf)
+            {
+                EquipPurchasePanel.SetActive(false);
+            }
+            else if(MainPanel.activeSelf)
             {
                 MainPanel.SetActive(false);
             }
@@ -59,9 +64,21 @@ public class ShopManager : MonoBehaviour
                 break;
             }
         }
+
         itemCost = itemList[itemIndex].itemPrice;
-        PurchasePanel.SetActive(true);
-        PurchasePanel.GetComponent<PurchaseBox>().ShowValues();
+
+        if (itemList[itemIndex].itemType != Item.ItemType.Ingredient)
+        {
+            EquipPurchasePanel.SetActive(true);
+            EquipPurchasePanel.GetComponent<PurchaseBox>().ShowValues();
+        }
+        else
+        {
+            PurchasePanel.SetActive(true);
+            PurchasePanel.GetComponent<PurchaseBox>().ShowValues();
+        }
+           
+        
     }
 
     public void BuyItem(int count)
@@ -74,6 +91,6 @@ public class ShopManager : MonoBehaviour
         //Add(itemList[itemIndex] * count);
         DataController.instance.gameData.gold =GoldAmount;
         InventoryController.Instance.GetItem(itemList[itemIndex].itemPrefab);
-        DataController.instance.gameData.myItemCount[itemList[itemIndex].itemName] = count;
+        DataController.instance.gameData.myItemCount[itemList[itemIndex].itemName] += count-1;
     }
 }

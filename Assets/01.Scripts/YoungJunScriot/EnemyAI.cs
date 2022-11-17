@@ -19,6 +19,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private ActionController theActionController;
 
+    MinimapIcon my_Icon = null;
+
     private bool findTarget = false;
 
    
@@ -26,13 +28,15 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject obj = Instantiate(Resources.Load("Prefabs/EnemyIcon"), SceneData.Inst.Minimap) as GameObject;
+        my_Icon = obj.GetComponent<MinimapIcon>();
+        my_Icon.Initialize(transform, Color.red);
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        
     }
     private Vector3 BoundaryAngle(float _angle)
     {

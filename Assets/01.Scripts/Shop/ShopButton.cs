@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShopButton : MonoBehaviour
 {
     public Item myItem;
+    public GameObject SoldOut;
     public ShopManager shopManager;
     public Image myItemImage;
     public TextMeshProUGUI myPriceText;
@@ -29,6 +30,14 @@ public class ShopButton : MonoBehaviour
         else
         {
             this.GetComponent<Button>().interactable = true;
+        }
+        if (DataController.instance.gameData.savedInventory.ContainsKey(myItem.itemName))
+        {
+            if (myItem.itemType != Item.ItemType.Ingredient)
+            {
+                this.GetComponent<Button>().interactable = false;
+                SoldOut.SetActive(true);
+            }
         }
     }
 
