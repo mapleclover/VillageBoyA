@@ -130,13 +130,7 @@ public class TurnBattle : MonoBehaviour
                     {
                         if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
                         {
-                            GameObject obj = Instantiate(myVictoryItems[0]);
-                            RawImage img = obj.GetComponentInChildren<RawImage>();
-                            img.transform.SetParent(victoryItemSlots[0].transform);
-                            img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                            img.GetComponent<RectTransform>().sizeDelta = new Vector2(100,100);
-                            img.transform.localPosition = Vector2.zero;
-                            Destroy(obj);
+                            ShowEarnedItem(0, 0);      
                         }
                         RewardGold.text = $"{5*Enemy.Count}";
                     }
@@ -144,13 +138,7 @@ public class TurnBattle : MonoBehaviour
                     {
                         if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 2)
                         {
-                            GameObject obj = Instantiate(myVictoryItems[1]);
-                            RawImage img = obj.GetComponentInChildren<RawImage>();
-                            img.transform.SetParent(victoryItemSlots[0].transform);
-                            img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                            img.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
-                            img.transform.localPosition = Vector2.zero;
-                            Destroy(obj);
+                            ShowEarnedItem(1, 0);
                         }
                         RewardGold.text = $"{30 * Enemy.Count}";
                     }
@@ -165,6 +153,16 @@ public class TurnBattle : MonoBehaviour
                 break;
         }
 
+    }
+    void ShowEarnedItem(int itemIndex,int itemSlot)
+    {
+        GameObject obj = Instantiate(myVictoryItems[itemIndex]);
+        RawImage img = obj.GetComponentInChildren<RawImage>();
+        img.transform.SetParent(victoryItemSlots[itemSlot].transform);
+        img.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        img.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
+        img.transform.localPosition = Vector2.zero;
+        Destroy(obj);
     }
     void StateProcess()
     {
@@ -286,31 +284,36 @@ public class TurnBattle : MonoBehaviour
         FollowEnemyHpbar();
 
     }
+    void CheckVictoryAndType(int actionindex,int index)
+    {
+        DataController.instance.gameData.questClear = true;
+        DataController.instance.gameData.questActionIndex += actionindex;
+        DataController.instance.gameData.victoryComplete[index] = true;
+    }
     public void VictoryOk()
     {
         if (VictoryCheck)
         {
-            if (SceneLoad.Instance.MonsterType == "Fox")
+            switch (SceneLoad.Instance.MonsterType)
             {
-                if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
-                {
-                    DataController.instance.gameData.questClear = true;
-                    DataController.instance.gameData.questActionIndex += 1;
-                    DataController.instance.gameData.victoryComplete[0] = true;
-                    
-                }
-                DataController.instance.gameData.gold += 5 * Enemy.Count;
+                case "Fox":
+                    if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 1)
+                    {
+                        CheckVictoryAndType(1, 0);                          // 중복 코드가 많아 함수로 대체했습니다 -영진
+                    }
+                    DataController.instance.gameData.gold += 5 * Enemy.Count;
+                    break;
+
+                case "BossFox":
+                    if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 2)
+                    {
+                        CheckVictoryAndType(1, 1);
+                    }
+                    DataController.instance.gameData.gold += 30 * Enemy.Count;
+                    break;
+
             }
-            if (SceneLoad.Instance.MonsterType == "BossFox")
-            {
-                if (DataController.instance.gameData.questID == 30 && DataController.instance.gameData.questActionIndex == 2)
-                {
-                    DataController.instance.gameData.questClear = true;
-                    DataController.instance.gameData.questActionIndex += 1;
-                    DataController.instance.gameData.victoryComplete[1] = true;
-                }
-                DataController.instance.gameData.gold += 30 * Enemy.Count;
-            }
+           
             SceneLoad.Instance.battleResult.victory = true;
             for (int i = 0; i < Player.Count; ++i)
             {
