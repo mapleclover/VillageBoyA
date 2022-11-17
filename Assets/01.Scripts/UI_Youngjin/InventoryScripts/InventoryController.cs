@@ -217,6 +217,9 @@ public class InventoryController : MonoBehaviour
                 case "咯快部府":
                     ItemAppears(theItem);
                     break;
+                case "咯快赣府":
+                    ItemAppears(theItem);
+                    break;
 
             }
         }

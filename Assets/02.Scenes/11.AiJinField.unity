@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1838554, g: 0.22906086, b: 0.3034666, a: 1}
+  m_IndirectSpecularColor: {r: 0.18385577, g: 0.22906174, b: 0.30346733, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -71564,7 +71564,6 @@ GameObject:
   - component: {fileID: 8231149742591696463}
   - component: {fileID: 8500378010307493905}
   - component: {fileID: 8500378010307493904}
-  - component: {fileID: 9076481301955348514}
   m_Layer: 28
   m_Name: Klee(final) (1)
   m_TagString: Npc
@@ -71968,19 +71967,6 @@ MonoBehaviour:
   npc: {fileID: 11400000, guid: 4ecd74c58afe2d841a424a3ca190871b, type: 2}
   item: {fileID: 0}
   enemy: {fileID: 0}
---- !u!135 &9076481301955348514
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8740918749197957002}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9076481301955348515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71993,10 +71979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc42f9550d093f46bdf21dad8c5110b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTarget: {fileID: 0}
-  PlayerMask:
-    serializedVersion: 2
-    m_Bits: 64
+  rotSpeed: 1
 --- !u!4 &9083306192980458477
 Transform:
   m_ObjectHideFlags: 0
