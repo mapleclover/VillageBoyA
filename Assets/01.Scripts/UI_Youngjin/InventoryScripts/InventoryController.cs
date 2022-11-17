@@ -244,7 +244,7 @@ public class InventoryController : MonoBehaviour
             {
 
                 GameObject obj = mySlots[i].transform.GetChild(0).gameObject;
-                if (obj.GetComponent<Pickup>().item.itemType == Item.NpcType.Ingredient || obj.layer == 8)      // 소모품 혹은 재료일 경우만 실행
+                if (obj.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient || obj.layer == 8)      // 소모품 혹은 재료일 경우만 실행
                 {
 
                     itemCount.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);

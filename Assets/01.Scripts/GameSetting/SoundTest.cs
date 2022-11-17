@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SoundTest : MonoBehaviour
 {
+    void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
