@@ -8,7 +8,26 @@ public class PC : ScriptableObject
     {
         get => _name;
     }
-    [SerializeField] private int _baseAttackDamage;//기본 데미지
+    [SerializeField] private int _baseAttackDamage;//기본 데미지 
+    [SerializeField] private int _speed;//속도
+    public int Speed
+    {
+        get => _speed;
+    }
+    [SerializeField] private int _health;//체력
+    public int Health
+    {
+        get => _health;
+    }
+    public enum Type
+    {
+        Player, Enemy, Boss 
+    }
+    [SerializeField] private Type _battleType;
+    public Type BattelType
+    {
+        get => _battleType;
+    }
     //스킬 이름, 데미지, 광역, 크리확률
     [SerializeField] private string[] _skillName;//스킬명
     public string[] SkillName
@@ -42,7 +61,7 @@ public class PC : ScriptableObject
             }
         }
         return false;
-    }
+    }//크리떳냐?
     public float GetDamage(int skillNumber)
     {
         if (skillNumber >= _skillName.Length)//스킬 리스트보다 큰 수 입력시 에러 호출
@@ -52,5 +71,5 @@ public class PC : ScriptableObject
         }
         float damage = _damageMultiplier[skillNumber] * _baseAttackDamage * Random.Range(0.9f, 1.1f);
         return damage;
-    }
+    }//기본 데미지 * 스킬 데미지 배율 * ±10%는 얼마야?
 }
