@@ -252,43 +252,7 @@ public class QuestManager : MonoBehaviour
                     questObject[2].transform.rotation = Quaternion.Euler(-90, 0, 0);
                 }
                 break;
-            case 40:
-                if(questActionIndex == 0)
-                {
-                    questObject[2].SetActive(false);
-                    questObject[1].SetActive(true);
-                    questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
-                }
-                if(questActionIndex == 1 && tempCheck)
-                {
-                    questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
-                }
-                if(questActionIndex == 1 && scanObject == Zhongli_3000)
-                {
-                    questObject[1].SetActive(false);
-                }
-                if (questActionIndex == 2)
-                {
-                    questObject[2].SetActive(true);
-                    questObject[2].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
-                }
-                if(questActionIndex == 3 && tempCheck)
-                {
-                    questObject[2].SetActive(false);
-                    questObject[1].SetActive(true);
-                    questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
-                }
-                if(questActionIndex == 3 && scanObject == Klee_1000)
-                {
-                    questObject[1].SetActive(false);
-                }
-                if(questActionIndex == 4)
-                {
-                    questObject[2].SetActive(true);
-                    questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
-                    questObject[2].transform.rotation = Quaternion.Euler(-90, 0, 0);
-                }
-                break;
+
         }
     }
 
@@ -406,45 +370,7 @@ public class QuestManager : MonoBehaviour
                     questPopupText.text = "클레에게\n우유전달하기";
                 }
                 break;
-            case 40:
-                if(questActionIndex == 0)
-                {
-                    myAnim.SetBool("isComplete", true);
-                    questPopupText.text = "클레와 대화하기";
-                }
-                if(questActionIndex == 1 && tempCheck)
-                {
-                    questPopupText.text = "종려와 대화하기";
 
-                    questComplete = false;
-                }
-                if (questActionIndex == 1 && scanObject == Zhongli_3000)
-                {
-                    myAnim.SetBool("isComplete", false);
-                    questPopupText.text = "리드런 사냥하기";
-                }
-                if (questActionIndex == 2)
-                {
-                    myAnim.SetBool("isComplete", true);
-                    questPopupText.text = "종려와 대화하기";
-                }
-                if(questActionIndex == 3 && tempCheck)
-                {
-                    questPopupText.text = "조사시간동안\n클레와 대화하기";
-
-                    questComplete = false;
-                }
-                if (questActionIndex == 3 && scanObject == Klee_1000)
-                {
-                    myAnim.SetBool("isComplete", false);
-                    questPopupText.text = "밀크카우 잡고\n클레에게\n우유전달하기";
-                }
-                if(questActionIndex == 4)
-                {
-                    myAnim.SetBool("isComplete", true);
-                    questPopupText.text = "클레에게\n우유전달하기";
-                }
-                break;
         }
     }
 }
