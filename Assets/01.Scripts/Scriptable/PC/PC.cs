@@ -8,7 +8,26 @@ public class PC : ScriptableObject
     {
         get => _name;
     }
-    [SerializeField] private int _baseAttackDamage;//기본 데미지
+    [SerializeField] private int _baseAttackDamage;//기본 데미지 
+    [SerializeField] private int _speed;//속도
+    public int Speed
+    {
+        get => _speed;
+    }
+    [SerializeField] private int _health;//체력
+    public int Health
+    {
+        get => _health;
+    }
+    public enum Type
+    {
+        Player, Enemy, Boss 
+    }
+    [SerializeField] private Type _battleType;
+    public Type BattelType
+    {
+        get => _battleType;
+    }
     //스킬 이름, 데미지, 광역, 크리확률
     [SerializeField] private string[] _skillName;//스킬명
     public string[] SkillName
@@ -18,6 +37,10 @@ public class PC : ScriptableObject
     [SerializeField] private float[] _damageMultiplier;//데미지 배율
     [SerializeField] private float[] _criticalPercentage;//크리티컬 확률
     [SerializeField] private float[] _criticalRatio;//크리티컬 데미지 배율
+    public float[] CriticalRatio
+    {
+        get => _criticalRatio;
+    }
     [SerializeField] private bool[] _isAOE;//광역기인가? Area Of Effect
     public bool[] IsAOE
     {
@@ -28,8 +51,7 @@ public class PC : ScriptableObject
     {
         get => _isRangeAttack;
     }
-
-    private bool IsCritical(int skillNumber)
+    public bool IsCritical(int skillNumber)
     {
         float rnd = Random.Range(0.0f, 100.0f);
         {
@@ -39,7 +61,7 @@ public class PC : ScriptableObject
             }
         }
         return false;
-    }
+    }//크리떳냐?
     public float GetDamage(int skillNumber)
     {
         if (skillNumber >= _skillName.Length)//스킬 리스트보다 큰 수 입력시 에러 호출
@@ -47,13 +69,7 @@ public class PC : ScriptableObject
             Debug.LogError($"스킬번호{skillNumber}은(는) 존재하지 않습니다");
             return -1.0f;
         }
-        float crit = 1.0f;
-        if (IsCritical(skillNumber))
-        {
-            crit = _criticalRatio[skillNumber];
-        }
-        float damage = crit * _damageMultiplier[skillNumber] * _baseAttackDamage * Random.Range(0.9f, 1.1f);
-        
+        float damage = _damageMultiplier[skillNumber] * _baseAttackDamage * Random.Range(0.9f, 1.1f);
         return damage;
-    }
+    }//기본 데미지 * 스킬 데미지 배율 * ±10%는 얼마야?
 }
