@@ -43,7 +43,7 @@ public class QuestManager : MonoBehaviour
         questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
         questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000 }));
         questList.Add(30, new QuestData("여우 사냥", new int[] { 1000, 2000, 2000, 2000 }));
-        questList.Add(40, new QuestData("골렘 사냥", new int[] { 1000, 3000, 3000, 1000, 1000, 3000 }));
+        questList.Add(40, new QuestData("골렘 사냥", new int[] { 1000, 3000, 3000, 1000, 1000, 3000, 3000, 10000 }));
     }
 
     public int GetQuestTalkIndex(int id)
@@ -63,12 +63,9 @@ public class QuestManager : MonoBehaviour
                 questActionIndex++; //인덱스순서를주지않으면 A를거치고 B를가야하는데 A안거치고 B가도되기때문.  
             }
         }
-
+        //Control Quest Object
         ControlPopup(scanObject);
         ControlObject(scanObject);
-
-        //Control Quest Object
-
 
         //Talk Complete & Next Quest
         if (questActionIndex == questList[questId].npcId.Length) //npcId의배열? -> 퀘스트진행시 다뤄야할 대화
@@ -97,6 +94,8 @@ public class QuestManager : MonoBehaviour
     {
         questId += 10; // 다음questId로 증가.
         questActionIndex = 0; // 액션인덱스는 초기화.
+        ControlPopup();
+        ControlObject();
     }
 
 
@@ -251,6 +250,24 @@ public class QuestManager : MonoBehaviour
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(-90, 0, 0);
                 }
+                if (questActionIndex == 5 && tempCheck)
+                {
+                    questObject[1].SetActive(true);
+                    questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+                }
+                if (questActionIndex == 5 && scanObject == Zhongli_3000)
+                {
+                    questObject[1].SetActive(false);
+                }
+                if (questActionIndex == 6)
+                {
+                    questObject[2].SetActive(true);
+                    questObject[2].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+                }
+                if (questActionIndex == 7)
+                {
+                    questObject[2].SetActive(false);
+                }
                 break;
 
         }
@@ -368,6 +385,27 @@ public class QuestManager : MonoBehaviour
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "클레에게\n우유전달하기";
+                }
+                if (questActionIndex == 5 && tempCheck)
+                {
+                    questPopupText.text = "종려한테 대화걸기";
+
+                    questComplete = false;
+                }
+                if (questActionIndex == 5 && scanObject == Zhongli_3000)
+                {
+                    myAnim.SetBool("isComplete", false);
+                    questPopupText.text = "거대골렘을\n토벌하자";
+                }
+                if (questActionIndex == 6)
+                {
+                    myAnim.SetBool("isComplete", true);
+                    questPopupText.text = "거대골렘을\n토벌했다 !\n종려에게로 가자";
+                }
+                if (questActionIndex == 7)
+                {
+                    myAnim.SetBool("isComplete", true);
+                    questPopupText.text = "GameClear !";
                 }
                 break;
 
