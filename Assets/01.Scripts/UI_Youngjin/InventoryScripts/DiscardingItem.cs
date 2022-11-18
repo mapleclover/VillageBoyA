@@ -1,5 +1,6 @@
 //작성자 : 이영진
 //설명 : 
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,26 +19,14 @@ public class DiscardingItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         icon = transform.GetComponentInChildren<PointerInfo>();
         Transform movingItem = eventData.pointerDrag.transform;
         if (icon != null)
-<<<<<<< HEAD
         {
-            originalParent = eventData.pointerDrag.transform.parent;
-            trashcan = eventData.pointerDrag.transform.parent.GetComponent<DiscardingItem>();
+            originalParent = movingItem.parent;
+            trashcan = movingItem.parent.GetComponent<DiscardingItem>();
             trashcan.SetChildren(icon.transform);
         }
-
-        originalParent = eventData.pointerDrag.transform.parent;
-        eventData.pointerDrag.transform.SetParent(transform);
-        eventData.pointerDrag.transform.localPosition = Vector3.zero;
-=======
-            {        
-                originalParent =movingItem.parent;
-                trashcan =movingItem.parent.GetComponent<DiscardingItem>();
-                trashcan.SetChildren(icon.transform);            
-            }
-            originalParent = movingItem.parent;
-           movingItem.SetParent(transform);
-            movingItem.localPosition = Vector3.zero;
->>>>>>> 09f870078b428a8e57993763e5ade4e5dab5b814
+        originalParent = movingItem.parent;
+        movingItem.SetParent(transform);
+        movingItem.localPosition = Vector3.zero;
 
         if (movingItem.gameObject.layer == 9)
         {

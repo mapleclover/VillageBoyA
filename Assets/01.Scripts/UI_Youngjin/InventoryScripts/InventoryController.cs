@@ -35,14 +35,7 @@ public class InventoryController : MonoBehaviour
         {
             if(mySlots[i].transform.childCount > 0)
             {
-<<<<<<< HEAD
-                DataController.instance.gameData.myItemCount[
-                    obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = 1;
-
-                //curItems[obj] = obj.transform.GetChild(0).GetComponent<Pickup>().item.count;
-=======
                 DataController.instance.gameData.myItemCount[mySlots[i].transform.GetChild(0).GetComponent<Pickup>().item.itemName] = 1;
->>>>>>> 09f870078b428a8e57993763e5ade4e5dab5b814
             }
         }
     }
@@ -185,22 +178,6 @@ public class InventoryController : MonoBehaviour
 
     public void GetItem(GameObject theItem)
     {
-<<<<<<< HEAD
-        if (DataController.instance.gameData.myItemCount.ContainsKey(theItem.GetComponent<Pickup>().item.itemName))
-        {
-            Debug.Log("이미있음");
-            DataController.instance.gameData.myItemCount[theItem.GetComponent<Pickup>().item.itemName]++;
-            if (theItem.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient || theItem.layer == 8)
-            {
-                GameObject temp =
-                    mySlots[
-                            DataController.instance.gameData.savedInventory[
-                                theItem.GetComponent<Pickup>().item.itemName]]
-                        .transform.GetChild(0).gameObject;
-                GameObject obj = temp.transform.GetChild(1).gameObject;
-                obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData
-                    .myItemCount[theItem.GetComponent<Pickup>().item.itemName].ToString();
-=======
         string st = theItem.GetComponent<Pickup>().item.itemName;
         if ( DataController.instance.gameData.myItemCount.ContainsKey(st))
         {
@@ -210,16 +187,11 @@ public class InventoryController : MonoBehaviour
                 GameObject temp= mySlots[DataController.instance.gameData.savedInventory[st]].transform.GetChild(0).gameObject;
                 GameObject obj = temp.transform.GetChild(1).gameObject;
                 obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.myItemCount[st].ToString();
->>>>>>> 09f870078b428a8e57993763e5ade4e5dab5b814
             }
         } //이미 내 인벤토리에 있으면 숫자만 더함
         else
         {
-<<<<<<< HEAD
-            switch (theItem.GetComponent<Pickup>().item.itemName) //내 인벤토리에 없으면 추가
-=======
             switch (st)             //내 인벤토리에 없으면 추가
->>>>>>> 09f870078b428a8e57993763e5ade4e5dab5b814
             {
                 case "사과":
                     ItemAppears(theItem);
@@ -261,14 +233,7 @@ public class InventoryController : MonoBehaviour
     {
         for (int i = 0; i < mySlots.Length; i++)
         {
-<<<<<<< HEAD
-            if (mySlots[i].transform.childCount == 0) //빈 슬롯을 찾음
-            {
-                GameObject obj = Instantiate(theItem);
 
-                obj.transform.SetParent(mySlots[i].transform);
-                obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-=======
             if (mySlots[i].transform.childCount.Equals(0))       //빈 슬롯을 찾음
             {       
                 GameObject obj = Instantiate(theItem);
@@ -279,23 +244,14 @@ public class InventoryController : MonoBehaviour
 
                 obj.transform.SetParent(mySlots[i].transform);
                 rt.localScale = new Vector3(1.0f, 1.0f, 1.0f);
->>>>>>> 09f870078b428a8e57993763e5ade4e5dab5b814
                 if (theItem.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient)
                 {
                      rtforchild.sizeDelta = new Vector2(60, 60);
                 }
-<<<<<<< HEAD
-                else obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-
-                obj.transform.localPosition = Vector2.zero;
-                DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName] = i;
-                DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName] = 1;
-=======
                 else rtforchild.sizeDelta = new Vector2(70, 70);
                 obj.transform.localPosition = Vector2.zero;
                 DataController.instance.gameData.savedInventory[itemname] = i;
                 DataController.instance.gameData.myItemCount[itemname] = 1;
->>>>>>> 09f870078b428a8e57993763e5ade4e5dab5b814
                 break;
             }
         }

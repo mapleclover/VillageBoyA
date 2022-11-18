@@ -109,14 +109,6 @@ public class DataController : MonoBehaviour
 
             gameData.isFirstTime = false;
         }
-<<<<<<< HEAD
-        else if (instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-=======
->>>>>>> 09f870078b428a8e57993763e5ade4e5dab5b814
 
         DontDestroyOnLoad(gameObject);
         //  gameData.myInventory = new List<GameData.myPartyItems>();

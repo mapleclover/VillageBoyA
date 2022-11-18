@@ -14,15 +14,8 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             ItemSlot slot = movingObject.parent.GetComponent<ItemSlot>();
             slot.SetChildren(icon.transform);
         }
-
-<<<<<<< HEAD
-        eventData.pointerDrag.transform.SetParent(transform);
-        eventData.pointerDrag.transform.localPosition = Vector3.zero;
-=======
         movingObject.SetParent(transform);
         movingObject.localPosition = Vector3.zero;
-
->>>>>>> 09f870078b428a8e57993763e5ade4e5dab5b814
     }
 
     public void SetChildren(Transform child)
