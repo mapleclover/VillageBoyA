@@ -12,7 +12,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 [Serializable]
 public struct BattleCharacterStat
 {
-    public EnemySC orgData;
+    public PC orgData;
     public float _curHP;
     public float curHP
     {
@@ -21,12 +21,11 @@ public struct BattleCharacterStat
         {
             _curHP = value;
             if (_curHP < 0.0f) _curHP = 0.0f;
-            if (_curHP > orgData.HP) _curHP = orgData.HP;
+            if (_curHP > orgData.Health) _curHP = orgData.Health;
         }
     }
     public float Speed;
-    public float[] AttackDmg;
-    public float Defend;
+    public float[] AttackDmg;    
     public bool[] longAttack;
 
 }
@@ -112,7 +111,7 @@ public class BattleCharacter : CharacterProperty
         callData();
         Canvas = GameObject.Find("Canvas");
         longAttackCheck = myStat.longAttack[0];
-        maxHp = myStat.orgData.HP;
+        maxHp = myStat.orgData.Health;
         
     }
     void Start()
@@ -134,7 +133,7 @@ public class BattleCharacter : CharacterProperty
     {
         if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            myStat.curHP = myStat.orgData.HP;
+            myStat.curHP = myStat.orgData.Health;
         }
         else if(gameObject.layer == LayerMask.NameToLayer("Player"))
         {
@@ -142,10 +141,8 @@ public class BattleCharacter : CharacterProperty
             if (this.gameObject.name == "JinForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Jin.HP;
             if (this.gameObject.name == "EmberForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Ember.HP;
         }
-        myStat.Speed = myStat.orgData.Speed;
-        myStat.AttackDmg = myStat.orgData.AttackDmg;
-        myStat.Defend = myStat.orgData.Defend;
-        myStat.longAttack = myStat.orgData.longAttack;
+        myStat.Speed = myStat.orgData.Speed;        
+        myStat.longAttack = myStat.orgData.IsRangeAttack;
 
     }
     public void ValuemyHpmaxHP()
@@ -197,19 +194,8 @@ public class BattleCharacter : CharacterProperty
     }
 
     public void OnTargetDamage(int a)
-    {
-        switch (a)
-        {
-            case 0:
-                StartCoroutine(OnDmg(myStat.AttackDmg[0]));
-                break;                
-            case 1:
-                StartCoroutine(OnDmg(myStat.AttackDmg[1]));
-                break;
-            case 2:
-                StartCoroutine(OnDmg(myStat.AttackDmg[2]));
-                break;
-        }
+    {        
+        StartCoroutine(OnDmg(myStat.orgData.GetDamage(a),a));
     }
     public void BowAttack1()
     {
@@ -224,8 +210,6 @@ public class BattleCharacter : CharacterProperty
 
         if (Physics.Raycast(ray, out hitData, 100f, 1 << LayerMask.NameToLayer("Enemy")))
         {
-            //Debug.DrawLine(transform.position, hitData.point, Color.red);
-
             pos=hitData.point;
             obj.transform.position = pos;
         }
@@ -243,46 +227,31 @@ public class BattleCharacter : CharacterProperty
         RaycastHit hitData;
 
         if (Physics.Raycast(ray, out hitData, 100f, 1 << LayerMask.NameToLayer("Enemy")))
-        {
-            //Debug.DrawLine(transform.position, hitData.point, Color.red);
-
+        {            
             pos = hitData.point;
             obj.transform.position = pos;
         }
         Destroy(obj, 1.0f);
     }
-    IEnumerator OnDmg(float dmg) //플로팅데미지
+    IEnumerator OnDmg(float dmg,int a) //플로팅데미지
     {        
         
         GameObject hudText = Instantiate(hudDmgText, Canvas.transform); // 플로팅데미지 생성
-        switch (UnityEngine.Random.Range(0, 10)) // 크리, 미스 , 일반데미지 확률
+        hudText.GetComponent<DmageText>().color = Color.white;
+        if (myStat.orgData.IsCritical(a))
         {
-            case 0:
-                dmg *= 2;
-                hudText.GetComponent<DmageText>().color = Color.red;
-                break;
-            case 1:
-                dmg *= 0;
-                hudText.GetComponent<DmageText>().color = Color.gray;
-                break;
-            default:
-                hudText.GetComponent<DmageText>().color = Color.white;
-                break;
+            hudText.GetComponent<DmageText>().color = Color.red;
+            dmg *= myStat.orgData.CriticalRatio[a];
         }
-        if(dmg > 0) myTarget.GetComponent<BattleCharacter>().GetComponent<Animator>().SetTrigger("Hit"); //미스시 피격모션x
+        dmg = (int)dmg;
+        //if(dmg > 0) myTarget.GetComponent<BattleCharacter>().GetComponent<Animator>().SetTrigger("Hit"); //미스시 피격모션x
         myTarget.GetComponent<BattleCharacter>().myStat.curHP -= dmg; // 크리미스 일반데미지 확인이후 체력에 -
         Vector3 pos = myTarget.transform.position; //타겟위치
         pos.y += 2.0f; // 위치에서 2만큼 y위로이동
         Vector3 pos2 = Camera.main.WorldToScreenPoint(pos); // pos2는 메인카메라에서 pos 위치값
         hudText.transform.position = pos2; // 플로팅데미지를 po2로이동
-        if (dmg <= 0.0f) //데미지체크해서 0이하면 미스로뜨게한다
-        {
-            hudText.GetComponent<DmageText>().Dmg.text = "Miss";
-        }
-        else
-        {
-            hudText.GetComponent<DmageText>().dmg = dmg;
-        }
+        
+        hudText.GetComponent<DmageText>().dmg = dmg;
         yield return null;
     }
     void SetActiveFalse()

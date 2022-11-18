@@ -371,7 +371,7 @@ public class TurnBattle : MonoBehaviour
         {
             GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{EnemyCharacterName}"), EnemyParent) as GameObject;
             Vector3 pos = new Vector3(-2 + (2 * i), 0, 0);
-            if (obj.GetComponent<BattleCharacter>().myStat.orgData.enemyType == EnemyType.Boss) pos = Vector3.zero;
+            if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss) pos = Vector3.zero;
             obj.transform.localPosition = pos;
             Enemy.Add(obj);
             Enemy[i].GetComponent<BattleCharacter>().myStat.Speed = SceneLoad.Instance.MonsterSpeed;
@@ -383,7 +383,7 @@ public class TurnBattle : MonoBehaviour
             EnHpbar[i].transform.position = pos2;
             Enemy[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
             Enemy[i].GetComponent<BattleCharacter>().Stunned = SceneLoad.Instance.BackAttack;
-            if (obj.GetComponent<BattleCharacter>().myStat.orgData.enemyType == EnemyType.Boss) break;
+            if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss) break;
         }
     }
 

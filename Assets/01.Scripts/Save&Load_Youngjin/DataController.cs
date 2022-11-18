@@ -21,6 +21,7 @@ public class GameData
     public Dictionary<string, int> myItemCount = new Dictionary<string, int>();      // 아이템과 개수
     public int gold=0;
 
+    public bool isFirstTime = true;
     //아이템 구조체: 슬롯 번호, 개수, 강화 횟수, 강화된 스탯
 
     //포션 개수: DataController.instance.gameData.myItemCount["포션"]
@@ -71,6 +72,15 @@ public class DataController: MonoBehaviour
         if (instance == null)
         {
             instance = this;
+           
+        }
+        else if (instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        if (gameData.isFirstTime)
+        {
             gameData.Kong.isLeader = true;
             gameData.Kong.strength = 10;
             gameData.Kong.defPower = 0;
@@ -94,12 +104,10 @@ public class DataController: MonoBehaviour
             gameData.Ember.HP = 100;
             gameData.Ember.isAlive = true;
             gameData.Ember.myUsedItems = new List<string>();
+
+            gameData.isFirstTime = false;
         }
-        else if (instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
+
         DontDestroyOnLoad(gameObject);
         //  gameData.myInventory = new List<GameData.myPartyItems>();
             filePath = Application.persistentDataPath + gamedataFilename;
