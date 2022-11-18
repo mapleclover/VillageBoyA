@@ -19,7 +19,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private ActionController theActionController;
 
-    MinimapIcon my_Icon = null;
+    MinimapIcon myIcon = null;
 
     private bool findTarget = false;
 
@@ -29,8 +29,8 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         GameObject obj = Instantiate(Resources.Load("Prefabs/Icons/MinimapIcon"), SceneData.Inst.Minimap) as GameObject;
-        my_Icon = obj.GetComponent<MinimapIcon>();
-        my_Icon.Initialize(transform, Color.red);
+        myIcon = obj.GetComponent<MinimapIcon>();
+        myIcon.Initialize(transform, Color.red);
     }
 
     // Update is called once per frame
