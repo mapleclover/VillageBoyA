@@ -18,6 +18,10 @@ public class PC : ScriptableObject
     [SerializeField] private float[] _damageMultiplier;//데미지 배율
     [SerializeField] private float[] _criticalPercentage;//크리티컬 확률
     [SerializeField] private float[] _criticalRatio;//크리티컬 데미지 배율
+    public float[] CriticalRatio
+    {
+        get => _criticalRatio;
+    }
     [SerializeField] private bool[] _isAOE;//광역기인가? Area Of Effect
     public bool[] IsAOE
     {
@@ -28,8 +32,7 @@ public class PC : ScriptableObject
     {
         get => _isRangeAttack;
     }
-
-    private bool IsCritical(int skillNumber)
+    public bool IsCritical(int skillNumber)
     {
         float rnd = Random.Range(0.0f, 100.0f);
         {
@@ -47,13 +50,7 @@ public class PC : ScriptableObject
             Debug.LogError($"스킬번호{skillNumber}은(는) 존재하지 않습니다");
             return -1.0f;
         }
-        float crit = 1.0f;
-        if (IsCritical(skillNumber))
-        {
-            crit = _criticalRatio[skillNumber];
-        }
-        float damage = crit * _damageMultiplier[skillNumber] * _baseAttackDamage * Random.Range(0.9f, 1.1f);
-        
+        float damage = _damageMultiplier[skillNumber] * _baseAttackDamage * Random.Range(0.9f, 1.1f);
         return damage;
     }
 }
