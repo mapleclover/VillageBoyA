@@ -193,7 +193,6 @@ public class DataController: MonoBehaviour
 
                 //DontDestroyOnLoad(thisitem);
 
-                Debug.Log($"{thisitem.name} ภ๚ภๅตส");
             }
         }
 
