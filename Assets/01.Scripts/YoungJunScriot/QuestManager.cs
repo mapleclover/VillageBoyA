@@ -19,6 +19,7 @@ public class QuestManager : MonoBehaviour
     // 필요한 컴퍼넌트
     public GameObject Klee_1000;
     public GameObject Hodu_2000;
+    public GameObject Zhongli_3000;
 
     [SerializeField]
     private TMPro.TMP_Text questPopupText;
@@ -43,7 +44,7 @@ public class QuestManager : MonoBehaviour
         questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
         questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000 }));
         questList.Add(30, new QuestData("여우 사냥", new int[] { 1000, 2000, 2000, 2000 }));
-        questList.Add(40, new QuestData("골렘 사냥", new int[] { }));
+        questList.Add(40, new QuestData("골렘 사냥", new int[] { 1000, 3000 }));
     }
 
     public int GetQuestTalkIndex(int id)
@@ -203,6 +204,22 @@ public class QuestManager : MonoBehaviour
                     questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
                 }
                 break;
+            case 40:
+                if(questActionIndex == 0)
+                {
+                    questObject[2].SetActive(false);
+                    questObject[1].SetActive(true);
+                    questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
+                }
+                if(questActionIndex == 1)
+                {
+                    questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.5f;
+                }
+                if(questActionIndex == 2)
+                {
+                    //questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.5f;
+                }
+                break;
         }
     }
 
@@ -269,6 +286,21 @@ public class QuestManager : MonoBehaviour
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "호두와 대화하기";
+                }
+                break;
+            case 40:
+                if(questActionIndex == 0)
+                {
+                    myAnim.SetBool("isComplete", true);
+                    questPopupText.text = "클레와 대화하기";
+                }
+                if(questActionIndex == 1)
+                {
+                    questPopupText.text = "종려와 대화하기";
+                }
+                if (questActionIndex == 2)
+                {
+                    //questPopupText.text = "종려와 대화하기";
                 }
                 break;
         }
