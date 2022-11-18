@@ -40602,6 +40602,7 @@ MonoBehaviour:
   - {fileID: 0}
   Klee_1000: {fileID: 1656858681}
   Hodu_2000: {fileID: 840526018}
+  Zhongli_3000: {fileID: 0}
   questPopupText: {fileID: 1468198156}
   theComplete: {fileID: 1757176257}
   theInven: {fileID: 0}
@@ -40819,9 +40820,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 10000
   isNpc: 0
-  obj: {fileID: 0}
-  Klee_1000: {fileID: 0}
-  Hodu_2000: {fileID: 0}
 --- !u!114 &1651944446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58590,7 +58588,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 140}
+  m_SizeDelta: {x: 680, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8022436386472967719
 GameObject:
@@ -58636,7 +58634,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 92, y: 38}
+  m_AnchoredPosition: {x: 83.3, y: 29}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8022436386483864149
@@ -59635,13 +59633,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -59674,7 +59672,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8022436386913991251
@@ -59689,7 +59687,7 @@ GameObject:
   - component: {fileID: 8022436386913991245}
   - component: {fileID: 8022436386913991250}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59891,7 +59889,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -92, y: 37}
+  m_AnchoredPosition: {x: -85, y: 29}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8022436387187845059
@@ -61821,8 +61819,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -286}
-  m_SizeDelta: {x: 520, y: 120}
+  m_AnchoredPosition: {x: 0, y: -352}
+  m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8022436387867321661
 GameObject:

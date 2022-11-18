@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,25 +20,28 @@ public class AboutItem : MonoBehaviour
     }
     public void pointerenter(PointerInfo temp)
     {
+        StringBuilder sb = new StringBuilder();
+        Color color = myInfoBox.GetComponent<Image>().color;
         switch (temp.transform.gameObject.layer)
         {
             case 7:                         //7: 장비, 8:소모품,9:퀘스트
-                myInfoBox.GetComponent<Image>().color = Color.yellow;
+                color= Color.yellow;
                 break;
             case 8:
-                myInfoBox.GetComponent<Image>().color = Color.green;
+                color = Color.green;
                 break;
             case 9:
-                myInfoBox.GetComponent<Image>().color = Color.grey;
+               color = Color.grey;
                 break;
 
         }
-        myInfoText.text = $"<size=36><b>{PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName}</size></b> \n {temp.transform.GetComponent<Pickup>().item.itemInfo} ";
-     //   pos.x = temp.transform.parent.localPosition.x;
-     //  pos.y = temp.transform.parent.localPosition.y +200;
-     //   myInfoBox.transform.localPosition = pos;
+        myInfoBox.GetComponent<Image>().color=color;
+        sb.Append(PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName);     //볼드체 처리 해야됨
+        
+        sb.AppendLine();sb.AppendLine();
+        sb.Append(temp.transform.GetComponent<Pickup>().item.itemInfo);
+        myInfoText.text = sb.ToString();
 
-        //  myInfoBox.transform.SetParent(this.transform);
         myInfoBox.SetActive(true);
     }
     public void pointerexit()
@@ -60,5 +64,4 @@ public class AboutItem : MonoBehaviour
     }
 
 
-    //.transform.GetComponent<Pickup>().item.itemName
 }

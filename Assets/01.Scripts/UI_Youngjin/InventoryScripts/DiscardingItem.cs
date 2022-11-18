@@ -14,18 +14,18 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     public void OnDrop(PointerEventData eventData)
     {
         icon = transform.GetComponentInChildren<PointerInfo>();
-
+        Transform movingItem = eventData.pointerDrag.transform;
         if (icon != null)
             {        
-                originalParent = eventData.pointerDrag.transform.parent;
-                trashcan = eventData.pointerDrag.transform.parent.GetComponent<DiscardingItem>();
+                originalParent =movingItem.parent;
+                trashcan =movingItem.parent.GetComponent<DiscardingItem>();
                 trashcan.SetChildren(icon.transform);            
             }
-            originalParent = eventData.pointerDrag.transform.parent;
-            eventData.pointerDrag.transform.SetParent(transform);
-            eventData.pointerDrag.transform.localPosition = Vector3.zero;
+            originalParent = movingItem.parent;
+           movingItem.SetParent(transform);
+            movingItem.localPosition = Vector3.zero;
 
-        if (eventData.pointerDrag.transform.gameObject.layer == 9)
+        if (movingItem.gameObject.layer == 9)
         {
             isQuestItem.SetActive(true);
 
@@ -66,9 +66,9 @@ public class DiscardingItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
             DataController.instance.gameData.Ember.myUsedItems.Remove(thisname);
         }
 
-        DataController.instance.gameData.savedInventory.Remove(selectedItem.GetComponent<Pickup>().item.itemName);
+        DataController.instance.gameData.savedInventory.Remove(thisname);
 
-        DataController.instance.gameData.myItemCount[selectedItem.GetComponent<Pickup>().item.itemName]--;
+        DataController.instance.gameData.myItemCount[thisname]--;
         Destroy(selectedItem);
         
         myPanel.SetActive(false);
