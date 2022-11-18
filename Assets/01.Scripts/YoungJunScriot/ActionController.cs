@@ -140,8 +140,6 @@ public class ActionController : MonoBehaviour
 
                     //float _frontEnemy = Vector3.Dot(transform.forward, _direction); // 앞인지 뒤인지구별 양수면 적이 내앞
                     _backAttackAngle = Vector3.Dot(transform.forward, Target.forward); // 각도확인.
-                    //Debug.Log("앵글" + _backAttackAngle);
-                    //Debug.Log("내앞에있나요?" + _frontEnemy);
                     float _angle = Vector3.Angle(_direction, transform.forward);
                     if (_angle < viewAngle * 0.5f)
                     { 
