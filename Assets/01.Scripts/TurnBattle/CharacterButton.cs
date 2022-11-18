@@ -46,24 +46,11 @@ public class CharacterButton : MonoBehaviour
             MyChosenAttack.GetComponent<CharacterImgaeAlpha>().DieCheck = true;
         }
 
-        if (TurnBattle.Inst.myState == TurnBattle.State.Choice)
-            for (int i = 0; i < 3; i++)
+        if (TurnBattle.Inst.myState == TurnBattle.State.Choice)            
                 if (!myCharacter.GetComponent<BattleCharacter>().ActiveHeal)
-                    if (myCharacter.GetComponent<BattleCharacter>().Skill == i)
-                    {
-                        if (i == 0)
-                        {
-                            myActvieTxt.text = "공격1";
-                        }
-                        else if (i == 1)
-                        {
-                            myActvieTxt.text = "공격2";
-                        }
-                        else if (i == 2)
-                        {
-                            myActvieTxt.text = "공격3";
-                        }
-                    }
+                   myActvieTxt.text = myCharacter.GetComponent<BattleCharacter>().myStat.orgData.SkillName[myCharacter.GetComponent<BattleCharacter>().Skill];
+
+                    
     }
 
     public void SelectedCharacter()

@@ -60,7 +60,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[0];
         mySelectAttack.gameObject.SetActive(false);
-        myActvieTxt.text = "공격1";
+        myActvieTxt.text = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.orgData.SkillName[0];
         myActiveAttack.SetActive(true);
     }
 
@@ -76,7 +76,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[1];
         mySelectAttack.gameObject.SetActive(false);
-        myActvieTxt.text = "공격2";
+        myActvieTxt.text = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.orgData.SkillName[1];
         myActiveAttack.SetActive(true);
     }
 
@@ -92,7 +92,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[2];
         mySelectAttack.gameObject.SetActive(false);
-        myActvieTxt.text = "공격3";
+        myActvieTxt.text = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.orgData.SkillName[2];
         myActiveAttack.SetActive(true);
     }
 

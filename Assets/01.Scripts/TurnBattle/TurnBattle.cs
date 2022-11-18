@@ -198,7 +198,6 @@ public class TurnBattle : MonoBehaviour
                         }
                     }
                 }
-
                 if (SelectedCharacter != null) //캐릭터가 선택되어있을경우
                 {
                     mySelectRing.SetActive(true); //캐릭터가 선택되면 링온
@@ -210,10 +209,8 @@ public class TurnBattle : MonoBehaviour
                             .myTarget.transform.position; // 타겟링을 타겟위치로 
                     }
                 }
-
                 break;
             case State.ActiveCheck:
-
                 PlayerTargetDie();
                 Active = PlayList[0];
                 while (!Active.GetComponent<BattleCharacter>().TurnActive ||
