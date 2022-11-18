@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+//작성자 : 이영진
+//설명 : 
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.UI;
-
 
 public class Button_New : MonoBehaviour
 {
@@ -22,16 +18,9 @@ public class Button_New : MonoBehaviour
     int min = 0, max = 3;
     Vector2 pos = Vector2.zero;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-
         if (v)
         {
             if (mySaveLoad.activeSelf)
@@ -48,17 +37,18 @@ public class Button_New : MonoBehaviour
                         check = false;
                     }
                 }
+
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     cur++;
                     if (cur > max) cur = max;
                 }
+
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     cur--;
                     if (cur < min) cur = min;
                 }
-
             }
             else
             {
@@ -84,57 +74,63 @@ public class Button_New : MonoBehaviour
                             break;
                     }
                 }
+
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     cur++;
                     if (cur > max) cur = max;
                 }
+
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     cur--;
                     if (cur < min) cur = min;
                 }
             }
-
-
         }
+
         if (Input.anyKey)
         {
             if (!v)
             {
                 v = true;
             }
+
             OnMouse.SetActive(true);
         }
     }
+
     public void OnClickStart()
     {
         myStart.SetActive(false);
         mySaveLoad.SetActive(true);
         check = true;
     }
+
     public void OnClickSettings()
     {
         myStart.SetActive(false);
         OnMouse.SetActive(false);
         GameSetting.SetActive(true);
     }
+
     public void OnClickExit()
     {
-
     }
+
     public void OnClickBack()
     {
-
         mySaveLoad.SetActive(false);
         myStart.SetActive(true);
         check = false;
     }
+
     public void Move()
     {
         pos.y = myButtons[cur].transform.localPosition.y;
         OnMouse.transform.localPosition = pos;
     }
+
     public void SecondMove()
     {
         pos.y = myButtons2[cur].transform.localPosition.y;

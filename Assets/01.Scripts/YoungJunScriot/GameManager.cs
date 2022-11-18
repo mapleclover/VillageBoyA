@@ -1,8 +1,11 @@
+//작성자 : 박영준
+//설명 : 게임매니저 (토크매니저 및 퀘스트매니저처리)
+
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-//박여준 게임매니저 (토크매니저 및 퀘스트매니저처리)
+
 public class GameManager : MonoBehaviour
 {
     public TalkManager talkManager;
@@ -10,20 +13,15 @@ public class GameManager : MonoBehaviour
     public GameObject talkPanel; // 대화창배경
     public Image portraitImg; // 대화시 초상화.
     public GameObject namePanel; // npc이름 판넬
-    public TMPro.TMP_Text nameText; // 대화시 NPC 이름.
-    public TMPro.TMP_Text talkText; // 대화 대사
+    public TMP_Text nameText; // 대화시 NPC 이름.
+    public TMP_Text talkText; // 대화 대사
     public GameObject scanObject; // 대화하고있는 대상 
     public bool isAction; // 대화하고있는지아닌지
     public int talkIndex; // 대화순서
 
     [SerializeField]
     private Goal theGoal;
-
-
-    private void Start()
-    {
-        //Debug.Log(questManager.CheckQuest());
-    }
+    
     public void Action(GameObject scanObj)
     {
         scanObject = scanObj;

@@ -1,15 +1,16 @@
+//작성자 : 유은호 
+//설명 : 씬이동 + 그사이에 끼워넣어줄 로드씬
+//수정자 : 박영준
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
-
 
 public class SceneLoad : MonoBehaviour
 {
     private static SceneLoad instance = null;
+
     private void Awake()
     {
         if (null == instance)
@@ -22,39 +23,37 @@ public class SceneLoad : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    
+
     public static SceneLoad Instance
     {
         get
         {
-            if(null == instance)
+            if (null == instance)
             {
                 return null;
             }
+
             return instance;
         }
     }
-
-
-
+    
     bool isChange = false;
     public bool BackAttack = false;
     public string MonsterType;
     public int MonsterCount;
     public int MonsterSpeed;
-
-
+    
     private GameObject player;
     private GameObject camera;
     private QuestManager theQuestManager;
     private GameObject myInven;
     private Transform mySlots;
-
-
+    
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -78,20 +77,14 @@ public class SceneLoad : MonoBehaviour
             //퀘스트 진행도
             theQuestManager.questId = DataController.instance.gameData.questID;
             theQuestManager.questComplete = DataController.instance.gameData.questClear;
-            //if (theQuestManager.questComplete)
-            //{
             theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
             theQuestManager.ControlObject();
             theQuestManager.ControlPopup();
-            //}
-            //else
-            //theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
             foreach (KeyValuePair<string, int> items in DataController.instance.gameData.savedInventory)
             {
                 GameObject obj;
                 for (int i = 0; i < InventoryController.Instance.curItem.Count; i++)
                 {
-                  
                     if (InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.itemName == items.Key)
                     {
                         obj = Instantiate(InventoryController.Instance.curItem[i]);
@@ -100,8 +93,8 @@ public class SceneLoad : MonoBehaviour
                         obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                         obj.transform.localPosition = Vector2.zero;
                         if (obj.transform.childCount > 1)
-                        {                           
-                            Destroy(obj.transform.GetChild(1));                           
+                        {
+                            Destroy(obj.transform.GetChild(1));
                         }
                     }
 
@@ -110,7 +103,6 @@ public class SceneLoad : MonoBehaviour
                     {
                         if (DataController.instance.gameData.Kong.myUsedItems.Contains(items.Key))
                         {
-                            
                             //UI에 표시
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items);
                             break;
@@ -124,23 +116,23 @@ public class SceneLoad : MonoBehaviour
                         else if (DataController.instance.gameData.Ember.myUsedItems.Contains(items.Key))
                         {
                             //UI에 표시
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i,items);
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i, items);
                             break;
                         }
                     }
                 }
             }
-            for(int i = 0; i < DataController.instance.gameData.victoryComplete.Length; i++)
+
+            for (int i = 0; i < DataController.instance.gameData.victoryComplete.Length; i++)
             {
                 if (DataController.instance.gameData.victoryComplete[i])
                 {
-                    InventoryController.Instance.GetItem(InventoryController.Instance.curItem[8+i]);
+                    InventoryController.Instance.GetItem(InventoryController.Instance.curItem[8 + i]);
                     DataController.instance.gameData.victoryComplete[i] = false;
                 }
             }
-            
         }
-        else if(scene.name == "H_H")
+        else if (scene.name == "H_H")
         {
             player = GameObject.Find("Summons(Final)");
             camera = GameObject.Find("Camera");
@@ -156,19 +148,19 @@ public class SceneLoad : MonoBehaviour
             //퀘스트 진행도
             theQuestManager.questId = DataController.instance.gameData.questID;
             theQuestManager.questComplete = DataController.instance.gameData.questClear;
-            //if (theQuestManager.questComplete)
-            //{
             theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
             theQuestManager.ControlObject();
             theQuestManager.ControlPopup();
         }
-   
     }
-    void ShowPortrait(GameObject portrait,int i,KeyValuePair<string,int>items)
+
+    void ShowPortrait(GameObject portrait, int i, KeyValuePair<string, int> items)
     {
         portrait.GetComponent<RectTransform>().sizeDelta = new Vector2(20, 20);
         portrait.transform.SetParent(mySlots.transform.GetChild(items.Value).transform.GetChild(0));
-        portrait.transform.localPosition = new Vector2(InventoryController.Instance.curItem[i].transform.localPosition.x+20, InventoryController.Instance.curItem[i].transform.localPosition.y-20);
+        portrait.transform.localPosition =
+            new Vector2(InventoryController.Instance.curItem[i].transform.localPosition.x + 20,
+                InventoryController.Instance.curItem[i].transform.localPosition.y - 20);
         portrait.GetComponent<RawImage>().raycastTarget = false;
     }
 
@@ -179,6 +171,7 @@ public class SceneLoad : MonoBehaviour
             StartCoroutine(Loading(i));
         }
     }
+
     public void ChangeScene(string i)
     {
         if (!isChange)
@@ -192,9 +185,10 @@ public class SceneLoad : MonoBehaviour
         public string Name;
         public bool victory;
     }
+
     public BattleResultData battleResult = new BattleResultData();
 
-    public void ToBattleScene(string Name,bool backAttack, string monsterType , int monsterCount, int monsterSpeed)
+    public void ToBattleScene(string Name, bool backAttack, string monsterType, int monsterCount, int monsterSpeed)
     {
         battleResult.Name = Name;
         battleResult.victory = false;
@@ -220,6 +214,7 @@ public class SceneLoad : MonoBehaviour
         StartCoroutine(LoadingTarget(slider, i));
         isChange = false;
     }
+
     IEnumerator Loading(string mapName)
     {
         isChange = true;
@@ -231,7 +226,7 @@ public class SceneLoad : MonoBehaviour
         isChange = false;
     }
 
-    IEnumerator LoadingTarget(Slider slider,int i)
+    IEnumerator LoadingTarget(Slider slider, int i)
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(i);
         ao.allowSceneActivation = false;
@@ -244,10 +239,12 @@ public class SceneLoad : MonoBehaviour
                 // 씬로딩 끝
                 ao.allowSceneActivation = true;
             }
+
             yield return null;
             Cursor.lockState = CursorLockMode.None;
         }
     }
+
     IEnumerator LoadingTarget(Slider slider, string mapName)
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(mapName);
@@ -261,8 +258,9 @@ public class SceneLoad : MonoBehaviour
                 // 씬로딩 끝
                 ao.allowSceneActivation = true;
             }
+
             yield return null;
-            Cursor.lockState = CursorLockMode.None;            
+            Cursor.lockState = CursorLockMode.None;
         }
 
         if (battleResult.victory)
@@ -273,6 +271,7 @@ public class SceneLoad : MonoBehaviour
             StartCoroutine(MonsterRegeneration(monster));
         }
     }
+
     IEnumerator MonsterRegeneration(GameObject monster)
     {
         Debug.Log(monster);

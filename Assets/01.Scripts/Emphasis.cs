@@ -1,23 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 이영진
+//설명 : 
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class Emphasis : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
+
+public class Emphasis : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private float yPos;
-    public GameObject myEmphasis;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject myEmphasis;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         yPos = this.gameObject.transform.localPosition.y;
@@ -25,6 +16,7 @@ public class Emphasis : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         Vector2 newPostion = new Vector2(0.0f, yPos);
         myEmphasis.transform.localPosition = newPostion;
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         myEmphasis.SetActive(false);

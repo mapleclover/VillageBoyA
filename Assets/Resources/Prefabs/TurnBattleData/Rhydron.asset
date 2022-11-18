@@ -9,18 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95221ce9a3fb4b2479def08d39c3740f, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c169d81dcc72c4b8f64ce15c12b483, type: 3}
   m_Name: Rhydron
   m_EditorClassIdentifier: 
-  enemyName: Rhydron
-  enemyType: 0
-  moveSpeed: 5
-  <HP>k__BackingField: 150
-  Speed: 4
-  AttackDmg:
-  - 0
-  - 0
-  - 0
-  Defend: 0
-  longAttack: 000000
-  enemyPrefab: {fileID: 8678659501660555602, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
+  _name: Rhydron
+  _baseAttackDamage: 10
+  _speed: 5
+  _health: 100
+  _battleType: 1
+  _skillName:
+  - "\uBC1C\uCC28\uAE30"
+  - "\uAF2C\uB9AC\uCE58\uAE30"
+  - "\uC810\uD504\uACF5\uACA9"
+  _damageMultiplier:
+  - 1
+  - 1.5
+  - 1
+  _criticalPercentage:
+  - 50
+  - 50
+  - 50
+  _criticalRatio:
+  - 2
+  - 2
+  - 2
+  _isAOE: 000000
+  _isRangeAttack: 010001

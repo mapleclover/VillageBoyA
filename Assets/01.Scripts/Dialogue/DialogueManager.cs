@@ -1,9 +1,9 @@
-///작성자 : 유은호
-///설명 : 불러온 대사를 대화창에 그리고 화자의 이미지를 띄워주는 스크립트
+//작성자 : 유은호
+//설명 : 불러온 대사를 대화창에 그리고 화자의 이미지를 띄워주는 스크립트
+
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour

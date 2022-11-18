@@ -1,8 +1,6 @@
-///박진
-///캐릭터 버튼
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
+//작성자 : 박진
+//설명 : 캐릭터 버튼
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,17 +11,18 @@ public class CharacterButton : MonoBehaviour
     public GameObject myCharacter;
     public GameObject myAttack;
     public GameObject mySelectAttack;
-    public TMPro.TMP_Text myActvieTxt = null;
+    public TMP_Text myActvieTxt = null;
     public GameObject mySelectCharacter;
     Vector3 pos;
+
     void Start()
     {
         for (int i = 0; i < 3; i++)
         {
             if (myCharacter == null) return;
-            if(myCharacter.GetComponent<BattleCharacter>().Skill==i)
+            if (myCharacter.GetComponent<BattleCharacter>().Skill == i)
             {
-                if(i==0)
+                if (i == 0)
                 {
                     myActvieTxt.text = "공격1";
                 }
@@ -41,11 +40,12 @@ public class CharacterButton : MonoBehaviour
 
     void Update()
     {
-        if(myCharacter.GetComponent<BattleCharacter>().State==STATE.Die)
+        if (myCharacter.GetComponent<BattleCharacter>().State == STATE.Die)
         {
             myButton.interactable = false;
-            MyChosenAttack.GetComponent<CharacterImgaeAlpha>().DieCheck=true;
+            MyChosenAttack.GetComponent<CharacterImgaeAlpha>().DieCheck = true;
         }
+
         if (TurnBattle.Inst.myState == TurnBattle.State.Choice)
             for (int i = 0; i < 3; i++)
                 if (!myCharacter.GetComponent<BattleCharacter>().ActiveHeal)
@@ -65,19 +65,19 @@ public class CharacterButton : MonoBehaviour
                         }
                     }
     }
+
     public void SelectedCharacter()
     {
         mySelectCharacter.SetActive(true);
         mySelectCharacter.transform.position = transform.position;
-        TurnBattle.Inst.SelectedCharacter=myCharacter;
+        TurnBattle.Inst.SelectedCharacter = myCharacter;
         mySelectAttack.gameObject.SetActive(false);
         pos = transform.position;
         float y = myAttack.gameObject.transform.position.y;
         pos.y = y;
-        myAttack.gameObject.SetActive(true);        
+        myAttack.gameObject.SetActive(true);
         myAttack.gameObject.transform.position = pos;
         SelectedCharacterAttack.Inst.myActvieTxt = myActvieTxt;
         SelectedCharacterAttack.Inst.myActiveAttack.SetActive(false);
     }
-    
 }

@@ -1,20 +1,19 @@
+//작성자 : 박영준
+//설명 : 몬스터 상태기계
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-// 박영준, 몬스터 상태기계
+
 public class Monster : CharacterMoveMent
 {
     Vector3 startPos = Vector3.zero;
 
-    [SerializeField]
-    private EnemyAI theEnemyAI;
+    [SerializeField] private EnemyAI theEnemyAI;
 
     private Transform myTarget;
 
-    [SerializeField]
-    private Animator myAnim;
-    [SerializeField]
-    private float roamingDist;
+    [SerializeField] private Animator myAnim;
+    [SerializeField] private float roamingDist;
 
     public enum STATE
     {
@@ -52,6 +51,7 @@ public class Monster : CharacterMoveMent
                 break;
         }
     }
+
     private void StateProcess()
     {
         switch (myState)
@@ -69,7 +69,7 @@ public class Monster : CharacterMoveMent
                 theEnemyAI.ChaseTarget(myTarget);
                 break;
             case STATE.DEAD:
-                
+
                 break;
         }
     }
@@ -79,12 +79,7 @@ public class Monster : CharacterMoveMent
         yield return new WaitForSeconds(t);
         ChangeState(STATE.ROAMING);
     }
-
-    // Start is called before the first frame update
-    //public void Start()
-    //{
-        
-    //}
+    
     private void OnEnable()
     {
         startPos = this.transform.position;

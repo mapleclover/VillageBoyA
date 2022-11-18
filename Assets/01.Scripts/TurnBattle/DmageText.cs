@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//작성자 : 박진
+//설명 :
 
+using TMPro;
+using UnityEngine;
 
 public class DmageText : MonoBehaviour
 {
     private float moveSpeed;
     private float destroyTime;
-    public TMPro.TMP_Text Dmg = null;
+    public TMP_Text Dmg = null;
     float _dmg = 0;
     public Color color;
     public float dmg
@@ -26,8 +27,7 @@ public class DmageText : MonoBehaviour
         Invoke("DestroyObject", destroyTime);
         Dmg.color = color;
     }
-
-   
+    
     void Update()
     {
         

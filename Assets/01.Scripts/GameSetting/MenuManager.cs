@@ -1,23 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 이현호
+//설명 : 
+
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-   // public Action
-
+    // public Action
     public GameObject optionsMenu;
     public GameObject settingMenu;
     public GameObject Waring;
-
     
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -32,6 +24,6 @@ public class MenuManager : MonoBehaviour
         else if (settingMenu.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
             settingMenu.gameObject.SetActive(false);
-        }        
+        }
     }
 }

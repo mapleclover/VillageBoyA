@@ -1,5 +1,6 @@
+//제작자 : 유은호
+//설명 : 대화창의 텍스트 출력 속도 조절 스크립트
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

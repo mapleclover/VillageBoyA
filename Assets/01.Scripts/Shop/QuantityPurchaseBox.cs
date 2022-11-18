@@ -1,5 +1,7 @@
+//작성자 : 유은호
+//설명 : 선택한 아이템이 다수 구매 가능한 아이템 일 경우 purchasebox 상속한 스크립트
+
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class QuantityPurchaseBox : PurchaseBox
@@ -30,11 +32,12 @@ public class QuantityPurchaseBox : PurchaseBox
     {
         if (int.TryParse(QuantityText.text, out int result))
         {
-            if(result > QuantitySlider.maxValue)
+            if (result > QuantitySlider.maxValue)
             {
                 QuantityText.text = QuantitySlider.maxValue.ToString();
                 result = (int)QuantitySlider.maxValue;
             }
+
             QuantitySlider.value = result;
         }
         else
@@ -42,6 +45,7 @@ public class QuantityPurchaseBox : PurchaseBox
             QuantityText.text = "1";
             QuantitySlider.value = 1;
         }
+
         CalculateTotalCost();
     }
 

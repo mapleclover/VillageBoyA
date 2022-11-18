@@ -1,11 +1,11 @@
-using UnityEngine;
+//작성자 : 박영준
+//설명 : NPC
 
-// �ڿ��� Npc ��ũ���ͺ�.
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "new Npc", menuName = "ScriptableObject/NPC")]
 public class Npc : ScriptableObject
 {
-
     public string npcName;
     public NpcType npcType;
     public Sprite npcImage;
@@ -15,5 +15,4 @@ public class Npc : ScriptableObject
     {
         Npc
     }
-
 }

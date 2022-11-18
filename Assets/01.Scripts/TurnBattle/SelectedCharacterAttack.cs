@@ -1,10 +1,9 @@
-///박진
-///캐릭터 공격선택버튼
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 박진
+//설명 : 캐릭터 공격선택버튼
+
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class SelectedCharacterAttack : MonoBehaviour
 {
@@ -13,20 +12,19 @@ public class SelectedCharacterAttack : MonoBehaviour
     public GameObject myActiveAttack;
     public Button myHeal;
     public static SelectedCharacterAttack Inst = null;
-    public TMPro.TMP_Text myActvieTxt = null;
-   
+    public TMP_Text myActvieTxt = null;
+
     private void Awake()
     {
-        Inst = this;        
+        Inst = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if(TurnBattle.Inst.HealingPotion>0)
+        if (TurnBattle.Inst.HealingPotion > 0)
         {
-            myHeal.interactable=true;
+            myHeal.interactable = true;
         }
         else
         {
@@ -42,14 +40,14 @@ public class SelectedCharacterAttack : MonoBehaviour
                 }
             }
         }
-        
     }
+
     public void AttackSelected()
     {
         myAttack.gameObject.SetActive(false);
-        mySelectAttack.gameObject.SetActive(true);        
-        
+        mySelectAttack.gameObject.SetActive(true);
     }
+
     public void Attack1()
     {
         if (TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal)
@@ -57,6 +55,7 @@ public class SelectedCharacterAttack : MonoBehaviour
             TurnBattle.Inst.HealingPotion += 1;
             TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal = false;
         }
+
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().Skill = 0;
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[0];
@@ -64,6 +63,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         myActvieTxt.text = "공격1";
         myActiveAttack.SetActive(true);
     }
+
     public void Attack2()
     {
         if (TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal)
@@ -71,6 +71,7 @@ public class SelectedCharacterAttack : MonoBehaviour
             TurnBattle.Inst.HealingPotion += 1;
             TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal = false;
         }
+
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().Skill = 1;
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[1];
@@ -78,6 +79,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         myActvieTxt.text = "공격2";
         myActiveAttack.SetActive(true);
     }
+
     public void Attack3()
     {
         if (TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal)
@@ -85,6 +87,7 @@ public class SelectedCharacterAttack : MonoBehaviour
             TurnBattle.Inst.HealingPotion += 1;
             TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal = false;
         }
+
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().Skill = 2;
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[2];
@@ -92,17 +95,17 @@ public class SelectedCharacterAttack : MonoBehaviour
         myActvieTxt.text = "공격3";
         myActiveAttack.SetActive(true);
     }
+
     public void Healing()
     {
         if (!TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal)
-        {            
+        {
             TurnBattle.Inst.HealingPotion -= 1;
         }
+
         myAttack.gameObject.SetActive(false);
         myActvieTxt.text = "회복";
         myActiveAttack.SetActive(true);
-        TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal=true;
-        
+        TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().ActiveHeal = true;
     }
-
 }

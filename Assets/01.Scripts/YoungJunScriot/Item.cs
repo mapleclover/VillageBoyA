@@ -1,9 +1,15 @@
+//작성자 : 박영준
+//설명 :  
+//수정자 : 전정우
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-[System.Serializable]
+[Serializable]
 public struct SaveItemStat
 {
     public Item orgData;
+
     //public ItemLevel level;
     public float GetUpgradeProb(int level)
     {
@@ -27,12 +33,13 @@ public class Item : ScriptableObject
 
     public enum EnhanceableItem // 강화 가능한 아이템인지
     {
-        Possible, Impossible
+        Possible,
+        Impossible
     }
 
-    [Header("------Enhancement-------")]
-    
-    [SerializeField] EnhanceableItem _enhanceableItem;
+    [Header("------Enhancement-------")] [SerializeField]
+    EnhanceableItem _enhanceableItem;
+
     public EnhanceableItem enhanceableItem // 강화 가능 아이템
     {
         get => _enhanceableItem;
@@ -40,7 +47,11 @@ public class Item : ScriptableObject
 
     public enum ItemLevel // 아이템레벨
     {
-        Level_1, Level_2, Level_3, Level_4, Level_5
+        Level_1,
+        Level_2,
+        Level_3,
+        Level_4,
+        Level_5
     }
 
 
@@ -50,8 +61,8 @@ public class Item : ScriptableObject
     public int[] EnchantCost; // 비용
 
 
-
     [SerializeField] float[] _possibility; // 확률
+
     public float[] possibility
     {
         get => _possibility;
@@ -59,25 +70,23 @@ public class Item : ScriptableObject
 
     public bool CheckSuccess(int level)
     {
-        float rnd = UnityEngine.Random.Range(0f, 100f);
+        float rnd = Random.Range(0f, 100f);
         if (rnd < _possibility[level])
         {
             return true;
         }
+
         return false;
     }
-
-
 
 
     // 강화 ----------------------------------
 
 
-    
     public enum ItemType
     {
         Weapon,
-        Armor,      
+        Armor,
         Used,
         Ingredient
     }

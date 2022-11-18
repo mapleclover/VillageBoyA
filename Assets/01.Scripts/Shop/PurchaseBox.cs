@@ -1,3 +1,5 @@
+//작성자 : 유은호
+//설명 : 기본적인 구매 아이템 선택후 뜨는 창
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

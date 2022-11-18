@@ -1,25 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+//ì‘ì„±ì : ìœ ì€í˜¸
+//ì„¤ëª… : ê²Œì„ í”Œë ˆì´ì‹œ í˜¹ì€ ì—ë””í„° ìƒì—ì„œ ëœ¨ëŠ” ì˜¤ë¥˜ í•´ê²°ì„ ìœ„í•´ ë§Œë“  ê¸°ëŠ¥ë“¤ì„ ë‹´ì•„ë‘” ìŠ¤í¬ë¦½íŠ¸
 using TMPro;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DebugWindow : EditorWindow
 {
     private static int count = 0;
-    [MenuItem("AutoTextFix/ChangeText/À»Áö·ÎÃ¼")]
+    [MenuItem("AutoTextFix/ChangeText/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼")]
     static void ChangeText1()
     {
         ChangeText("Assets/09.Fonts/AutoFix/BMEULJIROTTF.asset");
     }
 
-    [MenuItem("AutoTextFix/ChangeText/´Ş¼­Ã¼")]
+    [MenuItem("AutoTextFix/ChangeText/ï¿½Ş¼ï¿½Ã¼")]
     static void ChangeText2()
     {
         ChangeText("Assets/09.Fonts/AutoFix/DalseoHealingBold SDF.asset");
     }
-    [MenuItem("AutoTextFix/LoadScene/¹èÆ²¾À³Ñ±â±â")]
+    [MenuItem("AutoTextFix/LoadScene/ï¿½ï¿½Æ²ï¿½ï¿½ï¿½Ñ±ï¿½ï¿½")]
     static void ToInfinityAndBeyond()
     {
         SceneLoad.Instance.ToBattleScene("Fox", true, "Fox", 3, 10);
@@ -28,14 +28,10 @@ public class DebugWindow : EditorWindow
     [MenuItem("AutoTextFix/Debug")]
     static void Init()
     {
-        DebugWindow window = EditorWindow.GetWindow<DebugWindow>("BattleDebug");
+        DebugWindow window = GetWindow<DebugWindow>("BattleDebug");
         window.Show();
     }
-
-    string myString = "Hello World";
-    bool groupEnabled;
-    bool myBool = true;
-    float myFloat = 1.23f;
+    
     void OnGUI()
     {
         if(GUILayout.Button("Kill All Enemies"))
@@ -64,11 +60,11 @@ public class DebugWindow : EditorWindow
             foreach (TextMeshProUGUI txt in com)
             {
                 txt.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(str);
-                //Debug.Log(txt.name);//ÅØ½ºÆ®¸Ş½ÃÇÁ·Î °¡Áö°íÀÖ´Â ¿ÀºêÁ§Æ® ÀÌ¸§ Ãâ·Â
+                //Debug.Log(txt.name);//ï¿½Ø½ï¿½Æ®ï¿½Ş½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½
                 count++;
             }
         }
-        Debug.Log("TextMeshProUGUI¸¦ Æ÷ÇÔÇÑ ¿ÀºêÁ§Æ® °¹¼ö : " + count); //ÃÑ ¹Ù²ï ÆùÆ® °¹¼ö
+        Debug.Log("TextMeshProUGUIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ : " + count); //ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     }
 
 

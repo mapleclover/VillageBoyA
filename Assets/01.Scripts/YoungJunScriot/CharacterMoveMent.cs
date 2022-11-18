@@ -1,32 +1,33 @@
+//작성자 : 박영준
+//설명 : 캐릭터 움직임 및 회전
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-//박영준,  캐릭터 움직임. 및 회전
+
 public class CharacterMoveMent : MonoBehaviour
 {
-
     Coroutine moveCo = null;
     Coroutine rotCo = null;
 
-    
-
     protected void MoveToPosition(Vector3 pos, UnityAction done = null, bool Rot = true)
     {
-        if(moveCo != null)
+        if (moveCo != null)
         {
             StopCoroutine(moveCo);
             moveCo = null;
         }
+
         moveCo = StartCoroutine(MovingToPosition(pos, done));
 
         if (Rot)
         {
-            if(rotCo != null)
+            if (rotCo != null)
             {
                 StopCoroutine(rotCo);
                 rotCo = null;
             }
+
             rotCo = StartCoroutine(RotatingToPosition(pos));
         }
     }
@@ -40,14 +41,16 @@ public class CharacterMoveMent : MonoBehaviour
         while (dist > 0.0f)
         {
             float delta = this.transform.GetComponent<Pickup>().enemy.moveSpeed * Time.deltaTime;
-            if(delta > dist)
+            if (delta > dist)
             {
                 delta = dist;
             }
+
             dist -= delta;
             transform.Translate(dir * delta, Space.World);
             yield return null;
         }
+
         done?.Invoke(); // 다움직이고나면 람다식으로 IDLE 실행하도록.
     }
 
@@ -60,17 +63,18 @@ public class CharacterMoveMent : MonoBehaviour
         {
             rotDir = -1.0f;
         }
-        while(Angle > 0.0f)
+
+        while (Angle > 0.0f)
         {
             float delta = 180.0f * Time.deltaTime;
-            if(delta > Angle)
+            if (delta > Angle)
             {
                 delta = Angle;
             }
+
             Angle -= delta;
-            transform.Rotate(Vector3.up * delta * rotDir,Space.World);
+            transform.Rotate(Vector3.up * delta * rotDir, Space.World);
             yield return null;
         }
-        
     }
 }

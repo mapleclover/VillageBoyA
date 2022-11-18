@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 이현호
+//설명 : 
+
 using UnityEngine;
 using UnityEngine.UI;
-
-// 작성자 : 이현호
 
 public class SoundManager : MonoBehaviour
 {
@@ -31,11 +30,13 @@ public class SoundManager : MonoBehaviour
             Load(1);
         }
     }
+
     public void ChangeVolume(int i)
     {
         BGMSFXSource[i].volume = volumeSlider[i].value;
         Save(i);
     }
+
     private void Load(int i)
     {
         switch (i)
@@ -47,8 +48,10 @@ public class SoundManager : MonoBehaviour
                 volumeSlider[i].value = 1.0f - PlayerPrefs.GetFloat("SFXVolume");
                 break;
         }
+
         BGMSFXSource[i].volume = volumeSlider[i].value;
     }
+
     private void Save(int i)
     {
         switch (i)
@@ -61,5 +64,4 @@ public class SoundManager : MonoBehaviour
                 break;
         }
     }
-
 }

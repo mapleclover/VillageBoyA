@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 박영준
+//설명 : 
 using UnityEngine;
 
 public class CharacterProperty : MonoBehaviour
 {
     //public CharacterStat Stat;
     Animator _anim = null;
+
     protected Animator myAnim
     {
         get
@@ -18,11 +19,13 @@ public class CharacterProperty : MonoBehaviour
                     _anim = GetComponentInChildren<Animator>();
                 }
             }
+
             return _anim;
         }
     }
 
     Rigidbody _rigid = null;
+
     protected Rigidbody myRigid
     {
         get
@@ -31,6 +34,7 @@ public class CharacterProperty : MonoBehaviour
             {
                 _rigid = GetComponent<Rigidbody>();
             }
+
             return _rigid;
         }
     }

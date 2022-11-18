@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 박영준
+//설명 : 상호작용 스크립트
+
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-// 박영준 상호작용 스크립트
 
 public class ActionController : MonoBehaviour
 {
@@ -22,34 +22,19 @@ public class ActionController : MonoBehaviour
 
     private RaycastHit hitInfo;
     private GameObject scanObject;
-    
 
-    [SerializeField]
-    private LayerMask layerMask; // 해당레이어에만 반응하게끔.
-    [SerializeField]
-    private LayerMask enemyMask; // 적 레이어
+
+    [SerializeField] private LayerMask layerMask; // 해당레이어에만 반응하게끔.
+    [SerializeField] private LayerMask enemyMask; // 적 레이어
 
     //필요한 컴포넌트
-    [SerializeField]
-    private TMPro.TextMeshProUGUI CheckText;
-    [SerializeField]
-    private Image npcTextBackground;
-    [SerializeField]
-    private Image itemTextBackground;
-    [SerializeField]
-    private Image enemyextBackground;
-    [SerializeField]
-    private GameManager theManager;
-    [SerializeField]
-    private Image thePicture;
-    [SerializeField]
-    private Goal theGoal;
-
-    
-    
-
-
-
+    [SerializeField] private TextMeshProUGUI CheckText;
+    [SerializeField] private Image npcTextBackground;
+    [SerializeField] private Image itemTextBackground;
+    [SerializeField] private Image enemyextBackground;
+    [SerializeField] private GameManager theManager;
+    [SerializeField] private Image thePicture;
+    [SerializeField] private Goal theGoal;
 
 
     // Start is called before the first frame update
@@ -71,13 +56,14 @@ public class ActionController : MonoBehaviour
         {
             scanObject = null;
         }
+
         TryPickupAction();
     }
 
     private Vector3 BoudaryAngle(float _angle)
     {
         _angle += transform.eulerAngles.y; // 플레이어의 로테이션값에따라 angle값 변화주기위함.
-        return new Vector3(Mathf.Sin(_angle * Mathf.Deg2Rad), 0f, Mathf.Cos(_angle * Mathf.Deg2Rad)); 
+        return new Vector3(Mathf.Sin(_angle * Mathf.Deg2Rad), 0f, Mathf.Cos(_angle * Mathf.Deg2Rad));
         //deg2rad -> 값을 라디안값으로 변환.
     }
 
@@ -134,28 +120,25 @@ public class ActionController : MonoBehaviour
                         ItemInfoDisappear();
                     }
                 }
-                else if(Target.CompareTag("Enemy")) // 적발견시
+                else if (Target.CompareTag("Enemy")) // 적발견시
                 {
                     Vector3 _direction = (Target.position - transform.position).normalized;
 
                     //float _frontEnemy = Vector3.Dot(transform.forward, _direction); // 앞인지 뒤인지구별 양수면 적이 내앞
                     _backAttackAngle = Vector3.Dot(transform.forward, Target.forward); // 각도확인.
-                    //Debug.Log("앵글" + _backAttackAngle);
-                    //Debug.Log("내앞에있나요?" + _frontEnemy);
                     float _angle = Vector3.Angle(_direction, transform.forward);
                     if (_angle < viewAngle * 0.5f)
-                    { 
+                    {
                         if (Physics.Raycast(transform.position, _direction, out hitInfo, range, enemyMask))
                         {
-                            if (hitInfo.transform.tag == "Enemy")//한번더체크
+                            if (hitInfo.transform.tag == "Enemy") //한번더체크
                             {
-
                                 if (_backAttackAngle > 0.866f) // 30도 + 30도 = 60도
                                 {
                                     isBackAttack = true;
                                     //EnemyBackAttackInfoAppear();
                                 }
-                                else if (_backAttackAngle <= 0.866f)// _zvalue값이 0이상일때 (뒤치기아닐때)
+                                else if (_backAttackAngle <= 0.866f) // _zvalue값이 0이상일때 (뒤치기아닐때)
                                 {
                                     isBackAttack = false;
                                     //EnemyBackAttackInfoDisappear();
@@ -184,6 +167,7 @@ public class ActionController : MonoBehaviour
             //EnemyBackAttackInfoDisappear();
         }
     }
+
     // 아이템체크 후 pickup 함수활성화
     private void TryPickupAction()
     {
@@ -201,18 +185,20 @@ public class ActionController : MonoBehaviour
                 }
             }
         }
+
         if (isBattle)
         {
             CheckObject();
             CanPickUp();
         }
     }
+
     // 아이템획득가능으로전환.
     private void CanPickUp()
     {
-        if(pickItemActivated) // 아이템 횔득활성시에만 기능
+        if (pickItemActivated) // 아이템 횔득활성시에만 기능
         {
-            if(hitInfo.transform != null) // 한번더 체크 및 아이템획득
+            if (hitInfo.transform != null) // 한번더 체크 및 아이템획득
             {
                 Debug.Log(scanObject);
                 ItemInfoDisappear();
@@ -222,7 +208,7 @@ public class ActionController : MonoBehaviour
         }
         else if (pickNpcActivated)
         {
-            if(hitInfo.transform != null) // 한번 더 확인 및 // NPC와 대화.
+            if (hitInfo.transform != null) // 한번 더 확인 및 // NPC와 대화.
             {
                 Debug.Log(scanObject);
                 theManager.Action(scanObject);
@@ -230,15 +216,16 @@ public class ActionController : MonoBehaviour
         }
         else if (isBackAttack)
         {
-            if(hitInfo.transform != null && isBattle)
+            if (hitInfo.transform != null && isBattle)
             {
                 //기습- 배틀씬으로넘어감.///////////////////////////////**************
                 Destroy(hitInfo.transform.gameObject);
                 isBattle = false;
 
                 DataController.instance.SaveData();
-                SceneLoad.Instance.ToBattleScene(hitInfo.transform.name , isBackAttack, hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2,4) 
-                                                                   ,hitInfo.transform.GetComponent<Pickup>().enemy.Speed) ;
+                SceneLoad.Instance.ToBattleScene(hitInfo.transform.name, isBackAttack,
+                    hitInfo.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2, 4)
+                    , hitInfo.transform.GetComponent<Pickup>().enemy.Speed);
                 //EnemyBackAttackInfoDisappear();
                 //기습 할때 배틀신 넘어감 //********************************************************************************
 
@@ -263,10 +250,12 @@ public class ActionController : MonoBehaviour
             npcTextBackground.gameObject.SetActive(true);
             thePicture.sprite = hitInfo.transform.GetComponent<Pickup>().npc.npcImage;
             CheckText.gameObject.SetActive(true); // 텍스트창 활성화
-            CheckText.alignment = TMPro.TextAlignmentOptions.Right;
-            CheckText.text = "<color=blue>" + hitInfo.transform.GetComponent<Pickup>().npc.npcName + "</color>" + "와 대화하시겠습니까?" + "<color=yellow>" + " (E) " + "</color>";
+            CheckText.alignment = TextAlignmentOptions.Right;
+            CheckText.text = "<color=blue>" + hitInfo.transform.GetComponent<Pickup>().npc.npcName + "</color>" +
+                             "와 대화하시겠습니까?" + "<color=yellow>" + " (E) " + "</color>";
         }
     }
+
     // item 정보창 오픈
     private void ItemInfoAppear()
     {
@@ -275,8 +264,9 @@ public class ActionController : MonoBehaviour
             pickItemActivated = true;
             itemTextBackground.gameObject.SetActive(true);
             CheckText.gameObject.SetActive(true);
-            CheckText.alignment = TMPro.TextAlignmentOptions.Center;
-            CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" + "획득" + "<color=yellow>" + " (E) " + "</color>";
+            CheckText.alignment = TextAlignmentOptions.Center;
+            CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" +
+                             "획득" + "<color=yellow>" + " (E) " + "</color>";
         }
     }
 
@@ -290,6 +280,7 @@ public class ActionController : MonoBehaviour
             CheckText.gameObject.SetActive(false);
         }
     }
+
     // 아이템 정보창 클로즈
     private void ItemInfoDisappear()
     {
@@ -303,7 +294,7 @@ public class ActionController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.tag == "Enemy")
+        if (other.transform.tag == "Enemy")
         {
             isBattle = true;
         }

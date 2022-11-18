@@ -1,35 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//작성자 : 박영준
+//설명 : 캐릭터 간단한 무브 및 숄더뷰
 
-//박영준 캐릭터 간단한 무브 및 숄더뷰
+using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    [SerializeField]
-    private float walkSpeed; // 걷기속도
+    [SerializeField] private float walkSpeed; // 걷기속도
 
     private float applySpeed; // 중복방지위한 저장용 속도
 
-    [SerializeField]
-    private float lookSensitivityX;// x축 민감도
-    [SerializeField]
-    private float lookSensitivityY;// y축 민감도
+    [SerializeField] private float lookSensitivityX; // x축 민감도
+    [SerializeField] private float lookSensitivityY; // y축 민감도
 
     //카메라 이동한계치
-    [SerializeField]
-    private float cameraRotationLimit;
+    [SerializeField] private float cameraRotationLimit;
     private float currentCameraRotation = 0;
 
     //필요한 컴포넌트
-    [SerializeField]
-    private Camera theCamera;
+    [SerializeField] private Camera theCamera;
     private Rigidbody myRigid;
 
     // Start is called before the first frame update
     void Start()
     {
-        myRigid = GetComponent < Rigidbody >();
+        myRigid = GetComponent<Rigidbody>();
 
         applySpeed = walkSpeed;
     }
@@ -43,7 +37,6 @@ public class Move : MonoBehaviour
             CharacterRotation();
             CameraRotation();
         }
-        
     }
 
     private void CharacterMove()

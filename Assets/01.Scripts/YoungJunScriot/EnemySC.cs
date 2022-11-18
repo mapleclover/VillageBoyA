@@ -1,3 +1,6 @@
+//작성자 : 박영준
+//설명 : 
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new enemy", menuName = "ScriptableObject/Enemy")]
@@ -6,12 +9,7 @@ public class EnemySC : ScriptableObject
     public string enemyName;
     public EnemyType enemyType;
     public float moveSpeed;
-    [field: SerializeField]
-    public float HP
-    {
-        get;
-        private set;
-    }
+    [field: SerializeField] public float HP { get; private set; }
     public int Speed;
     public float[] AttackDmg = new float[3];
     public float Defend;
@@ -23,5 +21,5 @@ public class EnemySC : ScriptableObject
     {
         normal,
         Boss
-    }     
+    }
 }

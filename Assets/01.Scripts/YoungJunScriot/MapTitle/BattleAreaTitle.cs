@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 박영준
+//설명 : 
+
+using TMPro;
 using UnityEngine;
 
 public class BattleAreaTitle : MonoBehaviour
 {
     [SerializeField] GameObject MapTitle;
-    [SerializeField] TMPro.TMP_Text text;
+    [SerializeField] TMP_Text text;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,7 +31,6 @@ public class BattleAreaTitle : MonoBehaviour
                     text.text = "태초 마을";
                     break;
             }
-        
         }
     }
 }
