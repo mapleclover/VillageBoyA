@@ -9,14 +9,15 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         PointerInfo icon = transform.GetComponentInChildren<PointerInfo>();
+        Transform movingObject = eventData.pointerDrag.transform;
         if (icon != null)
         {
-            ItemSlot slot = eventData.pointerDrag.transform.parent.GetComponent<ItemSlot>();
+            ItemSlot slot = movingObject.parent.GetComponent<ItemSlot>();
             slot.SetChildren(icon.transform);
         }
 
-        eventData.pointerDrag.transform.SetParent(transform);
-        eventData.pointerDrag.transform.localPosition = Vector3.zero;
+        movingObject.SetParent(transform);
+        movingObject.localPosition = Vector3.zero;
 
     }
     public void SetChildren(Transform child)

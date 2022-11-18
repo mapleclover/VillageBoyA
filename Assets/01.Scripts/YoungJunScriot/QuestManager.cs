@@ -44,7 +44,7 @@ public class QuestManager : MonoBehaviour
         questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
         questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000 }));
         questList.Add(30, new QuestData("여우 사냥", new int[] { 1000, 2000, 2000, 2000 }));
-        questList.Add(40, new QuestData("골렘 사냥", new int[] { 1000, 3000 }));
+        questList.Add(40, new QuestData("골렘 사냥", new int[] { 1000, 3000, 3000, 1000, 1000, 3000 }));
     }
 
     public int GetQuestTalkIndex(int id)
@@ -211,13 +211,34 @@ public class QuestManager : MonoBehaviour
                     questObject[1].SetActive(true);
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                 }
-                if(questActionIndex == 1)
+                if(questActionIndex == 1 && tempCheck)
                 {
-                    questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.5f;
+                    questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
                 }
-                if(questActionIndex == 2)
+                if(questActionIndex == 1 && scanObject == Zhongli_3000)
                 {
-                    //questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.5f;
+                    questObject[1].SetActive(false);
+                }
+                if (questActionIndex == 2)
+                {
+                    questObject[2].SetActive(true);
+                    questObject[2].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+                }
+                if(questActionIndex == 3 && tempCheck)
+                {
+                    questObject[2].SetActive(false);
+                    questObject[1].SetActive(true);
+                    questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
+                }
+                if(questActionIndex == 3 && scanObject == Klee_1000)
+                {
+                    questObject[1].SetActive(false);
+                }
+                if(questActionIndex == 4)
+                {
+                    questObject[2].SetActive(true);
+                    questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
+                    questObject[2].transform.rotation = Quaternion.Euler(-90, 0, 0);
                 }
                 break;
         }
@@ -294,13 +315,37 @@ public class QuestManager : MonoBehaviour
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "클레와 대화하기";
                 }
-                if(questActionIndex == 1)
+                if(questActionIndex == 1 && tempCheck)
                 {
                     questPopupText.text = "종려와 대화하기";
+
+                    questComplete = false;
+                }
+                if (questActionIndex == 1 && scanObject == Zhongli_3000)
+                {
+                    myAnim.SetBool("isComplete", false);
+                    questPopupText.text = "리드런 사냥하기";
                 }
                 if (questActionIndex == 2)
                 {
-                    //questPopupText.text = "종려와 대화하기";
+                    myAnim.SetBool("isComplete", true);
+                    questPopupText.text = "종려와 대화하기";
+                }
+                if(questActionIndex == 3 && tempCheck)
+                {
+                    questPopupText.text = "조사시간동안\n클레와 대화하기";
+
+                    questComplete = false;
+                }
+                if (questActionIndex == 3 && scanObject == Klee_1000)
+                {
+                    myAnim.SetBool("isComplete", false);
+                    questPopupText.text = "밀크카우 잡고\n클레에게\n우유전달하기";
+                }
+                if(questActionIndex == 4)
+                {
+                    myAnim.SetBool("isComplete", true);
+                    questPopupText.text = "클레에게\n우유전달하기";
                 }
                 break;
         }
