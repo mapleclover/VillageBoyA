@@ -5,25 +5,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[Serializable]
-public struct SaveItemStat
-{
-    public Item orgData;
 
-
-    public int[] AP; // 공격력
-    public int[] EnchantCost; // 비용
-
-
-
-
-
-    //public ItemLevel level;
-    public float GetUpgradeProb(int level)
-    {
-        return orgData.possibility[(int)level];
-    }
-}
 
 
 [CreateAssetMenu(fileName = "new item", menuName = "ScriptableObject/Item")]
@@ -44,7 +26,6 @@ public class Item : ScriptableObject
         Possible,
         Impossible
     }
-
     [Header("------Enhancement-------")] [SerializeField]
     EnhanceableItem _enhanceableItem;
 
@@ -52,38 +33,32 @@ public class Item : ScriptableObject
     {
         get => _enhanceableItem;
     }
-/*
-    public enum ItemLevel // 아이템레벨
+
+    public int[] AP; // 공격력
+    public int[] EnchantCost; // 비용
+    public int[] Possibility; // 확률
+    public int GetPossibility(int lv)
     {
-        Level_1,
-        Level_2,
-        Level_3,
-        Level_4,
-        Level_5
-    }*/
-
-    //public int itemLevel; // 아이템레벨
-
-
-
-    [SerializeField] float[] _possibility; // 확률
-
-    public float[] possibility
-    {
-        get => _possibility;
+        return Possibility[lv - 1];
     }
-
+    public int GetAP(int lv)
+    {
+        return AP[lv - 1];
+    }
+    public int GetEnchantCost(int lv)
+    {
+        return EnchantCost[lv - 1];
+    }
     public bool CheckSuccess(int level)
     {
         float rnd = Random.Range(0f, 100f);
-        if (rnd < _possibility[level])
+        if (rnd < Possibility[level])
         {
             return true;
         }
 
         return false;
     }
-
 
     // 강화 ----------------------------------
 
@@ -93,6 +68,7 @@ public class Item : ScriptableObject
         Weapon,
         Armor,
         Used,
-        Ingredient
+        Ingredient,
+        Accessory
     }
 }
