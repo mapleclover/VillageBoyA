@@ -233,6 +233,7 @@ public class QuestManager : MonoBehaviour
                 {
                     questObject[2].SetActive(true);
                     questObject[2].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+                    questObject[2].transform.rotation = Quaternion.Euler(90, 90, 0);
                 }
                 if(questActionIndex == 3 && tempCheck)
                 {
@@ -248,10 +249,11 @@ public class QuestManager : MonoBehaviour
                 {
                     questObject[2].SetActive(true);
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
-                    questObject[2].transform.rotation = Quaternion.Euler(-90, 0, 0);
+                    questObject[2].transform.rotation = Quaternion.Euler(90, 180, 0);
                 }
                 if (questActionIndex == 5 && tempCheck)
                 {
+                    questObject[2].SetActive(false);
                     questObject[1].SetActive(true);
                     questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
                 }

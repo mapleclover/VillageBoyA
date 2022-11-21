@@ -333,10 +333,40 @@ public class TurnBattle : MonoBehaviour
                     if (DataController.instance.gameData.questID == 30 &&
                         DataController.instance.gameData.questActionIndex == 2)
                     {
-                        CheckVictoryAndType(1, 1);
+                        CheckVictoryAndType(1, 1);// 대왕여우 와의 맞짱 후 이김 승리값전달
                     }
 
                     DataController.instance.gameData.gold += 30 * Enemy.Count;
+                    break;
+
+                case "Rhydron":
+                    if (DataController.instance.gameData.questID == 40 &&
+                        DataController.instance.gameData.questActionIndex == 1)
+                    {
+                        CheckVictoryAndType(1, 2); // 리드런과의 맞짱 후 이김 승리값전달
+                    }
+
+                    DataController.instance.gameData.gold += 5 * Enemy.Count;
+                    break;
+
+                case "Milkcow":
+                    if (DataController.instance.gameData.questID == 40 &&
+                        DataController.instance.gameData.questActionIndex == 3)
+                    {
+                        CheckVictoryAndType(1, 3); // 밀크카우 와의 맞짱 후 이김 승리값전달
+                    }
+
+                    DataController.instance.gameData.gold += 5 * Enemy.Count;
+                    break;
+
+                case "GenshinGolem":
+                    if (DataController.instance.gameData.questID == 40 &&
+                        DataController.instance.gameData.questActionIndex == 5)
+                    {
+                        CheckVictoryAndType(1, 4); // 밀크카우 와의 맞짱 후 이김 승리값전달
+                    }
+
+                    DataController.instance.gameData.gold += 100 * Enemy.Count;
                     break;
             }
 

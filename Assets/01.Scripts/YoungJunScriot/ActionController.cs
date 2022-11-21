@@ -185,7 +185,6 @@ public class ActionController : MonoBehaviour
                 }
             }
         }
-
         if (isBattle)
         {
             CheckObject();

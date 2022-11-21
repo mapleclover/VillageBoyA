@@ -19,7 +19,7 @@ public class Goal : MonoBehaviour
     void Start()
     {
         goalCounting = 0;
-        isTutorial = true;
+        isTutorial = false;
     }
 
     // Update is called once per frame
