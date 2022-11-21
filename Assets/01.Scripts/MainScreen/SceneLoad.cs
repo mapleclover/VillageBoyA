@@ -134,9 +134,12 @@ public class SceneLoad : MonoBehaviour
         }
         else if (scene.name == "H_H")
         {
-            player = GameObject.Find("Summons(Final)");
-            camera = GameObject.Find("Camera");
-            myInven = GameObject.Find("Inventory 1");
+            // player = GameObject.Find("Summons(Final)");
+            player = GameObject.FindWithTag("Player");
+           // camera = GameObject.Find("Camera");
+            camera = GameObject.FindWithTag("Camera");
+            // myInven = GameObject.Find("Inventory 1");
+            myInven = GameObject.FindWithTag("Inventory");
             mySlots = myInven.transform.GetChild(0);
             theQuestManager = FindObjectOfType<QuestManager>();
 
