@@ -68,6 +68,7 @@ public class Item : ScriptableObject
         Weapon,
         Armor,
         Used,
-        Ingredient
+        Ingredient,
+        Accessory
     }
 }
