@@ -92,11 +92,12 @@ public class SceneLoad : MonoBehaviour
                         obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                         obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                         obj.transform.localPosition = Vector2.zero;
-                        if (obj.transform.childCount > 1)
-                        {
-                            Destroy(obj.transform.GetChild(1));
-                        }
+                        // if (obj.transform.childCount > 1)
+                        //  {
+                        //     Destroy(obj.transform.GetChild(1));
+                        //  }
                     }
+                    else continue;
 
 
                     if (InventoryController.Instance.curItem[i].layer == 7)
@@ -104,19 +105,19 @@ public class SceneLoad : MonoBehaviour
                         if (DataController.instance.gameData.Kong.myUsedItems.Contains(items.Key))
                         {
                             //UI에 표시
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items);
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items.Value);
                             break;
                         }
                         else if (DataController.instance.gameData.Jin.myUsedItems.Contains(items.Key))
                         {
                             //UI에 표시
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, items);
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, items.Value);
                             break;
                         }
                         else if (DataController.instance.gameData.Ember.myUsedItems.Contains(items.Key))
                         {
                             //UI에 표시
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i, items);
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i, items.Value);
                             break;
                         }
                     }
@@ -155,10 +156,10 @@ public class SceneLoad : MonoBehaviour
         }
     }
 
-    void ShowPortrait(GameObject portrait, int i, KeyValuePair<string, int> items)
+    void ShowPortrait(GameObject portrait, int i, int index)
     {
-        portrait.GetComponent<RectTransform>().sizeDelta = new Vector2(20, 20);
-        portrait.transform.SetParent(mySlots.transform.GetChild(items.Value).transform.GetChild(0));
+        portrait.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
+        portrait.transform.SetParent(mySlots.transform.GetChild(index).transform.GetChild(0));
         portrait.transform.localPosition =
             new Vector2(InventoryController.Instance.curItem[i].transform.localPosition.x + 20,
                 InventoryController.Instance.curItem[i].transform.localPosition.y - 20);

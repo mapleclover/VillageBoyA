@@ -11554,10 +11554,14 @@ MonoBehaviour:
   portraitArr:
   - {fileID: 21300000, guid: a6d20768473b1144aa1d7e8a67c244ef, type: 3}
   - {fileID: 1163500796, guid: 79865aa7e26cc974f93734d5ba15ed7e, type: 3}
+  - {fileID: 21300000, guid: 24178d3d8b5debe469e9b067d0de8810, type: 3}
+  - {fileID: 21300000, guid: 687352b9c9099434a86fb1e9f9222e14, type: 3}
   - {fileID: -1044782287, guid: 72a18ac672c05924382704b809ee89f8, type: 3}
-  - {fileID: 1596235354, guid: aa8f6486154ba374c8979fafe0bdce10, type: 3}
+  - {fileID: 21300000, guid: 0eb459f607c8a8142bf5aee0f0a87c30, type: 3}
+  - {fileID: 13000927, guid: 75ee8bef1a75fd047b97fa0478d49be6, type: 3}
   - {fileID: 21300000, guid: 21c8b7ce51b8bc244b18a0662c564915, type: 3}
   - {fileID: 21300000, guid: ee58a4705ec0a5242a687db05de9f1da, type: 3}
+  - {fileID: 1288873948, guid: 5cac6968a3f65014197f37e7916a4977, type: 3}
 --- !u!4 &384855009
 Transform:
   m_ObjectHideFlags: 0
@@ -26300,6 +26304,7 @@ MonoBehaviour:
   scanObject: {fileID: 0}
   isAction: 0
   talkIndex: 0
+  textSpeed: 0.01
   theGoal: {fileID: 1651944446}
 --- !u!4 &948012091
 Transform:
@@ -48627,7 +48632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.03
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalPosition.z
@@ -48635,19 +48640,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -48655,7 +48660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 4212361466194207674, guid: 5042ab7d6764fbe429fb069c902afd43, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -74411,7 +74416,7 @@ GameObject:
   - component: {fileID: 7192729493087117227}
   m_Layer: 5
   m_Name: Ember
-  m_TagString: Untagged
+  m_TagString: Ember
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76317,7 +76322,7 @@ GameObject:
   - component: {fileID: 7192729493986281432}
   m_Layer: 5
   m_Name: Jin
-  m_TagString: Untagged
+  m_TagString: Jin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77508,7 +77513,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -325}
-  m_SizeDelta: {x: 600, y: 130}
+  m_SizeDelta: {x: 610, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7192729494509750903
 GameObject:
@@ -77790,7 +77795,7 @@ GameObject:
   - component: {fileID: 7192729494640220635}
   m_Layer: 5
   m_Name: MainCharacter
-  m_TagString: Untagged
+  m_TagString: Kong
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78361,6 +78366,9 @@ MonoBehaviour:
   - {fileID: 8467420778154410322, guid: 28cb468c50f67b6419ea945ab345f8bc, type: 3}
   - {fileID: 8791271813233905572, guid: 566e5ebfc94351d4d8b740733b41b746, type: 3}
   - {fileID: 4572444223898922994, guid: ba05a3aa874a8fe4b9fbc8f04fb56129, type: 3}
+  - {fileID: 1517985089446596643, guid: 534e8c69d4bb6f545ad61ed786b8a15b, type: 3}
+  - {fileID: 8060573463309540733, guid: 6571fdac550ca884da9c8fd14106d76b, type: 3}
+  - {fileID: 410481006349795861, guid: 61cddf3d7d64da74eb981fe45e1786ad, type: 3}
   v: 1
 --- !u!114 &7192729494876934917
 MonoBehaviour:
@@ -78793,8 +78801,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -238}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 0, y: -798}
+  m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7192729495023887863
 CanvasRenderer:

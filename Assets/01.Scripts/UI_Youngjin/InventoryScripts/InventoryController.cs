@@ -76,9 +76,9 @@ public class InventoryController : MonoBehaviour
             GetItem(curItem[1]);
         }
 
-        if (Input.GetKeyDown(KeyCode.F2))
+        if (Input.GetKeyDown(KeyCode.F2))           
         {
-            GetItem(curItem[2]);
+            GetItem(curItem[0]);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
@@ -106,10 +106,6 @@ public class InventoryController : MonoBehaviour
             GetItem(curItem[7]);
         }
 
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            GetItem(curItem[0]);
-        }
     }
 
     public void OnClickX()
@@ -223,6 +219,15 @@ public class InventoryController : MonoBehaviour
                 case "여우머리":
                     ItemAppears(theItem);
                     break;
+                case "뿔":          
+                    ItemAppears(theItem);
+                    break;
+                case "우유":
+                    ItemAppears(theItem);
+                    break;
+                case "기어부품":
+                    ItemAppears(theItem);
+                    break;
             }
         }
     }
@@ -265,22 +270,30 @@ public class InventoryController : MonoBehaviour
                 if (obj.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient ||
                     obj.layer == 8) // 소모품 혹은 재료일 경우만 실행
                 {
-                    GameObject count = Instantiate(itemCount);
-                    itemCount.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
-                    count.transform.SetParent(mySlots[i].transform.GetChild(0).transform);
-                    count.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
-                    count.GetComponent<Image>().raycastTarget = false;
-
-                    //    else Destroy(count);
-                    if (DataController.instance.gameData.savedInventory.ContainsKey(obj.GetComponent<Pickup>().item
-                            .itemName))
+                    if (obj.transform.childCount == 1)
                     {
-                        count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance
-                            .gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName].ToString();
-                    }
+                        GameObject count = Instantiate(itemCount);
+                        itemCount.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
+                        count.transform.SetParent(mySlots[i].transform.GetChild(0).transform);
+                        count.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
+                        count.GetComponent<Image>().raycastTarget = false;
 
-                    //아이템의 개수를 UI로 표기
-                    count.transform.localPosition = new Vector2(15, 15);
+                        //    else Destroy(count);
+                        if (DataController.instance.gameData.savedInventory.ContainsKey(obj.GetComponent<Pickup>().item
+                                .itemName))
+                        {
+                            count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance
+                                .gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName].ToString();
+                        }
+
+                        //아이템의 개수를 UI로 표기
+                        count.transform.localPosition = new Vector2(15, 15);
+                    }
+                    else
+                    {
+                        obj.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = DataController.instance
+                                .gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName].ToString();
+                    }
                 }
                 //  count.SetActive(true);
             }

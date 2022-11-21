@@ -35,18 +35,19 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
             GameObject temp = PointerInfo.instance.transform.gameObject;
             int heal= temp.GetComponent<Pickup>().item.value;
             string name = temp.GetComponent<Pickup>().item.itemName;
-            switch (this.name)
+            if (gameObject.CompareTag("Kong"))
             {
-                case "MainCharacter":
-                   DataController.instance.gameData.Kong.HP += heal;
-                    break;
-                case "Jin":
-                    DataController.instance.gameData.Jin.HP += heal;
-                    break;
-                case "Ember":
-                    DataController.instance.gameData.Ember.HP += heal;          //누가 사용하는지에 따라 회복됨
-                    break;
+                DataController.instance.gameData.Kong.HP += heal;
             }
+            else if (gameObject.CompareTag("Jin"))
+            {
+                DataController.instance.gameData.Jin.HP += heal;             //누가 사용하는지에 따라 회복됨
+            }
+            else if (gameObject.CompareTag("Ember"))
+            {
+                DataController.instance.gameData.Ember.HP += heal;
+            }
+
             myText.text = $"{this.transform.name} has gained +{heal}hp!";      //회복됐다는 알림
             StartCoroutine(UsedPotion());
             if ( DataController.instance.gameData.myItemCount[name] >1)
@@ -127,41 +128,42 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 GameObject clickedEquip = itemTransform.gameObject;
                 int Val = clickedEquip.GetComponent<Pickup>().item.value;
                 Item.ItemType thisType = clickedEquip.GetComponent<Pickup>().item.itemType;
-                switch (this.name)
+              
+                if (gameObject.CompareTag("Kong"))
                 {
-                    case "MainCharacter":
-                        DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
-                        if (thisType == Item.ItemType.Weapon)
-                        {
-                            DataController.instance.gameData.Kong.strength += Val;
-                        }
-                        else if (thisType == Item.ItemType.Armor)
-                        {
-                            DataController.instance.gameData.Kong.defPower += Val;
-                        }
-                        break;
-                    case "Jin":
-                        DataController.instance.gameData.Jin.myUsedItems.Add(thisname);
-                        if (thisType == Item.ItemType.Weapon)
-                        {
-                            DataController.instance.gameData.Jin.strength += Val;
-                        }
-                        else if (thisType == Item.ItemType.Armor)
-                        {
-                            DataController.instance.gameData.Jin.defPower += Val;
-                        }
-                        break;
-                    case "Ember":
-                        DataController.instance.gameData.Ember.myUsedItems.Add(thisname);
-                        if (thisType == Item.ItemType.Weapon)
-                        {
-                            DataController.instance.gameData.Ember.strength += Val;
-                        }
-                        else if (thisType == Item.ItemType.Armor)
-                        {
-                            DataController.instance.gameData.Ember.defPower += Val;
-                        }
-                        break;
+                    DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
+                    if (thisType == Item.ItemType.Weapon)
+                    {
+                        DataController.instance.gameData.Kong.strength += Val;
+                    }
+                    else if (thisType == Item.ItemType.Armor)
+                    {
+                        DataController.instance.gameData.Kong.defPower += Val;
+                    }
+                }
+                else if (gameObject.CompareTag("Jin"))
+                {
+                    DataController.instance.gameData.Jin.myUsedItems.Add(thisname);
+                    if (thisType == Item.ItemType.Weapon)
+                    {
+                        DataController.instance.gameData.Jin.strength += Val;
+                    }
+                    else if (thisType == Item.ItemType.Armor)
+                    {
+                        DataController.instance.gameData.Jin.defPower += Val;
+                    }
+                }
+                else if (gameObject.CompareTag("Ember"))
+                {
+                    DataController.instance.gameData.Ember.myUsedItems.Add(thisname);
+                    if (thisType == Item.ItemType.Weapon)
+                    {
+                        DataController.instance.gameData.Ember.strength += Val;
+                    }
+                    else if (thisType == Item.ItemType.Armor)
+                    {
+                        DataController.instance.gameData.Ember.defPower += Val;
+                    }
                 }
             }
 
