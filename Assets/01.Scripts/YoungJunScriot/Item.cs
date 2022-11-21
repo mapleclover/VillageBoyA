@@ -10,6 +10,14 @@ public struct SaveItemStat
 {
     public Item orgData;
 
+
+    public int[] AP; // 공격력
+    public int[] EnchantCost; // 비용
+
+
+
+
+
     //public ItemLevel level;
     public float GetUpgradeProb(int level)
     {
@@ -29,8 +37,8 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public int value;
 
-    // 강화 ---------------------------------
 
+    // 강화 ---------------------------------
     public enum EnhanceableItem // 강화 가능한 아이템인지
     {
         Possible,
@@ -44,7 +52,7 @@ public class Item : ScriptableObject
     {
         get => _enhanceableItem;
     }
-
+/*
     public enum ItemLevel // 아이템레벨
     {
         Level_1,
@@ -52,13 +60,10 @@ public class Item : ScriptableObject
         Level_3,
         Level_4,
         Level_5
-    }
-
+    }*/
 
     //public int itemLevel; // 아이템레벨
 
-    public int[] AP; // 공격력
-    public int[] EnchantCost; // 비용
 
 
     [SerializeField] float[] _possibility; // 확률
