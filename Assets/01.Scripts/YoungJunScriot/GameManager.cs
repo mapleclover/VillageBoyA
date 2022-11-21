@@ -74,22 +74,30 @@ public class GameManager : MonoBehaviour
     IEnumerator SaySomething(string text)
     {
         talkText.text = "";
-        //float textSpeed = (float)PlayerPrefs.GetInt("TextSpeed");
-        //if(textSpeed == 10.0f)
-        //{
-        //    talkText.text = i;
-        //}
-        //else
-        //{
-        //    while (talkText.text != i)
-        //    {
-        //        talkText.text += i[talkText.text.Length];
-        //        yield return new WaitForSeconds(0.2f / textSpeed);
-        //    }
-        //}
+        bool t_monster = false, t_white = false, t_yellow = false, t_size = false, t_orgsize = false;
+        bool t_ignore = false; // 특수문자를 생략하기위한 bool값.
         for (int i = 0; i < text.Length; i++)
         {
-            talkText.text += text[i];
+            switch (text[i])
+            {
+                case 'ⓦ': t_monster = false; t_white = true; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
+                case 'ⓜ': t_monster = true; t_white = false; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
+                case 'ⓨ': t_monster = true; t_white = false; t_yellow = true; t_size = false; t_orgsize = false; t_ignore = true; break;
+                case 'ⓢ': t_monster = false; t_white = false; t_yellow = false; t_size = true; t_orgsize = false; t_ignore = true; break;
+                case 'ⓞ': t_monster = false; t_white = false; t_yellow = false; t_size = false; t_orgsize = true; t_ignore = true; break;
+            }
+            string t_letter = text[i].ToString();
+            if (!t_ignore)
+            {
+                if(t_white) { t_letter = "<color=#ffffff>" + t_letter + "</color>"; }
+                else if(t_monster) { t_letter = "<color=#42DEE3>" + t_letter + "</color>";}
+                else if (t_yellow) { t_letter = "<color=#FFFF00>" + t_letter + "</color>"; }
+                else if (t_size) { t_letter = "<size=20>" + t_letter + "</size>";}
+                else if (t_orgsize) { t_letter = "<size=36>" + t_letter + "</size>"; }
+                talkText.text += t_letter;
+            }
+            t_ignore = false;
+            
             yield return new WaitForSeconds(textSpeed);
         }
     }

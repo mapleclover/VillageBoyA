@@ -265,6 +265,7 @@ public class QuestManager : MonoBehaviour
                 {
                     questObject[2].SetActive(true);
                     questObject[2].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+                    questObject[2].transform.rotation = Quaternion.Euler(90, 90, 0);
                 }
                 if (questActionIndex == 7)
                 {
