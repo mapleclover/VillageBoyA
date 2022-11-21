@@ -46,9 +46,9 @@ public class EnhancementController : PointerInfo
                     myItemlevel.Itemlevel++;
                     Debug.Log("¼º°ø");
 
-                    Debug.Log(myItems.EnchantCost[myItemlevel.Itemlevel]);
-                    Debug.Log(myItems.AP[myItemlevel.Itemlevel]);
-                    Debug.Log(myItems.possibility[myItemlevel.Itemlevel]);
+                    //Debug.Log(myItems.EnchantCost[myItemlevel.Itemlevel]);
+                    //Debug.Log(myItems.AP[myItemlevel.Itemlevel]);
+                    //Debug.Log(myItems.possibility[myItemlevel.Itemlevel]);
                 }
                 else
                 {
