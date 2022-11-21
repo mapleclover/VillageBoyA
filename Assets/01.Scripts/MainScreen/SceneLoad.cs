@@ -63,11 +63,11 @@ public class SceneLoad : MonoBehaviour
     {
         if (scene.name == "06.Field")
         {
-            player = GameObject.Find("Summons(Final)");
-            camera = GameObject.Find("Camera");
-            myInven = GameObject.Find("Inventory 1");
+            player = GameObject.FindWithTag("Player");
+            camera = GameObject.FindWithTag("Camera");
+            myInven = GameObject.FindWithTag("Inventory");
             mySlots = myInven.transform.GetChild(0);
-            theQuestManager = FindObjectOfType<QuestManager>();
+             theQuestManager = FindObjectOfType<QuestManager>();
 
             //플레이어 위치값
             player.transform.position = DataController.instance.gameData.currentPosition;
@@ -134,12 +134,10 @@ public class SceneLoad : MonoBehaviour
         }
         else if (scene.name == "H_H")
         {
-            // player = GameObject.Find("Summons(Final)");
-            player = GameObject.FindWithTag("Player");
-           // camera = GameObject.Find("Camera");
-            camera = GameObject.FindWithTag("Camera");
-            // myInven = GameObject.Find("Inventory 1");
-            myInven = GameObject.FindWithTag("Inventory");
+             player = GameObject.Find("Summons(Final)");
+            camera = GameObject.Find("Camera");
+             myInven = GameObject.Find("Inventory 1");
+
             mySlots = myInven.transform.GetChild(0);
             theQuestManager = FindObjectOfType<QuestManager>();
 

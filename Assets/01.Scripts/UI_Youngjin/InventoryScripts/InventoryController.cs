@@ -46,8 +46,6 @@ public class InventoryController : MonoBehaviour
         {
             if (v)
             {
-                DataController.instance.gameData.Kong.HP -= 10;
-                Debug.Log(DataController.instance.gameData.Kong.HP);
                 ShowNumbertoUI();
                 ShowMyGold();
             }
