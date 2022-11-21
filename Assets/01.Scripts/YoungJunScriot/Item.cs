@@ -2,6 +2,7 @@
 //설명 :  
 //수정자 : 전정우
 using System;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -51,12 +52,14 @@ public class Item : ScriptableObject
     }
     public bool CheckSuccess(int level)
     {
-        float rnd = Random.Range(0f, 100f);
-        if (rnd < Possibility[level])
+        float rnd = Random.Range(0, 100);
+        if (rnd <= Possibility[level])
         {
+            Debug.Log($"랜덤숫자{rnd}");
             return true;
         }
-
+        Debug.Log($"랜덤숫자{rnd}");
+        
         return false;
     }
 
