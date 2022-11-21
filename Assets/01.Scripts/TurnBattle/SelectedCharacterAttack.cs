@@ -13,6 +13,7 @@ public class SelectedCharacterAttack : MonoBehaviour
     public Button myHeal;
     public static SelectedCharacterAttack Inst = null;
     public TMP_Text myActvieTxt = null;
+    public TMP_Text[] myAttacks;
 
     private void Awake()
     {
@@ -46,6 +47,10 @@ public class SelectedCharacterAttack : MonoBehaviour
     {
         myAttack.gameObject.SetActive(false);
         mySelectAttack.gameObject.SetActive(true);
+        for (int i = 0; i < myAttacks.Length; i++)
+        {
+            myAttacks[i].text = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.orgData.SkillName[i];
+        }
     }
 
     public void Attack1()

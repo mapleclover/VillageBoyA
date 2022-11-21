@@ -48,7 +48,21 @@ public class PC : ScriptableObject
     {
         get => _skillName;
     }
+    
+    [SerializeField] private string[] _skillDescription; //스킬명
 
+    public string[] SkillDescription
+    {
+        get => _skillDescription;
+    }
+
+    [SerializeField] private int[] _skillCost; //체력
+
+    public int[] SkillCost
+    {
+        get => _skillCost;
+    }
+    
     [SerializeField] private float[] _damageMultiplier; //데미지 배율
     [SerializeField] private float[] _criticalPercentage; //크리티컬 확률
     [SerializeField] private float[] _criticalRatio; //크리티컬 데미지 배율
