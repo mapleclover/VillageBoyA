@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject scanObject; // 대화하고있는 대상 
     public bool isAction; // 대화하고있는지아닌지
     public int talkIndex; // 대화순서
+    public float textSpeed;
 
     [SerializeField]
     private Goal theGoal;
@@ -70,21 +71,26 @@ public class GameManager : MonoBehaviour
         talkIndex++; // 다음대화로 넘어감.
     }
 
-    IEnumerator SaySomething(string i)
+    IEnumerator SaySomething(string text)
     {
         talkText.text = "";
-        float textSpeed = (float)PlayerPrefs.GetInt("TextSpeed");
-        if(textSpeed == 10.0f)
+        //float textSpeed = (float)PlayerPrefs.GetInt("TextSpeed");
+        //if(textSpeed == 10.0f)
+        //{
+        //    talkText.text = i;
+        //}
+        //else
+        //{
+        //    while (talkText.text != i)
+        //    {
+        //        talkText.text += i[talkText.text.Length];
+        //        yield return new WaitForSeconds(0.2f / textSpeed);
+        //    }
+        //}
+        for (int i = 0; i < text.Length; i++)
         {
-            talkText.text = i;
-        }
-        else
-        {
-            while (talkText.text != i)
-            {
-                talkText.text += i[talkText.text.Length];
-                yield return new WaitForSeconds(0.2f / textSpeed);
-            }
+            talkText.text += text[i];
+            yield return new WaitForSeconds(textSpeed);
         }
     }
     private void NameText(GameObject gameObject, bool isNpc)
