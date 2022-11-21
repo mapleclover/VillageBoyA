@@ -134,26 +134,51 @@ public class TurnBattle : MonoBehaviour
                     foreach (GameObject act in Player) act.GetComponent<Animator>().SetTrigger("Victory");
                     GameOverCanvas.SetActive(true);
 
-                    if (SceneLoad.Instance.MonsterType == "Fox")
+                    switch (SceneLoad.Instance.MonsterType)
                     {
-                        if (DataController.instance.gameData.questID == 30 &&
-                            DataController.instance.gameData.questActionIndex == 1)
-                        {
-                            ShowEarnedItem(0, 0);
-                        }
+                        case "Fox":
+                            if (DataController.instance.gameData.questID == 30 &&
+                           DataController.instance.gameData.questActionIndex == 1)
+                            {
+                                ShowEarnedItem(0, 0);
+                            }
+                            RewardGold.text = $"{5 * Enemy.Count}";
+                            break;
+                        case "BossFox":
+                            if (DataController.instance.gameData.questID == 30 &&
+                          DataController.instance.gameData.questActionIndex == 2)
+                            {
+                                ShowEarnedItem(1, 0);
+                            }
+                            RewardGold.text = $"{30 * Enemy.Count}";
+                            break;
+                        case "Rhydron":
+                            if (DataController.instance.gameData.questID == 40 &&
+                    DataController.instance.gameData.questActionIndex == 1)
+                            {
+                                ShowEarnedItem(2, 0);
+                            }
+                            RewardGold.text = $"{5 * Enemy.Count}";
+                            break;
+                        case "Milkcow":
+                            if (DataController.instance.gameData.questID == 40 &&
+                   DataController.instance.gameData.questActionIndex == 3)
+                            {
+                                ShowEarnedItem(3, 0);
+                            }
+                            RewardGold.text = $"{5 * Enemy.Count}";
+                            break;
+                        case "GenshinGolem":
+                            if (DataController.instance.gameData.questID == 40 &&
+                   DataController.instance.gameData.questActionIndex == 5)
+                            {
+                                ShowEarnedItem(4, 0);
+                            }
+                            RewardGold.text = $"{100 * Enemy.Count}";
+                            break;
 
-                        RewardGold.text = $"{5 * Enemy.Count}";
                     }
-                    else if (SceneLoad.Instance.MonsterType == "BossFox")
-                    {
-                        if (DataController.instance.gameData.questID == 30 &&
-                            DataController.instance.gameData.questActionIndex == 2)
-                        {
-                            ShowEarnedItem(1, 0);
-                        }
-
-                        RewardGold.text = $"{30 * Enemy.Count}";
-                    }
+                  
 
                     VictoryImage.SetActive(true);
                 }
