@@ -26733,6 +26733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Minimap: {fileID: 2002546969}
+  canVas: {fileID: 1592291410}
 --- !u!4 &974425773
 Transform:
   m_ObjectHideFlags: 0
@@ -43435,6 +43436,7 @@ MonoBehaviour:
   questId: 30
   questComplete: 0
   questActionIndex: 0
+  myInven: {fileID: 0}
   questObject:
   - {fileID: 0}
   - {fileID: 1275216987}
@@ -43449,6 +43451,7 @@ MonoBehaviour:
   questPopupText: {fileID: 1468198156}
   theComplete: {fileID: 1757176257}
   theInven: {fileID: 0}
+  theQuestPopupText: {fileID: 0}
 --- !u!4 &1638807068
 Transform:
   m_ObjectHideFlags: 0
@@ -78400,6 +78403,8 @@ GameObject:
   - component: {fileID: 7192729494876934915}
   - component: {fileID: 7192729494876934916}
   - component: {fileID: 7192729494876934917}
+  - component: {fileID: 7192729494876934920}
+  - component: {fileID: 7192729494876934919}
   m_Layer: 5
   m_Name: Inventory 1
   m_TagString: Inventory
@@ -78407,6 +78412,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7192729494876934919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192729494876934918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200c230c963c11c4e8cce2ad64b246ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myInventory: {fileID: 7192729494502882011}
+--- !u!222 &7192729494876934920
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192729494876934918}
+  m_CullTransparentMesh: 1
 --- !u!222 &7192729494900129771
 CanvasRenderer:
   m_ObjectHideFlags: 0
