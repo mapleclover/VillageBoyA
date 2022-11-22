@@ -11,6 +11,7 @@ public class QuestManager : MonoBehaviour
     public bool questComplete;
     private bool tempCheck; // 퀘스트컴플리트 저장용 임시변수
     public int questActionIndex; // 퀘스트npc대화순서 변수
+    public GameObject myInven;
     private Animator myAnim;
     public GameObject[] questObject;
 
@@ -166,8 +167,7 @@ public class QuestManager : MonoBehaviour
                     questObject[1].SetActive(true);
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     // 미니맵 ! 아이콘
-                    questObject[5] =
-                        Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[5].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
                 }
 
@@ -177,8 +177,7 @@ public class QuestManager : MonoBehaviour
 
                     questObject[1].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
 
-                    questObject[5] =
-                        Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[5].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
                 }
 
@@ -190,89 +189,151 @@ public class QuestManager : MonoBehaviour
 
                 if (questActionIndex == 2 && questComplete)
                 {
-                    questObject[2].SetActive(true); // 호두 위에 ? 아이콘
-
-                    questObject[6] =
-                        Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"),
-                            SceneData.Inst.Minimap) as GameObject;
-                    questObject[6].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
-
+                    questObject[2].SetActive(true); // 호두 위에 ? 아이콘                   
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
+
+                    questObject[6] = Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[6].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
                 }
 
                 if (questActionIndex == 2 && scanObject == Hodu_2000)
                 {
-                    questObject[2].SetActive(false);
+                    questObject[2].SetActive(false); // 여우꼬리 사라짐
+                    RemovingItem("여우꼬리");
+                    Destroy(questObject[6]);
                 }
 
                 if (questActionIndex == 3)
                 {
-                    questObject[2].SetActive(true);
+                    questObject[2].SetActive(true);                
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
+
+                    questObject[6] = Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[6].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
                 }
 
                 break;
             case 40:
                 if(questActionIndex == 0)
                 {
-                    questObject[2].SetActive(false);
+                    questObject[2].SetActive(false); // 대왕여우 머리 사라짐
+                    RemovingItem("여우머리");
+                    Destroy(questObject[6]);
+
                     questObject[1].SetActive(true);
+
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
+
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                 }
                 if(questActionIndex == 1 && tempCheck)
                 {
+                    Destroy(questObject[5]);
+
                     questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
                 }
                 if(questActionIndex == 1 && scanObject == Zhongli_3000)
                 {
                     questObject[1].SetActive(false);
+
+                    Destroy(questObject[5]);
                 }
                 if (questActionIndex == 2)
                 {
-                    questObject[2].SetActive(true);
+                    questObject[2].SetActive(true);                  // 니드런 뿔 사라짐
                     questObject[2].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 90, 0);
+
+                    questObject[6] = Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[6].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
                 }
                 if(questActionIndex == 3 && tempCheck)
                 {
                     questObject[2].SetActive(false);
-                    questObject[1].SetActive(true);
+
+                    Destroy(questObject[6]);
+                    RemovingItem("뿔");
+                    questObject[1].SetActive(true);                
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
+
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
                 }
                 if(questActionIndex == 3 && scanObject == Klee_1000)
                 {
                     questObject[1].SetActive(false);
+
+                    Destroy(questObject[5]);
                 }
                 if(questActionIndex == 4)
                 {
-                    questObject[2].SetActive(true);
+                    questObject[2].SetActive(true);                 
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 180, 0);
+
+                    questObject[6] = Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[6].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
                 }
                 if (questActionIndex == 5 && tempCheck)
                 {
                     questObject[2].SetActive(false);
+                    RemovingItem("우유");
+                    Destroy(questObject[6]);
+
                     questObject[1].SetActive(true);
                     questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
                 }
                 if (questActionIndex == 5 && scanObject == Zhongli_3000)
                 {
                     questObject[1].SetActive(false);
+
+                    Destroy(questObject[5]);
                 }
                 if (questActionIndex == 6)
                 {
-                    questObject[2].SetActive(true);
+                    questObject[2].SetActive(true);    // 톱니바퀴 사라짐                   
                     questObject[2].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 90, 0);
+
+                    questObject[6] = Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[6].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
                 }
                 if (questActionIndex == 7)
                 {
+                    RemovingItem("기어부품");
                     questObject[2].SetActive(false);
+
+                    Destroy(questObject[6]);
                 }
                 break;
 
+        }
+    }
+    public void RemovingItem(string name)
+    {
+        for(int i = 0; i < 14; i++)
+        {
+            if (myInven.transform.GetChild(i).transform.GetChild(0) != null)
+            {
+                if (myInven.transform.GetChild(i).transform.GetChild(0).GetComponent<Pickup>().item.itemName.Equals(name))
+                {
+                    string thisItem = myInven.transform.GetChild(i).transform.GetChild(0).GetComponent<Pickup>().item.itemName;
+                    DataController.instance.gameData.savedInventory.Remove(thisItem);
+                    DataController.instance.gameData.myItemCount.Remove(thisItem);
+                    Destroy(myInven.transform.GetChild(i).transform.GetChild(0).gameObject);
+                    break;
+                }
+            }
+            else continue;
         }
     }
 
