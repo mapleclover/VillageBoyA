@@ -4787,6 +4787,7 @@ GameObject:
   - component: {fileID: 86845458}
   - component: {fileID: 86845457}
   - component: {fileID: 86845456}
+  - component: {fileID: 86845462}
   m_Layer: 5
   m_Name: Inventory 1
   m_TagString: Inventory
@@ -4944,6 +4945,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &86845462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86845455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200c230c963c11c4e8cce2ad64b246ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myInventory: {fileID: 1641573289}
 --- !u!1001 &87527233
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32671,6 +32685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Minimap: {fileID: 407129253}
+  canVas: {fileID: 1592291410}
 --- !u!4 &1106476402
 Transform:
   m_ObjectHideFlags: 0
