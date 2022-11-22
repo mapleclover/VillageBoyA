@@ -15,6 +15,7 @@ public class QuestManager : MonoBehaviour
     private Animator myAnim;
     public GameObject[] questObject;
 
+
     MinimapIcon my_Icon = null;
 
 
@@ -28,6 +29,7 @@ public class QuestManager : MonoBehaviour
     [SerializeField] private TMP_Text questPopupText;
     [SerializeField] private GameObject theComplete;
     [SerializeField] private InventoryController theInven;
+    [SerializeField] private TMP_Text theQuestPopupText;
 
 
     private void Awake()
@@ -206,7 +208,7 @@ public class QuestManager : MonoBehaviour
 
                 if (questActionIndex == 3)
                 {
-                    questObject[2].SetActive(true);                
+                    questObject[2].SetActive(true);
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
 
@@ -216,7 +218,7 @@ public class QuestManager : MonoBehaviour
 
                 break;
             case 40:
-                if(questActionIndex == 0)
+                if (questActionIndex == 0)
                 {
                     questObject[2].SetActive(false); // 대왕여우 머리 사라짐
                     RemovingItem("여우머리");
@@ -229,7 +231,7 @@ public class QuestManager : MonoBehaviour
 
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                 }
-                if(questActionIndex == 1 && tempCheck)
+                if (questActionIndex == 1 && tempCheck)
                 {
                     Destroy(questObject[5]);
 
@@ -238,7 +240,7 @@ public class QuestManager : MonoBehaviour
                     questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[5].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
                 }
-                if(questActionIndex == 1 && scanObject == Zhongli_3000)
+                if (questActionIndex == 1 && scanObject == Zhongli_3000)
                 {
                     questObject[1].SetActive(false);
 
@@ -253,27 +255,27 @@ public class QuestManager : MonoBehaviour
                     questObject[6] = Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[6].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
                 }
-                if(questActionIndex == 3 && tempCheck)
+                if (questActionIndex == 3 && tempCheck)
                 {
                     questObject[2].SetActive(false);
 
                     Destroy(questObject[6]);
                     RemovingItem("뿔");
-                    questObject[1].SetActive(true);                
+                    questObject[1].SetActive(true);
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
 
                     questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[5].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
                 }
-                if(questActionIndex == 3 && scanObject == Klee_1000)
+                if (questActionIndex == 3 && scanObject == Klee_1000)
                 {
                     questObject[1].SetActive(false);
 
                     Destroy(questObject[5]);
                 }
-                if(questActionIndex == 4)
+                if (questActionIndex == 4)
                 {
-                    questObject[2].SetActive(true);                 
+                    questObject[2].SetActive(true);
                     questObject[2].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 180, 0);
 
@@ -320,7 +322,7 @@ public class QuestManager : MonoBehaviour
     }
     public void RemovingItem(string name)
     {
-        for(int i = 0; i < 14; i++)
+        for (int i = 0; i < 14; i++)
         {
             if (myInven.transform.GetChild(i).transform.GetChild(0) != null)
             {
@@ -344,10 +346,14 @@ public class QuestManager : MonoBehaviour
         {
             case 10:
                 if (questActionIndex == 1)
+                {
                     questPopupText.text = "클레와 대화하기";
+                    theQuestPopupText.text = "클레와 대화를 하세요.\n대화는 대상과 다가가서 'E'버튼 누르면됩니다.";
+                }
                 if (questActionIndex == 2)
                 {
                     questPopupText.text = "사과 구해오기 0/2";
+                    theQuestPopupText.text = "클레가 사과를 구해달라고 요청합니다.\n사과에게 다가가서 'E'버튼 누르세요\n사과 구해오기 0 / 2";
                     myAnim.SetBool("isComplete", false);
                 }
 
@@ -356,6 +362,7 @@ public class QuestManager : MonoBehaviour
                 if (questActionIndex == 1)
                 {
                     questPopupText.text = "사과 구해오기 1/2";
+                    theQuestPopupText.text = "클레가 사과를 구해달라고 요청합니다.\n사과에게 다가가서 'E'버튼 누르세요\n사과 구해오기 1 / 2";
                     theInven.GetItem(scanObject);
                 }
 
@@ -363,12 +370,14 @@ public class QuestManager : MonoBehaviour
                 {
                     theInven.GetItem(scanObject);
                     questPopupText.text = "클레에게 \n사과 갖다주기";
+                    theQuestPopupText.text = "사과를 전부 구했습니다\n클레에게 사과 가져다 주세요.";
                     myAnim.SetBool("isComplete", true);
                 }
 
                 if (questActionIndex == 3)
                 {
                     questPopupText.text = "다음 목표지점으로\n이동하기";
+                    theQuestPopupText.text = "다음 목표지점으로\n이동하세요.";
                 }
 
                 break;
@@ -376,12 +385,13 @@ public class QuestManager : MonoBehaviour
                 if (questActionIndex == 0)
                 {
                     questPopupText.text = "클레와 대화하기";
+                    theQuestPopupText.text = "마을에 처음 방문했습니다.\n클레와 대화하세요.";
                 }
 
                 if (questActionIndex == 1 && tempCheck)
                 {
                     questPopupText.text = "호두와 대화하기";
-
+                    theQuestPopupText.text = "호두가 고민이 있어보입니다.\n호두와 대화하세요.";
                     questComplete = false;
                 }
 
@@ -389,13 +399,14 @@ public class QuestManager : MonoBehaviour
                 {
                     myAnim.SetBool("isComplete", false);
                     questPopupText.text = "여우 잡아오기";
+                    theQuestPopupText.text = "마을의 골칫거리\n여우를 처치하세요.\n몬스터와 부딪히면 배틀에 돌입합니다.";
                 }
 
                 if (questActionIndex == 2 && questComplete)
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "호두와 대화하기";
-
+                    theQuestPopupText.text = "여우를 처치했습니다!\n호두를 찾아가세요.";
                     questComplete = false;
                 }
 
@@ -403,24 +414,28 @@ public class QuestManager : MonoBehaviour
                 {
                     myAnim.SetBool("isComplete", false);
                     questPopupText.text = "대왕여우 잡아오기";
+                    theQuestPopupText.text = "여우들의 왕을 처치하세요.\n다른여우들보다 배로 큰 몸을 가지고 있습니다.";
                 }
 
                 if (questActionIndex == 3)
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "호두와 대화하기";
+                    theQuestPopupText.text = "대왕 여우를 물리쳤습니다.\n호두를 찾아가세요.";
                 }
 
                 break;
             case 40:
-                if(questActionIndex == 0)
+                if (questActionIndex == 0)
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "클레와 대화하기";
+                    theQuestPopupText.text = "클레와 대화하세요.";
                 }
-                if(questActionIndex == 1 && tempCheck)
+                if (questActionIndex == 1 && tempCheck)
                 {
                     questPopupText.text = "종려와 대화하기";
+                    theQuestPopupText.text = "종려가 할 얘기가 있어보입니다.\n종려를 찾아가 보세요.";
 
                     questComplete = false;
                 }
@@ -428,31 +443,36 @@ public class QuestManager : MonoBehaviour
                 {
                     myAnim.SetBool("isComplete", false);
                     questPopupText.text = "리드런 사냥하기";
+                    theQuestPopupText.text = "종려가 몬스터들의 조사를 위해\n리드런 토벌을 요청했습니다. 리드런을 물리치세요.";
                 }
                 if (questActionIndex == 2)
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "종려와 대화하기";
+                    theQuestPopupText.text = "리드런을 물리쳤습니다.\n종려를 찾아가보세요.";
                 }
-                if(questActionIndex == 3 && tempCheck)
+                if (questActionIndex == 3 && tempCheck)
                 {
                     questPopupText.text = "조사시간동안\n클레와 대화하기";
-
+                    theQuestPopupText.text = "종려가 리드런의 뿔을 이용해 조사를 시작하겠다고 합니다.\n조사시간동안 클레를 찾아가보세요.";
                     questComplete = false;
                 }
                 if (questActionIndex == 3 && scanObject == Klee_1000)
                 {
                     myAnim.SetBool("isComplete", false);
                     questPopupText.text = "밀크카우 잡고\n클레에게\n우유전달하기";
+                    theQuestPopupText.text = "클레가 우유를 구해달라고합니다. 밀크카우를 물리쳐 우유를 획득하세요.";
                 }
-                if(questActionIndex == 4)
+                if (questActionIndex == 4)
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "클레에게\n우유전달하기";
+                    theQuestPopupText.text = "우유를 구했습니다.\n클레를 찾아가세요.";
                 }
                 if (questActionIndex == 5 && tempCheck)
                 {
                     questPopupText.text = "종려한테 대화걸기";
+                    theQuestPopupText.text = "종려가 조사를 끝맞춘거같습니다. 종려를 찾아가보세요.";
 
                     questComplete = false;
                 }
@@ -460,19 +480,21 @@ public class QuestManager : MonoBehaviour
                 {
                     myAnim.SetBool("isComplete", false);
                     questPopupText.text = "거대골렘을\n토벌하자";
+                    theQuestPopupText.text = "마을위협의 원흉 거대골렘을 물리쳐주세요.";
                 }
                 if (questActionIndex == 6)
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "거대골렘을\n토벌했다 !\n종려에게로 가자";
+                    theQuestPopupText.text = "거대골렘을 토벌했다.\n종려를 찾아가세요.";
                 }
                 if (questActionIndex == 7)
                 {
                     myAnim.SetBool("isComplete", true);
                     questPopupText.text = "GameClear !";
+                    theQuestPopupText.text = "GameClear !";
                 }
                 break;
-
         }
     }
 }
