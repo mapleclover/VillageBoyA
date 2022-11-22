@@ -23,9 +23,21 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (this.GetComponent<Pickup>().enemy.enemyType == EnemySC.EnemyType.Boss) 
+        {
+            RedOrBlack(Color.black);
+        }
+        else
+        {
+            RedOrBlack(Color.red);
+        }
+        
+    }
+    void RedOrBlack(Color color)
+    {
         GameObject obj = Instantiate(Resources.Load("Prefabs/Icons/MinimapIcon"), SceneData.Inst.Minimap) as GameObject;
         myIcon = obj.GetComponent<MinimapIcon>();
-        myIcon.Initialize(transform, Color.red);
+        myIcon.Initialize(transform,color);
     }
 
     private Vector3 BoundaryAngle(float _angle)
