@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController Instance;
@@ -164,7 +165,6 @@ public class InventoryController : MonoBehaviour
         {
             DataController.instance.gameData.savedInventory[
                 mySlots[i].transform.GetChild(0).gameObject.GetComponent<Pickup>().item.itemName] = i;
-
             //정렬된 위치값을 데이터로 저장
         }
     }
