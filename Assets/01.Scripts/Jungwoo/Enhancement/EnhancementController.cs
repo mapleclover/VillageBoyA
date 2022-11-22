@@ -80,36 +80,11 @@ public class EnhancementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        EnchantButton.onClick.RemoveAllListeners();
-        if (myItems.enhanceableItem == Item.EnhanceableItem.Possible && EnchantButton)
-        {
-            EnchantButton.interactable = true;
-            EnchantButton.onClick.AddListener(
-                () =>
-                {
-                    // EnchantCost --; 나중에 데이터 끌어올 때 추가
-                    if (myItems.CheckSuccess(myData.Level))
-                    {
-                        myData.Level++;
-                        Debug.Log("성공");
-
-                        Debug.Log(myItems.EnchantCost[myData.Level - 1]);
-                        Debug.Log(myItems.AP[myData.Level - 1]);
-                        Debug.Log(myItems.Possibility[myData.Level - 1]);
-                    }
-                    else
-                    {
-                        Debug.Log("실패");
-                    }
-                });
-        }
-        else
-        {
-            EnchantButton.interactable = false;
-        }
+        EnchantLogic();
 
         if (Input.GetKeyDown(KeyCode.C))
         {
+            
             myInventory.localPosition = new Vector2(200f, 0f);
             print("1");
             myUI.SetActive(true);
@@ -125,6 +100,42 @@ public class EnhancementController : MonoBehaviour
             setMyInventory.SetActive(false);
             onOff = false;
         }
+    }
+
+    public void EnchantLogic()
+    {
+        if (myItems.enhanceableItem == Item.EnhanceableItem.Possible && EnchantButton)
+        {
+            EnchantButton.onClick.RemoveAllListeners();
+            EnchantButton.interactable = true;
+            EnchantButton.onClick.AddListener(
+                () =>
+                {
+                    // EnchantCost --; 나중에 데이터 끌어올 때 추가
+                    if (myItems.CheckSuccess(myData.Level))
+                    {
+                        myData.Level++;
+                        Debug.Log("성공");
+
+                        Debug.Log(myItems.EnchantCost[myData.Level-1]);
+                        Debug.Log(myItems.AP[myData.Level-1]);
+                        Debug.Log(myItems.Possibility[myData.Level-1]);
+                    }
+                    else
+                    {
+                        Debug.Log("실패");
+                        Debug.Log(myItems.EnchantCost[myData.Level - 1]);
+                        Debug.Log(myItems.AP[myData.Level - 1]);
+                        Debug.Log(myItems.Possibility[myData.Level - 1]);
+                    }
+                });
+        }
+        else
+        {
+            EnchantButton.interactable = false;
+        }
+
+
     }
        
 }
