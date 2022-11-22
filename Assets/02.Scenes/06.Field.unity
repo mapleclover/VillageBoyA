@@ -55841,17 +55841,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1042394738259159867 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6988697219120646298, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-  m_PrefabInstance: {fileID: 8847030620355929835}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee37531279a77ff4ea22afbe9b11d02f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1043092909787215363
 GameObject:
   m_ObjectHideFlags: 0
@@ -56414,18 +56403,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 942554638}
     m_Modifications:
-    - target: {fileID: 2451437290212224820, guid: 4d585426a763a03469e652b47407227f, type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 11400000, guid: 46ae45933f4b4b041963f70f5cfa838d, type: 2}
-    - target: {fileID: 2451437290212224821, guid: 4d585426a763a03469e652b47407227f, type: 3}
-      propertyPath: m_Radius
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2451437290212224822, guid: 4d585426a763a03469e652b47407227f, type: 3}
-      propertyPath: roamingDist
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 2451437290212224823, guid: 4d585426a763a03469e652b47407227f, type: 3}
       propertyPath: theActionController
       value: 
@@ -59869,10 +59846,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 942554638}
     m_Modifications:
-    - target: {fileID: 3719797196842129786, guid: 560494a6211d42740a717a4e2dbcff46, type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 11400000, guid: 1ce8095eeb668fc4f8b2400642eaf8ac, type: 2}
     - target: {fileID: 6040329696718434356, guid: 560494a6211d42740a717a4e2dbcff46, type: 3}
       propertyPath: theActionController
       value: 
@@ -84430,46 +84403,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 942554638}
     m_Modifications:
-    - target: {fileID: 820067465409670232, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: theEnemyAI
-      value: 
-      objectReference: {fileID: 1042394738259159867}
-    - target: {fileID: 6065192528621533513, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 11400000, guid: b3358a2697f22894db597c5e27fa61e4, type: 2}
-    - target: {fileID: 6094734150129188091, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: m_Radius
-      value: 1.2
-      objectReference: {fileID: 0}
     - target: {fileID: 6988697219120646298, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
       propertyPath: theActionController
       value: 
       objectReference: {fileID: 1315345266}
-    - target: {fileID: 8124086406286606017, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: m_Size.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8124086406286606017, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: m_Size.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8124086406286606017, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: m_Size.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8124086406286606017, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: m_Center.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8124086406286606017, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: m_Center.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8124086406286606017, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
-      propertyPath: m_Center.z
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 8303259446218036200, guid: 8562c5f706d430a44adfb5af0b30790c, type: 3}
       propertyPath: m_RootOrder
       value: 8
