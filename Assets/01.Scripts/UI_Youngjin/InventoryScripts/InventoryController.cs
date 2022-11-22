@@ -74,39 +74,42 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            GetItem(curItem[1]);
+            GetItem(curItem[0]);
         }
 
         if (Input.GetKeyDown(KeyCode.F2))           
         {
-            GetItem(curItem[0]);
+            GetItem(curItem[1]);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            GetItem(curItem[3]);
+            GetItem(curItem[2]);
         }
 
         if (Input.GetKeyDown(KeyCode.F4))
         {
-            GetItem(curItem[4]);
+            GetItem(curItem[3]);
         }
 
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            GetItem(curItem[5]);
+            GetItem(curItem[4]);
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            GetItem(curItem[6]);
+            GetItem(curItem[5]);
         }
 
         if (Input.GetKeyDown(KeyCode.F7))
         {
+            GetItem(curItem[6]);
+        }
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
             GetItem(curItem[7]);
         }
-
     }
 
     public void OnClickX()
@@ -191,8 +194,9 @@ public class InventoryController : MonoBehaviour
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
-                case "¹Ú½º":
+                case "´ÙÀÌ¾Æ¸óµå":
                     ItemAppears(theItem);
+                    ShowNumbertoUI();
                     break;
                 case "±Ý¹ÝÁö":
                     ItemAppears(theItem);
@@ -204,8 +208,13 @@ public class InventoryController : MonoBehaviour
                 case "¹æÆÐ":
                     ItemAppears(theItem);
                     break;
-                case "ÇØ°ñ":
+                case "Ã¶":
                     ItemAppears(theItem);
+                    ShowNumbertoUI();
+                    break;
+                case "º°":
+                    ItemAppears(theItem);
+                    ShowNumbertoUI();
                     break;
                 case "ÆÈÂî":
                     ItemAppears(theItem);
