@@ -71,11 +71,21 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 {
                     thisIngred.transform.SetParent(myIngSlots[index].transform);
                     thisIngred.transform.localPosition = Vector3.zero;
-
+                    DataController.instance.gameData.savedInventory.Remove(name);
+                    DataController.instance.gameData.myItemCount.Remove(name);
                     break;
                 }
             }
         }
+    }
+    public void OnClickCancel()
+    {
+        InventoryController.Instance.GetItem(transform.GetChild(0).gameObject);
+        InventoryController.Instance.GetItem(myIngSlots[0].transform.GetChild(0).gameObject);
+        InventoryController.Instance.GetItem(myIngSlots[1].transform.GetChild(0).gameObject);
+        Destroy(this.transform.GetChild(0).gameObject);
+        Destroy(myIngSlots[0].transform.GetChild(0).gameObject);
+        Destroy(myIngSlots[1].transform.GetChild(0).gameObject);
     }
 }
 
