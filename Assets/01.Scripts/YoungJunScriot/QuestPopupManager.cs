@@ -8,6 +8,7 @@ public class QuestPopupManager : MonoBehaviour
     [SerializeField] private Button openButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private Image panel;
+    
 
     private Animator myAnim;
 
