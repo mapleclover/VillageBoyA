@@ -62,6 +62,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         }
 
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().Skill = 0;
+        TurnBattle.Inst.OnTotalCost();
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[0];
         mySelectAttack.gameObject.SetActive(false);
@@ -78,6 +79,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         }
 
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().Skill = 1;
+        TurnBattle.Inst.OnTotalCost();
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[1];
         mySelectAttack.gameObject.SetActive(false);
@@ -94,6 +96,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         }
 
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().Skill = 2;
+        TurnBattle.Inst.OnTotalCost();
         TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().longAttackCheck
             = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.longAttack[2];
         mySelectAttack.gameObject.SetActive(false);

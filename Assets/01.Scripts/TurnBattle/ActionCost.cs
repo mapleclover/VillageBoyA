@@ -15,7 +15,7 @@ public class ActionCost : MonoBehaviour
     [SerializeField] private GameObject[] Crystal;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         Crystal = new GameObject[NumberOfCrystal];
         for (int i = 0; i < NumberOfCrystal; i++)
@@ -23,8 +23,9 @@ public class ActionCost : MonoBehaviour
             GameObject obj = Instantiate(CrystalPrefab, ContentBox);
             Crystal[i] = obj;
         }
-        TotalCost(4);
+
     }
+
 
     public void OnHoverSkillExit(int SelectedSkillCost) //캐릭터 스킬 선택 버튼 리스트가 떴을때 캐릭터가 선택되어있던 스킬의 코스트만큼 살짝 진하게 변경
     {
@@ -64,7 +65,7 @@ public class ActionCost : MonoBehaviour
 
     public void TotalCost(int costs)
     {
-        RemainingCost -= costs;
+        RemainingCost = NumberOfCrystal- costs;
         if (RemainingCost < 0)
         {
             ChangeToUsedCost(1, NumberOfCrystal);

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed8f45313f661442b896e0f3fb0781f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  previousCost: 0
   cost: 3
   manager: {fileID: 1950986188}
 --- !u!1 &173096910
@@ -884,6 +885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed8f45313f661442b896e0f3fb0781f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  previousCost: 0
   cost: 3
   manager: {fileID: 1950986188}
 --- !u!114 &1446640489
@@ -1208,7 +1210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69b43e40fb8f2f46809b417397ea606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RemainingCost: 7
   NumberOfCrystal: 7
   CrystalPrefab: {fileID: 3112637286913920395, guid: b709726b3bf88da46a95ceaf062b5d48, type: 3}
   ContentBox: {fileID: 675028925}
+  NotEnough: {fileID: 0}
   Crystal: []
