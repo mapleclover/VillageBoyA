@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController Instance;
@@ -73,39 +74,42 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            GetItem(curItem[1]);
+            GetItem(curItem[0]);
         }
 
         if (Input.GetKeyDown(KeyCode.F2))           
         {
-            GetItem(curItem[0]);
+            GetItem(curItem[1]);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            GetItem(curItem[3]);
+            GetItem(curItem[2]);
         }
 
         if (Input.GetKeyDown(KeyCode.F4))
         {
-            GetItem(curItem[4]);
+            GetItem(curItem[3]);
         }
 
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            GetItem(curItem[5]);
+            GetItem(curItem[4]);
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            GetItem(curItem[6]);
+            GetItem(curItem[5]);
         }
 
         if (Input.GetKeyDown(KeyCode.F7))
         {
+            GetItem(curItem[6]);
+        }
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
             GetItem(curItem[7]);
         }
-
     }
 
     public void OnClickX()
@@ -164,7 +168,6 @@ public class InventoryController : MonoBehaviour
         {
             DataController.instance.gameData.savedInventory[
                 mySlots[i].transform.GetChild(0).gameObject.GetComponent<Pickup>().item.itemName] = i;
-
             //정렬된 위치값을 데이터로 저장
         }
     }
@@ -191,8 +194,9 @@ public class InventoryController : MonoBehaviour
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
-                case "박스":
+                case "다이아몬드":
                     ItemAppears(theItem);
+                    ShowNumbertoUI();
                     break;
                 case "금반지":
                     ItemAppears(theItem);
@@ -203,9 +207,15 @@ public class InventoryController : MonoBehaviour
                     break;
                 case "방패":
                     ItemAppears(theItem);
+                    
                     break;
-                case "해골":
+                case "철":
                     ItemAppears(theItem);
+                    ShowNumbertoUI();
+                    break;
+                case "별":
+                    ItemAppears(theItem);
+                    ShowNumbertoUI();
                     break;
                 case "팔찌":
                     ItemAppears(theItem);

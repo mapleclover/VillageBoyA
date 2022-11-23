@@ -62,6 +62,10 @@ public class Item : ScriptableObject
         
         return false;
     }
+    public int GetMaxLevel() // 강화 맥스레벨 체크
+    {
+        return AP.Length;
+    }
 
     // 강화 ----------------------------------
 

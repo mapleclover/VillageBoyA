@@ -1380,7 +1380,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.8, z: 2.5}
+  m_Size: {x: 3, y: 2.8, z: 4}
   m_Center: {x: 0, y: 1.4, z: 0}
 --- !u!54 &9054329527220550431
 Rigidbody:
@@ -1412,7 +1412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theEnemyAI: {fileID: 2451437290212224823}
   myAnim: {fileID: 3118562899462873447}
-  roamingDist: 5
+  roamingDist: 10
   myState: 0
 --- !u!114 &2451437290212224823
 MonoBehaviour:
@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npc: {fileID: 0}
   item: {fileID: 0}
-  enemy: {fileID: 11400000, guid: c23f52c3deba3e94c996c1405032051c, type: 2}
+  enemy: {fileID: 11400000, guid: 46ae45933f4b4b041963f70f5cfa838d, type: 2}
 --- !u!195 &2451437290212224821
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1459,7 +1459,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8569400212563419559}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
