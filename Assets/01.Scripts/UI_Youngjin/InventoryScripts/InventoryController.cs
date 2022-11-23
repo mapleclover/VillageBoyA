@@ -176,7 +176,7 @@ public class InventoryController : MonoBehaviour
     public void GetItem(GameObject theItem)
     {
         string st = theItem.GetComponent<Pickup>().item.itemName;
-        if ( DataController.instance.gameData.myItemCount.ContainsKey(st))
+        if (DataController.instance.gameData.myItemCount.ContainsKey(st)&&DataController.instance.gameData.savedInventory.ContainsKey(st) )
         {
             DataController.instance.gameData.myItemCount[st]++;
             if (theItem.GetComponent<Pickup>().item.itemType==Item.ItemType.Ingredient||theItem.layer==8)
