@@ -37,6 +37,7 @@ public class TurnBattle : MonoBehaviour
     public Button AttackStartButton;
     public Button RunButton;
 
+    public ActionCost myActionCost;
     int runPercentage = 50;
     string PlayerCharacterName;
     string EnemyCharacterName;
@@ -318,7 +319,7 @@ public class TurnBattle : MonoBehaviour
                 }
             }
         }
-
+        OnTotalCost();
         ChangeState(State.Choice);
     }
 
@@ -331,6 +332,15 @@ public class TurnBattle : MonoBehaviour
         FollowEnemyHpbar();
     }
 
+    public void OnTotalCost()
+    {
+        int a = 0;
+        for (int i = 0; i < Player.Count; ++i)
+        {
+            a += Player[i].GetComponent<BattleCharacter>().myStat.orgData.SkillCost[Player[i].GetComponent<BattleCharacter>().Skill];
+        }
+        myActionCost.TotalCost(a);
+    }
     void CheckVictoryAndType(int actionindex, int index)
     {
         DataController.instance.gameData.questClear = true;
@@ -441,8 +451,7 @@ public class TurnBattle : MonoBehaviour
                     break;
             }
 
-            GameObject obj =
-                Instantiate(Resources.Load($"Prefabs/ForBattle/{PlayerCharacterName}"), PlayerParent) as GameObject;
+            GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{PlayerCharacterName}"), PlayerParent) as GameObject;
             Vector3 pos = new Vector3(x, 0, 0);
             obj.transform.localPosition = pos;
             Player.Add(obj);
@@ -457,8 +466,7 @@ public class TurnBattle : MonoBehaviour
     {
         for (int i = 0; i < SceneLoad.Instance.MonsterCount; ++i)
         {
-            GameObject obj =
-                Instantiate(Resources.Load($"Prefabs/ForBattle/{EnemyCharacterName}"), EnemyParent) as GameObject;
+            GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{EnemyCharacterName}"), EnemyParent) as GameObject;
             Vector3 pos = new Vector3(-2 + (2 * i), 0, 0);
             if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss) pos = Vector3.zero;
             obj.transform.localPosition = pos;

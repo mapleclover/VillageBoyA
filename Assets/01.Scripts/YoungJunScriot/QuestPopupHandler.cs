@@ -15,7 +15,7 @@ public class QuestPopupHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
     private void Awake()
     {
         _parentRect = transform.parent.GetComponent<RectTransform>();
-        halfSize = _parentRect.sizeDelta * 0.5f;
+        halfSize = _parentRect.sizeDelta * 0.25f;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
