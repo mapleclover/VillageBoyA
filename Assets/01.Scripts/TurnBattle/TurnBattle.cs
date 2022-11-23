@@ -37,6 +37,7 @@ public class TurnBattle : MonoBehaviour
     public Button AttackStartButton;
     public Button RunButton;
 
+    public ActionCost myActionCost;
     int runPercentage = 50;
     string PlayerCharacterName;
     string EnemyCharacterName;
@@ -318,7 +319,7 @@ public class TurnBattle : MonoBehaviour
                 }
             }
         }
-
+        OnTotalCost();
         ChangeState(State.Choice);
     }
 
@@ -331,6 +332,15 @@ public class TurnBattle : MonoBehaviour
         FollowEnemyHpbar();
     }
 
+    public void OnTotalCost()
+    {
+        int a = 0;
+        for (int i = 0; i < Player.Count; ++i)
+        {
+            a += Player[i].GetComponent<BattleCharacter>().myStat.orgData.SkillCost[Player[i].GetComponent<BattleCharacter>().Skill];
+        }
+        myActionCost.TotalCost(a);
+    }
     void CheckVictoryAndType(int actionindex, int index)
     {
         DataController.instance.gameData.questClear = true;

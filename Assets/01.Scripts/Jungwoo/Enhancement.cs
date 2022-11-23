@@ -1,9 +1,11 @@
 //작성자 : 전정우
 //설명 :
 
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+
 
 public class Enhancement : MonoBehaviour
 {

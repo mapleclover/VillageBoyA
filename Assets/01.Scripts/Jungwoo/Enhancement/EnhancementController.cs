@@ -10,7 +10,7 @@ using static HPBarInField;
 
 [Serializable]
 public struct SaveItemData
-{ 
+{
     public Item orgData;
     public int Level;
 
@@ -27,7 +27,7 @@ public struct SaveItemData
         get => orgData.GetPossibility(Level);
     }
     public bool GetMaxLevel
-    {// 현재 최대 레벨보다 낮다면 업그레이드가 가능하므로
+    {
         get => Level < orgData.GetMaxLevel(); // 작다면 트루
     }
 
@@ -42,7 +42,7 @@ public struct SaveItemData
 
     // 재료강화 >> 텍스트로
 
-
+    // item.cs 는 스크립터블오브젝트인데 cs안에 스트럭트 구조가 포함되어도 되는가?
 
     // 일단 여기에 스트럭트 구조를 만들었지만 다 모였을 때 EnhanceableItems.cs 를
     // 스크립터블로 만들고 거기에서 아이템데이터 구조를 만들 수 있도록 해야할 것 같음
@@ -57,35 +57,36 @@ public class EnhancementController : MonoBehaviour
     public RectTransform myInventory;
     public GameObject setMyInventory;
     public bool onOff = false;
-
     public Button EnchantButton; // button UI
-
     public GameObject mySlot;
+
     public Item myItems;
-
-    public GameObject myMaterial = null;
-
+    public SaveItemData myData;
 
 
-    [SerializeField] SaveItemData myData;
-    
-
-    public int AP
+    public int _AP
     {
         get => myData.AP;
     }
-    public int EnchantCost
+    public int _EnchantCost
     {
         get => myData.EnchantCost;
     }
-    public float Possibility
+    public float _Possibility
     {
         get => myData.Possibility;
     }
-    public bool GetMaxLevel
+    public bool _GetMaxLevel
     {
         get => myData.GetMaxLevel;
     }
+
+    //public GameObject myMaterial = null;
+
+    private void Awake()
+    {
+    }
+
 
 
     // Start is called before the first frame update
@@ -93,13 +94,7 @@ public class EnhancementController : MonoBehaviour
     {
         myInventory = myInventory.GetComponent<RectTransform>();
         myInventory.localPosition = new Vector2(0f, 0f);
-
-        /*  public int ComposeItems()
-          {
-              if()
-              return 1;
-          }*/
-
+        
     }
 
     // Update is called once per frame
@@ -113,8 +108,15 @@ public class EnhancementController : MonoBehaviour
         //GetComponent<Pickup>().item.value;
         myMaterial[1] = transform.GetChild(0).gameObject;*/
 
+        if (myItems != null)
+        {
+            EnchantLogic();
+        }
+        else
+        {
+            myItems = null;
+        }
 
-        EnchantLogic();
 
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -124,6 +126,8 @@ public class EnhancementController : MonoBehaviour
             myUI.SetActive(true);
             setMyInventory.SetActive(true);
             onOff = true; // 나중에 사용할 것 같음
+
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -138,7 +142,7 @@ public class EnhancementController : MonoBehaviour
 
     public void EnchantLogic()
     {
-        if (GetMaxLevel)
+        if (_GetMaxLevel)
         {
             if (myItems.enhanceableItem == Item.EnhanceableItem.Possible && EnchantButton)
             // 강화 가능 아이템인지
@@ -159,19 +163,18 @@ public class EnhancementController : MonoBehaviour
                         Debug.Log("성공");
 
                         Debug.Log(DataController.instance.gameData.gold);
-                        Debug.Log(myItems.EnchantCost[myData.Level - 1]);
-                        Debug.Log(myItems.AP[myData.Level - 1]);
-                        Debug.Log(myItems.Possibility[myData.Level - 1]);
+                        Debug.Log($"가격{myItems.EnchantCost[myData.Level - 1]}");
+                        Debug.Log($"공격력{myItems.AP[myData.Level - 1]}");
+                        Debug.Log($"확률{myItems.Possibility[myData.Level - 1]}");
                     }
                     else // 실패
                     {
                         Debug.Log("실패");
                         Debug.Log(DataController.instance.gameData.gold);
-                        Debug.Log(myItems.EnchantCost[myData.Level - 1]);
-                        Debug.Log(myItems.AP[myData.Level - 1]);
-                        Debug.Log(myItems.Possibility[myData.Level - 1]);
+                        Debug.Log($"가격{myItems.EnchantCost[myData.Level - 1]}");
+                        Debug.Log($"공격력{myItems.AP[myData.Level - 1]}");
+                        Debug.Log($"확률{myItems.Possibility[myData.Level - 1]}");
 
-                        // Destroy(슬롯안에.gameObject) 실패 시 아이템 파괴 로직 추가
                     }
                 });
             }
