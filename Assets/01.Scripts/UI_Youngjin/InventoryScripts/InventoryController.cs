@@ -207,6 +207,7 @@ public class InventoryController : MonoBehaviour
                     break;
                 case "πÊ∆–":
                     ItemAppears(theItem);
+                    
                     break;
                 case "√∂":
                     ItemAppears(theItem);

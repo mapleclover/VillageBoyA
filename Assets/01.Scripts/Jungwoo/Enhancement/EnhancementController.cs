@@ -114,9 +114,6 @@ public class EnhancementController : MonoBehaviour
         myMaterial[1] = transform.GetChild(0).gameObject;
 
 
-        Debug.Log(myMaterial[0]);
-        Debug.Log(myMaterial[1]);
-
         EnchantLogic();
 
         if (Input.GetKeyDown(KeyCode.C))
