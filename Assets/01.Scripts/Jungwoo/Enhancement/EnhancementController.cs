@@ -105,13 +105,13 @@ public class EnhancementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (myMaterial[0].transform.childCount > 0 && myMaterial[1].transform.childCount > 0)
+        /*if (myMaterial[0].transform.childCount > 0 && myMaterial[1].transform.childCount > 0)
         {
 
         }
-        myMaterisdfww = myMaterial[0].transform.GetChild(0).gameObject;
+        myMateris = myMaterial[0].transform.GetChild(0).gameObject;
         //GetComponent<Pickup>().item.value;
-        myMaterial[1] = transform.GetChild(0).gameObject;
+        myMaterial[1] = transform.GetChild(0).gameObject;*/
 
 
         EnchantLogic();
