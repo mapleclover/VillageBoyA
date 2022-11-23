@@ -9,6 +9,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     public GameObject[] myIngSlots;
     public GameObject[] myInven;
     public GameObject alert;
+    public TMPro.TMP_Text myMessage;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -48,6 +49,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 }
                 else
                 {
+                    myMessage.text = $"다이아몬드, 철";
                     alert.SetActive(true);
                     FindMySlot(thisitem.gameObject);
                 }
@@ -60,6 +62,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 }
                 else
                 {
+                    myMessage.text = $"철, 별";
                     alert.SetActive(true);
                     FindMySlot(thisitem.gameObject);
                 }
@@ -72,6 +75,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 }
                 else
                 {
+                    myMessage.text = $"사과, 별";
                     alert.SetActive(true);
                     FindMySlot(thisitem.gameObject);
                 }
