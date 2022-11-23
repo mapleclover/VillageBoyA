@@ -5,12 +5,12 @@ public class TestButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
 {
     public void OnPointerEnter(PointerEventData eventData)
     {
-        manager.OnHoverSKill(cost);
+        //manager.OnHoverSKill(cost);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        manager.OnHoverSkillCancel();
+        //manager.OnHoverSkillCancel();
     }
     public int cost;
     public ActionCost manager;
