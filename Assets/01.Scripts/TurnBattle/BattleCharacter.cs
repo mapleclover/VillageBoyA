@@ -198,9 +198,16 @@ public class BattleCharacter : CharacterProperty
     }
 
     public void OnTargetDamage(int a)
-    {        
-        StartCoroutine(OnDmg(myStat.orgData.GetDamage(a),a));
-    }
+    {
+        if (!myStat.orgData.IsAOE[a]) StartCoroutine(OnDmg(myStat.orgData.GetDamage(a),a, myTarget));
+        else if (myStat.orgData.IsAOE[a])
+        {
+            for (int i = 0; i < TurnBattle.Inst.Enemy.Count; ++i)
+            {
+                StartCoroutine(OnDmg(myStat.orgData.GetDamage(a), a, TurnBattle.Inst.Enemy[i]));
+            }
+        }
+    }   
 
     public void BowAttack1()
     {
@@ -232,19 +239,17 @@ public class BattleCharacter : CharacterProperty
         myTargetPos.y += 1.0f;
         Ray ray = new Ray(myPos, (myTargetPos - myPos).normalized);
         RaycastHit hitData;
-
         if (Physics.Raycast(ray, out hitData, 100f, 1 << LayerMask.NameToLayer("Enemy")))
         {            
             pos = hitData.point;
             obj.transform.position = pos;
         }
-
         Destroy(obj, 1.0f);
     }
 
-    IEnumerator OnDmg(float dmg,int a) //플로팅데미지
-    {        
-        
+    IEnumerator OnDmg(float dmg,int a,GameObject myTarget) //플로팅데미지
+    {
+        if (myTarget.GetComponent<BattleCharacter>().State == STATE.Die) yield break;
         GameObject hudText = Instantiate(hudDmgText, Canvas.transform); // 플로팅데미지 생성
         hudText.GetComponent<DmageText>().color = Color.white;
         if (myStat.orgData.IsCritical(a))
@@ -253,7 +258,6 @@ public class BattleCharacter : CharacterProperty
             dmg *= myStat.orgData.CriticalRatio[a];
         }
         dmg = (int)dmg;
-        //if(dmg > 0) myTarget.GetComponent<BattleCharacter>().GetComponent<Animator>().SetTrigger("Hit"); //미스시 피격모션x
         myTarget.GetComponent<BattleCharacter>().myStat.curHP -= dmg; // 크리미스 일반데미지 확인이후 체력에 -
         Vector3 pos = myTarget.transform.position; //타겟위치
         pos.y += 2.0f; // 위치에서 2만큼 y위로이동
