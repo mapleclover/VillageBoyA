@@ -1,5 +1,5 @@
 //작성자 : 박영준
-//설명 : 
+//설명 : 퀘스트 미니팝업창
 using UnityEngine;
 using UnityEngine.UI;
 
