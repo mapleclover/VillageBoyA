@@ -73,7 +73,7 @@ public class DiscardingItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         DataController.instance.gameData.savedInventory.Remove(thisname);
 
-        DataController.instance.gameData.myItemCount[thisname]--;
+        DataController.instance.gameData.myItemCount.Remove(thisname);  
         Destroy(selectedItem);
 
         myPanel.SetActive(false);

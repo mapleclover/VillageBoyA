@@ -7,7 +7,9 @@ using UnityEngine.EventSystems;
 public class reinforceslot : MonoBehaviour, IDropHandler
 {
     public GameObject[] myIngSlots;
-    public GameObject myInven;
+    public GameObject[] myInven;
+    public GameObject alert;
+
     public void OnDrop(PointerEventData eventData)
     {
         PointerInfo icon = transform.GetComponentInChildren<PointerInfo>();
@@ -16,8 +18,9 @@ public class reinforceslot : MonoBehaviour, IDropHandler
         {
             if (icon != null)
             {
-                reinforceslot slot = movingObject.parent.GetComponent<reinforceslot>();
-                slot.SetChild(icon.transform);
+                ItemSlot slot = movingObject.parent.GetComponent<ItemSlot>();
+                slot.SetChildren(icon.transform);
+                OnClickCancel();
             }
             movingObject.SetParent(transform);
             movingObject.localPosition = Vector3.zero;
@@ -43,12 +46,22 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                     ShowIngredients("다이아몬드", 0);
                     ShowIngredients("철", 1);
                 }
+                else
+                {
+                    alert.SetActive(true);
+                    FindMySlot(thisitem.gameObject);
+                }
                 break;  
             case "장갑":
                 if (DataController.instance.gameData.savedInventory.ContainsKey("철") && DataController.instance.gameData.savedInventory.ContainsKey("별"))
                 {
                     ShowIngredients("철", 0);
                     ShowIngredients("별", 1);
+                }
+                else
+                {
+                    alert.SetActive(true);
+                    FindMySlot(thisitem.gameObject);
                 }
                 break;
             case "방패":
@@ -57,6 +70,11 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                     ShowIngredients("사과", 0);
                     ShowIngredients("별", 1);
                 }
+                else
+                {
+                    alert.SetActive(true);
+                    FindMySlot(thisitem.gameObject);
+                }
                 break;
         }
     }
@@ -64,29 +82,69 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     {
         for(int i = 0; i < 14; i++)
         {
-            if (myInven.transform.GetChild(i).transform.childCount > 0)
+            if (myInven[i].transform.childCount > 0)
             {
-                GameObject thisIngred = myInven.transform.GetChild(i).transform.GetChild(0).gameObject;
-                if (thisIngred.GetComponent<Pickup>().item.itemName.Equals(name))
+                GameObject thisIngred = myInven[i].transform.GetChild(0).gameObject;
+                if (thisIngred != null&&name!=null)
                 {
-                    thisIngred.transform.SetParent(myIngSlots[index].transform);
-                    thisIngred.transform.localPosition = Vector3.zero;
-                    DataController.instance.gameData.savedInventory.Remove(name);
-                    DataController.instance.gameData.myItemCount.Remove(name);
-                    break;
+                    if (!thisIngred.GetComponent<Pickup>().item.itemName.Equals(name)) continue;
+                    else
+                    {
+                        thisIngred.transform.SetParent(myIngSlots[index].transform);
+                        thisIngred.transform.localPosition = Vector3.zero;
+                        DataController.instance.gameData.savedInventory.Remove(name);
+                        //  DataController.instance.gameData.myItemCount.Remove(name);    강화 개수만큼 빼야됨
+                        break;
+                    }
                 }
             }
         }
     }
     public void OnClickCancel()
     {
-        InventoryController.Instance.GetItem(transform.GetChild(0).gameObject);
-        InventoryController.Instance.GetItem(myIngSlots[0].transform.GetChild(0).gameObject);
-        InventoryController.Instance.GetItem(myIngSlots[1].transform.GetChild(0).gameObject);
-        Destroy(this.transform.GetChild(0).gameObject);
-        Destroy(myIngSlots[0].transform.GetChild(0).gameObject);
-        Destroy(myIngSlots[1].transform.GetChild(0).gameObject);
+        if (transform.childCount > 0)
+        {
+            GameObject obj = transform.GetChild(0).gameObject;
+            FindMySlot(obj);
+        }
+        if (myIngSlots[0].transform.childCount > 0) 
+        {
+            GameObject ing1 = myIngSlots[0].transform.GetChild(0).gameObject;
+            FindMySlot(ing1);
+        }
+        if (myIngSlots[1].transform.childCount > 0)
+        {
+            GameObject ing2 = myIngSlots[1].transform.GetChild(0).gameObject;
+            FindMySlot(ing2);
+        }
+
     }
+    public void OnClickEnhance()                //데이터 연결해야됨, 이펙트 추가?
+    {
+        if (myIngSlots[0].transform.childCount > 0)
+        {
+           Destroy(myIngSlots[0].transform.GetChild(0).gameObject);
+        }
+        if (myIngSlots[1].transform.childCount > 0)
+        {
+            Destroy(myIngSlots[1].transform.GetChild(0).gameObject);
+        }
+    }
+    public void FindMySlot(GameObject obj)
+    {
+        for (int i = 0; i < 14; i++)
+        {
+            if (myInven[i].transform.childCount == 0)
+            {
+                obj.transform.SetParent(myInven[i].transform);
+                obj.transform.localPosition = Vector3.zero;
+                DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName]=i;
+              //  DataController.instance.gameData.myItemCount[];
+                break;
+            }
+        }
+    }
+
 }
 
 //취소 버튼 누르면 인벤토리 제자리로
