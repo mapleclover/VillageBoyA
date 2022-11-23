@@ -27,9 +27,9 @@ public class Item : ScriptableObject
         Possible,
         Impossible
     }
-    [Header("------Enhancement-------")] [SerializeField]
-    EnhanceableItem _enhanceableItem;
+    [Header("------Enhancement-------")] 
 
+    [SerializeField] EnhanceableItem _enhanceableItem;
     public EnhanceableItem enhanceableItem // 강화 가능 아이템
     {
         get => _enhanceableItem;
@@ -53,7 +53,7 @@ public class Item : ScriptableObject
     public bool CheckSuccess(int level)
     {
         float rnd = Random.Range(0, 100);
-        if (rnd <= Possibility[level])
+        if (rnd <= Possibility[level-1])
         {
             Debug.Log($"랜덤숫자{rnd}");
             return true;
