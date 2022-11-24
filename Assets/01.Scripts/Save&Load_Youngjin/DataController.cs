@@ -27,7 +27,7 @@ public struct SaveItemData
     }
     public bool GetMaxLevel
     {
-        get => orgData.value < orgData.GetMaxLevel(); // 작다면 트루
+        get => Level < orgData.GetMaxLevel(); // 작다면 트루
     }
     public bool GetEnhanceableItem
     {

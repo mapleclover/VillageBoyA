@@ -15,15 +15,8 @@ public class EnhancementController : MonoBehaviour
     public GameObject myUI;
     public RectTransform myInventory;
     public GameObject setMyInventory;
-   
-    public GameObject mySlot;
-
-
 
     //public GameObject myMaterial = null;
-
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -57,12 +50,10 @@ public class EnhancementController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-
             myInventory.localPosition = new Vector2(200f, 0f);
             print("1");
             myUI.SetActive(true);
             setMyInventory.SetActive(true);
-            
             
         }
 

@@ -202,7 +202,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     }
     public void FindMySlot(GameObject obj)
     {
-        int level = 1;      //레벨과 연동
+        int level = 1;      //레벨과 연동 // 영진아 이거 레벨 뭐야?
         for (int i = 0; i < myInven.Length; i++)
         {
             if (myInven[i].transform.childCount == 0)
@@ -218,18 +218,13 @@ public class reinforceslot : MonoBehaviour, IDropHandler
 
     public void EnchantLogic(GameObject obj)
     {
-        myItem = obj.GetComponent<EnhanceableItems>();
+        myItem = obj.GetComponent<EnhanceableItems>(); // 드래그 되자 마자 바인딩 되도록 바꿔야함
         if (myItem._GetMaxLevel)
         {
 
             if (myItem._EnhanceableItem)
             // 강화 가능 아이템인지
             {
-                /*EnchantButton.onClick.RemoveAllListeners();
-                EnchantButton.interactable = true;
-                EnchantButton.onClick.AddListener(*/
-                /*() =>
-                {*/
                     myItem.ConsumeGold();
                     //강화 시도 마다 골드 제거
                     InventoryController.Instance.ShowMyGold();
@@ -237,12 +232,14 @@ public class reinforceslot : MonoBehaviour, IDropHandler
 
                     if (myItem.CheckSuccess()) // 성공
                     {
-                        if (obj.GetComponent<Pickup>().item.itemName.Equals("장갑"))
+                        myItem.GetComponent<EnhanceableItems>().myData.Level++; 
+                        DataController.instance.gameData.gloves.Level++;
+                        print($"레벨{DataController.instance.gameData.gloves.Level}");
+                        /*if (obj.GetComponent<Pickup>().item.itemName.Equals("장갑"))
                         {
-                            DataController.instance.gameData.gloves.Level++;
                             
-                            print($"레벨{DataController.instance.gameData.gloves.Level}");
-                        }
+                            
+                        }*/
                         Debug.Log("성공");
 
                         Debug.Log(DataController.instance.gameData.gold);
@@ -259,14 +256,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                         Debug.Log($"확률{myItem._Possibility}");
 
                     }
-                /*});*/
             }
         }
-        /*
-        else
-        {
-            EnchantButton.interactable = false;
-        }*/
 
 
     }
@@ -275,3 +266,5 @@ public class reinforceslot : MonoBehaviour, IDropHandler
 
 //취소 버튼 누르면 인벤토리 제자리로
 //강화 버튼 누르면 재료는 인벤토리에서 사라짐
+
+// 코루틴으로 쿨타임
