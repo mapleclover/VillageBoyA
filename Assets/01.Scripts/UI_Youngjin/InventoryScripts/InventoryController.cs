@@ -192,6 +192,7 @@ public class InventoryController : MonoBehaviour
             {
                 case "사과":
                     ItemAppears(theItem);
+
                     ShowNumbertoUI();
                     break;
                 case "다이아몬드":
