@@ -53,6 +53,7 @@ public class TurnBattle : MonoBehaviour
 
     public GameObject[] victoryItemSlots;
     public GameObject[] myVictoryItems;
+    private DataController myData;
 
     public enum State
     {
@@ -119,7 +120,6 @@ public class TurnBattle : MonoBehaviour
                         }
                     }
                 }
-
                 if (!Active.GetComponent<BattleCharacter>().ActiveHeal)
                     StartCoroutine(Moving(Active.GetComponent<BattleCharacter>().myTarget.transform.position,
                         Active.GetComponent<BattleCharacter>().longAttackCheck));
@@ -138,49 +138,46 @@ public class TurnBattle : MonoBehaviour
                     switch (SceneLoad.Instance.MonsterType)
                     {
                         case "Fox":
-                            if (DataController.instance.gameData.questID == 30 &&
-                           DataController.instance.gameData.questActionIndex == 1)
+                            if (myData.gameData.questID == 30 &&
+                           myData.gameData.questActionIndex == 1)
                             {
                                 ShowEarnedItem(0, 0);
                             }
                             RewardGold.text = $"{5 * Enemy.Count}";
                             break;
                         case "BossFox":
-                            if (DataController.instance.gameData.questID == 30 &&
-                          DataController.instance.gameData.questActionIndex == 2)
+                            if (myData.gameData.questID == 30 &&
+                          myData.gameData.questActionIndex == 2)
                             {
                                 ShowEarnedItem(1, 0);
                             }
                             RewardGold.text = $"{30 * Enemy.Count}";
                             break;
                         case "Rhydron":
-                            if (DataController.instance.gameData.questID == 40 &&
-                    DataController.instance.gameData.questActionIndex == 1)
+                            if (myData.gameData.questID == 40 &&
+                    myData.gameData.questActionIndex == 1)
                             {
                                 ShowEarnedItem(2, 0);
                             }
                             RewardGold.text = $"{5 * Enemy.Count}";
                             break;
                         case "Milkcow":
-                            if (DataController.instance.gameData.questID == 40 &&
-                   DataController.instance.gameData.questActionIndex == 3)
+                            if (myData.gameData.questID == 40 &&
+                   myData.gameData.questActionIndex == 3)
                             {
                                 ShowEarnedItem(3, 0);
                             }
                             RewardGold.text = $"{5 * Enemy.Count}";
                             break;
                         case "GenshinGolem":
-                            if (DataController.instance.gameData.questID == 40 &&
-                   DataController.instance.gameData.questActionIndex == 5)
+                            if (myData.gameData.questID == 40 &&
+                   myData.gameData.questActionIndex == 5)
                             {
                                 ShowEarnedItem(4, 0);
                             }
                             RewardGold.text = $"{100 * Enemy.Count}";
                             break;
-
                     }
-                  
-
                     VictoryImage.SetActive(true);
                 }
                 else if (!VictoryCheck)
@@ -273,14 +270,15 @@ public class TurnBattle : MonoBehaviour
         Cursor.visible = true; // 커서안보이는거 트루로
         Cursor.lockState = CursorLockMode.None; //커서잠금모드 해제        
         EnemyCharacterName = SceneLoad.Instance.MonsterType;
+        myData = DataController.instance;
         InstantiateEnemy();
         InstantiatePlayerCharacter();
     }
 
     void Start()
-    {
-        if (DataController.instance.gameData.myItemCount.ContainsKey("포션"))
-            HealingPotion = DataController.instance.gameData.myItemCount["포션"]; //포션
+    {        
+        if (myData.gameData.myItemCount.ContainsKey("포션"))
+            HealingPotion = myData.gameData.myItemCount["포션"]; //포션
         else HealingPotion = 0;
 
         for (int i = 0; i < Player.Count; ++i) //플레이어갯수만큼 추가
@@ -343,9 +341,9 @@ public class TurnBattle : MonoBehaviour
     }
     void CheckVictoryAndType(int actionindex, int index)
     {
-        DataController.instance.gameData.questClear = true;
-        DataController.instance.gameData.questActionIndex += actionindex;
-        DataController.instance.gameData.victoryComplete[index] = true;
+        myData.gameData.questClear = true;
+        myData.gameData.questActionIndex += actionindex;
+        myData.gameData.victoryComplete[index] = true;
     }
 
     public void VictoryOk()
@@ -355,53 +353,53 @@ public class TurnBattle : MonoBehaviour
             switch (SceneLoad.Instance.MonsterType)
             {
                 case "Fox":
-                    if (DataController.instance.gameData.questID == 30 &&
-                        DataController.instance.gameData.questActionIndex == 1)
+                    if (myData.gameData.questID == 30 &&
+                        myData.gameData.questActionIndex == 1)
                     {
                         CheckVictoryAndType(1, 0); // 중복 코드가 많아 함수로 대체했습니다 -영진
                     }
 
-                    DataController.instance.gameData.gold += 5 * Enemy.Count;
+                    myData.gameData.gold += 5 * Enemy.Count;
                     break;
 
                 case "BossFox":
-                    if (DataController.instance.gameData.questID == 30 &&
-                        DataController.instance.gameData.questActionIndex == 2)
+                    if (myData.gameData.questID == 30 &&
+                        myData.gameData.questActionIndex == 2)
                     {
                         CheckVictoryAndType(1, 1);// 대왕여우 와의 맞짱 후 이김 승리값전달
                     }
 
-                    DataController.instance.gameData.gold += 30 * Enemy.Count;
+                    myData.gameData.gold += 30 * Enemy.Count;
                     break;
 
                 case "Rhydron":
-                    if (DataController.instance.gameData.questID == 40 &&
-                        DataController.instance.gameData.questActionIndex == 1)
+                    if (myData.gameData.questID == 40 &&
+                        myData.gameData.questActionIndex == 1)
                     {
                         CheckVictoryAndType(1, 2); // 리드런과의 맞짱 후 이김 승리값전달
                     }
 
-                    DataController.instance.gameData.gold += 5 * Enemy.Count;
+                    myData.gameData.gold += 5 * Enemy.Count;
                     break;
 
                 case "Milkcow":
-                    if (DataController.instance.gameData.questID == 40 &&
-                        DataController.instance.gameData.questActionIndex == 3)
+                    if (myData.gameData.questID == 40 &&
+                        myData.gameData.questActionIndex == 3)
                     {
                         CheckVictoryAndType(1, 3); // 밀크카우 와의 맞짱 후 이김 승리값전달
                     }
 
-                    DataController.instance.gameData.gold += 5 * Enemy.Count;
+                    myData.gameData.gold += 5 * Enemy.Count;
                     break;
 
                 case "GenshinGolem":
-                    if (DataController.instance.gameData.questID == 40 &&
-                        DataController.instance.gameData.questActionIndex == 5)
+                    if (myData.gameData.questID == 40 &&
+                        myData.gameData.questActionIndex == 5)
                     {
                         CheckVictoryAndType(1, 4); // 밀크카우 와의 맞짱 후 이김 승리값전달
                     }
 
-                    DataController.instance.gameData.gold += 100 * Enemy.Count;
+                    myData.gameData.gold += 100 * Enemy.Count;
                     break;
             }
 
@@ -411,15 +409,15 @@ public class TurnBattle : MonoBehaviour
                 switch (i)
                 {
                     case 0:
-                        DataController.instance.gameData.Kong.HP =
+                        myData.gameData.Kong.HP =
                             (int)Player[0].GetComponent<BattleCharacter>().myStat.curHP;
                         break;
                     case 1:
-                        DataController.instance.gameData.Jin.HP =
+                        myData.gameData.Jin.HP =
                             (int)Player[1].GetComponent<BattleCharacter>().myStat.curHP;
                         break;
                     case 2:
-                        DataController.instance.gameData.Ember.HP =
+                        myData.gameData.Ember.HP =
                             (int)Player[2].GetComponent<BattleCharacter>().myStat.curHP;
                         break;
                 }
@@ -431,7 +429,7 @@ public class TurnBattle : MonoBehaviour
 
     void InstantiatePlayerCharacter()
     {
-        for (int i = 0; i < DataController.instance.gameData.partyMember.Length; ++i)
+        for (int i = 0; i < myData.gameData.partyMember.Length; ++i)
         {
             CharacterButton[i].gameObject.SetActive(true);
             CharacterButton[i].GetComponent<CharacterButton>().MyChosenAttack.SetActive(true);
@@ -577,6 +575,8 @@ public class TurnBattle : MonoBehaviour
         }
     }
 
+    Coroutine CostCheck = null;
+    
     public void BattleStart() //공격버튼 클릭시 함수
     {
         for (int i = 0; i < PlayList.Count; ++i)
@@ -587,22 +587,48 @@ public class TurnBattle : MonoBehaviour
         if (!SelectedCharacterAttack.Inst.myAttack.activeSelf &&
             !SelectedCharacterAttack.Inst.mySelectAttack.activeSelf)
         {
-            ChangeState(State.ActiveCheck);
-            AttackStartButton.interactable = false;
-            RunButton.interactable = false;
-            for (int i = 0; i < CharacterButton.Length; ++i)
+            if (myActionCost.RemainingCost >= 0)
             {
-                CharacterButton[i].interactable = false; //버튼비활성화
-                CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
+                ChangeState(State.ActiveCheck);
+                AttackStartButton.interactable = false;
+                RunButton.interactable = false;
+                for (int i = 0; i < CharacterButton.Length; ++i)
+                {
+                    CharacterButton[i].interactable = false; //버튼비활성화
+                    CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
+                }
             }
-        }
+            else
+            {                
+                if (CostCheck == null)
+                {
+                    CostCheck =  StartCoroutine(ActionCostNotEnough());
+                }
+            }
+        }        
         //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
-
+        SelectedCharacterAttack.Inst.mySelectCharacter.SetActive(false);
         SelectedCharacterAttack.Inst.myAttack.SetActive(false);
         SelectedCharacterAttack.Inst.mySelectAttack.SetActive(false);
         SelectedCharacterAttack.Inst.myActiveAttack.SetActive(true);
         SelectedCharacter = null;
     }
+    IEnumerator ActionCostNotEnough()
+    {
+        float a = 3.0f;
+        
+        while(a>Mathf.Epsilon)
+        {
+            
+            myActionCost.NotEnough.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            myActionCost.NotEnough.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            a -= 1.0f;
+        }
+        CostCheck = null;
+    }
+
 
     IEnumerator HealingActive()
     {

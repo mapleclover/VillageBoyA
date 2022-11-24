@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385577, g: 0.22906174, b: 0.30346733, a: 1}
+  m_IndirectSpecularColor: {r: 0.1838554, g: 0.22906086, b: 0.3034666, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -35286,8 +35286,8 @@ MonoBehaviour:
   mySlider: {fileID: 1541253105}
   myStaminaBar: {fileID: 1541253103}
   myCamRot: {fileID: 6059563165524560314}
-  speed: 15
-  dash: 30
+  speed: 10
+  dash: 20
   rotSpeed: 60
   layer:
     serializedVersion: 2
@@ -43770,7 +43770,21 @@ MonoBehaviour:
   questId: 30
   questComplete: 0
   questActionIndex: 0
-  myInven: {fileID: 0}
+  mySlots:
+  - {fileID: 7192729494058511057}
+  - {fileID: 7192729493167878561}
+  - {fileID: 7192729493951669420}
+  - {fileID: 7192729493239986379}
+  - {fileID: 7192729493926846275}
+  - {fileID: 7192729494573292584}
+  - {fileID: 7192729494250182282}
+  - {fileID: 7192729493953516057}
+  - {fileID: 7192729494116761655}
+  - {fileID: 7192729494859944837}
+  - {fileID: 7192729495062773128}
+  - {fileID: 7192729493188324336}
+  - {fileID: 7192729494034678272}
+  - {fileID: 7192729493785228830}
   questObject:
   - {fileID: 0}
   - {fileID: 1275216987}
@@ -43784,7 +43798,7 @@ MonoBehaviour:
   Zhongli_3000: {fileID: 528796814025194547}
   questPopupText: {fileID: 1468198156}
   theComplete: {fileID: 1757176257}
-  theInven: {fileID: 0}
+  theInven: {fileID: 7192729494876934916}
   theQuestPopupText: {fileID: 1291370361}
 --- !u!4 &1638807068
 Transform:

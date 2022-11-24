@@ -239,8 +239,16 @@ public class InventoryController : MonoBehaviour
                 case "기어부품":
                     ItemAppears(theItem);
                     break;
+                case "test Item":
+                    Get3DObject(theItem);
+                    break;
             }
         }
+    }
+    public void Get3DObject(GameObject obj)
+    {
+        GetItem(obj.GetComponent<Pickup>().item.itemPrefab);
+        ShowNumbertoUI();
     }
 
     public void ItemAppears(GameObject theItem)

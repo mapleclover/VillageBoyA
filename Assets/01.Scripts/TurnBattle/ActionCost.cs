@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ActionCost : MonoBehaviour
 {
-    [SerializeField] private int RemainingCost;
+    public int RemainingCost;
     public int NumberOfCrystal;
     public GameObject CrystalPrefab;
     public Transform ContentBox;
