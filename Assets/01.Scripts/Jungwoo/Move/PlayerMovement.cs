@@ -196,9 +196,9 @@ public class PlayerMovement : MonoBehaviour
     void PlayerMove()
     {
         // 이동과 카메라
-        dir.x = Input.GetAxisRaw("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
+        dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
-        dir.z = Input.GetAxisRaw("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
+        dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
         totalDist = dir.magnitude;
 
         // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록

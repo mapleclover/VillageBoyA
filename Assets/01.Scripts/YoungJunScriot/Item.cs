@@ -4,7 +4,7 @@
 using System;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-using Random = UnityEngine.Random;
+
 
 
 
@@ -50,21 +50,14 @@ public class Item : ScriptableObject
     {
         return EnchantCost[lv - 1];
     }
-    public bool CheckSuccess(int level)
-    {
-        float rnd = Random.Range(0, 100);
-        if (rnd <= Possibility[level-1])
-        {
-            Debug.Log($"랜덤숫자{rnd}");
-            return true;
-        }
-        Debug.Log($"랜덤숫자{rnd}");
-        
-        return false;
-    }
     public int GetMaxLevel() // 강화 맥스레벨 체크
     {
         return AP.Length;
+    }
+    
+    public bool CheckEnhanceableItem()
+    {
+        return _enhanceableItem == 0 ? true : false;
     }
 
     // 강화 ----------------------------------
