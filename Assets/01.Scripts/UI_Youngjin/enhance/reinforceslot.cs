@@ -8,8 +8,11 @@ public class reinforceslot : MonoBehaviour, IDropHandler
 {
     public GameObject[] myIngSlots;
     public GameObject[] myInven;
-    public GameObject alert;
+    public GameObject alert; // 재료가 없다면 무슨 재료가 필요한지 알림
     public TMPro.TMP_Text myMessage;
+    public EnhanceableItems myItem;
+
+
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -27,7 +30,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
             movingObject.localPosition = Vector3.zero;
 
             CheckIngredients(movingObject);
-
+            
         }
         else return;
     }
@@ -186,6 +189,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     }
     public void OnClickEnhance()                //데이터 연결해야됨, 이펙트 추가?
     {
+        Debug.Log(this.transform.GetChild(0).gameObject);
+        EnchantLogic(this.transform.GetChild(0).gameObject);
         if (myIngSlots[0].transform.childCount > 0)
         {
            Destroy(myIngSlots[0].transform.GetChild(0).gameObject);
@@ -198,7 +203,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     public void FindMySlot(GameObject obj)
     {
         int level = 1;      //레벨과 연동
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i < myInven.Length; i++)
         {
             if (myInven[i].transform.childCount == 0)
             {
@@ -209,6 +214,61 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 break;
             }
         }
+    }
+
+    public void EnchantLogic(GameObject obj)
+    {
+        myItem = obj.GetComponent<EnhanceableItems>();
+        if (myItem._GetMaxLevel)
+        {
+
+            if (myItem._EnhanceableItem)
+            // 강화 가능 아이템인지
+            {
+                /*EnchantButton.onClick.RemoveAllListeners();
+                EnchantButton.interactable = true;
+                EnchantButton.onClick.AddListener(*/
+                /*() =>
+                {*/
+                    myItem.ConsumeGold();
+                    //강화 시도 마다 골드 제거
+                    InventoryController.Instance.ShowMyGold();
+                    // 인벤토리에 바로 적용
+
+                    if (myItem.CheckSuccess()) // 성공
+                    {
+                        if (obj.GetComponent<Pickup>().item.itemName.Equals("장갑"))
+                        {
+                            DataController.instance.gameData.gloves.Level++;
+                            
+                            print($"레벨{DataController.instance.gameData.gloves.Level}");
+                        }
+                        Debug.Log("성공");
+
+                        Debug.Log(DataController.instance.gameData.gold);
+                        Debug.Log($"가격{myItem._EnchantCost}");
+                        Debug.Log($"공격력{myItem._AP}");
+                        Debug.Log($"확률{myItem._Possibility}");
+                    }
+                    else // 실패
+                    {
+                        Debug.Log("실패");
+                        Debug.Log(DataController.instance.gameData.gold);
+                        Debug.Log($"가격{myItem._EnchantCost}");
+                        Debug.Log($"공격력{myItem._AP}");
+                        Debug.Log($"확률{myItem._Possibility}");
+
+                    }
+                /*});*/
+            }
+        }
+        /*
+        else
+        {
+            EnchantButton.interactable = false;
+        }*/
+
+
     }
 
 }
