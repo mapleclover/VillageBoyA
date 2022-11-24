@@ -14,43 +14,22 @@ public class CharacterButton : MonoBehaviour
     public TMP_Text myActvieTxt = null;
     public GameObject mySelectCharacter;
     Vector3 pos;
-
+    private BattleCharacter myBattle;
     void Start()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            if (myCharacter == null) return;
-            if (myCharacter.GetComponent<BattleCharacter>().Skill == i)
-            {
-                if (i == 0)
-                {
-                    myActvieTxt.text = "공격1";
-                }
-                else if (i == 1)
-                {
-                    myActvieTxt.text = "공격2";
-                }
-                else if (i == 2)
-                {
-                    myActvieTxt.text = "공격3";
-                }
-            }
-        }
+        myBattle = myCharacter.GetComponent<BattleCharacter>();
     }
 
     void Update()
     {
-        if (myCharacter.GetComponent<BattleCharacter>().State == STATE.Die)
+        if (myBattle.State == STATE.Die)
         {
             myButton.interactable = false;
             MyChosenAttack.GetComponent<CharacterImgaeAlpha>().DieCheck = true;
         }
-
         if (TurnBattle.Inst.myState == TurnBattle.State.Choice)            
-                if (!myCharacter.GetComponent<BattleCharacter>().ActiveHeal)
-                   myActvieTxt.text = myCharacter.GetComponent<BattleCharacter>().myStat.orgData.SkillName[myCharacter.GetComponent<BattleCharacter>().Skill];
-
-                    
+                if (!myBattle.ActiveHeal)
+                   myActvieTxt.text = myBattle.myStat.orgData.SkillName[myCharacter.GetComponent<BattleCharacter>().Skill];                    
     }
 
     public void SelectedCharacter()

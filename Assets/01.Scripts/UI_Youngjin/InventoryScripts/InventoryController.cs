@@ -192,6 +192,7 @@ public class InventoryController : MonoBehaviour
             {
                 case "사과":
                     ItemAppears(theItem);
+
                     ShowNumbertoUI();
                     break;
                 case "다이아몬드":
@@ -238,8 +239,16 @@ public class InventoryController : MonoBehaviour
                 case "기어부품":
                     ItemAppears(theItem);
                     break;
+                case "test Item":
+                    Get3DObject(theItem);
+                    break;
             }
         }
+    }
+    public void Get3DObject(GameObject obj)
+    {
+        GetItem(obj.GetComponent<Pickup>().item.itemPrefab);
+        ShowNumbertoUI();
     }
 
     public void ItemAppears(GameObject theItem)

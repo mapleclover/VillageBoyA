@@ -12,7 +12,7 @@ public class Goal : MonoBehaviour
     [SerializeField] private GameObject runKey;
     [SerializeField] private GameManager theManager;
 
-    private int keyDowunCount = 0;
+    private int keyDownCount = 0;
     public bool isTutorial; //  듀토리얼 팝업 켜져있는지 아닌지.
 
     // Start is called before the first frame update
@@ -72,11 +72,15 @@ public class Goal : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                 {
                     theManager.Action(this.gameObject);
-                    keyDowunCount++;
+                    keyDownCount++;
                 }
 
-                if (keyDowunCount == 2)
+                if (keyDownCount == 2)
                 {
+                    QuestManager thequest = FindObjectOfType<QuestManager>();
+                    thequest.questActionIndex++;
+                    thequest.ControlObject();
+                    thequest.ControlPopup();
                     gameObject.SetActive(false);
                 }
             }

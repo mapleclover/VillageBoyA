@@ -11,12 +11,9 @@ public class QuestManager : MonoBehaviour
     public bool questComplete;
     private bool tempCheck; // 퀘스트컴플리트 저장용 임시변수
     public int questActionIndex; // 퀘스트npc대화순서 변수
-    public GameObject myInven;
+    public GameObject[] mySlots;
     private Animator myAnim;
     public GameObject[] questObject;
-
-
-    MinimapIcon my_Icon = null;
 
 
     Dictionary<int, QuestData> questList; // questId, questData(questName, npcID)
@@ -44,7 +41,7 @@ public class QuestManager : MonoBehaviour
     private void GenerateData()
     {
         questList.Add(10, new QuestData("이동모션 듀토리얼", new int[] { 10000, 1000 }));
-        questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000 }));
+        questList.Add(20, new QuestData("사과 따오기", new int[] { 100, 100, 1000, 10000 }));
         questList.Add(30, new QuestData("여우 사냥", new int[] { 1000, 2000, 2000, 2000 }));
         questList.Add(40, new QuestData("골렘 사냥", new int[] { 1000, 3000, 3000, 1000, 1000, 3000, 3000, 10000 }));
     }
@@ -117,17 +114,11 @@ public class QuestManager : MonoBehaviour
                 if (questActionIndex == 1)
                 {
                     questObject[1].SetActive(true); // ! 아이콘                  
-
+                    questComplete = true;
                     //questObject[2].SetActive(true); // ? 아이콘
                     questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
                     questObject[2].transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0.0f);
                     questObject[4].transform.position = new Vector3(291.0f, 1.1f, 222.0f); // goal지접이동
-                }
-                else if (questActionIndex == 2) // 10번 퀘스트의 npc대화순서. 2명과 2번대화하므로 "2"
-                {
-                    questObject[1].SetActive(false);
-                    questObject[0].SetActive(true); // 사과 1 
-                    questObject[3].SetActive(true); // 사과 2
                 }
 
                 break;
@@ -322,16 +313,16 @@ public class QuestManager : MonoBehaviour
     }
     public void RemovingItem(string name)
     {
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i <mySlots.Length; i++)
         {
-            if (myInven.transform.GetChild(i).transform.GetChild(0) != null)
+            if (mySlots[i].transform.childCount>0)
             {
-                if (myInven.transform.GetChild(i).transform.GetChild(0).GetComponent<Pickup>().item.itemName.Equals(name))
+                if (mySlots[i].transform.GetChild(0).GetComponent<Pickup>().item.itemName.Equals(name))
                 {
-                    string thisItem = myInven.transform.GetChild(i).transform.GetChild(0).GetComponent<Pickup>().item.itemName;
+                    string thisItem =mySlots[i].transform.GetChild(0).GetComponent<Pickup>().item.itemName;
                     DataController.instance.gameData.savedInventory.Remove(thisItem);
                     DataController.instance.gameData.myItemCount.Remove(thisItem);
-                    Destroy(myInven.transform.GetChild(i).transform.GetChild(0).gameObject);
+                    Destroy(mySlots[i].transform.GetChild(0).gameObject);
                     break;
                 }
             }

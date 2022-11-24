@@ -22,9 +22,6 @@ public class EnhancementController : MonoBehaviour
 
     //public GameObject myMaterial = null;
 
-    private void Awake()
-    {
-    }
 
 
 
