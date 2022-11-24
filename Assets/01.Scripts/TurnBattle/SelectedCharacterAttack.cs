@@ -14,6 +14,7 @@ public class SelectedCharacterAttack : MonoBehaviour
     public static SelectedCharacterAttack Inst = null;
     public TMP_Text myActvieTxt = null;
     public TMP_Text[] myAttacks;
+    public ActionCost myActionCost;
 
     private void Awake()
     {
@@ -51,6 +52,10 @@ public class SelectedCharacterAttack : MonoBehaviour
         {
             myAttacks[i].text = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.orgData.SkillName[i];
         }
+
+        int currentCost = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().myStat.orgData
+            .SkillCost[TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>().Skill];
+        myActionCost.OnHoverSkill(currentCost, currentCost);
     }
 
     public void Attack1()
