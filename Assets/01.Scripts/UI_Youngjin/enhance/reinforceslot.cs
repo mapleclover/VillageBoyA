@@ -89,7 +89,9 @@ public class reinforceslot : MonoBehaviour, IDropHandler
             FindMySlot(thisitem.gameObject);
             return;
         }
-        if (DataController.instance.gameData.myItemCount[itemname1].Equals(level))
+        ShowIngredients(itemname1, 0);
+        ShowIngredients(itemname2, 1);
+      /*  if (DataController.instance.gameData.myItemCount[itemname1].Equals(level))
         {
             ShowIngredients(itemname1, 0);
         }
@@ -106,7 +108,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
             ReduceIngredients(itemname2, 1,level);
         }
 
-
+        */
     }
     public void ReduceIngredients(string name, int index,int level)
     {
@@ -203,7 +205,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 obj.transform.SetParent(myInven[i].transform);
                 obj.transform.localPosition = Vector3.zero;
                 DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName]=i;
-              DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName]+=level;
+              DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName]=level;
                 break;
             }
         }
