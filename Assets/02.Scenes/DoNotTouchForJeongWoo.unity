@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385538, g: 0.22906086, b: 0.30346623, a: 1}
+  m_IndirectSpecularColor: {r: 0.18385577, g: 0.22906174, b: 0.30346733, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -37209,13 +37209,7 @@ MonoBehaviour:
   myUI: {fileID: 1163097009}
   myInventory: {fileID: 0}
   setMyInventory: {fileID: 0}
-  onOff: 0
-  EnchantButton: {fileID: 2091271787}
   mySlot: {fileID: 1230335484}
-  myItems: {fileID: 0}
-  myData:
-    orgData: {fileID: 0}
-    Level: 0
 --- !u!4 &1241155533 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4038935894739632, guid: ba7c40e3eb2bcb54dbbb2bdd6c2ad983, type: 3}
@@ -38791,7 +38785,7 @@ MonoBehaviour:
   myStaminaBar: {fileID: 1541253103}
   myCamRot: {fileID: 6059563165524560314}
   speed: 6
-  dash: 10
+  dash: 15
   rotSpeed: 20
   layer:
     serializedVersion: 2
@@ -48303,13 +48297,7 @@ MonoBehaviour:
   myUI: {fileID: 1131686819}
   myInventory: {fileID: 1684219660}
   setMyInventory: {fileID: 1684219659}
-  onOff: 0
-  EnchantButton: {fileID: 0}
   mySlot: {fileID: 0}
-  myItems: {fileID: 0}
-  myData:
-    orgData: {fileID: 0}
-    Level: 0
 --- !u!114 &1648050548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69707,13 +69695,7 @@ MonoBehaviour:
   myUI: {fileID: 2490160066820592562}
   myInventory: {fileID: 342795238363401307}
   setMyInventory: {fileID: 342795238363401308}
-  onOff: 0
-  EnchantButton: {fileID: 2490160066479366512}
   mySlot: {fileID: 2490160067106130784}
-  myItems: {fileID: 0}
-  myData:
-    orgData: {fileID: 0}
-    Level: 1
 --- !u!114 &2490160066369701314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70417,7 +70399,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2490160066820592563
 RectTransform:
   m_ObjectHideFlags: 0
@@ -70842,6 +70824,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2490160067106130788}
+  - component: {fileID: 2490160067106130792}
   - component: {fileID: 2490160067106130791}
   - component: {fileID: 2490160067106130790}
   - component: {fileID: 2490160067106130785}
@@ -70922,6 +70905,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2490160067106130784}
   m_CullTransparentMesh: 1
+--- !u!114 &2490160067106130792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2490160067106130784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987a9ec6faeb07d44b3f6209a1807825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myItem: {fileID: 0}
+  EnchantButton: {fileID: 2490160066479366512}
 --- !u!114 &2490160067153821016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81513,18 +81510,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7866284019540167703}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7866284017883652036}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 124.53125, y: 268.26562}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7866284019540167701
@@ -81550,6 +81547,7 @@ GameObject:
   - component: {fileID: 7866284019540167700}
   - component: {fileID: 7866284019540167701}
   - component: {fileID: 1776940493223409895}
+  - component: {fileID: 7866284019540167704}
   m_Layer: 7
   m_Name: Gloves
   m_TagString: Untagged
@@ -81557,6 +81555,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7866284019540167704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7866284019540167703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124b60dc410064548be4a420631b4819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myData:
+    orgData: {fileID: 11400000, guid: 38c4668d2d68b0b48b3636f85ccb05da, type: 2}
+    Level: 1
 --- !u!224 &7888524790621987323
 RectTransform:
   m_ObjectHideFlags: 0
@@ -81571,7 +81584,7 @@ RectTransform:
   m_Children:
   - {fileID: 4496179161740081982}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
