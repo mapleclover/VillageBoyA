@@ -34,10 +34,16 @@ public class ActionCost : MonoBehaviour
             if (NotEnough.activeSelf)
             {
                 NotEnough.SetActive(false);
+                ChangeToUnusedCost(1, RemainingCost);
+                ChangeToTempCost(RemainingCost + 1, RemainingCost + SelectedSkillCost);
             }
         }
-        ChangeToUnusedCost(1, RemainingCost);
-        ChangeToTempCost(RemainingCost + 1, RemainingCost + SelectedSkillCost);
+        else
+        {
+            NotEnough.SetActive(true);
+            ChangeToTempCost(1, RemainingCost + SelectedSkillCost);
+        }
+        
     }
 
     public void OnHoverSkill(int newlySelectedCost, int previouslySelectedCost)//새로 선택하려고 마우스를 올린 스킬 코스트 & 전에 선택되어있던 스킬 코스트
@@ -46,8 +52,20 @@ public class ActionCost : MonoBehaviour
         
         if (costDiff <= 0)//새로 선택한 스킬의 코스트가 전에 선택되어있던 코스트 보다 적으면... 1 6 2 4
         {
-            ChangeToUnusedCost(RemainingCost + 1, RemainingCost - costDiff);// 2 3
-            ChangeToTempCost(RemainingCost - costDiff + 1, RemainingCost + previouslySelectedCost); // 4 5
+            if (RemainingCost - costDiff >= 0)
+            {
+                if (NotEnough.activeSelf)
+                {
+                    NotEnough.SetActive(false);
+                    ChangeToUnusedCost(1, RemainingCost - costDiff);// 2 3
+                    ChangeToTempCost(RemainingCost - costDiff + 1, RemainingCost + previouslySelectedCost); // 4 5
+                }
+            }
+            else
+            {
+                NotEnough.SetActive(true);
+                ChangeToTempCost(1, RemainingCost + previouslySelectedCost);
+            }
         }
         else
         {
@@ -88,7 +106,6 @@ public class ActionCost : MonoBehaviour
         color.a = 0.2f;
         for (int i = start; i <= end; i++)
         {
-            //Debug.Log($"{i}번째 크리스탈 비활성화");
             Crystal[i - 1].GetComponent<Image>().color = color;
         }
     }
@@ -99,7 +116,6 @@ public class ActionCost : MonoBehaviour
         color.a = 1.0f;
         for (int i = start; i <= end; i++)
         {
-            //Debug.Log($"{i}번째 크리스탈 활성화");
             Crystal[i - 1].GetComponent<Image>().color = color;
         }
     }
@@ -110,7 +126,6 @@ public class ActionCost : MonoBehaviour
         color.a = 0.5f;
         for (int i = start; i <= end; i++)
         {
-            //Debug.Log($"{i}번째 크리스탈 임시비활성화");
             Crystal[i - 1].GetComponent<Image>().color = color;
         }
     }
