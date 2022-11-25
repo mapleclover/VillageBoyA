@@ -464,7 +464,7 @@ public class TurnBattle : MonoBehaviour
     {
         for (int i = 0; i < SceneLoad.Instance.MonsterCount; ++i)
         {
-            EnemyCharacterName = "Rock";
+            
             GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{EnemyCharacterName}"), EnemyParent) as GameObject;
             Vector3 pos = new Vector3(-2 + (2 * i), 0, 0);
             if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss) pos = Vector3.zero;
