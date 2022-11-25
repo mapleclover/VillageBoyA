@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2003931976}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1051,8 +1051,8 @@ MonoBehaviour:
   mySlider: {fileID: 1875267215150034049}
   myStaminaBar: {fileID: 1875267215150034303}
   myCamRot: {fileID: 927279252}
-  speed: 5
-  dash: 10
+  speed: 10
+  dash: 20
   rotSpeed: 50
   layer:
     serializedVersion: 2
@@ -29418,6 +29418,12 @@ MonoBehaviour:
     currentRotation: {x: 0, y: 0, z: 0}
     gold: 0
     isFirstTime: 1
+    apple:
+      orgData: {fileID: 0}
+      Level: 0
+    gloves:
+      orgData: {fileID: 0}
+      Level: 0
     questID: 30
     questActionIndex: 0
     questClear: 1
