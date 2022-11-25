@@ -272,8 +272,8 @@ public class InventoryController : MonoBehaviour
                 }
                 else rtforchild.sizeDelta = new Vector2(70, 70);
                 obj.transform.localPosition = Vector2.zero;
-                DataController.instance.gameData.savedInventory[itemname] = i;
-                DataController.instance.gameData.myItemCount[itemname] = 1;
+                DataController.instance.gameData.savedInventory.Add(itemname,i);
+                DataController.instance.gameData.myItemCount.Add(itemname, 1);
                 break;
             }
         }
