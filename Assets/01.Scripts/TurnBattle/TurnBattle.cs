@@ -402,8 +402,10 @@ public class TurnBattle : MonoBehaviour
                     myData.gameData.gold += 100 * Enemy.Count;
                     break;
             }
-
-            SceneLoad.Instance.battleResult.victory = true;
+            if (SceneLoad.Instance.MonsterType != "Rock")
+            {
+                SceneLoad.Instance.battleResult.victory = true;
+            }
             for (int i = 0; i < Player.Count; ++i)
             {
                 switch (i)
