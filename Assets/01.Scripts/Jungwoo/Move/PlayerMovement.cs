@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     // 연속점프방지
     private bool ground = false;
 
-    //딜레이
+    // 캐릭터 교체 딜레이
     private bool giveDelay = false;
 
     void ChangeState(CHARACTER myCha)

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static Cinemachine.DocumentationSortingAttribute;
+using Unity.VisualScripting;
 
 public class reinforceslot : MonoBehaviour, IDropHandler
 {
@@ -16,6 +17,12 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     public TMPro.TMP_Text[] required;
     public GameObject[] myNumbers;
     public GameObject myPanel;
+
+    public bool EnchantDelay = false;
+    public bool result = false;
+    public Slider mySlider;
+    public GameObject SuccessPanel;
+    public GameObject FailPanel;
 
     public void UpdateNumberUI(string name, int level,int index)            
     {                                                                       
@@ -160,27 +167,35 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     }
     public void OnClickEnhance()                //데이터 연결해야됨, 이펙트 추가?
     {
-        if (this.transform.childCount > 0)
+        if(!EnchantDelay)
         {
-            GameObject enchantingObj = this.transform.GetChild(0).gameObject;
-            if (myIngSlots[0].transform.childCount > 0)
+            if (this.transform.childCount > 0)
             {
-                GameObject obj = myIngSlots[0].transform.GetChild(0).gameObject;
-                CheckDestroy(obj, enchantingObj);
-                myNumbers[0].SetActive(false);
+                GameObject enchantingObj = this.transform.GetChild(0).gameObject;
+                if (myIngSlots[0].transform.childCount > 0)
+                {
+                    GameObject obj = myIngSlots[0].transform.GetChild(0).gameObject;
+                    CheckDestroy(obj, enchantingObj);
+                    myNumbers[0].SetActive(false);
+                }
+                if (myIngSlots[1].transform.childCount > 0)
+                {
+                    GameObject obj2 = myIngSlots[1].transform.GetChild(0).gameObject;
+                    CheckDestroy(obj2, enchantingObj);
+                    myNumbers[1].SetActive(false);
+                }
+                EnchantLogic(enchantingObj);
+                StartCoroutine(Delay(3f, enchantingObj, 1.5f));
+                //FindMySlot()함수 Delay 코루틴 안에 넣음
             }
-            if (myIngSlots[1].transform.childCount > 0)
-            {
-                GameObject obj2 = myIngSlots[1].transform.GetChild(0).gameObject;
-                CheckDestroy(obj2, enchantingObj);
-                myNumbers[1].SetActive(false);
-            }
-            FindMySlot(enchantingObj);
-            EnchantLogic(enchantingObj);
         }
-        myPanel.SetActive(false);
+        else
+        {
+            myPanel.SetActive(false);
+        }
+        
     }
-    public void CheckDestroy(GameObject obj,GameObject enchantingObj)
+    public void CheckDestroy(GameObject obj, GameObject enchantingObj)
     {
         int level = enchantingObj.GetComponent<EnhanceableItems>().myData.Level;
         if (DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName]>level)
@@ -198,15 +213,18 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     }
     public void FindMySlot(GameObject obj)
     {
-             //레벨과 연동 // 영진아 이거 레벨 뭐야?   이거 아이템마다 가지고있는 레벨인뎅
-        for (int i = 0; i < myInven.Length; i++)
+        if(!EnchantDelay)
         {
-            if (myInven[i].transform.childCount == 0)
+            //레벨과 연동 // 영진아 이거 레벨 뭐야? //이거 아이템마다 가지고있는 레벨인뎅 // 그렇구만
+            for (int i = 0; i < myInven.Length; i++)
             {
-                obj.transform.SetParent(myInven[i].transform);
-                obj.transform.localPosition = Vector3.zero;
-                DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName]=i;
-                break;
+                if (myInven[i].transform.childCount == 0)
+                {
+                    obj.transform.SetParent(myInven[i].transform);
+                    obj.transform.localPosition = Vector3.zero;
+                    DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName] = i;
+                    break;
+                }
             }
         }
     }
@@ -220,42 +238,68 @@ public class reinforceslot : MonoBehaviour, IDropHandler
             if (myItem._EnhanceableItem)
             // 강화 가능 아이템인지
             {
-                    myItem.ConsumeGold();
-                    //강화 시도 마다 골드 제거
-                    InventoryController.Instance.ShowMyGold();
-                    // 인벤토리에 바로 적용
+                //myItem.ConsumeGold();
+                //강화 시도 마다 골드 제거 (안씀)
+                InventoryController.Instance.ShowMyGold();
+                // 인벤토리에 바로 적용
 
-                    if (myItem.CheckSuccess()) // 성공
-                    {
-                        myItem.GetComponent<EnhanceableItems>().myData.Level++; 
-                        DataController.instance.gameData.gloves.Level++;
-                        print($"레벨{DataController.instance.gameData.gloves.Level}");
-                    /*if (obj.GetComponent<Pickup>().item.itemName.Equals("장갑"))
-                    {
-                         DataController.instance.gameData.gloves.Level++;
-
-                    }*/
+                if (myItem.CheckSuccess()) // 성공
+                {
+                    result = true;
+                    myItem.GetComponent<EnhanceableItems>().myData.Level++;
                     Debug.Log("성공");
+                    Debug.Log($"가격{myItem._EnchantCost}");
+                    Debug.Log($"공격력{myItem._AP}");
+                    Debug.Log($"확률{myItem._Possibility}");
+                }
+                else // 실패
+                {
+                    result = false;
+                    Debug.Log("실패");
+                    Debug.Log($"가격{myItem._EnchantCost}");
+                    Debug.Log($"공격력{myItem._AP}");
+                    Debug.Log($"확률{myItem._Possibility}");
 
-                        Debug.Log(DataController.instance.gameData.gold);
-                        Debug.Log($"가격{myItem._EnchantCost}");
-                        Debug.Log($"공격력{myItem._AP}");
-                        Debug.Log($"확률{myItem._Possibility}");
-                    }
-                    else // 실패
-                    {
-                        Debug.Log("실패");
-                        Debug.Log(DataController.instance.gameData.gold);
-                        Debug.Log($"가격{myItem._EnchantCost}");
-                        Debug.Log($"공격력{myItem._AP}");
-                        Debug.Log($"확률{myItem._Possibility}");
-
-                    }
+                }
             }
         }
-
-
     }
+
+    IEnumerator Delay(float cool, GameObject enchantingObj, float showTime)
+    {
+        float coolTime = cool;
+        while (cool > 0.0f)
+        {
+            EnchantDelay = true; //트루를 주고
+            cool -= Time.deltaTime;
+            mySlider.value = 1f - (cool / coolTime);
+            yield return null;
+        }
+        EnchantDelay = false; //시간이 끝나면
+        FindMySlot(enchantingObj);
+
+
+        while (showTime > 0f)
+        {
+            if (result)
+            {
+                SuccessPanel.SetActive(true);
+            }
+            else
+            {
+                FailPanel.SetActive(true);
+            }
+            showTime -= Time.deltaTime;
+            yield return null;
+        }
+        SuccessPanel.SetActive(false);
+        FailPanel.SetActive(false);
+    }
+/*
+    IEnumerator ResultMessage(float showTime)
+    {
+    }*/
+
 
 }
 
