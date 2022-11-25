@@ -429,7 +429,7 @@ public class TurnBattle : MonoBehaviour
 
     void InstantiatePlayerCharacter()
     {
-        for (int i = 0; i < myData.gameData.partyMember.Length; ++i)
+        for (int i = 0; i < SceneLoad.Instance.PlayerCount; ++i)
         {
             CharacterButton[i].gameObject.SetActive(true);
             CharacterButton[i].GetComponent<CharacterButton>().MyChosenAttack.SetActive(true);
