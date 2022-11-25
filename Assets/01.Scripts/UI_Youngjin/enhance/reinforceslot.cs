@@ -163,7 +163,6 @@ public class reinforceslot : MonoBehaviour, IDropHandler
         if (this.transform.childCount > 0)
         {
             GameObject enchantingObj = this.transform.GetChild(0).gameObject;
-            EnchantLogic(enchantingObj);
             if (myIngSlots[0].transform.childCount > 0)
             {
                 GameObject obj = myIngSlots[0].transform.GetChild(0).gameObject;
@@ -172,11 +171,12 @@ public class reinforceslot : MonoBehaviour, IDropHandler
             }
             if (myIngSlots[1].transform.childCount > 0)
             {
-                GameObject obj = myIngSlots[1].transform.GetChild(0).gameObject;
-                CheckDestroy(obj, enchantingObj);
+                GameObject obj2 = myIngSlots[1].transform.GetChild(0).gameObject;
+                CheckDestroy(obj2, enchantingObj);
                 myNumbers[1].SetActive(false);
             }
             FindMySlot(enchantingObj);
+            EnchantLogic(enchantingObj);
         }
         myPanel.SetActive(false);
     }
