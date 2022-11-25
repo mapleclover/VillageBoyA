@@ -402,8 +402,10 @@ public class TurnBattle : MonoBehaviour
                     myData.gameData.gold += 100 * Enemy.Count;
                     break;
             }
-
-            SceneLoad.Instance.battleResult.victory = true;
+            if (SceneLoad.Instance.MonsterType != "Rock")
+            {
+                SceneLoad.Instance.battleResult.victory = true;
+            }
             for (int i = 0; i < Player.Count; ++i)
             {
                 switch (i)
@@ -429,7 +431,7 @@ public class TurnBattle : MonoBehaviour
 
     void InstantiatePlayerCharacter()
     {
-        for (int i = 0; i < myData.gameData.partyMember.Length; ++i)
+        for (int i = 0; i < SceneLoad.Instance.PlayerCount; ++i)
         {
             CharacterButton[i].gameObject.SetActive(true);
             CharacterButton[i].GetComponent<CharacterButton>().MyChosenAttack.SetActive(true);
@@ -464,6 +466,7 @@ public class TurnBattle : MonoBehaviour
     {
         for (int i = 0; i < SceneLoad.Instance.MonsterCount; ++i)
         {
+            
             GameObject obj = Instantiate(Resources.Load($"Prefabs/ForBattle/{EnemyCharacterName}"), EnemyParent) as GameObject;
             Vector3 pos = new Vector3(-2 + (2 * i), 0, 0);
             if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss) pos = Vector3.zero;

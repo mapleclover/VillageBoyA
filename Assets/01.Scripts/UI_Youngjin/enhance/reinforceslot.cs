@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class reinforceslot : MonoBehaviour, IDropHandler
 {
@@ -11,7 +12,16 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     public GameObject alert; // 재료가 없다면 무슨 재료가 필요한지 알림
     public TMPro.TMP_Text myMessage;
     public EnhanceableItems myItem;
+    public TMPro.TMP_Text[] curAmount;
+    public TMPro.TMP_Text[] required;
+    public GameObject[] myNumbers;
+    public GameObject myPanel;
 
+    public void UpdateNumberUI(string name, int level,int index)            
+    {                                                                       
+        curAmount[index].text = $"{DataController.instance.gameData.myItemCount[name]}";
+        required[index].text = $"{level}";
+    }
 
 
     public void OnDrop(PointerEventData eventData)
@@ -20,17 +30,20 @@ public class reinforceslot : MonoBehaviour, IDropHandler
         Transform movingObject = eventData.pointerDrag.transform;
         if (movingObject.GetComponent<Pickup>().item.enhanceableItem.Equals(Item.EnhanceableItem.Possible))
         {
-            if (icon != null)
+            if (icon != null&&movingObject.parent.TryGetComponent<ItemSlot>(out ItemSlot slot))
             {
-                ItemSlot slot = movingObject.parent.GetComponent<ItemSlot>();
                 slot.SetChildren(icon.transform);
+                OnClickCancel();
+            }
+            else if (icon != null && movingObject.parent.TryGetComponent<reinforceslot>(out reinforceslot Slot))
+            {
+                Slot.SetChild(icon.transform);
                 OnClickCancel();
             }
             movingObject.SetParent(transform);
             movingObject.localPosition = Vector3.zero;
 
             CheckIngredients(movingObject);
-            
         }
         else return;
     }
@@ -42,19 +55,18 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     }
     public void CheckIngredients(Transform thisitem)
     {
-        int level = 1;//나중에 아이템 레벨과 연동
+        int level = thisitem.GetComponent<EnhanceableItems>().myData.Level;       //레벨 이렇게 땡겨오는거 맞지? - 영진
         switch (thisitem.GetComponent<Pickup>().item.itemName)    //금반지: 다이아&철, 장갑: 철&별, 방패: 사과&별
-        {                                                         //나중에 개수도 체크해야됨
+        {                                                        
             case "금반지":
                 if (DataController.instance.gameData.savedInventory.ContainsKey("다이아몬드") && DataController.instance.gameData.savedInventory.ContainsKey("철"))
                 {
                     CompareRequirements(thisitem,"다이아몬드","철",level);
+
                 }
                 else
                 {
-                    myMessage.text = $"다이아몬드 {level}개, 철 {level}개";
-                    alert.SetActive(true);
-                    FindMySlot(thisitem.gameObject);
+                    NotEnough(thisitem, "다이아몬드", "철", level);                  
                 }
                 break;  
             case "장갑":
@@ -64,9 +76,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 }
                 else
                 {
-                    myMessage.text = $"철  {level}개, 별  {level}개";
-                    alert.SetActive(true);
-                    FindMySlot(thisitem.gameObject);
+                    NotEnough(thisitem, "철", "별", level);
                 }
                 break;
             case "방패":
@@ -76,12 +86,17 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 }
                 else
                 {
-                    myMessage.text = $"사과  {level}개, 별  {level}개";
-                    alert.SetActive(true);
-                    FindMySlot(thisitem.gameObject);
+                    NotEnough(thisitem, "사과", "별", level);
                 }
                 break;
         }
+    }
+    public void NotEnough(Transform thisitem, string st1, string st2, int level)
+    {
+        myPanel.SetActive(false);
+        myMessage.text = $"{st1} {level}개, {st2} {level}개";
+        alert.SetActive(true);
+        FindMySlot(thisitem.gameObject);
     }
     public void CompareRequirements(Transform thisitem,string itemname1,string itemname2, int level)
     {
@@ -94,55 +109,15 @@ public class reinforceslot : MonoBehaviour, IDropHandler
         }
         ShowIngredients(itemname1, 0);
         ShowIngredients(itemname2, 1);
-      /*  if (DataController.instance.gameData.myItemCount[itemname1].Equals(level))
-        {
-            ShowIngredients(itemname1, 0);
-        }
-        else
-        {
-            ReduceIngredients(itemname1, 0,level);
-        }
-        if (DataController.instance.gameData.myItemCount[itemname2].Equals(level) )
-        {
-            ShowIngredients(itemname2, 1);
-        }
-        else
-        {
-            ReduceIngredients(itemname2, 1,level);
-        }
-
-        */
+        UpdateNumberUI(itemname1,level,0);
+        UpdateNumberUI(itemname2, level,1);
+        myNumbers[0].SetActive(true);
+        myNumbers[1].SetActive(true);
+        myPanel.SetActive(true);
     }
-    public void ReduceIngredients(string name, int index,int level)
-    {
-        for (int i = 0; i < 14; i++)
-        {
-            if (myInven[i].transform.childCount > 0)
-            {
-                GameObject thisIngred = myInven[i].transform.GetChild(0).gameObject;
-                if (thisIngred != null && name != null)
-                {
-                    if (!thisIngred.GetComponent<Pickup>().item.itemName.Equals(name)) continue;
-                    else
-                    {
-                        thisIngred.transform.SetParent(myIngSlots[index].transform);
-                        thisIngred.transform.localPosition = Vector3.zero;
-                        DataController.instance.gameData.savedInventory.Remove(name);
-                        DataController.instance.gameData.myItemCount[name] -= level;        //아이템 레벨과 연동해 빼야됨
-                        if (DataController.instance.gameData.myItemCount[name] <= 0)
-                        {
-                            DataController.instance.gameData.myItemCount.Remove(name);
-                        }
 
-                        break;
-                    }
-                }
-            }
-        }
-    }
     public void ShowIngredients(string name,int index)
     {
-        int level = 1;
         for(int i = 0; i < 14; i++)
         {
             if (myInven[i].transform.childCount > 0)
@@ -155,12 +130,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                     {
                         thisIngred.transform.SetParent(myIngSlots[index].transform);
                         thisIngred.transform.localPosition = Vector3.zero;
-                        DataController.instance.gameData.savedInventory.Remove(name);
-                        DataController.instance.gameData.myItemCount[name] -= level;        //아이템 레벨과 연동해 빼야됨
-                        if (DataController.instance.gameData.myItemCount[name] <= 0)
-                        {
-                            DataController.instance.gameData.myItemCount.Remove(name);
-                        }
+                        
 
                         break;
                     }
@@ -185,24 +155,50 @@ public class reinforceslot : MonoBehaviour, IDropHandler
             GameObject ing2 = myIngSlots[1].transform.GetChild(0).gameObject;
             FindMySlot(ing2);
         }
+        myPanel.SetActive(false);
 
     }
     public void OnClickEnhance()                //데이터 연결해야됨, 이펙트 추가?
     {
-        Debug.Log(this.transform.GetChild(0).gameObject);
-        EnchantLogic(this.transform.GetChild(0).gameObject);
-        if (myIngSlots[0].transform.childCount > 0)
+        if (this.transform.childCount > 0)
         {
-           Destroy(myIngSlots[0].transform.GetChild(0).gameObject);
+            GameObject enchantingObj = this.transform.GetChild(0).gameObject;
+            if (myIngSlots[0].transform.childCount > 0)
+            {
+                GameObject obj = myIngSlots[0].transform.GetChild(0).gameObject;
+                CheckDestroy(obj, enchantingObj);
+                myNumbers[0].SetActive(false);
+            }
+            if (myIngSlots[1].transform.childCount > 0)
+            {
+                GameObject obj2 = myIngSlots[1].transform.GetChild(0).gameObject;
+                CheckDestroy(obj2, enchantingObj);
+                myNumbers[1].SetActive(false);
+            }
+            FindMySlot(enchantingObj);
+            EnchantLogic(enchantingObj);
         }
-        if (myIngSlots[1].transform.childCount > 0)
+        myPanel.SetActive(false);
+    }
+    public void CheckDestroy(GameObject obj,GameObject enchantingObj)
+    {
+        int level = enchantingObj.GetComponent<EnhanceableItems>().myData.Level;
+        if (DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName]>level)
         {
-            Destroy(myIngSlots[1].transform.GetChild(0).gameObject);
+            DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName] -= level;
+            FindMySlot(obj);
+            InventoryController.Instance.ShowNumbertoUI();
+        }
+        else
+        {
+            DataController.instance.gameData.savedInventory.Remove(obj.GetComponent<Pickup>().item.itemName);
+            DataController.instance.gameData.myItemCount.Remove(obj.GetComponent<Pickup>().item.itemName);
+            Destroy(obj);
         }
     }
     public void FindMySlot(GameObject obj)
     {
-        int level = 1;      //레벨과 연동 // 영진아 이거 레벨 뭐야?
+             //레벨과 연동 // 영진아 이거 레벨 뭐야?   이거 아이템마다 가지고있는 레벨인뎅
         for (int i = 0; i < myInven.Length; i++)
         {
             if (myInven[i].transform.childCount == 0)
@@ -210,7 +206,6 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                 obj.transform.SetParent(myInven[i].transform);
                 obj.transform.localPosition = Vector3.zero;
                 DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName]=i;
-              DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName]=level;
                 break;
             }
         }
@@ -235,12 +230,12 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                         myItem.GetComponent<EnhanceableItems>().myData.Level++; 
                         DataController.instance.gameData.gloves.Level++;
                         print($"레벨{DataController.instance.gameData.gloves.Level}");
-                        /*if (obj.GetComponent<Pickup>().item.itemName.Equals("장갑"))
-                        {
-                            
-                            
-                        }*/
-                        Debug.Log("성공");
+                    /*if (obj.GetComponent<Pickup>().item.itemName.Equals("장갑"))
+                    {
+                         DataController.instance.gameData.gloves.Level++;
+
+                    }*/
+                    Debug.Log("성공");
 
                         Debug.Log(DataController.instance.gameData.gold);
                         Debug.Log($"가격{myItem._EnchantCost}");

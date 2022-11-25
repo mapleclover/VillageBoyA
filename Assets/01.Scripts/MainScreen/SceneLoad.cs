@@ -42,6 +42,8 @@ public class SceneLoad : MonoBehaviour
     public string MonsterType;
     public int MonsterCount;
     public int MonsterSpeed;
+    public int PlayerCount;
+
     
     private GameObject player;
     private GameObject camera;
@@ -190,15 +192,15 @@ public class SceneLoad : MonoBehaviour
 
     public BattleResultData battleResult = new BattleResultData();
 
-    public void ToBattleScene(string Name, bool backAttack, string monsterType, int monsterCount, int monsterSpeed)
+    public void ToBattleScene(string Name, bool backAttack, string monsterType, int monsterCount, int monsterSpeed, int playerCount = 3)
     {
         battleResult.Name = Name;
         battleResult.victory = false;
-
         BackAttack = backAttack;
         MonsterType = monsterType;
         MonsterCount = monsterCount;
         MonsterSpeed = monsterSpeed;
+        PlayerCount = playerCount;
         if (!isChange)
         {
             StopAllCoroutines();
