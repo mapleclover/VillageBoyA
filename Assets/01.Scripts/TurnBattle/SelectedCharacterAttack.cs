@@ -93,4 +93,9 @@ public class SelectedCharacterAttack : MonoBehaviour
         myActiveAttack.SetActive(true);
         x.ActiveHeal = true;
     }
+
+    public void LoseClose()
+    {
+        SceneLoad.Instance.ChangeScene("01.MainTitle");
+    }
 }

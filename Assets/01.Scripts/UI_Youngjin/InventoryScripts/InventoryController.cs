@@ -71,7 +71,11 @@ public class InventoryController : MonoBehaviour
                 myInventory.SetActive(v);
             }
         }
-
+        if (Input.GetMouseButtonDown(1))
+        {
+            DataController.instance.gameData.gold += 100;
+            ShowMyGold();
+        }
         if (Input.GetKeyDown(KeyCode.F1))
         {
             GetItem(curItem[0]);
@@ -201,6 +205,10 @@ public class InventoryController : MonoBehaviour
                     break;
                 case "금반지":
                     ItemAppears(theItem);
+                    break;
+                case "금":
+                    ItemAppears(theItem);
+                    ShowNumbertoUI();
                     break;
                 case "포션":
                     ItemAppears(theItem);

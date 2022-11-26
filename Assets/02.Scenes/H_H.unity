@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1838554, g: 0.22906086, b: 0.3034666, a: 1}
+  m_IndirectSpecularColor: {r: 0.18385577, g: 0.22906174, b: 0.30346733, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2184,7 +2184,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8166786660292466159, guid: 6d9f7354d54418945af7bc104d99c8c7, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 3c170c9096ba3bd4c8283600069713f5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 14a1cf915de1c2448b200ab123c01445, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -49084,7 +49084,7 @@ MonoBehaviour:
   questId: 30
   questComplete: 0
   questActionIndex: 0
-  myInven: {fileID: 0}
+  mySlots: []
   questObject:
   - {fileID: 0}
   - {fileID: 1275216987}
@@ -49099,6 +49099,7 @@ MonoBehaviour:
   questPopupText: {fileID: 1468198156}
   theComplete: {fileID: 1757176257}
   theInven: {fileID: 0}
+  theQuestPopupText: {fileID: 0}
 --- !u!4 &1638807068
 Transform:
   m_ObjectHideFlags: 0
@@ -50189,6 +50190,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46b9f3ac242d2e438f7db2c930246f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSourceEffects: []
+  audioSourceBgm: {fileID: 0}
+  playSoundName: []
+  effectSounds: []
+  bgmSounds: []
 --- !u!4 &1674386505 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4144681733210084, guid: 55d0c7a4799210b4e8397c2e9f4718e5, type: 3}

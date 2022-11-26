@@ -8,10 +8,6 @@ public class EnhancementController : MonoBehaviour
     public GameObject myUI;
     public RectTransform myInventory;
     public GameObject setMyInventory;
-
-    //public GameObject myMaterial = null;
-
-    // Start is called before the first frame update
     void Start()
     {
         myInventory = myInventory.GetComponent<RectTransform>();

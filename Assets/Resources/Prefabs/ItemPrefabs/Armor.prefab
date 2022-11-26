@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 8467420778154410321}
   - component: {fileID: 8467420778154410320}
   - component: {fileID: 2000123298}
+  - component: {fileID: -4880192321717716061}
   m_Layer: 7
   m_Name: Armor
   m_TagString: Untagged
@@ -139,3 +140,18 @@ MonoBehaviour:
   npc: {fileID: 0}
   item: {fileID: 11400000, guid: 609f48f2c599a2c4081228d3d4834037, type: 2}
   enemy: {fileID: 0}
+--- !u!114 &-4880192321717716061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8467420778154410322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124b60dc410064548be4a420631b4819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myData:
+    orgData: {fileID: 11400000, guid: 609f48f2c599a2c4081228d3d4834037, type: 2}
+    Level: 1

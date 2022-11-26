@@ -35,15 +35,23 @@ public class AboutItem : MonoBehaviour
             case 9:
                 color = Color.grey;
                 break;
+            case 10:
+                color = Color.green;
+                break;
         }
 
         myInfoBox.GetComponent<Image>().color = color;
-        sb.Append(PointerInfo.instance.transform.GetComponent<Pickup>().item.itemName); //볼드체 처리 해야됨
-
-        sb.AppendLine();
-        sb.AppendLine();
+        sb.Append(temp.transform.GetComponent<Pickup>().item.itemName);
+        if (temp.GetComponent<Pickup>().item.enhanceableItem.Equals(Item.EnhanceableItem.Possible))
+        {
+            sb.Append("   lv.");
+            sb.Append(temp.GetComponent<EnhanceableItems>().myData.Level);
+        }
+        sb.AppendLine();sb.AppendLine();
         sb.Append(temp.transform.GetComponent<Pickup>().item.itemInfo);
         myInfoText.text = sb.ToString();
+        Transform tr = this.transform.GetChild(0).transform;
+        myInfoBox.transform.localPosition = new Vector2(tr.localPosition.x,tr.localPosition.y-300);
         myInfoBox.SetActive(true);
     }
 
