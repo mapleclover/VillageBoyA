@@ -8,8 +8,7 @@ public class ShopManager : MonoBehaviour
 {
     //저장 데이터에서 소유 골드 불러올 때 수정해야함
     public TextMeshProUGUI GoldText;
-
-    public int GoldAmount = 1000;
+    public int GoldAmount = 0;
 
     //UI패널 
     public GameObject PurchasePanel;
@@ -25,7 +24,7 @@ public class ShopManager : MonoBehaviour
     public int itemCost;
     public int itemIndex;
 
-    private void OpenUpShop()
+    public void OpenUpShop()
     {
         GoldAmount = DataController.instance.gameData.gold;
         GoldText.text = $"소유 골드 : {GoldAmount}";

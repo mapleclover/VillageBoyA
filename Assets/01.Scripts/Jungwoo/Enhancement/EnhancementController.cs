@@ -1,14 +1,7 @@
 //작성자 : 전정우
 //설명 :
 
-using System;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using static HPBarInField;
-
-
 
 public class EnhancementController : MonoBehaviour
 {
@@ -25,6 +18,20 @@ public class EnhancementController : MonoBehaviour
         myInventory.localPosition = new Vector2(0f, 0f);
     }
 
+    public void OpenUpEnhancement()
+    {
+        myInventory.localPosition = new Vector2(200f, 0f);
+        myUI.SetActive(true);
+        setMyInventory.SetActive(true);
+    }
+
+    public void CloseEnhancement()
+    {
+        myInventory.localPosition = new Vector2(0f, 0f);
+        myUI.SetActive(false);
+        setMyInventory.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -36,16 +43,16 @@ public class EnhancementController : MonoBehaviour
         //GetComponent<Pickup>().item.value;
         myMaterial[1] = transform.GetChild(0).gameObject;*/
 
-       /* if (myItems != null)
-        {
-            EnchantLogic();
-            EnchantButton.interactable = true;
-        }
-        else
-        {
-            myItems = null;
-            EnchantButton.interactable = false;
-        }*/
+        /* if (myItems != null)
+         {
+             EnchantLogic();
+             EnchantButton.interactable = true;
+         }
+         else
+         {
+             myItems = null;
+             EnchantButton.interactable = false;
+         }*/
 
 
         if (Input.GetKeyDown(KeyCode.C))
@@ -54,7 +61,6 @@ public class EnhancementController : MonoBehaviour
             print("1");
             myUI.SetActive(true);
             setMyInventory.SetActive(true);
-            
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -63,9 +69,6 @@ public class EnhancementController : MonoBehaviour
             print("2");
             myUI.SetActive(false);
             setMyInventory.SetActive(false);
-            
         }
     }
-
-
 }
