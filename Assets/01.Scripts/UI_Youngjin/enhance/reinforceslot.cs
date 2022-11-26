@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using static Cinemachine.DocumentationSortingAttribute;
 using Unity.VisualScripting;
 
-public class reinforceslot : MonoBehaviour, IDropHandler
+public class reinforceslot : MonoBehaviour, IDropHandler        //마우스 우클릭하면 돈 100원씩 들어옵니다...-영진
 {
     public GameObject[] myIngSlots;
     public GameObject[] myInven;
@@ -62,46 +62,48 @@ public class reinforceslot : MonoBehaviour, IDropHandler
     }
     public void CheckIngredients(Transform thisitem)
     {
-        int level = thisitem.GetComponent<EnhanceableItems>().myData.Level;       //레벨 이렇게 땡겨오는거 맞지? - 영진
+        int level = thisitem.GetComponent<EnhanceableItems>().myData.Level;
+        int cost = thisitem.GetComponent<EnhanceableItems>().myData.EnchantCost;
         switch (thisitem.GetComponent<Pickup>().item.itemName)    //금반지: 다이아&철, 장갑: 철&별, 방패: 사과&별
-        {                                                        
+        {
             case "금반지":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("다이아몬드") && DataController.instance.gameData.savedInventory.ContainsKey("철"))
+                if (DataController.instance.gameData.savedInventory.ContainsKey("다이아몬드") && DataController.instance.gameData.savedInventory.ContainsKey("금")&&DataController.instance.gameData.gold>=cost)
                 {
-                    CompareRequirements(thisitem,"다이아몬드","철",level);
+                    CompareRequirements(thisitem, "다이아몬드", "금", level);
 
                 }
                 else
                 {
-                    NotEnough(thisitem, "다이아몬드", "철", level);                  
+                    NotEnough(thisitem, "다이아몬드", "금", level, cost);
                 }
-                break;  
+                break;
             case "장갑":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("철") && DataController.instance.gameData.savedInventory.ContainsKey("별"))
+                if (DataController.instance.gameData.savedInventory.ContainsKey("철") && DataController.instance.gameData.savedInventory.ContainsKey("별") && DataController.instance.gameData.gold >= cost)
                 {
                     CompareRequirements(thisitem, "철", "별", level);
                 }
                 else
                 {
-                    NotEnough(thisitem, "철", "별", level);
+                    NotEnough(thisitem, "철", "별", level, cost);
                 }
                 break;
             case "방패":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("사과") && DataController.instance.gameData.savedInventory.ContainsKey("별"))
+                if (DataController.instance.gameData.savedInventory.ContainsKey("사과") && DataController.instance.gameData.savedInventory.ContainsKey("철") && DataController.instance.gameData.gold >= cost)
                 {
-                    CompareRequirements(thisitem, "사과", "별", level);
+                    CompareRequirements(thisitem, "사과", "철", level);
                 }
                 else
                 {
-                    NotEnough(thisitem, "사과", "별", level);
+                    NotEnough(thisitem, "사과", "철", level, cost);
                 }
                 break;
         }
+
     }
-    public void NotEnough(Transform thisitem, string st1, string st2, int level)
+    public void NotEnough(Transform thisitem, string st1, string st2, int level,int cost)
     {
         myPanel.SetActive(false);
-        myMessage.text = $"{st1} {level}개, {st2} {level}개";
+        myMessage.text = $"{st1} {level}개\n\n {st2} {level}개\n\n {cost}골드";
         alert.SetActive(true);
         FindMySlot(thisitem.gameObject);
     }
@@ -184,8 +186,11 @@ public class reinforceslot : MonoBehaviour, IDropHandler
                     CheckDestroy(obj2, enchantingObj);
                     myNumbers[1].SetActive(false);
                 }
+                DataController.instance.gameData.gold -= enchantingObj.GetComponent<EnhanceableItems>().myData.EnchantCost;
+                InventoryController.Instance.ShowMyGold();
                 EnchantLogic(enchantingObj);
                 StartCoroutine(Delay(3f, enchantingObj, 1.5f));
+                myPanel.SetActive(false);
                 //FindMySlot()함수 Delay 코루틴 안에 넣음
             }
         }
