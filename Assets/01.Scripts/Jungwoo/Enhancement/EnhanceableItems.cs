@@ -3,16 +3,18 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 
 
 
 
-public class EnhanceableItems : MonoBehaviour
+public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, IEndDragHandler
 {
     public SaveItemData myData;
-    
+    //public RawImage[] myIng;
     // public SaveItemData myData;
 
     public int _AP
@@ -53,5 +55,21 @@ public class EnhanceableItems : MonoBehaviour
         Debug.Log($"랜덤숫자{rnd}");
 
         return false;
+    }
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        //myIng[0].gameObject.SetActive(true);
+        //myIng[1].gameObject.SetActive(true);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        //myIng[0].gameObject.SetActive(false);
+        //myIng[1].gameObject.SetActive(false);
     }
 }
