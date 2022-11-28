@@ -27,6 +27,7 @@ public class TalkManager : MonoBehaviour
         talkData.Add(1000, new string[] { "안녕! 오빠 나는 클레야:0", "이곳에 처음 왔구나?:1" }); //대화뒤의숫자는 portratiIndex ":" 은구분자.
         talkData.Add(2000, new string[] { "안녕 ~ 난 호두야 ~:0", "누구 좀 도와줄 사람 없으려나~:1" });
         talkData.Add(3000, new string[] { "흠.. 날씨가 좋군 ..:0" });
+        talkData.Add(4000, new string[] { "안녕 ? 강화 해볼래 ? \n합성대를 빌려줄께:0" });
         talkData.Add(100, new string[] { "새빨갛게 잘 익은 사과다." });
 
         //Quest Talk Data
@@ -167,6 +168,8 @@ public class TalkManager : MonoBehaviour
         portraitData.Add(3000 + 0, portraitArr[7]); //종려 Base
         portraitData.Add(3000 + 1, portraitArr[8]); //종려 고민
         portraitData.Add(3000 + 2, portraitArr[9]); //종려 옷벗음
+
+        portraitData.Add(4000 + 0, portraitArr[10]); //  행추
     }
 
     public string GetTalk(int id, int talkIndex)
