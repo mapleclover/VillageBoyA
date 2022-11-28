@@ -19,6 +19,7 @@ public class CameraMovement2 : MonoBehaviour
     public GameObject mySave;
     public GameObject myLoad;
     public GameObject askingUI;
+    public GameObject myStatus;
 
 
     [Header("MainCamera")] public Transform realCamera;
@@ -50,7 +51,7 @@ public class CameraMovement2 : MonoBehaviour
 
     void OnCursor()
     {
-        if (myInventory.activeSelf || myESC.activeSelf || mySave.activeSelf || myLoad.activeSelf || askingUI.activeSelf)
+        if (myInventory.activeSelf || myESC.activeSelf || mySave.activeSelf || myLoad.activeSelf || askingUI.activeSelf || myStatus.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
         }

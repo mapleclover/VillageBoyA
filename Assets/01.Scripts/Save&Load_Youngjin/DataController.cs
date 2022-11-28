@@ -132,7 +132,7 @@ public class DataController : MonoBehaviour
         if (gameData.isFirstTime)
         {
             gameData.Kong.isLeader = true;
-            gameData.Kong.strength = 10;
+            gameData.Kong.strength = 20;
             gameData.Kong.defPower = 0;
             gameData.Kong.speed = 10;
             gameData.Kong.HP = 100;

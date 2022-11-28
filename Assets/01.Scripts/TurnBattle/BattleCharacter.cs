@@ -26,6 +26,8 @@ public struct BattleCharacterStat
     public float Speed;
     public float[] AttackDmg;    
     public bool[] longAttack;
+    public int AdditionalAttack;
+    public int AdditionalDefence;
 }
 
 public enum STATE
@@ -134,13 +136,37 @@ public class BattleCharacter : CharacterProperty
         if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             myStat.curHP = myStat.orgData.Health;
+            myStat.AdditionalAttack = 0;
+            if (myStat.orgData.BattleType == PC.Type.Boss)
+            {
+                myStat.AdditionalDefence = 10;
+            }
+            else
+            {
+                myStat.AdditionalDefence = 0;
+            }
+            
         }
         else if (gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            if (this.gameObject.name == "KongForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Kong.HP;
-            if (this.gameObject.name == "JinForBattle(Clone)") myStat.curHP = DataController.instance.gameData.Jin.HP;
+            if (this.gameObject.name == "KongForBattle(Clone)")
+            {
+                myStat.curHP = DataController.instance.gameData.Kong.HP;
+                myStat.AdditionalAttack = DataController.instance.gameData.Kong.strength;
+                myStat.AdditionalAttack = DataController.instance.gameData.Kong.defPower;
+            }
+            if (this.gameObject.name == "JinForBattle(Clone)")
+            {
+                myStat.curHP = DataController.instance.gameData.Jin.HP;
+                myStat.AdditionalAttack = DataController.instance.gameData.Jin.strength;
+                myStat.AdditionalAttack = DataController.instance.gameData.Jin.defPower;
+            }
             if (this.gameObject.name == "EmberForBattle(Clone)")
+            {
                 myStat.curHP = DataController.instance.gameData.Ember.HP;
+                myStat.AdditionalAttack = DataController.instance.gameData.Ember.strength;
+                myStat.AdditionalAttack = DataController.instance.gameData.Ember.defPower;
+            }
         }
         myStat.Speed = myStat.orgData.Speed;        
         myStat.longAttack = myStat.orgData.IsRangeAttack;
@@ -199,12 +225,12 @@ public class BattleCharacter : CharacterProperty
 
     public void OnTargetDamage(int a)
     {
-        if (!myStat.orgData.IsAOE[a]) StartCoroutine(OnDmg(myStat.orgData.GetDamage(a),a, myTarget));
+        if (!myStat.orgData.IsAOE[a]) StartCoroutine(OnDmg(myStat.orgData.GetDamage(a) * (myStat.orgData.BaseAttackDamage + myStat.AdditionalAttack - myTarget.GetComponent<BattleCharacter>().myStat.AdditionalDefence), a, myTarget));
         else if (myStat.orgData.IsAOE[a])
         {
             for (int i = 0; i < TurnBattle.Inst.Enemy.Count; ++i)
             {
-                StartCoroutine(OnDmg(myStat.orgData.GetDamage(a), a, TurnBattle.Inst.Enemy[i]));
+                StartCoroutine(OnDmg(myStat.orgData.GetDamage(a) * (myStat.orgData.BaseAttackDamage + myStat.AdditionalAttack - TurnBattle.Inst.Enemy[i].GetComponent<BattleCharacter>().myStat.AdditionalDefence), a, TurnBattle.Inst.Enemy[i]));
             }
         }
     }   
