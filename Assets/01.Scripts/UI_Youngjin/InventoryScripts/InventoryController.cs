@@ -15,6 +15,7 @@ public class InventoryController : MonoBehaviour
     public GameObject myInfoBox;
     public GameObject itemCount;
     public TMP_Text myGold;
+    public GameObject myEnhance;
 
     public GameObject myMenu;
 
@@ -24,10 +25,10 @@ public class InventoryController : MonoBehaviour
 
     // public  Dictionary<string, int> myItem = new Dictionary<string, int>();               //key는 item name, value는 개수
     public TMP_Text countUI;
-    public int defaultCount = 1;
+  //  public int defaultCount = 1;
     public List<GameObject> curItem = new List<GameObject>();
     public bool v = true;
-    Vector3 currentRotation;
+
 
     private void Awake()
     {
@@ -51,24 +52,32 @@ public class InventoryController : MonoBehaviour
                 ShowMyGold();
             }
 
-            if (!myMenu.activeSelf) myInventory.SetActive(v);
+            if (!myMenu.activeSelf)
+            {
+                myInventory.SetActive(v);
+            }
             else
             {
                 v = false;
                 myInventory.SetActive(v);
+               // myPanel.SetActive(false);
             }
-
             if (v) v = false;
             else v = true; //인벤토리 열기
             myInfoBox.SetActive(false);
+            myPanel.SetActive(false);
         }
-
+      //  if (Input.GetKeyDown(KeyCode.C))
+       // {
+     //       myEnhance.SetActive(true);
+     //   }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (myInventory.activeSelf)
             {
                 v = false;
                 myInventory.SetActive(v);
+                myPanel.SetActive(v);
             }
         }
         if (Input.GetMouseButtonDown(1))

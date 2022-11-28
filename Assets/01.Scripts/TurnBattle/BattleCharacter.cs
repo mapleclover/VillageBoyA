@@ -222,6 +222,7 @@ public class BattleCharacter : CharacterProperty
         myStat.curHP += 30.0f;
         ActiveHeal = false;
     }
+    
 
     public void OnTargetDamage(int a)
     {
@@ -233,8 +234,14 @@ public class BattleCharacter : CharacterProperty
                 StartCoroutine(OnDmg(myStat.orgData.GetDamage(a) * (myStat.orgData.BaseAttackDamage + myStat.AdditionalAttack - TurnBattle.Inst.Enemy[i].GetComponent<BattleCharacter>().myStat.AdditionalDefence), a, TurnBattle.Inst.Enemy[i]));
             }
         }
-    }   
-
+    }
+    public void KongAttack3()
+    {
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/KongAttack3"));
+        Vector3 pos = myTarget.transform.position;
+        obj.transform.position = pos;
+        Destroy(obj, 2.0f);
+    }
     public void BowAttack1()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack1"));
