@@ -165,6 +165,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //∏∂øÏΩ∫ øÏ≈¨∏Ø«
             FindMySlot(ing2);
         }
         myPanel.SetActive(false);
+        myNumbers[0].SetActive(false);
+        myNumbers[1].SetActive(false);
 
     }
     public void OnClickEnhance()                //µ•¿Ã≈Õ ø¨∞·«ÿæﬂµ , ¿Ã∆Â∆Æ √ﬂ∞°?
