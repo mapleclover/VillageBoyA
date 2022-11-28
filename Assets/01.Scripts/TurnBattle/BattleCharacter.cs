@@ -211,7 +211,8 @@ public class BattleCharacter : CharacterProperty
 
     public void BowAttack1()
     {
-        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack1"));        
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack1"));
+        SoundTest.instance.PlaySE("SFX_Arrow");
         Vector3 pos;
         Vector3 myPos = transform.position;
         myPos.y += 1.0f;
@@ -237,6 +238,7 @@ public class BattleCharacter : CharacterProperty
     public void BowAttack2()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack2"));
+        SoundTest.instance.PlaySE("SFX_Arrow");
         Vector3 pos;
         Vector3 myPos = transform.position;
         myPos.y += 1.0f;
