@@ -111,7 +111,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
     {
         if(DataController.instance.gameData.myItemCount[itemname1] <level || DataController.instance.gameData.myItemCount[itemname2] <level)
         {
-            myMessage.text = $"{itemname1} {level}°³, {itemname2} {level}°³";
+            myMessage.text = $"{itemname1} {level}°³\n\n {itemname2} {level}°³\n\n";
             alert.SetActive(true);
             FindMySlot(thisitem.gameObject);
             return;
@@ -165,6 +165,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             FindMySlot(ing2);
         }
         myPanel.SetActive(false);
+        myNumbers[0].SetActive(false);
+        myNumbers[1].SetActive(false);
 
     }
     public void OnClickEnhance()                //µ¥ÀÌÅÍ ¿¬°áÇØ¾ßµÊ, ÀÌÆåÆ® Ãß°¡?
