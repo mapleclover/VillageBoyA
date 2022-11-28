@@ -111,7 +111,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
     {
         if(DataController.instance.gameData.myItemCount[itemname1] <level || DataController.instance.gameData.myItemCount[itemname2] <level)
         {
-            myMessage.text = $"{itemname1} {level}°³, {itemname2} {level}°³";
+            myMessage.text = $"{itemname1} {level}°³\n\n {itemname2} {level}°³\n\n";
             alert.SetActive(true);
             FindMySlot(thisitem.gameObject);
             return;
