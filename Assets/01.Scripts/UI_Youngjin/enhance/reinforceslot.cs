@@ -49,7 +49,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             }
             movingObject.SetParent(transform);
             movingObject.localPosition = Vector3.zero;
-
+            myPanel.transform.SetAsLastSibling();
             CheckIngredients(movingObject);
         }
         else return;
