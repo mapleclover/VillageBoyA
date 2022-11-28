@@ -10,6 +10,7 @@ public class EnhancementController : MonoBehaviour
     public GameObject setMyInventory;
     public bool isOpen = false;
     public static EnhancementController inst = null;
+    public Transform myInven;
     private void Awake()
     {
         inst = this;
@@ -32,6 +33,7 @@ public class EnhancementController : MonoBehaviour
         myInventory.localPosition = new Vector2(0f, 35f);
         myUI.SetActive(false);
         setMyInventory.SetActive(false);
+        //this.transform.SetParent(myInven);
     }
 
     // Update is called once per frame
