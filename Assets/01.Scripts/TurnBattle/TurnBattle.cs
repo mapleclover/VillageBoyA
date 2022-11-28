@@ -481,7 +481,7 @@ public class TurnBattle : MonoBehaviour
             EnHpbar[i].transform.position = pos2;
             Enemy[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
             Enemy[i].GetComponent<BattleCharacter>().Stunned = SceneLoad.Instance.BackAttack;
-            if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss)
+            if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattleType == PC.Type.Boss)
             {
                 SoundTest.instance.PlayBGM("BGM_Boss");
                 RunButton.interactable = false;
@@ -490,7 +490,7 @@ public class TurnBattle : MonoBehaviour
             }
 
         }
-        if (Enemy[0].GetComponent<BattleCharacter>().myStat.orgData.BattelType != PC.Type.Boss)
+        if (Enemy[0].GetComponent<BattleCharacter>().myStat.orgData.BattleType != PC.Type.Boss)
         {
             SoundTest.instance.PlayBGM("BGM_Battle");
         }
