@@ -41,7 +41,7 @@ public class TurnBattle : MonoBehaviour
     int runPercentage = 50;
     string PlayerCharacterName;
     string EnemyCharacterName;
-    int x;
+    float x;
     public int HealingPotion;
     public int BattleTurn = 0;
     int Check = 0;
@@ -50,7 +50,7 @@ public class TurnBattle : MonoBehaviour
     Vector3 pos;
     Vector3 pos2;
     public GameObject speedChanger;
-
+    bool bossBattle = false;
     public GameObject[] victoryItemSlots;
     public GameObject[] myVictoryItems;
     private DataController myData;
@@ -89,7 +89,7 @@ public class TurnBattle : MonoBehaviour
                 }
 
                 AttackStartButton.interactable = true;
-                RunButton.interactable = true;
+                if(!bossBattle)RunButton.interactable = true;
                 for (int i = 0; i < Enemy.Count; ++i)
                 {
                     for (int j = 0; j < Player.Count; ++j)
@@ -439,7 +439,7 @@ public class TurnBattle : MonoBehaviour
             {
                 case 0:
                     PlayerCharacterName = "KongForBattle";
-                    x = -2;
+                    x = -1.5f;
                     break;
                 case 1:
                     PlayerCharacterName = "JinForBattle";
@@ -447,7 +447,7 @@ public class TurnBattle : MonoBehaviour
                     break;
                 case 2:
                     PlayerCharacterName = "EmberForBattle";
-                    x = 2;
+                    x = 1.5f;
                     break;
             }
 
@@ -481,7 +481,18 @@ public class TurnBattle : MonoBehaviour
             EnHpbar[i].transform.position = pos2;
             Enemy[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
             Enemy[i].GetComponent<BattleCharacter>().Stunned = SceneLoad.Instance.BackAttack;
-            if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattleType == PC.Type.Boss) break;
+            if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss)
+            {
+                SoundTest.instance.PlayBGM("BGM_Boss");
+                RunButton.interactable = false;
+                bossBattle = true;
+                break;
+            }
+
+        }
+        if (Enemy[0].GetComponent<BattleCharacter>().myStat.orgData.BattelType != PC.Type.Boss)
+        {
+            SoundTest.instance.PlayBGM("BGM_Battle");
         }
     }
 
@@ -518,6 +529,8 @@ public class TurnBattle : MonoBehaviour
             if (act.GetComponent<BattleCharacter>().State != STATE.Die)
                 return;
         VictoryCheck = true;
+
+        SoundTest.instance.PlayBGM("BGM_Victory");
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }
@@ -528,6 +541,8 @@ public class TurnBattle : MonoBehaviour
             if (act.GetComponent<BattleCharacter>().State != STATE.Die)
                 return;
         VictoryCheck = false;
+
+        SoundTest.instance.PlayBGM("BGM_Lose");
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }
@@ -594,7 +609,7 @@ public class TurnBattle : MonoBehaviour
             {
                 ChangeState(State.ActiveCheck);
                 AttackStartButton.interactable = false;
-                RunButton.interactable = false;
+                if (!bossBattle) RunButton.interactable = false;
                 for (int i = 0; i < CharacterButton.Length; ++i)
                 {
                     CharacterButton[i].interactable = false; //버튼비활성화

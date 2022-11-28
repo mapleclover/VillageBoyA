@@ -22,6 +22,7 @@ public class QuestManager : MonoBehaviour
     public GameObject Klee_1000;
     public GameObject Hodu_2000;
     public GameObject Zhongli_3000;
+    public GameObject Hangchu_4000;
 
     [SerializeField] private TMP_Text questPopupText;
     [SerializeField] private GameObject theComplete;

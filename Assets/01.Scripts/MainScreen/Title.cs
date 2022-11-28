@@ -15,4 +15,8 @@ public class Title : MonoBehaviour
             myMainScreen.SetActive(true);
         }
     }
+    private void Start()
+    {
+        SoundTest.instance.PlayBGM("BGM_Title");
+    }
 }

@@ -18,6 +18,8 @@ Category
 {
 	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
 	Blend SrcAlpha One
+	ZWrite off
+	ZTest Always
 	Cull Off Lighting Off ZWrite Off Fog { Color (0,0,0,0) }
 	
 	BindChannels

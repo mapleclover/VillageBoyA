@@ -196,27 +196,21 @@ public class InventoryController : MonoBehaviour
             {
                 case "사과":
                     ItemAppears(theItem);
-
-                    ShowNumbertoUI();
-                    break;
-                case "다이아몬드":
-                    ItemAppears(theItem);
-                    ShowNumbertoUI();
-                    break;
-                case "금반지":
-                    ItemAppears(theItem);
-                    break;
-                case "금":
-                    ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
                 case "포션":
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
-                case "방패":
+
+
+                case "다이아몬드":
                     ItemAppears(theItem);
-                    
+                    ShowNumbertoUI();
+                    break;
+                case "금":
+                    ItemAppears(theItem);
+                    ShowNumbertoUI();
                     break;
                 case "철":
                     ItemAppears(theItem);
@@ -226,12 +220,26 @@ public class InventoryController : MonoBehaviour
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
-                case "팔찌":
+                case "구리":
+                    ItemAppears(theItem);
+                    ShowNumbertoUI();
+                    break;
+                case "스크롤":
+                    ItemAppears(theItem);
+                    ShowNumbertoUI();
+                    break;
+
+                case "금반지":
                     ItemAppears(theItem);
                     break;
                 case "장갑":
                     ItemAppears(theItem);
                     break;
+                case "목걸이":
+                    ItemAppears(theItem);
+                    break;
+
+
                 case "여우꼬리":
                     ItemAppears(theItem);
                     break;

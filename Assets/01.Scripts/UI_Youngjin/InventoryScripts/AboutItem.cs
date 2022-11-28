@@ -13,6 +13,7 @@ public class AboutItem : MonoBehaviour
     public GameObject myParty;
     public GameObject myPanel;
     public static AboutItem instance = null;
+    public GameObject myEnhance;
     Vector2 pos = Vector2.zero;
 
     private void Awake()
@@ -49,6 +50,10 @@ public class AboutItem : MonoBehaviour
         }
         sb.AppendLine();sb.AppendLine();
         sb.Append(temp.transform.GetComponent<Pickup>().item.itemInfo);
+        if (temp.GetComponent<Pickup>().item.enhanceableItem.Equals(Item.EnhanceableItem.Possible))
+        {
+            sb.Append(temp.GetComponent<EnhanceableItems>().myData.AP);
+        }
         myInfoText.text = sb.ToString();
         Transform tr = this.transform.GetChild(0).transform;
         myInfoBox.transform.localPosition = new Vector2(tr.localPosition.x,tr.localPosition.y-300);
@@ -66,9 +71,10 @@ public class AboutItem : MonoBehaviour
         if (clickedItem.gameObject.layer == 7 || clickedItem.gameObject.layer == 8)
         {
             myPanel.SetActive(true);
-            pos.x = clickedItem.parent.localPosition.x;
-            pos.y = clickedItem.parent.localPosition.y + 150;
-            myParty.transform.localPosition = pos;
+           // if(myEnhance.activeSelf)pos.x= clickedItem.parent.transform.parent.localPosition.x+200;
+          //  else pos.x = clickedItem.parent.transform.parent.localPosition.x;
+           // pos.y = clickedItem.parent.transform.parent.localPosition.y + 150;
+          //  myParty.transform.localPosition = pos;
             myInfoBox.SetActive(false);
             myParty.SetActive(true);
         }
