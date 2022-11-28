@@ -54,9 +54,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         {
             myAttacks[i].text = x.myStat.orgData.SkillName[i];
         }
-
-        int currentCost = x.myStat.orgData
-            .SkillCost[x.Skill];
+        int currentCost = x.myStat.orgData.SkillCost[x.Skill];
         myActionCost.OnHoverSkill(currentCost, currentCost);
     }
 
@@ -87,7 +85,6 @@ public class SelectedCharacterAttack : MonoBehaviour
         {
             TurnBattle.Inst.HealingPotion -= 1;
         }
-
         myAttack.gameObject.SetActive(false);
         myActvieTxt.text = "È¸º¹";
         myActiveAttack.SetActive(true);

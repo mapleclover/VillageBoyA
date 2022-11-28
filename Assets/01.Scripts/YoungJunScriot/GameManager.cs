@@ -123,4 +123,9 @@ public class GameManager : MonoBehaviour
             namePanel.SetActive(false);
         }
     }
+
+    private void Start()
+    {
+        SoundTest.instance.PlayBGM("BGM_Town");
+    }
 }
