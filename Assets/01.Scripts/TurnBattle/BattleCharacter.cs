@@ -211,7 +211,7 @@ public class BattleCharacter : CharacterProperty
 
     public void BowAttack1()
     {
-        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack1"));
+        GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/BowAttack1"));        
         Vector3 pos;
         Vector3 myPos = transform.position;
         myPos.y += 1.0f;
@@ -219,13 +219,18 @@ public class BattleCharacter : CharacterProperty
         myTargetPos.y += 1.0f;
         Ray ray = new Ray(myPos, (myTargetPos - myPos).normalized);
         RaycastHit hitData;
-
         if (Physics.Raycast(ray, out hitData, 100f, 1 << LayerMask.NameToLayer("Enemy")))
         {
-            pos=hitData.point;
+            pos = hitData.point;
             obj.transform.position = pos;
         }
-
+        Destroy(obj, 2.0f);
+    }
+    public void BombAttack()
+    {
+        GameObject obj=Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Bomb"));
+        Vector3 pos= TurnBattle.Inst.EnemyParent.position;        
+        obj.transform.position = pos;
         Destroy(obj, 2.0f);
     }
 
@@ -259,6 +264,7 @@ public class BattleCharacter : CharacterProperty
         }
         dmg = (int)dmg;
         myTarget.GetComponent<BattleCharacter>().myStat.curHP -= dmg; // 크리미스 일반데미지 확인이후 체력에 -
+        myTarget.GetComponent<Animator>().SetTrigger("Hit");
         Vector3 pos = myTarget.transform.position; //타겟위치
         pos.y += 2.0f; // 위치에서 2만큼 y위로이동
         Vector3 pos2 = Camera.main.WorldToScreenPoint(pos); // pos2는 메인카메라에서 pos 위치값
