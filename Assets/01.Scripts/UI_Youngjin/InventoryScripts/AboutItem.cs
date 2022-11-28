@@ -50,6 +50,10 @@ public class AboutItem : MonoBehaviour
         }
         sb.AppendLine();sb.AppendLine();
         sb.Append(temp.transform.GetComponent<Pickup>().item.itemInfo);
+        if (temp.GetComponent<Pickup>().item.enhanceableItem.Equals(Item.EnhanceableItem.Possible))
+        {
+            sb.Append(temp.GetComponent<EnhanceableItems>().myData.AP);
+        }
         myInfoText.text = sb.ToString();
         Transform tr = this.transform.GetChild(0).transform;
         myInfoBox.transform.localPosition = new Vector2(tr.localPosition.x,tr.localPosition.y-300);
