@@ -483,10 +483,16 @@ public class TurnBattle : MonoBehaviour
             Enemy[i].GetComponent<BattleCharacter>().Stunned = SceneLoad.Instance.BackAttack;
             if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss)
             {
+                SoundTest.instance.PlayBGM("BGM_Boss");
                 RunButton.interactable = false;
                 bossBattle = true;
                 break;
             }
+
+        }
+        if (Enemy[0].GetComponent<BattleCharacter>().myStat.orgData.BattelType != PC.Type.Boss)
+        {
+            SoundTest.instance.PlayBGM("BGM_Battle");
         }
     }
 
