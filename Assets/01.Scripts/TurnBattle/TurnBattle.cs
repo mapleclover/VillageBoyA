@@ -529,6 +529,8 @@ public class TurnBattle : MonoBehaviour
             if (act.GetComponent<BattleCharacter>().State != STATE.Die)
                 return;
         VictoryCheck = true;
+
+        SoundTest.instance.PlayBGM("BGM_Victory");
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }
@@ -539,6 +541,8 @@ public class TurnBattle : MonoBehaviour
             if (act.GetComponent<BattleCharacter>().State != STATE.Die)
                 return;
         VictoryCheck = false;
+
+        SoundTest.instance.PlayBGM("BGM_Lose");
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }

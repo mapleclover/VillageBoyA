@@ -70,7 +70,7 @@ public class SoundTest : MonoBehaviour
                 {
                     if (!audioSourceEffects[j].isPlaying)
                     {
-                        playSoundName[j] = effectSounds[i].name;
+                        //playSoundName[j] = effectSounds[i].name;
                         audioSourceEffects[j].clip = effectSounds[i].clip;
                         audioSourceEffects[j].Play();
                         return;
@@ -131,43 +131,44 @@ public class SoundTest : MonoBehaviour
 
     public void StopBGM(string _name)
     {
-            audioSourceBgm.Stop();
-            return;
+        audioSourceBgm.Stop();
+        return;
         Debug.Log("재생 중인" + _name + "사운드가 없습니다.");
     }
 
 
     public void ChangeVolume(int i)
     {
-        BGMSFXSource[i].volume = volumeSlider[i].value;
+        if (i == 0)
+        {
+            BGMSFXSource[i].volume = volumeSlider[i].value;
+        }
+        else
+        {
+            for(int j = 1; j < BGMSFXSource.Length - 1; j++)
+            {
+                BGMSFXSource[j].volume = volumeSlider[1].value;
+            }
+        }
         Save(i);
     }
 
     private void Load(int i)
     {
-        switch (i)
+        if (i == 0)
         {
-            case 0:
-                volumeSlider[i].value = 1.0f - PlayerPrefs.GetFloat("BGMVolume");
-                break;
-            case 1:
-                volumeSlider[i].value = 1.0f - PlayerPrefs.GetFloat("SFXVolume");
-                break;
+            volumeSlider[i].value = 1.0f - PlayerPrefs.GetFloat("BGMVolume");
         }
+        else { volumeSlider[i].value = 1.0f - PlayerPrefs.GetFloat("SFXVolume"); }
 
         BGMSFXSource[i].volume = volumeSlider[i].value;
     }
 
     private void Save(int i)
     {
-        switch (i)
-        {
-            case 0:
-                PlayerPrefs.SetFloat("BGMVolume", 1.0f - volumeSlider[i].value);
-                break;
-            case 1:
-                PlayerPrefs.SetFloat("SFXVolume", 1.0f - volumeSlider[i].value);
-                break;
-        }
+        if(i == 0)
+          PlayerPrefs.SetFloat("BGMVolume", 1.0f - volumeSlider[i].value);
+        else
+          PlayerPrefs.SetFloat("SFXVolume", 1.0f - volumeSlider[i].value);
     }
 }
