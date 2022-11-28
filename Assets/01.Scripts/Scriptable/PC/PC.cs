@@ -13,6 +13,10 @@ public class PC : ScriptableObject
     }
 
     [SerializeField] private int _baseAttackDamage; //기본 데미지 
+    public int BaseAttackDamage
+    {
+        get => _baseAttackDamage;
+    }
     [SerializeField] private int _speed; //속도
 
     public int Speed
@@ -36,7 +40,7 @@ public class PC : ScriptableObject
 
     [SerializeField] private Type _battleType;
 
-    public Type BattelType
+    public Type BattleType
     {
         get => _battleType;
     }
@@ -106,7 +110,7 @@ public class PC : ScriptableObject
             return -1.0f;
         }
 
-        float damage = _damageMultiplier[skillNumber] * _baseAttackDamage * Random.Range(0.9f, 1.1f);
+        float damage = _damageMultiplier[skillNumber] * Random.Range(0.9f, 1.1f);
         return damage;
-    } //기본 데미지 * 스킬 데미지 배율 * ±10%는 얼마야?
+    } //스킬 데미지 배율 * ±10%는 얼마야?
 }
