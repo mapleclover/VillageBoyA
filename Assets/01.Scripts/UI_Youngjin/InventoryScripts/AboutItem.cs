@@ -37,7 +37,7 @@ public class AboutItem : MonoBehaviour
                 color = Color.grey;
                 break;
             case 10:
-                color = Color.green;
+                color = Color.magenta;
                 break;
         }
 
