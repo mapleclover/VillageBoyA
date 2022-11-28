@@ -81,7 +81,6 @@ public class GameData
         public bool isLeader; //리더 유무
         public int strength; //공격력
         public int defPower; //방어력
-        public int speed; //속도
         public int HP; //체력
         public bool isAlive; //생존 여부
         public List<string> myUsedItems;
@@ -132,26 +131,23 @@ public class DataController : MonoBehaviour
         if (gameData.isFirstTime)
         {
             gameData.Kong.isLeader = true;
-            gameData.Kong.strength = 10;
+            gameData.Kong.strength = 0;
             gameData.Kong.defPower = 0;
-            gameData.Kong.speed = 10;
-            gameData.Kong.HP = 100;
+            gameData.Kong.HP = 150;
             gameData.Kong.isAlive = true;
             gameData.Kong.myUsedItems = new List<string>();
 
             gameData.Jin.isLeader = false;
-            gameData.Jin.strength = 20;
+            gameData.Jin.strength = 0;
             gameData.Jin.defPower = 0;
-            gameData.Jin.speed = 20;
             gameData.Jin.HP = 100;
             gameData.Jin.isAlive = true;
             gameData.Jin.myUsedItems = new List<string>();
 
             gameData.Ember.isLeader = false;
-            gameData.Ember.strength = 30;
+            gameData.Ember.strength = 0;
             gameData.Ember.defPower = 0;
-            gameData.Ember.speed = 30;
-            gameData.Ember.HP = 100;
+            gameData.Ember.HP = 125;
             gameData.Ember.isAlive = true;
             gameData.Ember.myUsedItems = new List<string>();
 

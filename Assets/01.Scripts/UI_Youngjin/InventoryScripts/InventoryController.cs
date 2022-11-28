@@ -214,7 +214,7 @@ public class InventoryController : MonoBehaviour
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
-                case "방패":
+                case "목걸이":
                     ItemAppears(theItem);
                     
                     break;

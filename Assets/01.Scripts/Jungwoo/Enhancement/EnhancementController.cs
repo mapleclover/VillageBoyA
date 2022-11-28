@@ -11,19 +11,19 @@ public class EnhancementController : MonoBehaviour
     void Start()
     {
         myInventory = myInventory.GetComponent<RectTransform>();
-        myInventory.localPosition = new Vector2(0f, 0f);
+        myInventory.localPosition = new Vector2(0f, 35f);
     }
 
     public void OpenUpEnhancement()
     {
-        myInventory.localPosition = new Vector2(200f, 0f);
+        myInventory.localPosition = new Vector2(200f, 35f);
         myUI.SetActive(true);
         setMyInventory.SetActive(true);
     }
 
     public void CloseEnhancement()
     {
-        myInventory.localPosition = new Vector2(0f, 0f);
+        myInventory.localPosition = new Vector2(0f, 35f);
         myUI.SetActive(false);
         setMyInventory.SetActive(false);
     }
@@ -53,7 +53,7 @@ public class EnhancementController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            myInventory.localPosition = new Vector2(200f, 0f);
+            myInventory.localPosition = new Vector2(200f, 35f);
             print("1");
             myUI.SetActive(true);
             setMyInventory.SetActive(true);
@@ -61,7 +61,7 @@ public class EnhancementController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            myInventory.localPosition = new Vector2(0f, 0f);
+            myInventory.localPosition = new Vector2(0f, 35f);
             print("2");
             myUI.SetActive(false);
             setMyInventory.SetActive(false);

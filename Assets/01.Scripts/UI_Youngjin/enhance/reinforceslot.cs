@@ -288,6 +288,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         {
             if (result)
             {
+
                 SuccessPanel.SetActive(true);
             }
             else
@@ -300,10 +301,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         SuccessPanel.SetActive(false);
         FailPanel.SetActive(false);
     }
-/*
-    IEnumerator ResultMessage(float showTime)
-    {
-    }*/
+
+
 
 
 }
