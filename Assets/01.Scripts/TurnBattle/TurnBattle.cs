@@ -50,7 +50,7 @@ public class TurnBattle : MonoBehaviour
     Vector3 pos;
     Vector3 pos2;
     public GameObject speedChanger;
-
+    bool bossBattle = false;
     public GameObject[] victoryItemSlots;
     public GameObject[] myVictoryItems;
     private DataController myData;
@@ -89,7 +89,7 @@ public class TurnBattle : MonoBehaviour
                 }
 
                 AttackStartButton.interactable = true;
-                RunButton.interactable = true;
+                if(!bossBattle)RunButton.interactable = true;
                 for (int i = 0; i < Enemy.Count; ++i)
                 {
                     for (int j = 0; j < Player.Count; ++j)
@@ -481,7 +481,12 @@ public class TurnBattle : MonoBehaviour
             EnHpbar[i].transform.position = pos2;
             Enemy[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
             Enemy[i].GetComponent<BattleCharacter>().Stunned = SceneLoad.Instance.BackAttack;
-            if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss) break;
+            if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattelType == PC.Type.Boss)
+            {
+                RunButton.interactable = false;
+                bossBattle = true;
+                break;
+            }
         }
     }
 
@@ -594,7 +599,7 @@ public class TurnBattle : MonoBehaviour
             {
                 ChangeState(State.ActiveCheck);
                 AttackStartButton.interactable = false;
-                RunButton.interactable = false;
+                if (!bossBattle) RunButton.interactable = false;
                 for (int i = 0; i < CharacterButton.Length; ++i)
                 {
                     CharacterButton[i].interactable = false; //버튼비활성화
