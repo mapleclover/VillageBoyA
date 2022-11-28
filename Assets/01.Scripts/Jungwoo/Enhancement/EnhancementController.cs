@@ -2,9 +2,14 @@
 //Ό³Έν :
 
 using UnityEngine;
+using UnityEngine.EventSystems;
+using static UnityEditor.PlayerSettings;
 
-public class EnhancementController : MonoBehaviour
+public class EnhancementController : MonoBehaviour, IPointerEnterHandler
 {
+
+    public RectTransform rectTransform;
+
     public GameObject myUI;
     public RectTransform myInventory;
     public GameObject setMyInventory;
@@ -14,6 +19,8 @@ public class EnhancementController : MonoBehaviour
     private void Awake()
     {
         inst = this;
+
+        rectTransform = GetComponent<RectTransform>();
     }
     void Start()
     {
@@ -27,6 +34,20 @@ public class EnhancementController : MonoBehaviour
         myUI.SetActive(true);
         setMyInventory.SetActive(true);
     }
+
+  
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+       /* if(Slot != null)
+        {
+        */
+       rectTransform.SetAsFirstSibling();
+        
+        //transform.position = eventData.position;
+    }
+    
+
 
     public void CloseEnhancement()
     {
@@ -76,5 +97,7 @@ public class EnhancementController : MonoBehaviour
             setMyInventory.SetActive(false);
             isOpen = false;
         }
+
     }
+  
 }

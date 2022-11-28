@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 
 public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯ÇÏ¸é µ· 100¿ø¾¿ µé¾î¿É´Ï´Ù...-¿µÁø
 {
+    //public Transform myInven2;
     public GameObject[] myIngSlots;
     public GameObject[] myInven;
     public GameObject alert; // Àç·á°¡ ¾ø´Ù¸é ¹«½¼ Àç·á°¡ ÇÊ¿äÇÑÁö ¾Ë¸²
@@ -23,6 +24,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
     public Slider mySlider;
     public GameObject SuccessPanel;
     public GameObject FailPanel;
+
+
 
     public void UpdateNumberUI(string name, int level,int index)            
     {                                                                       
@@ -49,7 +52,9 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             }
             movingObject.SetParent(transform);
             movingObject.localPosition = Vector3.zero;
-            myPanel.transform.SetAsLastSibling();
+            //myPanel.transform.SetParent(myInven2);
+            //this.transform.SetAsLastSibling(); ¿Ö ¾ÈµÅ³Ä±¸!
+            EnhancementController.inst.rectTransform.SetAsLastSibling();
             CheckIngredients(movingObject);
         }
         else return;
@@ -340,10 +345,6 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         SuccessPanel.SetActive(false);
         FailPanel.SetActive(false);
     }
-
-
-
-
 }
 
 //Ãë¼Ò ¹öÆ° ´©¸£¸é ÀÎº¥Åä¸® Á¦ÀÚ¸®·Î

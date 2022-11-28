@@ -18,6 +18,8 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
     GameObject obj;
     GameObject obj2;
 
+
+
     
     //public SaveItemData myData;
 
@@ -61,6 +63,8 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        /*GameObject myEnchant = GameObject.FindWithTag("Enhance");
+        myEnchant.gameObject.transform.SetAsLastSibling();*/
         if (EnhancementController.inst.isOpen)
         {
             Vector3 pos = new Vector3(58, 168, 0); ;

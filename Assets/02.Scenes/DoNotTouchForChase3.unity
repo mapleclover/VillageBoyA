@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385538, g: 0.22906086, b: 0.30346623, a: 1}
+  m_IndirectSpecularColor: {r: 0.18385577, g: 0.22906174, b: 0.30346733, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -37049,6 +37049,8 @@ MonoBehaviour:
   myUI: {fileID: 1163097009}
   myInventory: {fileID: 342795238363401307}
   setMyInventory: {fileID: 342795238363401308}
+  isOpen: 0
+  myInven: {fileID: 0}
 --- !u!4 &1241155533 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4038935894739632, guid: ba7c40e3eb2bcb54dbbb2bdd6c2ad983, type: 3}
@@ -44069,9 +44071,9 @@ MonoBehaviour:
   myInfoBox: {fileID: 1686640544}
   itemCount: {fileID: 53337661}
   myGold: {fileID: 0}
+  myEnhance: {fileID: 0}
   myMenu: {fileID: 0}
   countUI: {fileID: 969797988}
-  defaultCount: 1
   curItem:
   - {fileID: 1733928706349601869, guid: 45ed7f3ebca77854092aa3de8581e410, type: 3}
   v: 1
@@ -48289,6 +48291,8 @@ MonoBehaviour:
   myUI: {fileID: 1131686819}
   myInventory: {fileID: 1684219660}
   setMyInventory: {fileID: 1684219659}
+  isOpen: 0
+  myInven: {fileID: 0}
 --- !u!114 &1648050548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62795,9 +62799,9 @@ MonoBehaviour:
   myInfoBox: {fileID: 342795238369377527}
   itemCount: {fileID: 342795236698125674}
   myGold: {fileID: 5370933170656323918}
+  myEnhance: {fileID: 0}
   myMenu: {fileID: 3941301071275785929}
   countUI: {fileID: 342795236813462067}
-  defaultCount: 1
   curItem:
   - {fileID: 1733928706349601869, guid: 45ed7f3ebca77854092aa3de8581e410, type: 3}
   - {fileID: 7325822729641859421, guid: 6765a9af37f68284e93348420362d63f, type: 3}
@@ -77142,6 +77146,7 @@ MonoBehaviour:
   mySave: {fileID: 2122793611689238398}
   myLoad: {fileID: 8327107597345499811}
   askingUI: {fileID: 5126786578321401847}
+  myStatus: {fileID: 0}
   realCamera: {fileID: 6059563166076179757}
 --- !u!1 &6059563165524560317
 GameObject:
