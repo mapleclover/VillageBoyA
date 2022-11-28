@@ -78,23 +78,23 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 }
                 break;
             case "Àå°©":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("Ã¶") && DataController.instance.gameData.savedInventory.ContainsKey("º°") && DataController.instance.gameData.gold >= cost)
+                if (DataController.instance.gameData.savedInventory.ContainsKey("±¸¸®") && DataController.instance.gameData.savedInventory.ContainsKey("½ºÅ©·Ñ") && DataController.instance.gameData.gold >= cost)
                 {
-                    CompareRequirements(thisitem, "Ã¶", "º°", level);
+                    CompareRequirements(thisitem, "±¸¸®", "½ºÅ©·Ñ", level);
                 }
                 else
                 {
-                    NotEnough(thisitem, "Ã¶", "º°", level, cost);
+                    NotEnough(thisitem, "±¸¸®", "½ºÅ©·Ñ", level, cost);
                 }
                 break;
-            case "¹æÆÐ":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("»ç°ú") && DataController.instance.gameData.savedInventory.ContainsKey("Ã¶") && DataController.instance.gameData.gold >= cost)
+            case "¸ñ°ÉÀÌ":
+                if (DataController.instance.gameData.savedInventory.ContainsKey("º°") && DataController.instance.gameData.savedInventory.ContainsKey("Ã¶") && DataController.instance.gameData.gold >= cost)
                 {
-                    CompareRequirements(thisitem, "»ç°ú", "Ã¶", level);
+                    CompareRequirements(thisitem, "º°", "Ã¶", level);
                 }
                 else
                 {
-                    NotEnough(thisitem, "»ç°ú", "Ã¶", level, cost);
+                    NotEnough(thisitem, "º°", "Ã¶", level, cost);
                 }
                 break;
         }
@@ -256,6 +256,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                     Debug.Log($"°¡°Ý{myItem._EnchantCost}");
                     Debug.Log($"°ø°Ý·Â{myItem._AP}");
                     Debug.Log($"È®·ü{myItem._Possibility}");
+                    CheckEquipped(obj);
                 }
                 else // ½ÇÆÐ
                 {
@@ -264,12 +265,48 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                     Debug.Log($"°¡°Ý{myItem._EnchantCost}");
                     Debug.Log($"°ø°Ý·Â{myItem._AP}");
                     Debug.Log($"È®·ü{myItem._Possibility}");
-
                 }
             }
         }
     }
-
+    public void CheckEquipped(GameObject obj)
+    {
+        string name = obj.GetComponent<Pickup>().item.itemName;
+        if (DataController.instance.gameData.Kong.myUsedItems.Contains(name))
+        {
+            if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
+            {
+                DataController.instance.gameData.Kong.strength = obj.GetComponent<EnhanceableItems>().myData.AP;
+                Debug.Log(DataController.instance.gameData.Kong.strength);
+            }
+            else if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Armor))
+            {
+                DataController.instance.gameData.Kong.defPower = obj.GetComponent<EnhanceableItems>().myData.AP;
+            }
+        }
+       else if (DataController.instance.gameData.Jin.myUsedItems.Contains(name))
+        {
+            if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
+            {
+                DataController.instance.gameData.Jin.strength = obj.GetComponent<EnhanceableItems>().myData.AP;
+            }
+            else if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Armor))
+            {
+                DataController.instance.gameData.Jin.defPower = obj.GetComponent<EnhanceableItems>().myData.AP;
+            }
+        }
+       else if (DataController.instance.gameData.Ember.myUsedItems.Contains(name))
+        {
+            if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
+            {
+                DataController.instance.gameData.Ember.strength = obj.GetComponent<EnhanceableItems>().myData.AP;
+            }
+            else if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Armor))
+            {
+                DataController.instance.gameData.Ember.defPower = obj.GetComponent<EnhanceableItems>().myData.AP;
+            }
+        }
+    }
     IEnumerator Delay(float cool, GameObject enchantingObj, float showTime)
     {
         float coolTime = cool;

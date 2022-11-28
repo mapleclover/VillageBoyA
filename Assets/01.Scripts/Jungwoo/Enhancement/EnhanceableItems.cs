@@ -14,8 +14,12 @@ using Random = UnityEngine.Random;
 public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, IEndDragHandler
 {
     public SaveItemData myData;
-    //public RawImage[] myIng;
-    // public SaveItemData myData;
+    public GameObject[] myIng;
+    GameObject obj;
+    GameObject obj2;
+
+    
+    //public SaveItemData myData;
 
     public int _AP
     {
@@ -38,7 +42,6 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
         get => myData.GetEnhanceableItem;
     }
 
- 
     public void ConsumeGold()
     {
         DataController.instance.gameData.gold -= myData.EnchantCost;
@@ -58,8 +61,14 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //myIng[0].gameObject.SetActive(true);
-        //myIng[1].gameObject.SetActive(true);
+        if (EnhancementController.inst.isOpen)
+        {
+            Vector3 pos = new Vector3(58, 168, 0); ;
+            obj = Instantiate(myIng[0], pos, Quaternion.identity, GameObject.FindWithTag("Enhance").transform);
+            obj.transform.localPosition = new Vector3(-516, -6, 0);
+            obj2 = Instantiate(myIng[1], pos, Quaternion.identity, GameObject.FindWithTag("Enhance").transform);
+            obj2.transform.localPosition = new Vector3(-361, -6, 0);
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -69,7 +78,7 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //myIng[0].gameObject.SetActive(false);
-        //myIng[1].gameObject.SetActive(false);
+        Destroy(obj);
+        Destroy(obj2);
     }
 }

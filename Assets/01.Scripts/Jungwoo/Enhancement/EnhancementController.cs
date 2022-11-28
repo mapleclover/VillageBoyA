@@ -8,6 +8,12 @@ public class EnhancementController : MonoBehaviour
     public GameObject myUI;
     public RectTransform myInventory;
     public GameObject setMyInventory;
+    public bool isOpen = false;
+    public static EnhancementController inst = null;
+    private void Awake()
+    {
+        inst = this;
+    }
     void Start()
     {
         myInventory = myInventory.GetComponent<RectTransform>();
@@ -57,6 +63,7 @@ public class EnhancementController : MonoBehaviour
             print("1");
             myUI.SetActive(true);
             setMyInventory.SetActive(true);
+            isOpen = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -65,6 +72,7 @@ public class EnhancementController : MonoBehaviour
             print("2");
             myUI.SetActive(false);
             setMyInventory.SetActive(false);
+            isOpen = false;
         }
     }
 }

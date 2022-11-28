@@ -12,7 +12,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public GameObject myArrow;
     public GameObject myPanel;
     public TMP_Text myText;
-
+    string check = "";
 
     GameObject obj;
     public void OnPointerEnter(PointerEventData eventData)
@@ -113,7 +113,6 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         {
             if (itemTransform.gameObject.layer == 7)       //장비를 캐릭터에게 장착
             {
-                
                 GameObject thisEquipment = PointerInfo.instance.transform.gameObject ;
                 string thisname = thisEquipment.GetComponent<Pickup>().item.itemName;
                 int ap = thisEquipment.GetComponent<EnhanceableItems>().myData.AP;
@@ -121,45 +120,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
 
                 if (thisEquipment.transform.childCount >= 2)      //만약 이 장비가 이전에 장착된 적이 있으면
                 {
-                    if (DataController.instance.gameData.Kong.myUsedItems.Contains(thisname))     // 콩이 장착했었으면 제거
-                    {
-                        DataController.instance.gameData.Kong.myUsedItems.Remove(thisname);
-
-                        if (myType.Equals(Item.ItemType.Accessory))
-                        {
-                            DataController.instance.gameData.Kong.strength =0;
-                        }
-                        else if (myType.Equals(Item.ItemType.Armor))               //더해진 스탯을 원래대로 되돌림
-                        {
-                            DataController.instance.gameData.Kong.defPower = 0;
-                        }                                                                                                                               
-
-                    }
-                    else if (DataController.instance.gameData.Jin.myUsedItems.Contains(thisname))        //진이 장착했었으면
-                    {
-                        DataController.instance.gameData.Jin.myUsedItems.Remove(thisname);
-                        if (myType.Equals(Item.ItemType.Accessory))
-                        {
-                            DataController.instance.gameData.Jin.strength = 0;
-                        }
-                        else if (myType == Item.ItemType.Armor)
-                        {
-                            DataController.instance.gameData.Jin.defPower = 0;
-                        }
-                    }
-                    else if (DataController.instance.gameData.Ember.myUsedItems.Contains(thisname))        //앰버가 장착했었으면
-                    {
-                        DataController.instance.gameData.Ember.myUsedItems.Remove(thisname);
-                        if (myType.Equals(Item.ItemType.Accessory))
-                        {
-                            DataController.instance.gameData.Ember.strength = 0;
-                        }
-                        else if (myType.Equals(Item.ItemType.Armor))
-                        {
-                            DataController.instance.gameData.Ember.defPower = 0;
-                        }
-                    }
-                    Destroy(itemTransform.GetChild(1).gameObject);             //전에 장비 위에 표시됐던 초상화 UI를 제거
+                    check=ThisCharEquipped(check, thisname, myType, thisEquipment);
                 }
                
                 //게임데이터에 적용할 때 여기서
@@ -168,74 +129,150 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
               
                 if (gameObject.CompareTag("Kong"))
                 {
-                    if (DataController.instance.gameData.Kong.myUsedItems.Count == 0)
+                    if (!check.Equals("Kong"))
                     {
-                        DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
-                        if (thisType.Equals(Item.ItemType.Accessory))
+                        if (DataController.instance.gameData.Kong.myUsedItems.Count.Equals(0))
                         {
-                            DataController.instance.gameData.Kong.strength += ap;
+                            DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
+                            if (thisType.Equals(Item.ItemType.Accessory))
+                            {
+                                DataController.instance.gameData.Kong.strength += ap;
+                            }
+                            else if (thisType.Equals(Item.ItemType.Armor))
+                            {
+                                DataController.instance.gameData.Kong.defPower += ap;
+                            }
+                            ShowtoUI(itemTransform);
+                            myPanel.SetActive(false);
                         }
-                        else if (thisType.Equals(Item.ItemType.Armor))
+                        else
                         {
-                            DataController.instance.gameData.Kong.defPower += ap;
+                            myText.text = "이미 장착된 장비가 있습니다.";
+                            StartCoroutine(UsedPotion(0.5f));
                         }
-                        ShowtoUI(itemTransform);
-                        myPanel.SetActive(false);
                     }
                     else
                     {
-                        myText.text = "이미 장착된 장비가 있습니다.";
-                        StartCoroutine(UsedPotion(0.5f));
+                        check = ThisCharEquipped(check, thisname, myType, thisEquipment);
+                        myPanel.SetActive(false);
                     }
                 }
                 else if (gameObject.CompareTag("Jin"))
                 {
-                    if (DataController.instance.gameData.Jin.myUsedItems.Count == 0)
+                    if (!check.Equals("Jin"))
                     {
-                        DataController.instance.gameData.Jin.myUsedItems.Add(thisname);
-                        if (thisType.Equals(Item.ItemType.Accessory))
+                        if (DataController.instance.gameData.Jin.myUsedItems.Count.Equals(0))
                         {
-                            DataController.instance.gameData.Jin.strength += ap;
+                            DataController.instance.gameData.Jin.myUsedItems.Add(thisname);
+                            if (thisType.Equals(Item.ItemType.Accessory))
+                            {
+                                DataController.instance.gameData.Jin.strength += ap;
+                            }
+                            else if (thisType.Equals(Item.ItemType.Armor))
+                            {
+                                DataController.instance.gameData.Jin.defPower += ap;
+                            }
+                            ShowtoUI(itemTransform);
+                            myPanel.SetActive(false);
                         }
-                        else if (thisType.Equals(Item.ItemType.Armor))
+                        else
                         {
-                            DataController.instance.gameData.Jin.defPower += ap;
+                            myText.text = "이미 장착된 장비가 있습니다.";
+                            StartCoroutine(UsedPotion(0.5f));
                         }
-                        ShowtoUI(itemTransform);
-                        myPanel.SetActive(false);
                     }
                     else
                     {
-                        myText.text = "이미 장착된 장비가 있습니다.";
-                        StartCoroutine(UsedPotion(0.5f));
+                        check=ThisCharEquipped(check, thisname, myType, thisEquipment);
+                        myPanel.SetActive(false);
                     }
                 }
                 else if (gameObject.CompareTag("Ember"))
                 {
-                    if (DataController.instance.gameData.Ember.myUsedItems.Count == 0)
+                    if (!check.Equals("Ember"))
                     {
-                        DataController.instance.gameData.Ember.myUsedItems.Add(thisname);
-                        if (thisType.Equals(Item.ItemType.Accessory))
+                        if (DataController.instance.gameData.Ember.myUsedItems.Count.Equals(0))
                         {
-                            DataController.instance.gameData.Ember.strength += ap;
+                            DataController.instance.gameData.Ember.myUsedItems.Add(thisname);
+                            if (thisType.Equals(Item.ItemType.Accessory))
+                            {
+                                DataController.instance.gameData.Ember.strength += ap;
+                            }
+                            else if (thisType.Equals(Item.ItemType.Armor))
+                            {
+                                DataController.instance.gameData.Ember.defPower += ap;
+                            }
+                            ShowtoUI(itemTransform);
+                            myPanel.SetActive(false);
                         }
-                        else if (thisType.Equals(Item.ItemType.Armor))
+                        else
                         {
-                            DataController.instance.gameData.Ember.defPower += ap;
+                            myText.text = "이미 장착된 장비가 있습니다.";
+                            StartCoroutine(UsedPotion(0.5f));
                         }
-                        ShowtoUI(itemTransform);
-                        myPanel.SetActive(false);
                     }
                     else
                     {
-                        myText.text = "이미 장착된 장비가 있습니다.";
-                        StartCoroutine(UsedPotion(0.5f));
+                        check=ThisCharEquipped(check, thisname, myType, thisEquipment);
+                        myPanel.SetActive(false);
                     }
                 }
+              //if(check!="")  check = ThisCharEquipped(check, thisname, myType, thisEquipment);
             }
 
 
         }
+    }
+    public string ThisCharEquipped(string check, string thisname, Item.ItemType myType,GameObject thisEquipment)
+    {
+        if (DataController.instance.gameData.Kong.myUsedItems.Contains(thisname))     // 콩이 장착했었으면 제거
+        {
+            check = "Kong";
+            DataController.instance.gameData.Kong.myUsedItems.Remove(thisname);
+
+            if (myType.Equals(Item.ItemType.Accessory))
+            {
+                DataController.instance.gameData.Kong.strength = 0;
+            }
+            else if (myType.Equals(Item.ItemType.Armor))               //더해진 스탯을 원래대로 되돌림
+            {
+                DataController.instance.gameData.Kong.defPower = 0;
+            }
+
+        }
+        else if (DataController.instance.gameData.Jin.myUsedItems.Contains(thisname))        //진이 장착했었으면
+        {
+            check = "Jin";
+            DataController.instance.gameData.Jin.myUsedItems.Remove(thisname);
+            if (myType.Equals(Item.ItemType.Accessory))
+            {
+                DataController.instance.gameData.Jin.strength = 0;
+            }
+            else if (myType.Equals(Item.ItemType.Armor))
+            {
+                DataController.instance.gameData.Jin.defPower = 0;
+            }
+        }
+        else if (DataController.instance.gameData.Ember.myUsedItems.Contains(thisname))        //앰버가 장착했었으면
+        {
+            check = "Ember";
+            DataController.instance.gameData.Ember.myUsedItems.Remove(thisname);
+            if (myType.Equals(Item.ItemType.Accessory))
+            {
+                DataController.instance.gameData.Ember.strength = 0;
+            }
+            else if (myType.Equals(Item.ItemType.Armor))
+            {
+                DataController.instance.gameData.Ember.defPower = 0;
+            }
+        }
+        else check = "";
+        if (thisEquipment.transform.childCount > 1)
+        {
+            Destroy(thisEquipment.transform.GetChild(1).gameObject);
+        }
+        else check = "";
+        return check;
     }
     public void ShowtoUI(Transform itemTransform)
     {
