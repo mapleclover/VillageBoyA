@@ -58,7 +58,7 @@ public class BattleCharacter : CharacterProperty
     int StunCheck;
     public bool ActiveHeal = false;
     public int StunTurn = 1;
-    GameObject Stun;
+    public GameObject Stun;
 
 
     void ChangeState(STATE s)
@@ -67,11 +67,11 @@ public class BattleCharacter : CharacterProperty
         State = s;
         switch (State)
         {
-            case STATE.Live:
+            case STATE.Live:                
                 break;
             case STATE.Stunned:
                 if (Stun == null) Stun = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Stun"));
-                else Stun.SetActive(true);
+                else if(Stun!=null) Stun.SetActive(true);
                 Vector3 pos = transform.position; //타겟위치
                 pos.y += 1.0f; // 위치에서 2만큼 y위로이동                
                 Stun.transform.position = pos;
@@ -100,7 +100,7 @@ public class BattleCharacter : CharacterProperty
             case STATE.Stunned:
                 if (StunCheck + StunTurn == TurnBattle.Inst.BattleTurn)
                 {
-                    if (Stun != null) Stun.SetActive(false);
+                    Stun.SetActive(false);
                     ChangeState(STATE.Live);
                 }
 

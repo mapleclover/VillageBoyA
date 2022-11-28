@@ -41,7 +41,7 @@ public class TurnBattle : MonoBehaviour
     int runPercentage = 50;
     string PlayerCharacterName;
     string EnemyCharacterName;
-    int x;
+    float x;
     public int HealingPotion;
     public int BattleTurn = 0;
     int Check = 0;
@@ -439,7 +439,7 @@ public class TurnBattle : MonoBehaviour
             {
                 case 0:
                     PlayerCharacterName = "KongForBattle";
-                    x = -2;
+                    x = -1.5f;
                     break;
                 case 1:
                     PlayerCharacterName = "JinForBattle";
@@ -447,7 +447,7 @@ public class TurnBattle : MonoBehaviour
                     break;
                 case 2:
                     PlayerCharacterName = "EmberForBattle";
-                    x = 2;
+                    x = 1.5f;
                     break;
             }
 
