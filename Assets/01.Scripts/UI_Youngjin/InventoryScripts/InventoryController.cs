@@ -15,7 +15,6 @@ public class InventoryController : MonoBehaviour
     public GameObject myInfoBox;
     public GameObject itemCount;
     public TMP_Text myGold;
-    public GameObject myEnhance;
 
     public GameObject myMenu;
 
@@ -67,10 +66,7 @@ public class InventoryController : MonoBehaviour
             myInfoBox.SetActive(false);
             myPanel.SetActive(false);
         }
-      //  if (Input.GetKeyDown(KeyCode.C))
-       // {
-     //       myEnhance.SetActive(true);
-     //   }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (myInventory.activeSelf)
@@ -122,6 +118,10 @@ public class InventoryController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F8))
         {
             GetItem(curItem[7]);
+        }
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            GetItem(curItem[13]);
         }
     }
 
@@ -229,7 +229,7 @@ public class InventoryController : MonoBehaviour
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
-                case "±¸¸®":
+                case "´«¹°":
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
