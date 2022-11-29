@@ -674,6 +674,7 @@ GameObject:
   - component: {fileID: 2126547059101867605}
   - component: {fileID: 542334122174372353}
   - component: {fileID: 6249843416346540413}
+  - component: {fileID: 6416555134059480889}
   m_Layer: 30
   m_Name: BossFox
   m_TagString: Untagged
@@ -739,6 +740,8 @@ MonoBehaviour:
     - 20
     - 20
     longAttack: 000000
+    AdditionalAttack: 0
+    AdditionalDefence: 0
   State: 0
   myHpBar: {fileID: 0}
   Skill: 0
@@ -779,6 +782,18 @@ MonoBehaviour:
   npc: {fileID: 0}
   item: {fileID: 0}
   enemy: {fileID: 11400000, guid: fbb8f7b042287494184a975130a0fba0, type: 2}
+--- !u!114 &6416555134059480889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777916482349777685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34e11852ad6ac3408c556a9418532a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4852414810982229054
 GameObject:
   m_ObjectHideFlags: 0

@@ -83,13 +83,13 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 }
                 break;
             case "Àå°©":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("±¸¸®") && DataController.instance.gameData.savedInventory.ContainsKey("½ºÅ©·Ñ") && DataController.instance.gameData.gold >= cost)
+                if (DataController.instance.gameData.savedInventory.ContainsKey("´«¹°") && DataController.instance.gameData.savedInventory.ContainsKey("½ºÅ©·Ñ") && DataController.instance.gameData.gold >= cost)
                 {
-                    CompareRequirements(thisitem, "±¸¸®", "½ºÅ©·Ñ", level);
+                    CompareRequirements(thisitem, "´«¹°", "½ºÅ©·Ñ", level);
                 }
                 else
                 {
-                    NotEnough(thisitem, "±¸¸®", "½ºÅ©·Ñ", level, cost);
+                    NotEnough(thisitem, "´«¹°", "½ºÅ©·Ñ", level, cost);
                 }
                 break;
             case "¸ñ°ÉÀÌ":

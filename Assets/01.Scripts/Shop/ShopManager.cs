@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour
     //저장 데이터에서 소유 골드 불러올 때 수정해야함
     public TextMeshProUGUI GoldText;
     public int GoldAmount = 0;
+    public static bool isAction = false;
 
     //UI패널 
     public GameObject PurchasePanel;
@@ -30,7 +31,7 @@ public class ShopManager : MonoBehaviour
         GoldText.text = $"소유 골드 : {GoldAmount}";
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -45,17 +46,16 @@ public class ShopManager : MonoBehaviour
             else if (MainPanel.activeSelf)
             {
                 MainPanel.SetActive(false);
+                isAction = false;
             }
+            
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isAction)
         {
-            if (!MainPanel.activeSelf)
-            {
-                MainPanel.SetActive(true);
-                myInventory.SetActive(false);
-                OpenUpShop();
-            }
+            MainPanel.SetActive(true);
+            myInventory.SetActive(false);
+            OpenUpShop();
         }
     }
 

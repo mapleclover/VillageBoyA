@@ -8,8 +8,9 @@ public class MenuManager : MonoBehaviour
     // public Action
     public GameObject optionsMenu;
     public GameObject settingMenu;
-    public GameObject Waring;
-    
+    public GameObject Waring;   
+
+
     // Update is called once per frame
     void Update()
     {
@@ -24,6 +25,6 @@ public class MenuManager : MonoBehaviour
         else if (settingMenu.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
             settingMenu.gameObject.SetActive(false);
-        }
+        }       
     }
 }

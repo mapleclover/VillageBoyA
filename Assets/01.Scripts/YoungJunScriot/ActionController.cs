@@ -243,7 +243,7 @@ public class ActionController : MonoBehaviour
     // npc 정보창 오픈
     private void NpcInfoAppear()
     {
-        if (!pickNpcActivated && !theManager.isAction && !theGoal.isTutorial) // false일때말실행
+        if (!pickNpcActivated && !theManager.isAction && !theGoal.isTutorial && !ShopManager.isAction) // false일때말실행
         {
             pickNpcActivated = true;
             npcTextBackground.gameObject.SetActive(true);

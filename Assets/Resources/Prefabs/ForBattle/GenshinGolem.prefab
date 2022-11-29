@@ -1645,6 +1645,7 @@ GameObject:
   - component: {fileID: 412656456371802603}
   - component: {fileID: 7766937222431863130}
   - component: {fileID: 5805997411737962883}
+  - component: {fileID: 5777601024056064910}
   m_Layer: 0
   m_Name: GenshinGolem
   m_TagString: Untagged
@@ -1722,6 +1723,8 @@ MonoBehaviour:
     Speed: 10
     AttackDmg: []
     longAttack: 
+    AdditionalAttack: 0
+    AdditionalDefence: 0
   State: 0
   myHpBar: {fileID: 0}
   Skill: 0
@@ -1732,6 +1735,19 @@ MonoBehaviour:
   Stunned: 0
   ActiveHeal: 0
   StunTurn: 1
+  Stun: {fileID: 0}
+--- !u!114 &5777601024056064910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6346117938308550955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34e11852ad6ac3408c556a9418532a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6392735586385580389
 GameObject:
   m_ObjectHideFlags: 0
