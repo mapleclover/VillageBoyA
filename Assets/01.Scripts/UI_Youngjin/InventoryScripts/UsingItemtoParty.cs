@@ -12,9 +12,9 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public GameObject myArrow;
     public GameObject myPanel;
     public TMP_Text myText;
+
     string check = "";
-    public TMP_Text[] hpText;
-    public GameObject HPList;
+
     GameObject obj;
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -33,10 +33,6 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         Transform itemTransform = PointerInfo.instance.transform;
         if (itemTransform.gameObject.layer == 8)          //소모품을 캐릭터에게 사용
         {
-            HPList.SetActive(true);
-            hpText[0].text = DataController.instance.gameData.Ember.HP.ToString();
-            hpText[1].text = DataController.instance.gameData.Jin.HP.ToString();
-            hpText[2].text = DataController.instance.gameData.Kong.HP.ToString();
 
             GameObject temp = PointerInfo.instance.transform.gameObject;
             int heal= temp.GetComponent<Pickup>().item.value;
@@ -308,15 +304,15 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
             DataController.instance.gameData.savedInventory.Remove(name);
             Destroy(temp); //1개일 경우 destroy
         }
-        HPList.SetActive(false);
+
     }
     IEnumerator UsedPotion(float sec)
     {
         myText.gameObject.SetActive(true);
         yield return new WaitForSeconds(sec);          //포션 사용됐다는 알림
         myText.gameObject.SetActive(false);
-        HPList.SetActive(false);
         myPanel.SetActive(false);
+
     }
   
 

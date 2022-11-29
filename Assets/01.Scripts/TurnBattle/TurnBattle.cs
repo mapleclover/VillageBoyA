@@ -138,40 +138,40 @@ public class TurnBattle : MonoBehaviour
                     switch (SceneLoad.Instance.MonsterType)
                     {
                         case "Fox":
-                            if (myData.gameData.questID == 30 &&
-                           myData.gameData.questActionIndex == 1)
+                            if (myData.gameData.questID.Equals(30) &&
+                           myData.gameData.questActionIndex.Equals(1))
                             {
                                 ShowEarnedItem(0, 0);
                             }
                             RewardGold.text = $"{5 * Enemy.Count}";
                             break;
                         case "BossFox":
-                            if (myData.gameData.questID == 30 &&
-                          myData.gameData.questActionIndex == 2)
+                            if (myData.gameData.questID.Equals(30) &&
+                          myData.gameData.questActionIndex.Equals(2))
                             {
                                 ShowEarnedItem(1, 0);
                             }
                             RewardGold.text = $"{30 * Enemy.Count}";
                             break;
                         case "Rhydron":
-                            if (myData.gameData.questID == 40 &&
-                    myData.gameData.questActionIndex == 1)
+                            if (myData.gameData.questID.Equals(40) &&
+                    myData.gameData.questActionIndex.Equals(1))
                             {
                                 ShowEarnedItem(2, 0);
                             }
                             RewardGold.text = $"{5 * Enemy.Count}";
                             break;
                         case "Milkcow":
-                            if (myData.gameData.questID == 40 &&
-                   myData.gameData.questActionIndex == 3)
+                            if (myData.gameData.questID.Equals(40) &&
+                   myData.gameData.questActionIndex.Equals(3))
                             {
                                 ShowEarnedItem(3, 0);
                             }
                             RewardGold.text = $"{5 * Enemy.Count}";
                             break;
                         case "GenshinGolem":
-                            if (myData.gameData.questID == 40 &&
-                   myData.gameData.questActionIndex == 5)
+                            if (myData.gameData.questID.Equals(40) &&
+                   myData.gameData.questActionIndex.Equals(5))
                             {
                                 ShowEarnedItem(4, 0);
                             }

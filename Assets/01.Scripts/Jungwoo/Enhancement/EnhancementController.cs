@@ -17,7 +17,7 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
     public GameObject setMyInventory;
     public bool isOpen = false;
     public static EnhancementController inst = null;
-    public Transform myInven;
+
     private void Awake()
     {
         inst = this;
