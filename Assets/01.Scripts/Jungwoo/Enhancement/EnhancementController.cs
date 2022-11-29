@@ -5,17 +5,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static UnityEditor.PlayerSettings;
 
-public class EnhancementController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class EnhancementController : MonoBehaviour, IPointerEnterHandler
 {
 
     public RectTransform rectTransform;
+
+    public GameObject myPanel;
 
     public GameObject myUI;
     public RectTransform myInventory;
     public GameObject setMyInventory;
     public bool isOpen = false;
     public static EnhancementController inst = null;
-    public Transform myInven;
+
     private void Awake()
     {
         inst = this;
@@ -27,82 +29,43 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler, IPoint
         myInventory = myInventory.GetComponent<RectTransform>();
         myInventory.localPosition = new Vector2(0f, 35f);
     }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!myPanel.activeSelf)
+        {
+            rectTransform.SetAsFirstSibling();
+        }
+    }
 
     public void OpenUpEnhancement()
     {
         myInventory.localPosition = new Vector2(200f, 35f);
         myUI.SetActive(true);
         setMyInventory.SetActive(true);
+        isOpen = true;
     }
 
-  
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        /*if (mySlot != null)
-        {*/
-            rectTransform.SetAsFirstSibling();
-        
-        
-        
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-
-    }
-
-
-
+   
     public void CloseEnhancement()
     {
         myInventory.localPosition = new Vector2(0f, 35f);
         myUI.SetActive(false);
         setMyInventory.SetActive(false);
-        //this.transform.SetParent(myInven);
+        isOpen = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if (myMaterial[0].transform.childCount > 0 && myMaterial[1].transform.childCount > 0)
-        {
-
-        }
-        myMateris = myMaterial[0].transform.GetChild(0).gameObject;
-        //GetComponent<Pickup>().item.value;
-        myMaterial[1] = transform.GetChild(0).gameObject;*/
-
-        /* if (myItems != null)
-         {
-             EnchantLogic();
-             EnchantButton.interactable = true;
-         }
-         else
-         {
-             myItems = null;
-             EnchantButton.interactable = false;
-         }*/
-
-
         if (Input.GetKeyDown(KeyCode.C))
         {
-            myInventory.localPosition = new Vector2(200f, 35f);
-            print("1");
-            myUI.SetActive(true);
-            setMyInventory.SetActive(true);
-            isOpen = true;
+            OpenUpEnhancement();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            myInventory.localPosition = new Vector2(0f, 35f);
-            print("2");
-            myUI.SetActive(false);
-            setMyInventory.SetActive(false);
-            isOpen = false;
+            CloseEnhancement();
         }
-
     }
   
 }

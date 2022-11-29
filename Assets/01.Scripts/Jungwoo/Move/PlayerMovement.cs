@@ -80,6 +80,9 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(false);
                 Jin.SetActive(false);
                 curAnimator = Kong.GetComponent<Animator>();
+                DataController.instance.gameData.Kong.isLeader = true;
+                DataController.instance.gameData.Jin.isLeader = false;
+                DataController.instance.gameData.Ember.isLeader = false;
                 //UI
                 //KongUI.SetActive(true);
                 //EmberUI.SetActive(false);
@@ -93,6 +96,9 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(false);
                 Jin.SetActive(true);
                 curAnimator = Jin.GetComponent<Animator>();
+                DataController.instance.gameData.Kong.isLeader = false;
+                DataController.instance.gameData.Jin.isLeader = true;
+                DataController.instance.gameData.Ember.isLeader = false;
                 //UI
                 //KongUI.SetActive(false);
                 //EmberUI.SetActive(false);
@@ -106,6 +112,9 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(true);
                 Jin.SetActive(false);
                 curAnimator = Ember.GetComponent<Animator>();
+                DataController.instance.gameData.Kong.isLeader = false;
+                DataController.instance.gameData.Jin.isLeader = false;
+                DataController.instance.gameData.Ember.isLeader = true;
                 //UI
                 //KongUI.SetActive(false);
                 //EmberUI.SetActive(true);
@@ -141,7 +150,8 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckGround(); // 연속점프 감지
         HideStaminaBar(); // 스태미나 바 숨기기
-        if (ground && !theManager.isAction)
+
+        if (ground && !theManager.isAction && !ShopManager.isAction)
         {
             //PlayerJump();
 
@@ -158,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerRotation();
 
 
-        if (ground && !theManager.isAction)
+        if (ground && !theManager.isAction && !ShopManager.isAction)
         {
             Dash();
         }
@@ -198,9 +208,8 @@ public class PlayerMovement : MonoBehaviour
         // 이동과 카메라
         dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
-        dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
+            dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
         totalDist = dir.magnitude;
-
         // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
         dir = myCamRot.rotation * dir;
         dir.y = 0.0f;

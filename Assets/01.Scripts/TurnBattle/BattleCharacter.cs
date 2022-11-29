@@ -153,19 +153,19 @@ public class BattleCharacter : CharacterProperty
             {
                 myStat.curHP = DataController.instance.gameData.Kong.HP;
                 myStat.AdditionalAttack = DataController.instance.gameData.Kong.strength;
-                myStat.AdditionalAttack = DataController.instance.gameData.Kong.defPower;
+                myStat.AdditionalDefence = DataController.instance.gameData.Kong.defPower;
             }
             if (this.gameObject.name == "JinForBattle(Clone)")
             {
                 myStat.curHP = DataController.instance.gameData.Jin.HP;
                 myStat.AdditionalAttack = DataController.instance.gameData.Jin.strength;
-                myStat.AdditionalAttack = DataController.instance.gameData.Jin.defPower;
+                myStat.AdditionalDefence = DataController.instance.gameData.Jin.defPower;
             }
             if (this.gameObject.name == "EmberForBattle(Clone)")
             {
                 myStat.curHP = DataController.instance.gameData.Ember.HP;
                 myStat.AdditionalAttack = DataController.instance.gameData.Ember.strength;
-                myStat.AdditionalAttack = DataController.instance.gameData.Ember.defPower;
+                myStat.AdditionalDefence = DataController.instance.gameData.Ember.defPower;
             }
         }
         myStat.Speed = myStat.orgData.Speed;        
@@ -241,6 +241,8 @@ public class BattleCharacter : CharacterProperty
     public void KongAttack3()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/KongAttack3"));
+             
+        SoundTest.instance.PlaySE("SFX_KongAttack3");            
         Vector3 pos = myTarget.transform.position;
         obj.transform.position = pos;
         Destroy(obj, 2.0f);
@@ -266,6 +268,7 @@ public class BattleCharacter : CharacterProperty
     public void BombAttack()
     {
         GameObject obj=Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Bomb"));
+        SoundTest.instance.PlaySE("SFX_JinAttack2");
         Vector3 pos= TurnBattle.Inst.EnemyParent.position;        
         obj.transform.position = pos;
         Destroy(obj, 2.0f);

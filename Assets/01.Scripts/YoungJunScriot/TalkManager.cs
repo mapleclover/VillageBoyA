@@ -11,6 +11,8 @@ public class TalkManager : MonoBehaviour
 
     public Sprite[] portraitArr;
 
+    [SerializeField] private GameObject shopManager;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -201,7 +203,14 @@ public class TalkManager : MonoBehaviour
 
         //예외처리아닐때 talkData 리턴
         if (talkIndex == talkData[id].Length)
+        {
+            if(id == 4000)
+            {
+                ShopManager.isAction = true;
+                shopManager.SetActive(true);
+            }
             return null; // 해당엔피시와의 대화(인덱스)가 끝났을때 리턴
+        }
         else
             return talkData[id][talkIndex];
     }

@@ -12,6 +12,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public GameObject myArrow;
     public GameObject myPanel;
     public TMP_Text myText;
+
     string check = "";
 
     GameObject obj;
@@ -32,6 +33,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         Transform itemTransform = PointerInfo.instance.transform;
         if (itemTransform.gameObject.layer == 8)          //소모품을 캐릭터에게 사용
         {
+
             GameObject temp = PointerInfo.instance.transform.gameObject;
             int heal= temp.GetComponent<Pickup>().item.value;
             string name = temp.GetComponent<Pickup>().item.itemName;
@@ -116,7 +118,9 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 GameObject thisEquipment = PointerInfo.instance.transform.gameObject ;
                 string thisname = thisEquipment.GetComponent<Pickup>().item.itemName;
                 int ap = thisEquipment.GetComponent<EnhanceableItems>().myData.AP;
+                int dp = thisEquipment.GetComponent<EnhanceableItems>().myData.DP;
                 Item.ItemType myType= thisEquipment.GetComponent<Pickup>().item.itemType;
+                
 
                 if (thisEquipment.transform.childCount >= 2)      //만약 이 장비가 이전에 장착된 적이 있으면
                 {
@@ -132,6 +136,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     {
                         if (DataController.instance.gameData.Kong.myUsedItems.Count.Equals(0))
                         {
+                            SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
                             if (thisType.Equals(Item.ItemType.Accessory))
                             {
@@ -139,7 +144,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                             }
                             else if (thisType.Equals(Item.ItemType.Armor))
                             {
-                                DataController.instance.gameData.Kong.defPower += ap;       //Kong에게 아이템 값만큼 부여
+                                DataController.instance.gameData.Kong.defPower += dp;       //Kong에게 아이템 값만큼 부여
                             }
                             ShowtoUI(itemTransform);        //장착된 캐릭터의 초상화 표시
                             myPanel.SetActive(false);
@@ -162,6 +167,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     {
                         if (DataController.instance.gameData.Jin.myUsedItems.Count.Equals(0))
                         {
+                            SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Jin.myUsedItems.Add(thisname);
                             if (thisType.Equals(Item.ItemType.Accessory))
                             {
@@ -169,7 +175,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                             }
                             else if (thisType.Equals(Item.ItemType.Armor))
                             {
-                                DataController.instance.gameData.Jin.defPower += ap;
+                                DataController.instance.gameData.Jin.defPower += dp;
                             }
                             ShowtoUI(itemTransform);
                             myPanel.SetActive(false);
@@ -192,6 +198,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     {
                         if (DataController.instance.gameData.Ember.myUsedItems.Count.Equals(0))
                         {
+                            SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Ember.myUsedItems.Add(thisname);
                             if (thisType.Equals(Item.ItemType.Accessory))
                             {
@@ -199,7 +206,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                             }
                             else if (thisType.Equals(Item.ItemType.Armor))
                             {
-                                DataController.instance.gameData.Ember.defPower += ap;
+                                DataController.instance.gameData.Ember.defPower += dp;
                             }
                             ShowtoUI(itemTransform);
                             myPanel.SetActive(false);
@@ -276,7 +283,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public void ShowtoUI(Transform itemTransform)
     {
         obj = Instantiate(this.gameObject);
-        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
+        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(20, 20);
         obj.transform.SetParent(PointerInfo.instance.transform);
         pos.x = itemTransform.localPosition.x + 20;
         pos.y = itemTransform.localPosition.y - 20;
@@ -305,6 +312,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         yield return new WaitForSeconds(sec);          //포션 사용됐다는 알림
         myText.gameObject.SetActive(false);
         myPanel.SetActive(false);
+
     }
   
 

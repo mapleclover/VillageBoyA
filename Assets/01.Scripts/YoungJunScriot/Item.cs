@@ -49,7 +49,7 @@ public class Item : ScriptableObject
     }
     public int GetDP(int lv)
     {
-        return AP[lv - 1];
+        return DP[lv - 1];
     }
     public int GetEnchantCost(int lv)
     {

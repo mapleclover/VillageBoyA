@@ -58,6 +58,7 @@ public class QuantityPurchaseBox : PurchaseBox
     public override void DecideBuy()
     {
         myShopManager.BuyItem((int)QuantitySlider.value);
+        SoundTest.instance.PlaySE("SFX_Buy");
         this.gameObject.SetActive(false);
     }
 
