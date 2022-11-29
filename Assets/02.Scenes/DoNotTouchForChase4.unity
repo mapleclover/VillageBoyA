@@ -10496,7 +10496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d1c88f142eee55b4eb2b2cfd7b3624ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 24f832e5feb8b1f4bb171ca8480f3616, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -40034,7 +40034,7 @@ GameObject:
   - component: {fileID: 1374904749}
   - component: {fileID: 1374904748}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: EnchantEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43978,6 +43978,7 @@ MonoBehaviour:
   myInfoText: {fileID: 475711695}
   myParty: {fileID: 1635578005}
   myPanel: {fileID: 818095748}
+  myInven: {fileID: 0}
   myEnhance: {fileID: 0}
 --- !u!114 &1521471187
 MonoBehaviour:
@@ -44011,7 +44012,6 @@ MonoBehaviour:
   myInfoBox: {fileID: 1686640544}
   itemCount: {fileID: 53337661}
   myGold: {fileID: 0}
-  myEnhance: {fileID: 0}
   myMenu: {fileID: 0}
   countUI: {fileID: 969797988}
   curItem:
@@ -48284,6 +48284,7 @@ MonoBehaviour:
   myInfoText: {fileID: 475711695}
   myParty: {fileID: 1635578005}
   myPanel: {fileID: 818095748}
+  myInven: {fileID: 0}
   myEnhance: {fileID: 0}
 --- !u!1 &1651944444
 GameObject:
@@ -62720,7 +62721,6 @@ MonoBehaviour:
   myInfoBox: {fileID: 342795238369377527}
   itemCount: {fileID: 342795236698125674}
   myGold: {fileID: 5370933170656323918}
-  myEnhance: {fileID: 0}
   myMenu: {fileID: 3941301071275785929}
   countUI: {fileID: 342795236813462067}
   curItem:
@@ -62755,6 +62755,7 @@ MonoBehaviour:
   myInfoText: {fileID: 342795236350714776}
   myParty: {fileID: 342795238278388674}
   myPanel: {fileID: 342795236964601299}
+  myInven: {fileID: 0}
   myEnhance: {fileID: 0}
 --- !u!1 &342795237394244998
 GameObject:
@@ -76598,7 +76599,7 @@ MonoBehaviour:
   mySave: {fileID: 2122793611689238398}
   myLoad: {fileID: 8327107597345499811}
   askingUI: {fileID: 5126786578321401847}
-  myStatus: {fileID: 6059563166076179756}
+  myStatus: {fileID: 296521114}
   realCamera: {fileID: 6059563166076179757}
 --- !u!1 &6059563165524560317
 GameObject:
