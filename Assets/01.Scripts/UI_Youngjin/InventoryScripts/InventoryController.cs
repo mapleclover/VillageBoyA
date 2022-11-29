@@ -15,7 +15,6 @@ public class InventoryController : MonoBehaviour
     public GameObject myInfoBox;
     public GameObject itemCount;
     public TMP_Text myGold;
-    public GameObject myEnhance;
 
     public GameObject myMenu;
 
@@ -67,10 +66,7 @@ public class InventoryController : MonoBehaviour
             myInfoBox.SetActive(false);
             myPanel.SetActive(false);
         }
-      //  if (Input.GetKeyDown(KeyCode.C))
-       // {
-     //       myEnhance.SetActive(true);
-     //   }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (myInventory.activeSelf)
@@ -278,11 +274,12 @@ public class InventoryController : MonoBehaviour
 
     public void ItemAppears(GameObject theItem)
     {
+        int temp = 0;
         for (int i = 0; i < mySlots.Length; i++)
         {
 
             if (mySlots[i].transform.childCount.Equals(0))       //ºó ½½·ÔÀ» Ã£À½
-            {       
+            {
                 GameObject obj = Instantiate(theItem);
                 RectTransform rt = obj.transform.GetComponent<RectTransform>();
                 RectTransform rtforchild = obj.transform.GetChild(0).GetComponent<RectTransform>();
@@ -293,14 +290,19 @@ public class InventoryController : MonoBehaviour
                 rt.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 if (theItem.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient)
                 {
-                     rtforchild.sizeDelta = new Vector2(60, 60);
+                    rtforchild.sizeDelta = new Vector2(60, 60);
                 }
                 else rtforchild.sizeDelta = new Vector2(70, 70);
                 obj.transform.localPosition = Vector2.zero;
-                DataController.instance.gameData.savedInventory.Add(itemname,i);
+                DataController.instance.gameData.savedInventory.Add(itemname, i);
                 DataController.instance.gameData.myItemCount.Add(itemname, 1);
                 break;
             }
+            else temp++;
+        }
+        if (temp.Equals(mySlots.Length))
+        {
+
         }
     }
 
