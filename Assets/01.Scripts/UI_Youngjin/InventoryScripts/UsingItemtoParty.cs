@@ -27,7 +27,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     {
         myArrow.SetActive(false);
     }
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)          //아이템을 누른 후 어떤 캐릭터에게 적용 시킬 것인지
     {
         Transform itemTransform = PointerInfo.instance.transform;
         if (itemTransform.gameObject.layer == 8)          //소모품을 캐릭터에게 사용
@@ -37,7 +37,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
             string name = temp.GetComponent<Pickup>().item.itemName;
             if (gameObject.CompareTag("Kong"))  //150
             {
-                if (DataController.instance.gameData.Kong.HP <= 140) 
+                if (DataController.instance.gameData.Kong.HP <= 140)            //최대체력과 비교해 회복되는 양을 계산
                 { 
                     DataController.instance.gameData.Kong.HP += heal;
                     myText.text = $"{this.transform.name} has gained +{heal}hp!";      //회복됐다는 알림
@@ -55,14 +55,14 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 else
                 {
                     myText.text = "이미 최대 체력입니다.";
-                    StartCoroutine(UsedPotion(1.0f));
+                    StartCoroutine(UsedPotion(1.0f));           //Kong의 경우
                 }
             }
             else if (gameObject.CompareTag("Jin"))      //100
             {
                 if (DataController.instance.gameData.Jin.HP <= 90)
                 {
-                    DataController.instance.gameData.Jin.HP += heal;             //누가 사용하는지에 따라 회복됨
+                    DataController.instance.gameData.Jin.HP += heal;             //Jin의 경우
                     myText.text = $"{this.transform.name} has gained +{heal}hp!"; 
                     StartCoroutine(UsedPotion(1.0f));
                     CheckDestroy(name, temp);
@@ -86,7 +86,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 if (DataController.instance.gameData.Ember.HP <= 115)
                 {
                     DataController.instance.gameData.Ember.HP += heal;
-                    myText.text = $"{this.transform.name} has gained +{heal}hp!"; 
+                    myText.text = $"{this.transform.name} has gained +{heal}hp!";       //Ember의 경우
                     StartCoroutine(UsedPotion(1.0f));
                     CheckDestroy(name, temp);
                 }
@@ -120,44 +120,43 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
 
                 if (thisEquipment.transform.childCount >= 2)      //만약 이 장비가 이전에 장착된 적이 있으면
                 {
-                    check=ThisCharEquipped(check, thisname, myType, thisEquipment);
+                    check=ThisCharEquipped(check, thisname, myType, thisEquipment);         //장착됐었던 캐릭터를 장착 해제
                 }
                
-                //게임데이터에 적용할 때 여기서
                 GameObject clickedEquip = itemTransform.gameObject;
                 Item.ItemType thisType = clickedEquip.GetComponent<Pickup>().item.itemType;
               
-                if (gameObject.CompareTag("Kong"))
+                if (gameObject.CompareTag("Kong"))          //Kong에게 장착시키려 함
                 {
-                    if (!check.Equals("Kong"))
+                    if (!check.Equals("Kong"))      //전에 장착된게 Kong이 아니라면
                     {
                         if (DataController.instance.gameData.Kong.myUsedItems.Count.Equals(0))
                         {
                             DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
                             if (thisType.Equals(Item.ItemType.Accessory))
                             {
-                                DataController.instance.gameData.Kong.strength += ap;
+                                DataController.instance.gameData.Kong.strength += ap;   
                             }
                             else if (thisType.Equals(Item.ItemType.Armor))
                             {
-                                DataController.instance.gameData.Kong.defPower += ap;
+                                DataController.instance.gameData.Kong.defPower += ap;       //Kong에게 아이템 값만큼 부여
                             }
-                            ShowtoUI(itemTransform);
+                            ShowtoUI(itemTransform);        //장착된 캐릭터의 초상화 표시
                             myPanel.SetActive(false);
                         }
                         else
                         {
-                            myText.text = "이미 장착된 장비가 있습니다.";
+                            myText.text = "이미 장착된 장비가 있습니다.";       //장착된 장비가 있으면 알림만 뜨고 장착 안됨
                             StartCoroutine(UsedPotion(0.5f));
                         }
                     }
                     else
                     {
-                        check = ThisCharEquipped(check, thisname, myType, thisEquipment);
+                        check = ThisCharEquipped(check, thisname, myType, thisEquipment);       //전에 장착된게 Kong이였다면 장착 해제
                         myPanel.SetActive(false);
                     }
                 }
-                else if (gameObject.CompareTag("Jin"))
+                else if (gameObject.CompareTag("Jin"))          //Jin의 경우
                 {
                     if (!check.Equals("Jin"))
                     {
@@ -187,7 +186,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                         myPanel.SetActive(false);
                     }
                 }
-                else if (gameObject.CompareTag("Ember"))
+                else if (gameObject.CompareTag("Ember"))            //Ember의 경우
                 {
                     if (!check.Equals("Ember"))
                     {

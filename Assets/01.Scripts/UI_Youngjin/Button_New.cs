@@ -12,6 +12,8 @@ public class Button_New : MonoBehaviour
     public GameObject mySaveLoad;
     public GameObject myStart;
     public GameObject GameSetting;
+    public GameObject creditButton;
+    public GameObject EndingCredit;
 
     bool check = false;
     bool v = false;
@@ -98,6 +100,14 @@ public class Button_New : MonoBehaviour
 
             OnMouse.SetActive(true);
         }
+        if (DataController.instance.gameData.myProgress.Equals(100))
+        {
+            creditButton.SetActive(true);
+        }
+    }
+    public void OnClickCredit()
+    {
+        EndingCredit.SetActive(true);
     }
 
     public void OnClickStart()
