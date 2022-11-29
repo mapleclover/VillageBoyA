@@ -226,7 +226,10 @@ public class BattleCharacter : CharacterProperty
 
     public void OnTargetDamage(int a)
     {
-        if (!myStat.orgData.IsAOE[a]) StartCoroutine(OnDmg(myStat.orgData.GetDamage(a) * (myStat.orgData.BaseAttackDamage + myStat.AdditionalAttack - myTarget.GetComponent<BattleCharacter>().myStat.AdditionalDefence), a, myTarget));
+        if (!myStat.orgData.IsAOE[a])
+        {
+            StartCoroutine(OnDmg(myStat.orgData.GetDamage(a) * (myStat.orgData.BaseAttackDamage + myStat.AdditionalAttack - myTarget.GetComponent<BattleCharacter>().myStat.AdditionalDefence), a, myTarget));
+        }
         else if (myStat.orgData.IsAOE[a])
         {
             for (int i = 0; i < TurnBattle.Inst.Enemy.Count; ++i)
