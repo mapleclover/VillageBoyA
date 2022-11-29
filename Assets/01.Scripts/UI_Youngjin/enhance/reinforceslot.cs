@@ -29,7 +29,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
 
     public void UpdateNumberUI(string name, int level,int index)            
     {                                                                       
-        curAmount[index].text = $"{DataController.instance.gameData.myItemCount[name]}";
+        curAmount[index].text = $"{DataController.instance.gameData.myItemCount[name]}";        //°¡Áö°í ÀÖ´Â °³¼ö¿Í ¸î°³ ÇÊ¿äÇÑÁö Ç¥½Ã
         required[index].text = $"{level}";
     }
 

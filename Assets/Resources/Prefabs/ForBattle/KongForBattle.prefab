@@ -1286,6 +1286,7 @@ GameObject:
   - component: {fileID: 7720753623890841165}
   - component: {fileID: -4303468119351948923}
   - component: {fileID: 5594092598583650223}
+  - component: {fileID: -564893952260696}
   m_Layer: 6
   m_Name: KongForBattle
   m_TagString: Untagged
@@ -1347,6 +1348,8 @@ MonoBehaviour:
     Speed: 0
     AttackDmg: []
     longAttack: 
+    AdditionalAttack: 0
+    AdditionalDefence: 0
   State: 0
   myHpBar: {fileID: 0}
   Skill: 0
@@ -1357,6 +1360,7 @@ MonoBehaviour:
   Stunned: 0
   ActiveHeal: 0
   StunTurn: 1
+  Stun: {fileID: 0}
 --- !u!136 &5594092598583650223
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1371,6 +1375,18 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!114 &-564893952260696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7720753623890841164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34e11852ad6ac3408c556a9418532a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7720753623895375976
 GameObject:
   m_ObjectHideFlags: 0

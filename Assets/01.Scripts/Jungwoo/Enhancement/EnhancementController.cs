@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static UnityEditor.PlayerSettings;
 
-public class EnhancementController : MonoBehaviour, IPointerEnterHandler
+public class EnhancementController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
     public RectTransform rectTransform;
@@ -39,14 +39,19 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-       /* if(Slot != null)
-        {
-        */
-       rectTransform.SetAsFirstSibling();
+        /*if (mySlot != null)
+        {*/
+            rectTransform.SetAsFirstSibling();
         
-        //transform.position = eventData.position;
+        
+        
     }
-    
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+
+    }
+
 
 
     public void CloseEnhancement()

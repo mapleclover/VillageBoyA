@@ -27,6 +27,10 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
     {
         get => myData.AP;
     }
+    public int _DP
+    {
+        get => myData.DP;
+    }
     public int _EnchantCost
     {
         get => myData.EnchantCost;
@@ -67,11 +71,11 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
         myEnchant.gameObject.transform.SetAsLastSibling();*/
         if (EnhancementController.inst.isOpen)
         {
-            Vector3 pos = new Vector3(58, 168, 0); ;
+            Vector3 pos = new Vector3(58, 168, 0);
             obj = Instantiate(myIng[0], pos, Quaternion.identity, GameObject.FindWithTag("Enhance").transform);
-            obj.transform.localPosition = new Vector3(-516, -6, 0);
+            obj.transform.localPosition = new Vector3(-120, -28, 0);
             obj2 = Instantiate(myIng[1], pos, Quaternion.identity, GameObject.FindWithTag("Enhance").transform);
-            obj2.transform.localPosition = new Vector3(-361, -6, 0);
+            obj2.transform.localPosition = new Vector3(40, -28, 0);
         }
     }
 
