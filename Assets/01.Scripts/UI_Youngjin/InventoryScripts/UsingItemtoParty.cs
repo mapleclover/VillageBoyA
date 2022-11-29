@@ -116,6 +116,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 GameObject thisEquipment = PointerInfo.instance.transform.gameObject ;
                 string thisname = thisEquipment.GetComponent<Pickup>().item.itemName;
                 int ap = thisEquipment.GetComponent<EnhanceableItems>().myData.AP;
+                int dp = thisEquipment.GetComponent<EnhanceableItems>().myData.DP;
                 Item.ItemType myType= thisEquipment.GetComponent<Pickup>().item.itemType;
 
                 if (thisEquipment.transform.childCount >= 2)      //만약 이 장비가 이전에 장착된 적이 있으면
@@ -139,7 +140,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                             }
                             else if (thisType.Equals(Item.ItemType.Armor))
                             {
-                                DataController.instance.gameData.Kong.defPower += ap;       //Kong에게 아이템 값만큼 부여
+                                DataController.instance.gameData.Kong.defPower += dp;       //Kong에게 아이템 값만큼 부여
                             }
                             ShowtoUI(itemTransform);        //장착된 캐릭터의 초상화 표시
                             myPanel.SetActive(false);
@@ -169,7 +170,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                             }
                             else if (thisType.Equals(Item.ItemType.Armor))
                             {
-                                DataController.instance.gameData.Jin.defPower += ap;
+                                DataController.instance.gameData.Jin.defPower += dp;
                             }
                             ShowtoUI(itemTransform);
                             myPanel.SetActive(false);
@@ -199,7 +200,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                             }
                             else if (thisType.Equals(Item.ItemType.Armor))
                             {
-                                DataController.instance.gameData.Ember.defPower += ap;
+                                DataController.instance.gameData.Ember.defPower += dp;
                             }
                             ShowtoUI(itemTransform);
                             myPanel.SetActive(false);
@@ -276,7 +277,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public void ShowtoUI(Transform itemTransform)
     {
         obj = Instantiate(this.gameObject);
-        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
+        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(20, 20);
         obj.transform.SetParent(PointerInfo.instance.transform);
         pos.x = itemTransform.localPosition.x + 20;
         pos.y = itemTransform.localPosition.y - 20;
