@@ -278,11 +278,12 @@ public class InventoryController : MonoBehaviour
 
     public void ItemAppears(GameObject theItem)
     {
+        int temp = 0;
         for (int i = 0; i < mySlots.Length; i++)
         {
 
             if (mySlots[i].transform.childCount.Equals(0))       //ºó ½½·ÔÀ» Ã£À½
-            {       
+            {
                 GameObject obj = Instantiate(theItem);
                 RectTransform rt = obj.transform.GetComponent<RectTransform>();
                 RectTransform rtforchild = obj.transform.GetChild(0).GetComponent<RectTransform>();
@@ -293,14 +294,19 @@ public class InventoryController : MonoBehaviour
                 rt.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 if (theItem.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient)
                 {
-                     rtforchild.sizeDelta = new Vector2(60, 60);
+                    rtforchild.sizeDelta = new Vector2(60, 60);
                 }
                 else rtforchild.sizeDelta = new Vector2(70, 70);
                 obj.transform.localPosition = Vector2.zero;
-                DataController.instance.gameData.savedInventory.Add(itemname,i);
+                DataController.instance.gameData.savedInventory.Add(itemname, i);
                 DataController.instance.gameData.myItemCount.Add(itemname, 1);
                 break;
             }
+            else temp++;
+        }
+        if (temp.Equals(mySlots.Length))
+        {
+
         }
     }
 

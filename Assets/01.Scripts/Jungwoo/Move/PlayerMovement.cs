@@ -80,6 +80,9 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(false);
                 Jin.SetActive(false);
                 curAnimator = Kong.GetComponent<Animator>();
+                DataController.instance.gameData.Kong.isLeader = true;
+                DataController.instance.gameData.Jin.isLeader = false;
+                DataController.instance.gameData.Ember.isLeader = false;
                 //UI
                 //KongUI.SetActive(true);
                 //EmberUI.SetActive(false);
@@ -93,6 +96,9 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(false);
                 Jin.SetActive(true);
                 curAnimator = Jin.GetComponent<Animator>();
+                DataController.instance.gameData.Kong.isLeader = false;
+                DataController.instance.gameData.Jin.isLeader = true;
+                DataController.instance.gameData.Ember.isLeader = false;
                 //UI
                 //KongUI.SetActive(false);
                 //EmberUI.SetActive(false);
@@ -106,6 +112,9 @@ public class PlayerMovement : MonoBehaviour
                 Ember.SetActive(true);
                 Jin.SetActive(false);
                 curAnimator = Ember.GetComponent<Animator>();
+                DataController.instance.gameData.Kong.isLeader = false;
+                DataController.instance.gameData.Jin.isLeader = false;
+                DataController.instance.gameData.Ember.isLeader = true;
                 //UI
                 //KongUI.SetActive(false);
                 //EmberUI.SetActive(true);
