@@ -55,7 +55,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             //myPanel.transform.SetParent(myInven2);
             //this.transform.SetAsLastSibling(); ¿Ö ¾ÈµÅ³Ä±¸!
             EnhancementController.inst.rectTransform.SetAsLastSibling();
-            CheckIngredients(movingObject);
+            CheckIngredients(movingObject);                                  //°­È­ Àç·á È®ÀÎ
         }
         else return;
     }
@@ -67,29 +67,29 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
     }
     public void CheckIngredients(Transform thisitem)
     {
-        int level = thisitem.GetComponent<EnhanceableItems>().myData.Level;
-        int cost = thisitem.GetComponent<EnhanceableItems>().myData.EnchantCost;
+        int level = thisitem.GetComponent<EnhanceableItems>().myData.Level;             //ÀÌ ¾ÆÀÌÅÛÀÇ ·¹º§
+        int cost = thisitem.GetComponent<EnhanceableItems>().myData.EnchantCost;       //ÀÌ ¾ÆÀÌÅÛÀÇ ·¹º§¿¡ µû¸¥ °¡°Ý
         switch (thisitem.GetComponent<Pickup>().item.itemName)    //±Ý¹ÝÁö: ´ÙÀÌ¾Æ&Ã¶, Àå°©: Ã¶&º°, ¹æÆÐ: »ç°ú&º°
         {
             case "±Ý¹ÝÁö":
                 if (DataController.instance.gameData.savedInventory.ContainsKey("´ÙÀÌ¾Æ¸óµå") && DataController.instance.gameData.savedInventory.ContainsKey("±Ý")&&DataController.instance.gameData.gold>=cost)
                 {
-                    CompareRequirements(thisitem, "´ÙÀÌ¾Æ¸óµå", "±Ý", level);
+                    CompareRequirements(thisitem, "´ÙÀÌ¾Æ¸óµå", "±Ý", level);     //ÀÎº¥Åä¸®¿¡ ÀÖÀ» °æ¿ì °³¼ö È®ÀÎÇÏ´Â ÇÔ¼ö È£Ãâ
 
                 }
                 else
                 {
-                    NotEnough(thisitem, "´ÙÀÌ¾Æ¸óµå", "±Ý", level, cost);
+                    NotEnough(thisitem, "´ÙÀÌ¾Æ¸óµå", "±Ý", level, cost);         //ÀÎº¥Åä¸®¿¡ ¾øÀ» °æ¿ì ÇÊ¿äÇÑ Àç·á¸¦ ¾Ë¸®´Â ¾Ë¸²Ã¢
                 }
                 break;
             case "Àå°©":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("±¸¸®") && DataController.instance.gameData.savedInventory.ContainsKey("½ºÅ©·Ñ") && DataController.instance.gameData.gold >= cost)
+                if (DataController.instance.gameData.savedInventory.ContainsKey("´«¹°") && DataController.instance.gameData.savedInventory.ContainsKey("½ºÅ©·Ñ") && DataController.instance.gameData.gold >= cost)
                 {
-                    CompareRequirements(thisitem, "±¸¸®", "½ºÅ©·Ñ", level);
+                    CompareRequirements(thisitem, "´«¹°", "½ºÅ©·Ñ", level);
                 }
                 else
                 {
-                    NotEnough(thisitem, "±¸¸®", "½ºÅ©·Ñ", level, cost);
+                    NotEnough(thisitem, "´«¹°", "½ºÅ©·Ñ", level, cost);
                 }
                 break;
             case "¸ñ°ÉÀÌ":
@@ -105,7 +105,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         }
 
     }
-    public void NotEnough(Transform thisitem, string st1, string st2, int level,int cost)
+    public void NotEnough(Transform thisitem, string st1, string st2, int level,int cost)       //ÇÊ¿äÇÑ Àç·á¸¦ ¾Ë¸®´Â °æ°íÃ¢
     {
         myPanel.SetActive(false);
         myMessage.text = $"{st1} {level}°³\n\n {st2} {level}°³\n\n {cost}°ñµå";
@@ -118,15 +118,15 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         {
             myMessage.text = $"{itemname1} {level}°³\n\n {itemname2} {level}°³\n\n";
             alert.SetActive(true);
-            FindMySlot(thisitem.gameObject);
+            FindMySlot(thisitem.gameObject);            //¸¸¾à ÇÊ¿äÇÑ °³¼ö¸¸Å­ ¾øÀ» °æ¿ì ¾Ë·ÁÁÖ´Â °æ°íÃ¢
             return;
         }
-        ShowIngredients(itemname1, 0);
-        ShowIngredients(itemname2, 1);
+        ShowIngredients(itemname1, 0);      //ÀÖÀ» °æ¿ì
+        ShowIngredients(itemname2, 1);      //ÇÊ¿äÇÑ Àç·á¸¦ °­È­Ã¢ ½½·ÔÀ¸·Î °¡Á®¿È
         UpdateNumberUI(itemname1,level,0);
-        UpdateNumberUI(itemname2, level,1);
+        UpdateNumberUI(itemname2, level,1);     //ÇöÀç ¸î °³ ÀÖ´ÂÁö¿Í ¸î °³°¡ ÇÊ¿äÇÑÁö¸¦ ³ªÅ¸³¿
         myNumbers[0].SetActive(true);
-        myNumbers[1].SetActive(true);
+        myNumbers[1].SetActive(true);       
         myPanel.SetActive(true);
     }
 
@@ -152,7 +152,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             }
         }
     }
-    public void OnClickCancel()
+    public void OnClickCancel()     //Ãë¼Ò¸¦ ´­·¶À» °æ¿ì
     {
         if (transform.childCount > 0)
         {
@@ -167,14 +167,14 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         if (myIngSlots[1].transform.childCount > 0)
         {
             GameObject ing2 = myIngSlots[1].transform.GetChild(0).gameObject;
-            FindMySlot(ing2);
+            FindMySlot(ing2);                                                   //ÀÎº¥Åä¸®·Î ´Ù½Ã ÀÌµ¿
         }
         myPanel.SetActive(false);
         myNumbers[0].SetActive(false);
         myNumbers[1].SetActive(false);
 
     }
-    public void OnClickEnhance()                //µ¥ÀÌÅÍ ¿¬°áÇØ¾ßµÊ, ÀÌÆåÆ® Ãß°¡?
+    public void OnClickEnhance()               //°­È­¸¦ ´­·¶À» °æ¿ì
     {
         if(!EnchantDelay)
         {
@@ -184,19 +184,19 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 if (myIngSlots[0].transform.childCount > 0)
                 {
                     GameObject obj = myIngSlots[0].transform.GetChild(0).gameObject;
-                    CheckDestroy(obj, enchantingObj);
+                    CheckDestroy(obj, enchantingObj);       //°³¼ö¸¦ ºñ±³ÇØ destroyÇØ¾ßÇÏ´ÂÁö ÀÎº¥Åä¸®¿¡ ³²¾Æ¾ß ÇÏ´ÂÁö Á¤ÇÔ
                     myNumbers[0].SetActive(false);
                 }
                 if (myIngSlots[1].transform.childCount > 0)
                 {
                     GameObject obj2 = myIngSlots[1].transform.GetChild(0).gameObject;
-                    CheckDestroy(obj2, enchantingObj);
+                    CheckDestroy(obj2, enchantingObj);      
                     myNumbers[1].SetActive(false);
                 }
                 DataController.instance.gameData.gold -= enchantingObj.GetComponent<EnhanceableItems>().myData.EnchantCost;
-                InventoryController.Instance.ShowMyGold();
-                EnchantLogic(enchantingObj);
-                StartCoroutine(Delay(3f, enchantingObj, 1.5f));
+                InventoryController.Instance.ShowMyGold();          //°ñµå¿¡ ¹Ý¿µ
+                EnchantLogic(enchantingObj);            
+                StartCoroutine(Delay(3f, enchantingObj, 1.5f));     
                 myPanel.SetActive(false);
                 //FindMySlot()ÇÔ¼ö Delay ÄÚ·çÆ¾ ¾È¿¡ ³ÖÀ½
             }
@@ -213,17 +213,17 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         if (DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName]>level)
         {
             DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName] -= level;
-            FindMySlot(obj);
-            InventoryController.Instance.ShowNumbertoUI();
+            FindMySlot(obj);        
+            InventoryController.Instance.ShowNumbertoUI();          //³»°¡ °®°í ÀÖ´Â °³¼ö°¡ ÇÊ¿ä °³¼öº¸´Ù ¸¹À» °æ¿ì ¼Ò¸ð ÈÄ ÀÎº¥À¸·Î ÀÌµ¿
         }
         else
         {
             DataController.instance.gameData.savedInventory.Remove(obj.GetComponent<Pickup>().item.itemName);
             DataController.instance.gameData.myItemCount.Remove(obj.GetComponent<Pickup>().item.itemName);
-            Destroy(obj);
+            Destroy(obj);       //°°À» °æ¿ì destroy
         }
     }
-    public void FindMySlot(GameObject obj)
+    public void FindMySlot(GameObject obj)      //ÀÎº¥Åä¸®¿¡¼­ ºñ¾îÀÖ´Â ½½·ÔÀ» Ã£¾Æ°¨
     {
         if(!EnchantDelay)
         {
@@ -232,7 +232,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             {
                 if (myInven[i].transform.childCount == 0)
                 {
-                    obj.transform.SetParent(myInven[i].transform);
+                    obj.transform.SetParent(myInven[i].transform);      //
                     obj.transform.localPosition = Vector3.zero;
                     DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName] = i;
                     break;
@@ -276,10 +276,10 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             }
         }
     }
-    public void CheckEquipped(GameObject obj)
+    public void CheckEquipped(GameObject obj)       //¸¸¾à ÀåÂøµÈ »óÅÂ¿¡¼­ °­È­¸¦ ÇßÀ» °æ¿ì Ä³¸¯ÅÍ ½ºÅÈ¿¡ ¹Ù·Î Àû¿ë
     {
         string name = obj.GetComponent<Pickup>().item.itemName;
-        if (DataController.instance.gameData.Kong.myUsedItems.Contains(name))
+        if (DataController.instance.gameData.Kong.myUsedItems.Contains(name))       //KongÀÏ °æ¿ì
         {
             if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
             {
@@ -291,7 +291,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 DataController.instance.gameData.Kong.defPower = obj.GetComponent<EnhanceableItems>().myData.AP;
             }
         }
-       else if (DataController.instance.gameData.Jin.myUsedItems.Contains(name))
+       else if (DataController.instance.gameData.Jin.myUsedItems.Contains(name))        //JinÀÏ °æ¿ì
         {
             if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
             {
@@ -302,7 +302,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 DataController.instance.gameData.Jin.defPower = obj.GetComponent<EnhanceableItems>().myData.AP;
             }
         }
-       else if (DataController.instance.gameData.Ember.myUsedItems.Contains(name))
+       else if (DataController.instance.gameData.Ember.myUsedItems.Contains(name))      //EmberÀÏ °æ¿ì
         {
             if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
             {

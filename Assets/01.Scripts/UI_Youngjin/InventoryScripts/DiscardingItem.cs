@@ -14,7 +14,7 @@ public class DiscardingItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     Transform originalParent;
     public GameObject isQuestItem;
 
-    public void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData)              //쓰레기통에 드랍
     {
         icon = transform.GetComponentInChildren<PointerInfo>();
         Transform movingItem = eventData.pointerDrag.transform;
@@ -28,13 +28,13 @@ public class DiscardingItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         movingItem.SetParent(transform);
         movingItem.localPosition = Vector3.zero;
 
-        if (movingItem.gameObject.layer == 9)
+        if (movingItem.gameObject.layer.Equals(9))
         {
-            isQuestItem.SetActive(true);
+            isQuestItem.SetActive(true);        //퀘스트 아이템은 못버림
         }
         else
         {
-            myPanel.SetActive(true);
+            myPanel.SetActive(true);    
         }
     }
 
@@ -54,21 +54,27 @@ public class DiscardingItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         myText.SetActive(false);
     }
 
-    public void OnClickYesDiscard()
+    public void OnClickYesDiscard()                 //확인창에서 확인을 눌렀을 경우
     {
         GameObject selectedItem = this.transform.GetChild(0).gameObject;
         string thisname = selectedItem.GetComponent<Pickup>().item.itemName;
-        if (DataController.instance.gameData.Kong.myUsedItems.Contains(thisname))
+        if (DataController.instance.gameData.Kong.myUsedItems.Contains(thisname))       //그 아이템을 장착하고 있던 캐릭터가 있을 경우
         {
             DataController.instance.gameData.Kong.myUsedItems.Remove(thisname);
+            DataController.instance.gameData.Kong.strength = 0;
+            DataController.instance.gameData.Kong.defPower = 0;
         }
         else if (DataController.instance.gameData.Jin.myUsedItems.Contains(thisname))
         {
             DataController.instance.gameData.Jin.myUsedItems.Remove(thisname);
+            DataController.instance.gameData.Jin.strength = 0;
+            DataController.instance.gameData.Jin.defPower = 0;
         }
         else if (DataController.instance.gameData.Ember.myUsedItems.Contains(thisname))
         {
             DataController.instance.gameData.Ember.myUsedItems.Remove(thisname);
+            DataController.instance.gameData.Ember.strength = 0;
+            DataController.instance.gameData.Ember.defPower = 0;
         }
 
         DataController.instance.gameData.savedInventory.Remove(thisname);
@@ -81,7 +87,7 @@ public class DiscardingItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnClickNoDiscard()
     {
-        Transform temp = this.transform.GetChild(0);
+        Transform temp = this.transform.GetChild(0);            //취소를 눌렀을 경우 원래 슬롯으로 돌아감
         temp.SetParent(originalParent);
         temp.localPosition = Vector3.zero;
         myPanel.SetActive(false);
