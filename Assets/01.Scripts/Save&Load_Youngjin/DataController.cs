@@ -17,6 +17,10 @@ public struct SaveItemData
     {
         get => orgData.GetAP(Level);
     }
+    public int DP
+    {
+        get => orgData.GetDP(Level);
+    }
     public int EnchantCost
     {
         get => orgData.GetEnchantCost(Level);

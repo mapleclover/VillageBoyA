@@ -27,6 +27,10 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
     {
         get => myData.AP;
     }
+    public int _DP
+    {
+        get => myData.DP;
+    }
     public int _EnchantCost
     {
         get => myData.EnchantCost;
