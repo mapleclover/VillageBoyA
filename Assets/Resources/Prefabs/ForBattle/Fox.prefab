@@ -1008,6 +1008,7 @@ GameObject:
   - component: {fileID: 2378347433891683554}
   - component: {fileID: 2378347433891683553}
   - component: {fileID: 2378347433891683552}
+  - component: {fileID: -541381754216941306}
   m_Layer: 30
   m_Name: Fox
   m_TagString: Untagged
@@ -1070,6 +1071,8 @@ MonoBehaviour:
     Speed: 0
     AttackDmg: []
     longAttack: 
+    AdditionalAttack: 0
+    AdditionalDefence: 0
   State: 0
   myHpBar: {fileID: 0}
   Skill: 0
@@ -1080,6 +1083,7 @@ MonoBehaviour:
   Stunned: 0
   ActiveHeal: 0
   StunTurn: 1
+  Stun: {fileID: 0}
 --- !u!136 &2378347433891683552
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1094,6 +1098,18 @@ CapsuleCollider:
   m_Height: 5
   m_Direction: 1
   m_Center: {x: 0, y: 10, z: 0}
+--- !u!114 &-541381754216941306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2378347433891683548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34e11852ad6ac3408c556a9418532a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2378347433935055405
 GameObject:
   m_ObjectHideFlags: 0

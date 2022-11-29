@@ -117,6 +117,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                 string thisname = thisEquipment.GetComponent<Pickup>().item.itemName;
                 int ap = thisEquipment.GetComponent<EnhanceableItems>().myData.AP;
                 Item.ItemType myType= thisEquipment.GetComponent<Pickup>().item.itemType;
+                
 
                 if (thisEquipment.transform.childCount >= 2)      //만약 이 장비가 이전에 장착된 적이 있으면
                 {
@@ -132,6 +133,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     {
                         if (DataController.instance.gameData.Kong.myUsedItems.Count.Equals(0))
                         {
+                            SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
                             if (thisType.Equals(Item.ItemType.Accessory))
                             {
@@ -162,6 +164,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     {
                         if (DataController.instance.gameData.Jin.myUsedItems.Count.Equals(0))
                         {
+                            SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Jin.myUsedItems.Add(thisname);
                             if (thisType.Equals(Item.ItemType.Accessory))
                             {
@@ -192,6 +195,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     {
                         if (DataController.instance.gameData.Ember.myUsedItems.Count.Equals(0))
                         {
+                            SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Ember.myUsedItems.Add(thisname);
                             if (thisType.Equals(Item.ItemType.Accessory))
                             {
