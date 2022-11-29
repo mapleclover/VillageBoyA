@@ -73,9 +73,9 @@ public class EnhanceableItems : MonoBehaviour, IDragHandler,IBeginDragHandler, I
         {
             Vector3 pos = new Vector3(58, 168, 0);
             obj = Instantiate(myIng[0], pos, Quaternion.identity, GameObject.FindWithTag("Enhance").transform);
-            obj.transform.localPosition = new Vector3(-120, -28, 0);
+            obj.transform.localPosition = new Vector3(-126, -27, 0);
             obj2 = Instantiate(myIng[1], pos, Quaternion.identity, GameObject.FindWithTag("Enhance").transform);
-            obj2.transform.localPosition = new Vector3(40, -28, 0);
+            obj2.transform.localPosition = new Vector3(26, -27, 0);
         }
     }
 
