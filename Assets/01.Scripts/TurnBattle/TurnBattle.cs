@@ -651,6 +651,7 @@ public class TurnBattle : MonoBehaviour
     IEnumerator HealingActive()
     {
         Active.GetComponent<BattleCharacter>().Healing();
+        SoundTest.instance.PlaySE("SFX_Heal");
         Active.GetComponent<BattleCharacter>().TurnActive = false;
         yield return new WaitForSeconds(1.0f);
         ChangeState(State.ActiveCheck);
