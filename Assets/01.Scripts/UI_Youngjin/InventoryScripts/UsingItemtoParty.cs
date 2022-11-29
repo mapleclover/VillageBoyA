@@ -12,6 +12,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public GameObject myArrow;
     public GameObject myPanel;
     public TMP_Text myText;
+
     string check = "";
 
     GameObject obj;
@@ -32,6 +33,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         Transform itemTransform = PointerInfo.instance.transform;
         if (itemTransform.gameObject.layer == 8)          //소모품을 캐릭터에게 사용
         {
+
             GameObject temp = PointerInfo.instance.transform.gameObject;
             int heal= temp.GetComponent<Pickup>().item.value;
             string name = temp.GetComponent<Pickup>().item.itemName;
@@ -310,6 +312,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         yield return new WaitForSeconds(sec);          //포션 사용됐다는 알림
         myText.gameObject.SetActive(false);
         myPanel.SetActive(false);
+
     }
   
 

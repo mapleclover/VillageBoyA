@@ -14,7 +14,7 @@ public class AboutItem : MonoBehaviour
     public GameObject myPanel;
     public GameObject myInven;
     public static AboutItem instance = null;
-    public GameObject myEnhance;
+
 
 
     private void Awake()
@@ -72,12 +72,13 @@ public class AboutItem : MonoBehaviour
     public void pointerclick()
     {
         Transform clickedItem = PointerInfo.instance.transform;
-        if (clickedItem.gameObject.layer == 7 || clickedItem.gameObject.layer == 8)     //포션 혹은 장비를 클릭할 경우
+        if (clickedItem.gameObject.layer.Equals(7)|| clickedItem.gameObject.layer.Equals(8))     //포션 혹은 장비를 클릭할 경우
         {
             myPanel.SetActive(true);        //적용할 파티원을 물어보는 UI 활성화
 
             myInfoBox.SetActive(false);
             myParty.SetActive(true);
         }
+       
     }
 }
