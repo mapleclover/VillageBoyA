@@ -23,6 +23,7 @@ public class PurchaseBox : MonoBehaviour
     public virtual void DecideBuy()
     {
         myShopManager.BuyItem(1);
+        SoundTest.instance.PlaySE("SFX_Buy");
         this.gameObject.SetActive(false);
     }
 
