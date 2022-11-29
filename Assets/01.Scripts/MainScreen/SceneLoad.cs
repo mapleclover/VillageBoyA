@@ -131,6 +131,7 @@ public class SceneLoad : MonoBehaviour
                 if (DataController.instance.gameData.victoryComplete[i])
                 {
                     InventoryController.Instance.GetItem(InventoryController.Instance.curItem[8 + i]);
+                    DataController.instance.gameData.myProgress += 20;
                     DataController.instance.gameData.victoryComplete[i] = false;
                 }
             }

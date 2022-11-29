@@ -36,6 +36,7 @@ public class Item : ScriptableObject
     }
 
     public int[] AP; // 공격력
+    public int[] DP;//방어력
     public int[] EnchantCost; // 비용
     public int[] Possibility; // 확률
     public int GetPossibility(int lv)
@@ -43,6 +44,10 @@ public class Item : ScriptableObject
         return Possibility[lv - 1];
     }
     public int GetAP(int lv)
+    {
+        return AP[lv - 1];
+    }
+    public int GetDP(int lv)
     {
         return AP[lv - 1];
     }

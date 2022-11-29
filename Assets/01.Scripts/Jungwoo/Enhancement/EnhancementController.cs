@@ -10,6 +10,8 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
 
     public RectTransform rectTransform;
 
+    public GameObject myPanel;
+
     public GameObject myUI;
     public RectTransform myInventory;
     public GameObject setMyInventory;
@@ -35,18 +37,15 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
         setMyInventory.SetActive(true);
     }
 
-  
-
     public void OnPointerEnter(PointerEventData eventData)
     {
-       /* if(Slot != null)
+        if (!myPanel.activeSelf)
         {
-        */
-       rectTransform.SetAsFirstSibling();
+            rectTransform.SetAsFirstSibling();
+        }
         
-        //transform.position = eventData.position;
+        
     }
-    
 
 
     public void CloseEnhancement()
