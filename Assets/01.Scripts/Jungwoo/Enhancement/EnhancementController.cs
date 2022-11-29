@@ -5,10 +5,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static UnityEditor.PlayerSettings;
 
-public class EnhancementController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class EnhancementController : MonoBehaviour, IPointerEnterHandler
 {
 
     public RectTransform rectTransform;
+
+    public GameObject myPanel;
 
     public GameObject myUI;
     public RectTransform myInventory;
@@ -35,23 +37,15 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler, IPoint
         setMyInventory.SetActive(true);
     }
 
-  
-
     public void OnPointerEnter(PointerEventData eventData)
     {
-        /*if (mySlot != null)
-        {*/
+        if (!myPanel.activeSelf)
+        {
             rectTransform.SetAsFirstSibling();
-        
+        }
         
         
     }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-
-    }
-
 
 
     public void CloseEnhancement()

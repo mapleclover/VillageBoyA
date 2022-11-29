@@ -10,6 +10,22 @@ public class ShowStatus : MonoBehaviour
     private GameData.myPartyStats character;
     public Image CharacterImage;
     [SerializeField]private Sprite[] images;
+    [SerializeField]private GameObject StatusPanel;
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            if(StatusPanel.activeSelf)
+            {
+                StatusPanel.SetActive(false);
+            }
+            else
+            {
+                OpenUpStatus();
+            }
+        }
+    }
 
     public string IsAOEToString(int i)
     {
@@ -27,6 +43,7 @@ public class ShowStatus : MonoBehaviour
     
     public void OpenUpStatus()
     {
+        StatusPanel.SetActive(true);
         if (DataController.instance.gameData.Kong.isLeader)
         {
             Show("Kong");

@@ -241,6 +241,8 @@ public class BattleCharacter : CharacterProperty
     public void KongAttack3()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/KongAttack3"));
+             
+        SoundTest.instance.PlaySE("SFX_KongAttack3");            
         Vector3 pos = myTarget.transform.position;
         obj.transform.position = pos;
         Destroy(obj, 2.0f);
@@ -266,6 +268,7 @@ public class BattleCharacter : CharacterProperty
     public void BombAttack()
     {
         GameObject obj=Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Bomb"));
+        SoundTest.instance.PlaySE("SFX_JinAttack2");
         Vector3 pos= TurnBattle.Inst.EnemyParent.position;        
         obj.transform.position = pos;
         Destroy(obj, 2.0f);
