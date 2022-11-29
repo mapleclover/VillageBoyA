@@ -1160,7 +1160,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &259920595
+--- !u!1 &267660412
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1168,28 +1168,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 259920603}
-  - component: {fileID: 259920602}
-  - component: {fileID: 259920601}
-  - component: {fileID: 259920600}
-  - component: {fileID: 259920599}
-  - component: {fileID: 259920598}
-  - component: {fileID: 259920597}
-  - component: {fileID: 259920596}
+  - component: {fileID: 267660420}
+  - component: {fileID: 267660419}
+  - component: {fileID: 267660418}
+  - component: {fileID: 267660417}
+  - component: {fileID: 267660416}
+  - component: {fileID: 267660415}
+  - component: {fileID: 267660414}
+  - component: {fileID: 267660413}
   m_Layer: 0
-  m_Name: 'SoundManager '
+  m_Name: SoundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!82 &259920596
+--- !u!82 &267660413
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259920595}
+  m_GameObject: {fileID: 267660412}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -1279,13 +1279,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &259920597
+--- !u!82 &267660414
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259920595}
+  m_GameObject: {fileID: 267660412}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -1375,13 +1375,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &259920598
+--- !u!82 &267660415
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259920595}
+  m_GameObject: {fileID: 267660412}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -1471,13 +1471,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &259920599
+--- !u!82 &267660416
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259920595}
+  m_GameObject: {fileID: 267660412}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -1567,13 +1567,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &259920600
+--- !u!82 &267660417
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259920595}
+  m_GameObject: {fileID: 267660412}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -1663,13 +1663,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &259920601
+--- !u!82 &267660418
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259920595}
+  m_GameObject: {fileID: 267660412}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -1759,13 +1759,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &259920602
+--- !u!114 &267660419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259920595}
+  m_GameObject: {fileID: 267660412}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f46b9f3ac242d2e438f7db2c930246f2, type: 3}
@@ -1775,19 +1775,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   BGMSFXSource:
-  - {fileID: 259920601}
-  - {fileID: 259920600}
-  - {fileID: 259920599}
-  - {fileID: 259920598}
-  - {fileID: 259920597}
-  - {fileID: 259920596}
+  - {fileID: 267660418}
+  - {fileID: 267660417}
+  - {fileID: 267660416}
+  - {fileID: 267660415}
+  - {fileID: 267660414}
+  - {fileID: 267660413}
   audioSourceEffects:
-  - {fileID: 259920600}
-  - {fileID: 259920599}
-  - {fileID: 259920598}
-  - {fileID: 259920597}
-  - {fileID: 259920596}
-  audioSourceBgm: {fileID: 259920601}
+  - {fileID: 267660417}
+  - {fileID: 267660416}
+  - {fileID: 267660415}
+  - {fileID: 267660414}
+  - {fileID: 267660413}
+  audioSourceBgm: {fileID: 267660418}
   playSoundName: []
   effectSounds:
   - name: SFX_Step
@@ -1810,6 +1810,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: fd25a15f9797641458336cccfb445343, type: 3}
   - name: SFX_Buy
     clip: {fileID: 8300000, guid: b9703806690cb49a58ab182032cad276, type: 3}
+  - name: SFX_Equip
+    clip: {fileID: 8300000, guid: bec9ce9a391d439428e12da04dd8c589, type: 3}
+  - name: SFX_Upgrade
+    clip: {fileID: 8300000, guid: 6e125c7f6c3574341bb7b01fe6b9dfee, type: 3}
+  - name: SFX_Fail
+    clip: {fileID: 8300000, guid: 5cee82438d9d94c04a46c94ddcb45835, type: 3}
+  - name: SFX_Complete
+    clip: {fileID: 8300000, guid: 9ff90b8c253fd5b4da3fbd9ce64a300a, type: 3}
   bgmSounds:
   - name: BGM_Title
     clip: {fileID: 8300000, guid: a6170b3d1a811d6478c29b25ec0a70d4, type: 3}
@@ -1829,13 +1837,13 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5d0d178732652fa4fa1b1540ee211250, type: 3}
   - name: BGM_Lose
     clip: {fileID: 8300000, guid: c94b7a95a2b821248a2747f51b2e7883, type: 3}
---- !u!4 &259920603
+--- !u!4 &267660420
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259920595}
+  m_GameObject: {fileID: 267660412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -68, y: 25.076515, z: -105.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
