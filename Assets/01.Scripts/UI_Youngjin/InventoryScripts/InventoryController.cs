@@ -119,6 +119,10 @@ public class InventoryController : MonoBehaviour
         {
             GetItem(curItem[7]);
         }
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            GetItem(curItem[13]);
+        }
     }
 
     public void OnClickX()
@@ -225,7 +229,7 @@ public class InventoryController : MonoBehaviour
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;
-                case "±¸¸®":
+                case "´«¹°":
                     ItemAppears(theItem);
                     ShowNumbertoUI();
                     break;

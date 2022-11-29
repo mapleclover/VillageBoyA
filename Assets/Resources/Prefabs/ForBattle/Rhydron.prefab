@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 1042394737507252906}
   - component: {fileID: 2652591685077837998}
   - component: {fileID: 9117132352549368345}
+  - component: {fileID: 6935875258190569543}
   m_Layer: 30
   m_Name: Rhydron
   m_TagString: Untagged
@@ -123,6 +124,8 @@ MonoBehaviour:
     Speed: 0
     AttackDmg: []
     longAttack: 
+    AdditionalAttack: 0
+    AdditionalDefence: 0
   State: 0
   myHpBar: {fileID: 0}
   Skill: 0
@@ -133,6 +136,19 @@ MonoBehaviour:
   Stunned: 0
   ActiveHeal: 0
   StunTurn: 1
+  Stun: {fileID: 0}
+--- !u!114 &6935875258190569543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195411444478328363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34e11852ad6ac3408c556a9418532a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &364945753894359081
 GameObject:
   m_ObjectHideFlags: 0
