@@ -8,13 +8,17 @@ public class AnimeEvent : MonoBehaviour
     {
         SoundTest.instance.PlaySE("SFX_Step");
     }
-    private void Attack_1()
+    private void KongAttack_1()
     {
-        SoundTest.instance.PlaySE("SFX_Attack1");
+        SoundTest.instance.PlaySE("SFX_KongAttack1");
     }
-    private void Attack_2()
+    private void KongAttack_2()
     {
-        SoundTest.instance.PlaySE("SFX_Attack2");
+        SoundTest.instance.PlaySE("SFX_KongAttack2");
     }
 
+    private void EmberAttack_2()
+    {
+        SoundTest.instance.PlaySE("SFX_EmberAttack2");
+    }
 }

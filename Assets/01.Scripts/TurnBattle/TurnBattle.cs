@@ -741,7 +741,7 @@ public class TurnBattle : MonoBehaviour
 
         if (Mathf.Approximately(dist, 0.0f))
         {
-            Active.GetComponent<Animator>().SetBool("IsWalking", false);
+            Active.GetComponent<Atonimar>().SetBool("IsWalking", false);
             StartCoroutine(RotatingToPosition(gos2, false));
             yield return new WaitForSeconds(0.5f);
             ChangeState(State.ActiveCheck);
