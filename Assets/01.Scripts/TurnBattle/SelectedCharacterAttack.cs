@@ -58,7 +58,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         myActionCost.OnHoverSkill(currentCost, currentCost);
     }
 
-    public void Attack(int a)
+    public void Attack(int a) //캐릭터버튼누르고 공격누른다음 공격스킬중한개 누르면나오는함수
     {
         x = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>();
         mySelectCharacter.SetActive(false);
@@ -77,7 +77,7 @@ public class SelectedCharacterAttack : MonoBehaviour
         
     }
 
-    public void Healing()
+    public void Healing() // 캐릭터버튼누르고 회복누르면 나오는함수
     {
         x = TurnBattle.Inst.SelectedCharacter.GetComponent<BattleCharacter>();
         mySelectCharacter.SetActive(false);
@@ -91,8 +91,9 @@ public class SelectedCharacterAttack : MonoBehaviour
         x.ActiveHeal = true;
     }
 
-    public void LoseClose()
+    public void LoseClose() //패배시 클릭함수
     {
         SceneLoad.Instance.ChangeScene("01.MainTitle");
     }
+
 }

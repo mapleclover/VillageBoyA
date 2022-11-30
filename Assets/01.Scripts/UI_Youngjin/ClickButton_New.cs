@@ -16,4 +16,8 @@ public class ClickButton_New : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
     }
+    public void OnClick()
+    {
+        SoundTest.instance.PlaySE("SFX_Button");
+    }
 }

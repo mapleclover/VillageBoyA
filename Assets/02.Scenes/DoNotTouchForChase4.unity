@@ -12548,6 +12548,7 @@ MonoBehaviour:
   - {fileID: -1044782287, guid: 72a18ac672c05924382704b809ee89f8, type: 3}
   - {fileID: 1596235354, guid: aa8f6486154ba374c8979fafe0bdce10, type: 3}
   shopManager: {fileID: 0}
+  theActionController: {fileID: 0}
 --- !u!4 &384855009
 Transform:
   m_ObjectHideFlags: 0
@@ -32977,6 +32978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 1276595758}
   myPanel: {fileID: 1276595755}
+  myPlayerUI: {fileID: 0}
   myUI: {fileID: 1163097009}
   myInventory: {fileID: 342795238363401307}
   setMyInventory: {fileID: 342795238363401308}
@@ -36877,6 +36879,7 @@ MonoBehaviour:
   EnchantDelay: 0
   result: 0
   mySlider: {fileID: 1245910295}
+  mySliderAnim: {fileID: 0}
   SuccessPanel: {fileID: 1689806868}
   FailPanel: {fileID: 1432305433}
 --- !u!1 &1231949389
@@ -48275,6 +48278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 0}
   myPanel: {fileID: 0}
+  myPlayerUI: {fileID: 0}
   myUI: {fileID: 1131686819}
   myInventory: {fileID: 1684219660}
   setMyInventory: {fileID: 1684219659}
@@ -76715,7 +76719,7 @@ MonoBehaviour:
   myLoad: {fileID: 8327107597345499811}
   askingUI: {fileID: 5126786578321401847}
   myStatus: {fileID: 296521114}
-  Shop: {fileID: 0}
+  Shop: {fileID: 296521114}
   realCamera: {fileID: 6059563166076179757}
 --- !u!1 &6059563165524560317
 GameObject:

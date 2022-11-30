@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -97,7 +98,6 @@ public class BattleCharacter : CharacterProperty
                     StunCheck = TurnBattle.Inst.BattleTurn;
                     Stunned = false;
                 }
-
                 break;
             case STATE.Stunned:
                 if (StunCheck + StunTurn == TurnBattle.Inst.BattleTurn)
@@ -105,7 +105,6 @@ public class BattleCharacter : CharacterProperty
                     Stun.SetActive(false);
                     ChangeState(STATE.Live);
                 }
-
                 break;
             case STATE.Die:
                 TurnActive = false;
@@ -124,11 +123,9 @@ public class BattleCharacter : CharacterProperty
     void Update()
     {
         StateProcess();
-        if (myHpBar != null) myHpBar.value = Mathf.Lerp(myHpBar.value, myStat.curHP / maxHp, 5.0f * Time.deltaTime);
-        if (myStat.curHP <= Mathf.Epsilon)
-        {
-            ChangeState(STATE.Die);
-        }
+        FollowEnemyHpbar();
+        myHpBar.value = Mathf.Lerp(myHpBar.value, myStat.curHP / maxHp, 5.0f * Time.deltaTime);
+        if (myStat.curHP <= Mathf.Epsilon) ChangeState(STATE.Die);        
     }
 
     void callData()
@@ -172,10 +169,7 @@ public class BattleCharacter : CharacterProperty
         myStat.longAttack = myStat.orgData.IsRangeAttack;
     }
 
-    public void ValuemyHpmaxHP()
-    {
-        myHpBar.value = myStat.curHP / maxHp;
-    }
+    
 
     public void ChoiceSkill(int s)
     {
@@ -291,6 +285,14 @@ public class BattleCharacter : CharacterProperty
             obj.transform.position = pos;
         }
         Destroy(obj, 1.0f);
+    }
+    void FollowEnemyHpbar()
+    {
+        if(gameObject.layer == LayerMask.NameToLayer("Player")) return;
+        Vector3 pos = transform.position;
+        pos.y += 2.0f;
+        pos = Camera.main.WorldToScreenPoint(pos);
+        myHpBar.transform.position = pos;
     }
 
     IEnumerator OnDmg(float dmg,int a,GameObject myTarget) //플로팅데미지
