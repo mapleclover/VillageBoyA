@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 [Serializable]
@@ -119,7 +120,8 @@ public class DataController : MonoBehaviour
     private GameObject thePlayer;
     private QuestManager theQuestManager;
     private ActionController theActionController;
-
+    private GameObject myInven;
+    private GameObject mySlots;
     private void Awake()
     {
         // File.Delete(filePath);
@@ -172,7 +174,63 @@ public class DataController : MonoBehaviour
             Debug.Log("불러오기");
             string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
             gameData = JsonUtility.FromJson<GameData>(FromJsonData); //파일이 있으면 불러옴
-            //Json을 data클래스로 복구
+                                                                     //Json을 data클래스로 복구
+
+            thePlayer = GameObject.FindWithTag("Player");
+            theQuestManager = FindObjectOfType<QuestManager>();
+            theActionController = FindObjectOfType<ActionController>();
+            myInven = GameObject.FindWithTag("Inventory");
+
+            thePlayer.transform.position = gameData.currentPosition;
+            thePlayer.transform.eulerAngles = gameData.currentRotation;
+
+            theQuestManager.questId = gameData.questID;
+            theQuestManager.questActionIndex = gameData.questActionIndex;
+
+           // theActionController.isBackAttack = gameData.isBackAttack;
+
+            mySlots = myInven.transform.GetChild(0).gameObject;
+            foreach (KeyValuePair<string, int> items in DataController.instance.gameData.savedInventory)
+            {
+                GameObject obj;
+                for (int i = 0; i < InventoryController.Instance.curItem.Count; i++)
+                {
+                    if (InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.itemName.Equals(items.Key))
+                    {
+                        obj = Instantiate(InventoryController.Instance.curItem[i]);
+                        obj.transform.SetParent(mySlots.transform.GetChild(items.Value));
+                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                        obj.transform.localPosition = Vector2.zero;
+
+                    }
+                    else continue;
+
+
+                    if (InventoryController.Instance.curItem[i].layer.Equals(7))
+                    {
+                        if (DataController.instance.gameData.Kong.myUsedItems.Contains(items.Key))
+                        {
+                            //UI에 표시
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items.Value);
+                            break;
+                        }
+                        else if (DataController.instance.gameData.Jin.myUsedItems.Contains(items.Key))
+                        {
+                            //UI에 표시
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, items.Value);
+                            break;
+                        }
+                        else if (DataController.instance.gameData.Ember.myUsedItems.Contains(items.Key))
+                        {
+                            //UI에 표시
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i, items.Value);
+                            break;
+                        }
+                    }
+                }
+            }
+
         }
         else
         {
@@ -284,7 +342,15 @@ public class DataController : MonoBehaviour
             }
         }
     }
-
+    void ShowPortrait(GameObject portrait, int i, int index)
+    {
+        portrait.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
+        portrait.transform.SetParent(mySlots.transform.GetChild(index).transform.GetChild(0));
+        portrait.transform.localPosition =
+            new Vector2(InventoryController.Instance.curItem[i].transform.localPosition.x + 20,
+                InventoryController.Instance.curItem[i].transform.localPosition.y - 20);
+        portrait.GetComponent<RawImage>().raycastTarget = false;
+    }
     /*  private void OnApplicationQuit()
       {
           SaveGameData();     
