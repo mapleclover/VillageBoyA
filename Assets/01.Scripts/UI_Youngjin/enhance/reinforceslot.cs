@@ -250,6 +250,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             if (myItem._EnhanceableItem)
             // °­È­ °¡´É ¾ÆÀÌÅÛÀÎÁö
             {
+                
                 //myItem.ConsumeGold();
                 //°­È­ ½Ãµµ ¸¶´Ù °ñµå Á¦°Å (¾È¾¸)
                 InventoryController.Instance.ShowMyGold();
@@ -263,7 +264,9 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                     Debug.Log($"°¡°Ý{myItem._EnchantCost}");
                     Debug.Log($"°ø°Ý·Â{myItem._AP}");
                     Debug.Log($"È®·ü{myItem._Possibility}");
-                    CheckEquipped(obj);
+                    
+
+                    CheckEquipped(obj);                    
                 }
                 else // ½ÇÆÐ
                 {
@@ -271,7 +274,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                     Debug.Log("½ÇÆÐ");
                     Debug.Log($"°¡°Ý{myItem._EnchantCost}");
                     Debug.Log($"°ø°Ý·Â{myItem._AP}");
-                    Debug.Log($"È®·ü{myItem._Possibility}");
+                    Debug.Log($"È®·ü{myItem._Possibility}");                   
                 }
             }
         }
@@ -330,14 +333,17 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
 
         while (showTime > 0f)
         {
+            
             if (result)
             {
-
                 SuccessPanel.SetActive(true);
+                SoundTest.instance.PlaySE("SFX_Complete");
+
             }
             else
             {
                 FailPanel.SetActive(true);
+                SoundTest.instance.PlaySE("SFX_Fail");
             }
             showTime -= Time.deltaTime;
             yield return null;
