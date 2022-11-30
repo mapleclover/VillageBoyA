@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text nameText; // 대화시 NPC 이름.
     public TMP_Text talkText; // 대화 대사
     public GameObject scanObject; // 대화하고있는 대상 
-    public bool isAction = false; // 대화하고있는지아닌지
+    public bool isAction; // 대화하고있는지아닌지
     public int talkIndex; // 대화순서
     public float textSpeed;
 
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         ObjData objData = scanObject.GetComponent<ObjData>();
         Talk(objData.id, objData.isNpc);
         NameText(scanObject, objData.isNpc);
-
+        
 
         talkPanel.SetActive(isAction);
     }
@@ -81,10 +81,10 @@ public class GameManager : MonoBehaviour
                 portraitImg.color = new Color(1, 1, 1, 0); // 맨뒤 0은 alpha값. 아이템과 대화할때는 alpha값 최소.
             }
         }
-        //if (!ShopManager.isAction)
-        //{
-        //    isAction = true;
-        //}
+        if (!ShopManager.isAction)
+        {
+            isAction = true;
+        }
         talkIndex++; // 다음대화로 넘어감.
     }
 

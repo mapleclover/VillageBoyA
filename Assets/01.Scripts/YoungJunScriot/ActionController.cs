@@ -270,7 +270,7 @@ public class ActionController : MonoBehaviour
     }
 
     // npc 정보창 클로즈
-    private void NpcInfoDisappear()
+    public void NpcInfoDisappear()
     {
         if (pickNpcActivated) // true일때만 발동,
         {

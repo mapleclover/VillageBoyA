@@ -13,6 +13,8 @@ public class TalkManager : MonoBehaviour
 
     [SerializeField] private GameObject shopManager;
 
+    [SerializeField] private ActionController theActionController;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -207,6 +209,7 @@ public class TalkManager : MonoBehaviour
             if(id == 4000)
             {
                 ShopManager.isAction = true;
+                theActionController.NpcInfoDisappear();
                 shopManager.SetActive(true);
             }
             return null; // 해당엔피시와의 대화(인덱스)가 끝났을때 리턴
