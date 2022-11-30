@@ -50,7 +50,9 @@ public class SceneLoad : MonoBehaviour
     private QuestManager theQuestManager;
     private GameObject myInven;
     private Transform mySlots;
-    [SerializeField]private GameObject[] charHP;
+    private GameObject konghp;
+    private GameObject jinhp;
+    private GameObject emberhp;
     
     private void OnEnable()
     {
@@ -69,9 +71,9 @@ public class SceneLoad : MonoBehaviour
             player = GameObject.FindWithTag("Player");
             camera = GameObject.FindWithTag("Camera");
             myInven = GameObject.FindWithTag("Inventory");
-            charHP[0] = GameObject.FindWithTag("KongHP");
-            charHP[1] = GameObject.FindWithTag("JinHP");
-            charHP[2] = GameObject.FindWithTag("EmberHP");
+            konghp = GameObject.FindWithTag("KongHP");
+            jinhp = GameObject.FindWithTag("JinHP");
+            emberhp = GameObject.FindWithTag("EmberHP");
             mySlots = myInven.transform.GetChild(0);
              theQuestManager = FindObjectOfType<QuestManager>();
 
@@ -139,9 +141,9 @@ public class SceneLoad : MonoBehaviour
                     DataController.instance.gameData.victoryComplete[i] = false;
                 }
             }
-            charHP[0].GetComponent<Slider>().value= DataController.instance.gameData.Kong.HP /150f; 
-            charHP[1].GetComponent<Slider>().value = DataController.instance.gameData.Jin.HP*0.01f;
-            charHP[2].GetComponent<Slider>().value = DataController.instance.gameData.Ember.HP*0.008f;
+            konghp.GetComponent<Slider>().value= DataController.instance.gameData.Kong.HP /150f; 
+            jinhp.GetComponent<Slider>().value = DataController.instance.gameData.Jin.HP*0.01f;
+            emberhp.GetComponent<Slider>().value = DataController.instance.gameData.Ember.HP*0.008f;
 
         }
         else if (scene.name == "H_H")
