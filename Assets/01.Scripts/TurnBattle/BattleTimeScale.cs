@@ -8,6 +8,15 @@ public class BattleTimeScale : MonoBehaviour
     private int speed = 0;
     public TextMeshProUGUI showspeed;
 
+    private void Start()
+    {
+        speed=DataController.instance.gameData.turnBattleTimeSpeed-1;
+        SpeedChange();
+    }
+    public void TurnBattleSpeedSave()
+    {
+        DataController.instance.gameData.turnBattleTimeSpeed=speed;
+    }
     public void SpeedChange()
     {
         speed = (speed + 1) % 4; //�׽�Ʈ��(�׽�Ʈ�ƴҽ� 3���� ����)

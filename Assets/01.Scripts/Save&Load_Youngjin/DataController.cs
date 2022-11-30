@@ -62,6 +62,7 @@ public struct SaveItemData
 public class GameData
 {
     //모든 배열은 0이 콩 1이 진 2가 앰버
+    public int turnBattleTimeSpeed = 0; // 턴배틀게임속도
     public int myProgress = 0; //진행도
     public string savedTime; //저장한 시간
     public string mapName = "FirstVillage"; //현재 마을
