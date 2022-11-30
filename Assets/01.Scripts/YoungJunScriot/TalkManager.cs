@@ -33,6 +33,7 @@ public class TalkManager : MonoBehaviour
         talkData.Add(3000, new string[] { "흠.. 날씨가 좋군 ..:0" });
         talkData.Add(4000, new string[] { "안녕 ? 강화 해볼래 ? \n합성대를 빌려줄께:0" });
         talkData.Add(100, new string[] { "새빨갛게 잘 익은 사과다." });
+        talkData.Add(200, new string[] { "강화 하시겠습니까 ? ⓜ(E)ⓦ"});
 
         //Quest Talk Data
         //첫마을 방문 마을사람과대화하기.
@@ -211,6 +212,10 @@ public class TalkManager : MonoBehaviour
                 ShopManager.isAction = true;
                 theActionController.NpcInfoDisappear();
                 shopManager.SetActive(true);
+            }
+            else if(id == 200)
+            {
+                EnhancementController.inst.OpenUpEnhancement();
             }
             return null; // 해당엔피시와의 대화(인덱스)가 끝났을때 리턴
         }

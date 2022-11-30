@@ -320,6 +320,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //∏∂øÏΩ∫ øÏ≈¨∏Ø«
     IEnumerator Delay(float cool, GameObject enchantingObj, float showTime)
     {
         float coolTime = cool;
+        SoundTest.instance.PlaySE("Upgrade");
         while (cool > 0.0f)
         {
             EnchantDelay = true; //∆Æ∑Á∏¶ ¡÷∞Ì
