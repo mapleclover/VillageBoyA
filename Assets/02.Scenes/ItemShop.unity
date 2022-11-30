@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -358,11 +358,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6843107414363237721}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!222 &1338893262
+CanvasRenderer:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_CullTransparentMesh: 1
 --- !u!1 &1424220865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6843107413610303384, guid: 29be83e55ea75544c882796845afbb90, type: 3}
@@ -826,6 +834,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3242253113743940660, guid: 2198eaec987c79c438b3c114fac435a7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242253113743940660, guid: 2198eaec987c79c438b3c114fac435a7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242253114178801364, guid: 2198eaec987c79c438b3c114fac435a7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4089677723487316491, guid: 2198eaec987c79c438b3c114fac435a7, type: 3}
       propertyPath: GoldText
       value: 
@@ -4176,7 +4196,6 @@ MonoBehaviour:
   myInfoBox: {fileID: 5850300488892483947}
   itemCount: {fileID: 5850300487221297398}
   myGold: {fileID: 2267782850459573458}
-  myEnhance: {fileID: 0}
   myMenu: {fileID: 0}
   countUI: {fileID: 5850300488141959087}
   curItem:
@@ -4206,7 +4225,7 @@ MonoBehaviour:
   myInfoText: {fileID: 5850300487679202820}
   myParty: {fileID: 5850300488801578590}
   myPanel: {fileID: 5850300488023554127}
-  myEnhance: {fileID: 0}
+  myInven: {fileID: 0}
 --- !u!1 &5850300488722731034
 GameObject:
   m_ObjectHideFlags: 0
