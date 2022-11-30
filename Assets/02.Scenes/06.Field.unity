@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385577, g: 0.22906174, b: 0.30346733, a: 1}
+  m_IndirectSpecularColor: {r: 0.18385538, g: 0.22906086, b: 0.30346623, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -64460,8 +64460,9 @@ MonoBehaviour:
   EnchantDelay: 0
   result: 0
   mySlider: {fileID: 3041550997867425890}
-  SuccessPanel: {fileID: 0}
-  FailPanel: {fileID: 0}
+  mySliderAnim: {fileID: 3041550997986778718}
+  SuccessPanel: {fileID: 997583125403375179}
+  FailPanel: {fileID: 997583125115617606}
 --- !u!222 &3041550997849181045
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -64724,6 +64725,7 @@ GameObject:
   - component: {fileID: 3041550997986778707}
   - component: {fileID: 3041550997986778717}
   - component: {fileID: 3041550997986778706}
+  - component: {fileID: 3041550997986778718}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -64789,6 +64791,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3041550997986778704}
   m_CullTransparentMesh: 1
+--- !u!95 &3041550997986778718
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3041550997986778704}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fc8185d0eff5d634b92ace3abe203f54, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3041550998170914788
 GameObject:
   m_ObjectHideFlags: 0
