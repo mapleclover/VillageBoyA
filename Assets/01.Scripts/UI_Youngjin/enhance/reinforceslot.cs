@@ -197,8 +197,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 DataController.instance.gameData.gold -= enchantingObj.GetComponent<EnhanceableItems>().myData.EnchantCost;
                 InventoryController.Instance.ShowMyGold();          //°ñµå¿¡ ¹Ý¿µ
                 EnchantLogic(enchantingObj);            
-                StartCoroutine(Delay(3f, enchantingObj, 1.5f));     
-                myPanel.SetActive(false);
+                StartCoroutine(Delay(3f, enchantingObj, 1.5f));               
+                myPanel.SetActive(false);                
                 //FindMySlot()ÇÔ¼ö Delay ÄÚ·çÆ¾ ¾È¿¡ ³ÖÀ½
             }
         }
@@ -341,13 +341,10 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
             if (result)
             {
                 SuccessPanel.SetActive(true);
-                SoundTest.instance.PlaySE("SFX_Complete");
-
             }
             else
             {
                 FailPanel.SetActive(true);
-                SoundTest.instance.PlaySE("SFX_Fail");
             }
             showTime -= Time.deltaTime;
             yield return null;

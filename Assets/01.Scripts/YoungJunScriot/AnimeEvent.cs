@@ -6,7 +6,7 @@ public class AnimeEvent : MonoBehaviour
 {
     private void WalkAnim()
     {
-        SoundTest.instance.PlaySE("SFX_Step");
+        SoundTest.instance.PlaySE("SFX_Step");                 
     }
     private void KongAttack_1()
     {
