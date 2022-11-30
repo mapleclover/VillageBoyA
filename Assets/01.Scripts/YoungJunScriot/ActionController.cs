@@ -243,8 +243,9 @@ public class ActionController : MonoBehaviour
     // npc Á¤º¸Ã¢ ¿ÀÇÂ
     private void NpcInfoAppear()
     {
-        if (!pickNpcActivated && !theManager.isAction && !theGoal.isTutorial && !ShopManager.isAction) // falseÀÏ¶§¸»½ÇÇà
+        if (!pickNpcActivated && !theManager.isAction && !theGoal.isTutorial && !ShopManager.isAction && !EnhancementController.inst.isOpen) // falseÀÏ¶§¸»½ÇÇà
         {
+            ItemInfoDisappear();
             pickNpcActivated = true;
             npcTextBackground.gameObject.SetActive(true);
             thePicture.sprite = hitInfo.transform.GetComponent<Pickup>().npc.npcImage;
@@ -258,14 +259,23 @@ public class ActionController : MonoBehaviour
     // item Á¤º¸Ã¢ ¿ÀÇÂ
     private void ItemInfoAppear()
     {
-        if (!pickItemActivated && !theManager.isAction && !theGoal.isTutorial)
+        if (!pickItemActivated && !theManager.isAction && !theGoal.isTutorial && !EnhancementController.inst.isOpen)
         {
+            NpcInfoDisappear();
             pickItemActivated = true;
             itemTextBackground.gameObject.SetActive(true);
             CheckText.gameObject.SetActive(true);
             CheckText.alignment = TextAlignmentOptions.Center;
-            CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" +
-                             "È¹µæ" + "<color=yellow>" + " (E) " + "</color>";
+            if (hitInfo.transform.GetComponent<Pickup>().item.itemType == Item.ItemType.Enchant)
+            {
+                CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" +
+                                              "<color=yellow>" + " (E) " + "</color>";
+            }
+            else
+            {
+                CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" +
+                                 "È¹µæ" + "<color=yellow>" + " (E) " + "</color>";
+            }
         }
     }
 

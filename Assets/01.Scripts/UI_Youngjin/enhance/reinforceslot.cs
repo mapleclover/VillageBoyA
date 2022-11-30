@@ -22,6 +22,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
     public bool EnchantDelay = false;
     public bool result = false;
     public Slider mySlider;
+    public Animator mySliderAnim;
     public GameObject SuccessPanel;
     public GameObject FailPanel;
 
@@ -320,13 +321,16 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
     IEnumerator Delay(float cool, GameObject enchantingObj, float showTime)
     {
         float coolTime = cool;
+        SoundTest.instance.PlaySE("Upgrade");
         while (cool > 0.0f)
         {
             EnchantDelay = true; //Æ®·ç¸¦ ÁÖ°í
             cool -= Time.deltaTime;
             mySlider.value = 1f - (cool / coolTime);
+            mySliderAnim.SetBool("IsWorking", true);
             yield return null;
         }
+        mySliderAnim.SetBool("IsWorking", false);
         EnchantDelay = false; //½Ã°£ÀÌ ³¡³ª¸é
         FindMySlot(enchantingObj);
 

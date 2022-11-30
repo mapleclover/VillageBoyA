@@ -144,6 +144,7 @@ public class SceneLoad : MonoBehaviour
             konghp.GetComponent<Slider>().value= DataController.instance.gameData.Kong.HP /150f; 
             jinhp.GetComponent<Slider>().value = DataController.instance.gameData.Jin.HP*0.01f;
             emberhp.GetComponent<Slider>().value = DataController.instance.gameData.Ember.HP*0.008f;
+            
 
         }
         else if (scene.name == "H_H")
