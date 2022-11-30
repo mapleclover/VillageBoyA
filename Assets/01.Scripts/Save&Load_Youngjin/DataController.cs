@@ -227,7 +227,7 @@ public class DataController : MonoBehaviour
     public void SaveGameDataByESC(int curSlot)
     {
         //if(SceneManager.GetActiveScene().name.Equals("06.Field"))
-        thePlayer = FindObjectOfType<PlayerMovement>();
+        thePlayer = GameObject.FindWithTag("Player");
         theQuestManager = FindObjectOfType<QuestManager>();
         theActionController = FindObjectOfType<ActionController>();
 
@@ -262,7 +262,7 @@ public class DataController : MonoBehaviour
 
     public void SaveData()
     {
-        thePlayer = FindObjectOfType<PlayerMovement>();
+        thePlayer = GameObject.FindWithTag("Player");
         theQuestManager = FindObjectOfType<QuestManager>();
         // Player position
         gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
