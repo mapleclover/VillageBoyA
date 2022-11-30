@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
         CheckGround(); // 연속점프 감지
         HideStaminaBar(); // 스태미나 바 숨기기
 
-        if (ground && !theManager.isAction && !ShopManager.isAction)
+        if (ground && !theManager.isAction && !ShopManager.isAction && !EnhancementController.inst.isOpen)
         {
             //PlayerJump();
 
@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerRotation();
 
 
-        if (ground && !theManager.isAction && !ShopManager.isAction)
+        if (ground && !theManager.isAction && !ShopManager.isAction && !EnhancementController.inst.isOpen)
         {
             Dash();
         }

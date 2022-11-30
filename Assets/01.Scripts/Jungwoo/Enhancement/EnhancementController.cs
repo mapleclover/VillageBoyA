@@ -11,6 +11,7 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
     public RectTransform rectTransform;
 
     public GameObject myPanel;
+    public GameObject myPlayerUI; // 박영준 플레이어ui가 자꾸 가려서 껏다키기위함.
 
     public GameObject myUI;
     public RectTransform myInventory;
@@ -42,6 +43,7 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
         myInventory.localPosition = new Vector2(200f, 35f);
         myUI.SetActive(true);
         setMyInventory.SetActive(true);
+        myPlayerUI.SetActive(false);
         isOpen = true;
     }
 
@@ -51,16 +53,17 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
         myInventory.localPosition = new Vector2(0f, 35f);
         myUI.SetActive(false);
         setMyInventory.SetActive(false);
+        myPlayerUI.SetActive(true);
         isOpen = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            OpenUpEnhancement();
-        }
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    OpenUpEnhancement();
+        //}
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

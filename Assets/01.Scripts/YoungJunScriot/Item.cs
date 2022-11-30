@@ -74,6 +74,7 @@ public class Item : ScriptableObject
         Armor,
         Used,
         Ingredient,
-        Accessory
+        Accessory,
+        Enchant
     }
 }
