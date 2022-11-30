@@ -192,11 +192,18 @@ public class InventoryController : MonoBehaviour
         if (DataController.instance.gameData.myItemCount.ContainsKey(st)&&DataController.instance.gameData.savedInventory.ContainsKey(st) )
         {
             DataController.instance.gameData.myItemCount[st]++;
-            if (theItem.GetComponent<Pickup>().item.itemType==Item.ItemType.Ingredient||theItem.layer==8)
+            if (theItem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient)||theItem.layer.Equals(8))
             {
                 GameObject temp= mySlots[DataController.instance.gameData.savedInventory[st]].transform.GetChild(0).gameObject;
-                GameObject obj = temp.transform.GetChild(1).gameObject;
-                obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.myItemCount[st].ToString();
+                if (temp.transform.childCount >= 2)
+                {
+                    GameObject obj = temp.transform.GetChild(1).gameObject;
+                    obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.myItemCount[st].ToString();
+                }
+                else
+                {
+                    ShowNumbertoUI();
+                }
             }
         } //이미 내 인벤토리에 있으면 숫자만 더함
         else
