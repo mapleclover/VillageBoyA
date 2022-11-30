@@ -110,8 +110,7 @@ public class TurnBattle : MonoBehaviour
                 for (int i = 0; i < Enemy.Count; ++i)
                 {
                     if (Active == Enemy[i])
-                    {
-                        Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0, Player.Count)];
+                    {                        
                         Active.GetComponent<BattleCharacter>().myTarget = Player[Random.Range(0, Player.Count)];
                         if (Active.GetComponent<BattleCharacter>().myTarget.GetComponent<BattleCharacter>().State ==
                             STATE.Die)
@@ -134,7 +133,6 @@ public class TurnBattle : MonoBehaviour
                 {
                     foreach (GameObject act in Player) act.GetComponent<Animator>().SetTrigger("Victory");
                     GameOverCanvas.SetActive(true);
-
                     switch (SceneLoad.Instance.MonsterType)
                     {
                         case "Fox":
@@ -326,8 +324,6 @@ public class TurnBattle : MonoBehaviour
         mySelectRing.SetActive(false); //캐릭터가 선택되기전까지 링 오프
         mySelectTargetRing.SetActive(false); // 캐릭터 타겟 링 오프
         StateProcess();
-
-        FollowEnemyHpbar();
     }
 
     public void OnTotalCost()
@@ -346,7 +342,7 @@ public class TurnBattle : MonoBehaviour
         myData.gameData.victoryComplete[index] = true;
     }
 
-    public void VictoryOk()
+    public void VictoryOk() //보상창 확인버튼시 클릭시 나오는 함수
     {
         if (VictoryCheck)
         {
@@ -358,7 +354,6 @@ public class TurnBattle : MonoBehaviour
                     {
                         CheckVictoryAndType(1, 0); // 중복 코드가 많아 함수로 대체했습니다 -영진
                     }
-
                     myData.gameData.gold += 5 * Enemy.Count;
                     break;
 
@@ -368,7 +363,6 @@ public class TurnBattle : MonoBehaviour
                     {
                         CheckVictoryAndType(1, 1);// 대왕여우 와의 맞짱 후 이김 승리값전달
                     }
-
                     myData.gameData.gold += 30 * Enemy.Count;
                     break;
 
@@ -378,17 +372,14 @@ public class TurnBattle : MonoBehaviour
                     {
                         CheckVictoryAndType(1, 2); // 리드런과의 맞짱 후 이김 승리값전달
                     }
-
                     myData.gameData.gold += 5 * Enemy.Count;
                     break;
-
                 case "Milkcow":
                     if (myData.gameData.questID == 40 &&
                         myData.gameData.questActionIndex == 3)
                     {
                         CheckVictoryAndType(1, 3); // 밀크카우 와의 맞짱 후 이김 승리값전달
                     }
-
                     myData.gameData.gold += 5 * Enemy.Count;
                     break;
 
@@ -398,7 +389,6 @@ public class TurnBattle : MonoBehaviour
                     {
                         CheckVictoryAndType(1, 4); // 밀크카우 와의 맞짱 후 이김 승리값전달
                     }
-
                     myData.gameData.gold += 100 * Enemy.Count;
                     break;
             }
@@ -424,7 +414,6 @@ public class TurnBattle : MonoBehaviour
                         break;
                 }
             }
-
             SceneLoad.Instance.ChangeScene("06.Field");
         }
     }
@@ -455,10 +444,9 @@ public class TurnBattle : MonoBehaviour
             Vector3 pos = new Vector3(x, 0, 0);
             obj.transform.localPosition = pos;
             Player.Add(obj);
-            CharacterButton[i].GetComponent<CharacterButton>().myCharacter = Player[i];
             Player[i].GetComponent<BattleCharacter>().myHpBar = CharacterHpbar[i];
-            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0];
-            Player[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
+            CharacterButton[i].GetComponent<CharacterButton>().myCharacter = Player[i];            
+            Player[i].GetComponent<BattleCharacter>().myTarget = Enemy[0];            
         }
     }
 
@@ -472,15 +460,11 @@ public class TurnBattle : MonoBehaviour
             if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattleType == PC.Type.Boss) pos = Vector3.zero;
             obj.transform.localPosition = pos;
             Enemy.Add(obj);
-            Enemy[i].GetComponent<BattleCharacter>().myStat.Speed = SceneLoad.Instance.MonsterSpeed;
-            EnHpbar.Add(Instantiate(EnemyHpbar, Enemy[0].GetComponent<BattleCharacter>().Canvas.transform));
-            Enemy[i].GetComponent<BattleCharacter>().myHpBar = EnHpbar[i];
-            pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
-            pos.y += 2.0f;
-            pos2 = Camera.main.WorldToScreenPoint(pos);
-            EnHpbar[i].transform.position = pos2;
-            Enemy[i].GetComponent<BattleCharacter>().ValuemyHpmaxHP();
-            Enemy[i].GetComponent<BattleCharacter>().Stunned = SceneLoad.Instance.BackAttack;
+            BattleCharacter EnemyI = Enemy[i].GetComponent<BattleCharacter>();
+            EnemyI.myStat.Speed = SceneLoad.Instance.MonsterSpeed;
+            EnHpbar.Add(Instantiate(EnemyHpbar, EnemyI.Canvas.transform));
+            EnemyI.myHpBar = EnHpbar[i];
+            EnemyI.Stunned = SceneLoad.Instance.BackAttack;
             if (obj.GetComponent<BattleCharacter>().myStat.orgData.BattleType == PC.Type.Boss)
             {
                 SoundTest.instance.PlayBGM("BGM_Boss");
@@ -494,19 +478,7 @@ public class TurnBattle : MonoBehaviour
         {
             SoundTest.instance.PlayBGM("BGM_Battle");
         }
-    }
-
-
-    void FollowEnemyHpbar() //몬스터hp바가 몬스터를 따라다니도록
-    {
-        for (int i = 0; i < Enemy.Count; ++i)
-        {
-            pos = Enemy[i].GetComponent<BattleCharacter>().transform.position;
-            pos.y += 2.0f;
-            pos2 = Camera.main.WorldToScreenPoint(pos);
-            EnHpbar[i].transform.position = pos2;
-        }
-    }
+    }    
 
     void PlayerTargetDie() //플레이어가 타겟으로삼는상대가죽으면
     {
@@ -529,7 +501,6 @@ public class TurnBattle : MonoBehaviour
             if (act.GetComponent<BattleCharacter>().State != STATE.Die)
                 return;
         VictoryCheck = true;
-
         SoundTest.instance.PlayBGM("BGM_Victory");
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
@@ -541,7 +512,6 @@ public class TurnBattle : MonoBehaviour
             if (act.GetComponent<BattleCharacter>().State != STATE.Die)
                 return;
         VictoryCheck = false;
-
         SoundTest.instance.PlayBGM("BGM_Lose");
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
@@ -570,7 +540,6 @@ public class TurnBattle : MonoBehaviour
             {
                 Enemy[i].GetComponent<BattleCharacter>().TurnActive = true; //적의 캐릭터 행동값을 트루로 만든다                  
             }
-
             if (!SelectedCharacterAttack.Inst.myAttack.activeSelf &&
                 !SelectedCharacterAttack.Inst.mySelectAttack.activeSelf)
             {
@@ -583,7 +552,6 @@ public class TurnBattle : MonoBehaviour
                     CharacterButton[i].GetComponent<CharacterButton>().mySelectCharacter.SetActive(false);
                 }
             }
-
             //클릭시 선택캐릭터 null값으로 변경 버튼들 비활성화
             SelectedCharacterAttack.Inst.myAttack.SetActive(false);
             SelectedCharacterAttack.Inst.mySelectAttack.SetActive(false);
@@ -646,8 +614,6 @@ public class TurnBattle : MonoBehaviour
         }
         CostCheck = null;
     }
-
-
     IEnumerator HealingActive()
     {
         Active.GetComponent<BattleCharacter>().Healing();
@@ -667,15 +633,13 @@ public class TurnBattle : MonoBehaviour
                 Active.GetComponent<BattleCharacter>().ChoiceSkill(Active.GetComponent<BattleCharacter>().Skill);
             }
         }
-
         foreach (GameObject act in Enemy)
         {
             if (Active == act)
             {
-                Active.GetComponent<BattleCharacter>().RandomSkill();
+                Active.GetComponent<BattleCharacter>().ChoiceSkill(Random.Range(0, 3));
             }
         }
-
         yield return new WaitForSeconds(0.5f);
         while (!Active.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle")) yield return null;
         if (!v) StartCoroutine(BackMoving(gos, gos2));
@@ -706,7 +670,6 @@ public class TurnBattle : MonoBehaviour
                 Active.transform.Translate(dir * delta, Space.World);
                 yield return null;
             }
-
             if (Mathf.Approximately(dist, 0.0f))
             {
                 Active.GetComponent<Animator>().SetBool("IsWalking", false);
@@ -733,7 +696,6 @@ public class TurnBattle : MonoBehaviour
             {
                 delta = dist;
             }
-
             dist -= delta;
             Active.transform.Translate(dir * delta, Space.World);
             yield return null;
@@ -747,7 +709,6 @@ public class TurnBattle : MonoBehaviour
             ChangeState(State.ActiveCheck);
         }
     }
-
     IEnumerator RotatingToPosition(Vector3 pos, bool v) //회전
     {
         Vector3 dir;
@@ -763,10 +724,8 @@ public class TurnBattle : MonoBehaviour
             {
                 delta = Angle;
             }
-
             Angle -= delta;
             Active.transform.Rotate(Vector3.up * rotDir * delta, Space.World);
-
             yield return null;
         }
     }
