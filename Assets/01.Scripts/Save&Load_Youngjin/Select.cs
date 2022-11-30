@@ -11,8 +11,8 @@ using UnityEngine.SceneManagement;
 public class Select : MonoBehaviour
 {
     public static Select instance = null;
-    public TextMeshProUGUI[] slotText; // ���� ��ư �Ʒ� �ؽ�Ʈ
-    public bool[] savefile = new bool[3]; //���̺����� ���� ����
+    public TextMeshProUGUI[] slotText; 
+    public bool[] savefile = new bool[3]; 
     public GameObject[] buttonList;
     public GameObject[] myMember;
     public GameObject mySaveLoad;
@@ -43,38 +43,43 @@ public class Select : MonoBehaviour
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
-            //�ش� ���Կ� �����Ͱ� �����ϸ� ���Ӿ����� �̵�
+            
         }
 
         Game();
     }
 
+
     public void Game()
     {
-        if (!savefile[DataController.instance.nowSlot]) //���� ���Կ� ������ ������ 
+        if (!savefile[DataController.instance.nowSlot]) 
         {
             DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
 
             savefile[DataController.instance.nowSlot] = true;
-            DataController.instance.SaveGameData(); //�Է��� �̸� ���� �� ���� ���� ����
+            DataController.instance.Save();
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            SceneLoad.Instance.ChangeScene("06.Field");
+            //DataController.instance.LoadGameData();
         }
 
-        SceneManager.LoadScene(6); //���Ӿ����� �̵�
     }
 
     public void ShowUI()
     {
         for (int i = 0; i < 3; i++)
         {
-            if (File.Exists(DataController.instance.filePath + $"{i}")) //������ ����
+            if (File.Exists(DataController.instance.filePath + $"{i}")) 
             {
                 savefile[i] = true;
                 DataController.instance.nowSlot = i;
                 DataController.instance.LoadGameData();
                 Vector2 temp = new Vector2(-110, 0);
                 slotText[i].transform.localPosition = temp;
-                slotText[i].text = "Saved Date:" + DataController.instance.gameData.savedTime; //������ �ð� ǥ��      
-                //  slotText[i].text+="\n"+ $"<color=blue>{DataController.instance.gameData.currentVillage}</color>";//���� �ִ� ���� ǥ��
+                slotText[i].text = "Saved Date:" + DataController.instance.gameData.savedTime;     
                 slotText[i].text += $"\nMy Progress={DataController.instance.gameData.myProgress}%";
                 DataController.instance.gameData.Kong.isAlive = true;
                 DataController.instance.gameData.Jin.isAlive = true;
@@ -101,7 +106,7 @@ public class Select : MonoBehaviour
                     obj.transform.SetParent(mySaveLoad.transform);
                     obj.transform.localPosition = position;
                     obj.SetActive(true);
-                    //��Ƽ���� ������ ������ ��
+
                 }
 
                 if (DataController.instance.gameData.Kong.isAlive)
@@ -126,7 +131,7 @@ public class Select : MonoBehaviour
                     obj.transform.SetParent(mySaveLoad.transform);
                     obj.transform.localPosition = position;
                     obj.SetActive(true);
-                    //��Ƽ���� ������ ������ ��
+
                 }
 
                 if (DataController.instance.gameData.Kong.isAlive)
@@ -151,7 +156,7 @@ public class Select : MonoBehaviour
                     obj.transform.SetParent(mySaveLoad.transform);
                     obj.transform.localPosition = position;
                     obj.SetActive(true);
-                    //��Ƽ���� ������ ������ ��
+
                 }
             }
 
@@ -161,7 +166,7 @@ public class Select : MonoBehaviour
             }
         }
 
-        DataController.instance.DataClear(); //�ҷ��� ������ �ʱ�ȭ(�ð��� ǥ�⸸ ��)
+        DataController.instance.DataClear(); 
     }
 }
 //���: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json

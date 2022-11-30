@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -166,8 +168,36 @@ public class DataController : MonoBehaviour
         filePath = Application.persistentDataPath + gamedataFilename;
     }
 
+    public void Save()
+    {
+        gameData.Kong.isLeader = true;
+        gameData.Kong.strength = 0;
+        gameData.Kong.defPower = 0;
+        gameData.Kong.HP = 150;
+        gameData.Kong.isAlive = true;
+        gameData.Kong.myUsedItems = new List<string>();
 
-    public void LoadGameData()
+        gameData.Jin.isLeader = false;
+        gameData.Jin.strength = 0;
+        gameData.Jin.defPower = 0;
+        gameData.Jin.HP = 100;
+        gameData.Jin.isAlive = true;
+        gameData.Jin.myUsedItems = new List<string>();
+
+        gameData.Ember.isLeader = false;
+        gameData.Ember.strength = 0;
+        gameData.Ember.defPower = 0;
+        gameData.Ember.HP = 125;
+        gameData.Ember.isAlive = true;
+        gameData.Ember.myUsedItems = new List<string>();
+
+        gameData.isFirstTime = false;
+        gameData.savedTime = DateTime.Now.ToString();
+        string ToJsonData = JsonUtility.ToJson(gameData);
+
+        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
+    }
+    public void InGameLoad()
     {
         if (File.Exists(filePath + nowSlot.ToString()))
         {
@@ -187,7 +217,7 @@ public class DataController : MonoBehaviour
             theQuestManager.questId = gameData.questID;
             theQuestManager.questActionIndex = gameData.questActionIndex;
 
-           // theActionController.isBackAttack = gameData.isBackAttack;
+            // theActionController.isBackAttack = gameData.isBackAttack;
 
             mySlots = myInven.transform.GetChild(0).gameObject;
             foreach (KeyValuePair<string, int> items in DataController.instance.gameData.savedInventory)
@@ -211,71 +241,103 @@ public class DataController : MonoBehaviour
                     {
                         if (DataController.instance.gameData.Kong.myUsedItems.Contains(items.Key))
                         {
-                            //UI에 표시
+                            //UI?? ???
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items.Value);
                             break;
                         }
                         else if (DataController.instance.gameData.Jin.myUsedItems.Contains(items.Key))
                         {
-                            //UI에 표시
+                            //UI?? ???
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, items.Value);
                             break;
                         }
                         else if (DataController.instance.gameData.Ember.myUsedItems.Contains(items.Key))
                         {
-                            //UI에 표시
+                            //UI?? ???
                             ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i, items.Value);
                             break;
                         }
                     }
                 }
             }
+            StopAllCoroutines();
+            SceneLoad.Instance.ChangeScene("06.Field");
 
         }
         else
         {
             Debug.Log("새로운 파일 생성");
             gameData = new GameData(); //저장된 파일이 없으면 새로 만듦
+            gameData.Kong.isLeader = true;
+            gameData.Kong.strength = 0;
+            gameData.Kong.defPower = 0;
+            gameData.Kong.HP = 150;
+            gameData.Kong.isAlive = true;
+            gameData.Kong.myUsedItems = new List<string>();
+
+            gameData.Jin.isLeader = false;
+            gameData.Jin.strength = 0;
+            gameData.Jin.defPower = 0;
+            gameData.Jin.HP = 100;
+            gameData.Jin.isAlive = true;
+            gameData.Jin.myUsedItems = new List<string>();
+
+            gameData.Ember.isLeader = false;
+            gameData.Ember.strength = 0;
+            gameData.Ember.defPower = 0;
+            gameData.Ember.HP = 125;
+            gameData.Ember.isAlive = true;
+            gameData.Ember.myUsedItems = new List<string>();
+
+            gameData.isFirstTime = false;
+        }
+    }
+    public void LoadGameData()
+    {
+
+        if (File.Exists(filePath + nowSlot.ToString()))
+        {
+            Debug.Log("불러오기");
+            string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
+            gameData = JsonUtility.FromJson<GameData>(FromJsonData); //파일이 있으면 불러옴
+                                                                     //Json을 data클래스로 복구
+        }
+        else
+        {
+            Debug.Log("새로운 파일 생성");
+            gameData = new GameData(); //저장된 파일이 없으면 새로 만듦
+           
         }
     }
 
-    public void SaveGameData()
+
+    public void SaveData()
     {
         thePlayer = GameObject.FindWithTag("Player");
         theQuestManager = FindObjectOfType<QuestManager>();
         theActionController = FindObjectOfType<ActionController>();
-
-        //Player position
+        // Player position
         gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
         gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
-
         //Quest ~ing
         gameData.questID = theQuestManager.questId;
+        gameData.questClear = theQuestManager.questComplete;
         gameData.questActionIndex = theQuestManager.questActionIndex;
-
         //BackAttack Battle ? true : false
         gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
-
-        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++) //인벤토리 저장
+        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++)
         {
             GameObject obj = InventoryController.Instance.mySlots[i];
             if (obj.transform.childCount > 0)
             {
-                Debug.Log(obj.transform.GetChild(0).name);
-                if (!gameData.savedInventory.ContainsKey(obj.transform.GetChild(0).GetComponent<Pickup>().item
-                        .itemName))
-                    gameData.savedInventory[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = i;
+                GameObject thisitem = obj.transform.GetChild(0).gameObject;
+                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName))
+                    gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
+
+                //DontDestroyOnLoad(thisitem);
             }
         }
-
-        gameData.savedTime = DateTime.Now.ToString();
-        string ToJsonData = JsonUtility.ToJson(gameData); //Json으로 변환
-        //  filePath = Application.persistentDataPath + gamedataFilename;
-        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
-        Debug.Log("저장"); //저장된 파일이 있으면 덮어씀
-        //게임 실행 후 저장된 파일 없으면 데이터 파일을 만들기 때문에 계속 덮어 씀
     }
-
     public void DataClear()
     {
         nowSlot = -1;
@@ -305,10 +367,15 @@ public class DataController : MonoBehaviour
             GameObject obj = InventoryController.Instance.mySlots[i];
             if (obj.transform.childCount > 0)
             {
-                Debug.Log(obj.transform.GetChild(0).name);
-                if (!gameData.savedInventory.ContainsKey(obj.transform.GetChild(0).GetComponent<Pickup>().item
+                GameObject thisitem = obj.transform.GetChild(0).gameObject;
+                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item
                         .itemName))
-                    gameData.savedInventory[obj.transform.GetChild(0).GetComponent<Pickup>().item.itemName] = i;
+                    gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
+                if (thisitem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient))
+                {
+                    string st = thisitem.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.ToString();
+                    gameData.myItemCount[thisitem.GetComponent<Pickup>().item.itemName] = int.Parse(st);
+                }
             }
         }
         gameData.savedTime = DateTime.Now.ToString();
@@ -318,30 +385,7 @@ public class DataController : MonoBehaviour
         Debug.Log("저장");
     }
 
-    public void SaveData()
-    {
-        thePlayer = GameObject.FindWithTag("Player");
-        theQuestManager = FindObjectOfType<QuestManager>();
-        // Player position
-        gameData.currentPosition = thePlayer.transform.position; //플레이어좌표값.
-        gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
-        //Quest ~ing
-        gameData.questID = theQuestManager.questId;
-        gameData.questClear = theQuestManager.questComplete;
-        gameData.questActionIndex = theQuestManager.questActionIndex;
-        for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++)
-        {
-            GameObject obj = InventoryController.Instance.mySlots[i];
-            if (obj.transform.childCount > 0)
-            {
-                GameObject thisitem = obj.transform.GetChild(0).gameObject;
-                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName))
-                    gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
 
-                //DontDestroyOnLoad(thisitem);
-            }
-        }
-    }
     void ShowPortrait(GameObject portrait, int i, int index)
     {
         portrait.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);

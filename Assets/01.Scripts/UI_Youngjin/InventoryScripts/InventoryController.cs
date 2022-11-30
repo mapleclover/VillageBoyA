@@ -327,7 +327,7 @@ public class InventoryController : MonoBehaviour
                 if (obj.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient ||
                     obj.layer == 8) // 소모품 혹은 재료일 경우만 실행
                 {
-                    if (obj.transform.childCount == 1)
+                    if (obj.transform.childCount <= 1)
                     {
                         GameObject count = Instantiate(itemCount);
                         itemCount.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
@@ -348,6 +348,7 @@ public class InventoryController : MonoBehaviour
                     }
                     else
                     {
+                        if(DataController.instance.gameData.myItemCount.ContainsKey(obj.GetComponent<Pickup>().item.itemName))
                         obj.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = DataController.instance
                                 .gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName].ToString();
                     }

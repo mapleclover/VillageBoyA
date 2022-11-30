@@ -20,6 +20,14 @@ public class arrowmove : MonoBehaviour
 
     void Update() //-200~-250
     {
+        if (currentleftPosition.Equals(null))
+        {
+            currentleftPosition = right.transform.localPosition.x;
+        }
+        if (currentrightPosition.Equals(null))
+        {
+            currentrightPosition = right.transform.localPosition.x;
+        }
         currentleftPosition += Time.deltaTime * dir;
         currentrightPosition -= Time.deltaTime * dir;
         if (dir > 0)

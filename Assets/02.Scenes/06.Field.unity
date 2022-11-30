@@ -23230,6 +23230,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abe4a3b52fe0bf04087b559900a1d035, type: 3}
+--- !u!114 &840502066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5223964255496096713, guid: abe4a3b52fe0bf04087b559900a1d035, type: 3}
+  m_PrefabInstance: {fileID: 840502065}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ffb860ad6e10142a15596f8a6164b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &841413447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30174,7 +30185,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -3
   m_TargetDisplay: 0
 --- !u!114 &1132406317
 MonoBehaviour:
@@ -88817,9 +88828,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5813380433056980995}
-        m_TargetAssemblyTypeName: Select, Assembly-CSharp
-        m_MethodName: Game
+      - m_Target: {fileID: 840502066}
+        m_TargetAssemblyTypeName: DataController, Assembly-CSharp
+        m_MethodName: LoadGameData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -88829,9 +88840,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5813380434079873883}
-        m_TargetAssemblyTypeName: BtnSound, Assembly-CSharp
-        m_MethodName: OnClick
+      - m_Target: {fileID: 840502066}
+        m_TargetAssemblyTypeName: DataController, Assembly-CSharp
+        m_MethodName: InGameLoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -89088,21 +89099,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5813380433056980995}
-        m_TargetAssemblyTypeName: Select, Assembly-CSharp
-        m_MethodName: Game
+      - m_Target: {fileID: 5813380434107667736}
+        m_TargetAssemblyTypeName: BtnSound, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5813380434107667736}
-        m_TargetAssemblyTypeName: BtnSound, Assembly-CSharp
-        m_MethodName: OnClick
+      - m_Target: {fileID: 840502066}
+        m_TargetAssemblyTypeName: DataController, Assembly-CSharp
+        m_MethodName: InGameLoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -89259,9 +89270,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5813380433056980995}
-        m_TargetAssemblyTypeName: Select, Assembly-CSharp
-        m_MethodName: Game
+      - m_Target: {fileID: 5813380434152348604}
+        m_TargetAssemblyTypeName: BtnSound, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -89271,9 +89282,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5813380434152348604}
-        m_TargetAssemblyTypeName: BtnSound, Assembly-CSharp
-        m_MethodName: OnClick
+      - m_Target: {fileID: 840502066}
+        m_TargetAssemblyTypeName: DataController, Assembly-CSharp
+        m_MethodName: InGameLoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

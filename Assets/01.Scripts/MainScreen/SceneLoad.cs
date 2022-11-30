@@ -66,7 +66,7 @@ public class SceneLoad : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "06.Field")
+        if (scene.name.Equals("06.Field"))
         {
             player = GameObject.FindWithTag("Player");
             camera = GameObject.FindWithTag("Camera");
@@ -231,7 +231,7 @@ public class SceneLoad : MonoBehaviour
         isChange = false;
     }
 
-    IEnumerator Loading(string mapName)
+    public IEnumerator Loading(string mapName)
     {
         isChange = true;
         yield return SceneManager.LoadSceneAsync("00.LoadingScene");
