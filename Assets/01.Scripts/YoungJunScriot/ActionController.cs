@@ -235,7 +235,6 @@ public class ActionController : MonoBehaviour
         }
         else if (theManager.isAction)
         {
-            //Debug.Log(scanObject);
             theManager.Action(scanObject);
         }
     }
@@ -291,7 +290,7 @@ public class ActionController : MonoBehaviour
     }
 
     // 아이템 정보창 클로즈
-    private void ItemInfoDisappear()
+    public void ItemInfoDisappear()
     {
         if (pickItemActivated) //trye 일때만발동.
         {

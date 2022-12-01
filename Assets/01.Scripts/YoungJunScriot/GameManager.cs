@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public TalkManager talkManager;
+    public ActionController theActionController;
     public QuestManager questManager;
     static public GameManager inst;
 
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
 
     public void Action(GameObject scanObj)
     {
+        
         scanObject = scanObj;
         ObjData objData = scanObject.GetComponent<ObjData>();
         if (isTalkAction)
@@ -41,8 +43,9 @@ public class GameManager : MonoBehaviour
             Talk(objData.id, objData.isNpc);
             NameText(scanObject, objData.isNpc);
         }
-        
 
+        theActionController.ItemInfoDisappear();
+        theActionController.NpcInfoDisappear();
         talkPanel.SetActive(isAction);
     }
 
@@ -127,6 +130,10 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < text.Length; i++)
             {
+                if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
+                {
+                    textSpeed = 10;
+                }
                 switch (text[i])
                 {
                     case '¨ã': t_monster = false; t_white = true; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
@@ -168,5 +175,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SoundTest.instance.PlayBGM("BGM_Town");
+    }
+
+    private void Update()
+    {
+
     }
 }
