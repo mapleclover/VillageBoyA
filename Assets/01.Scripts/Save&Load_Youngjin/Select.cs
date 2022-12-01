@@ -41,10 +41,10 @@ public class Select : MonoBehaviour
     public void Slot(int num)
     {
         DataController.instance.nowSlot = num;
+        ShowUI();
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
-            //ShowUI();
             
         }
 
@@ -57,7 +57,8 @@ public class Select : MonoBehaviour
             DataController.instance.nowSlot = i;
             if (!savefile[i])
             {
-               // DataController.instance.LoadGameData();
+                // DataController.instance.LoadGameData();
+               
                 Game();
                 return;
             }
@@ -179,6 +180,11 @@ public class Select : MonoBehaviour
         }
 
         DataController.instance.DataClear();
+    }
+    public void clickload()
+    {
+        mySaveLoad.SetActive(true);
+        ShowUI();
     }
 }
 //���: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json

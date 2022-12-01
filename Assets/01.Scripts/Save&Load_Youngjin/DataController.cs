@@ -137,31 +137,9 @@ public class DataController : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        if (gameData.isFirstTime)
-        {
-            gameData.Kong.isLeader = true;
-            gameData.Kong.strength = 0;
-            gameData.Kong.defPower = 0;
-            gameData.Kong.HP = 150;
-            gameData.Kong.isAlive = true;
-            gameData.Kong.myUsedItems = new List<string>();
 
-            gameData.Jin.isLeader = false;
-            gameData.Jin.strength = 0;
-            gameData.Jin.defPower = 0;
-            gameData.Jin.HP = 100;
-            gameData.Jin.isAlive = true;
-            gameData.Jin.myUsedItems = new List<string>();
+            
 
-            gameData.Ember.isLeader = false;
-            gameData.Ember.strength = 0;
-            gameData.Ember.defPower = 0;
-            gameData.Ember.HP = 125;
-            gameData.Ember.isAlive = true;
-            gameData.Ember.myUsedItems = new List<string>();
-
-            gameData.isFirstTime = false;
-        }
 
         DontDestroyOnLoad(gameObject);
         //  gameData.myInventory = new List<GameData.myPartyItems>();
@@ -170,31 +148,28 @@ public class DataController : MonoBehaviour
 
     public void Save()
     {
-        if (gameData.isFirstTime)
-        {
-            gameData.Kong.isLeader = true;
-            gameData.Kong.strength = 0;
-            gameData.Kong.defPower = 0;
-            gameData.Kong.HP = 150;
-            gameData.Kong.isAlive = true;
-            gameData.Kong.myUsedItems = new List<string>();
+        gameData.Kong.isLeader = true;
+        gameData.Kong.strength = 0;
+        gameData.Kong.defPower = 0;
+        gameData.Kong.HP = 150;
+        gameData.Kong.isAlive = true;
+        gameData.Kong.myUsedItems = new List<string>();
 
-            gameData.Jin.isLeader = false;
-            gameData.Jin.strength = 0;
-            gameData.Jin.defPower = 0;
-            gameData.Jin.HP = 100;
-            gameData.Jin.isAlive = true;
-            gameData.Jin.myUsedItems = new List<string>();
+        gameData.Jin.isLeader = false;
+        gameData.Jin.strength = 0;
+        gameData.Jin.defPower = 0;
+        gameData.Jin.HP = 100;
+        gameData.Jin.isAlive = true;
+        gameData.Jin.myUsedItems = new List<string>();
 
-            gameData.Ember.isLeader = false;
-            gameData.Ember.strength = 0;
-            gameData.Ember.defPower = 0;
-            gameData.Ember.HP = 125;
-            gameData.Ember.isAlive = true;
-            gameData.Ember.myUsedItems = new List<string>();
+        gameData.Ember.isLeader = false;
+        gameData.Ember.strength = 0;
+        gameData.Ember.defPower = 0;
+        gameData.Ember.HP = 125;
+        gameData.Ember.isAlive = true;
+        gameData.Ember.myUsedItems = new List<string>();
 
-            gameData.isFirstTime = false;
-        }
+
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData = JsonUtility.ToJson(gameData);
 
@@ -244,7 +219,7 @@ public class DataController : MonoBehaviour
                 if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName))
                     gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
 
-                //DontDestroyOnLoad(thisitem);
+                
             }
         }
     }
@@ -281,13 +256,15 @@ public class DataController : MonoBehaviour
                 if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item
                         .itemName))
                     gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
-                if (thisitem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient)&&this.transform.childCount>=2)
+                if (thisitem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient)&&thisitem.transform.childCount>=2)
                 {
                     string st = thisitem.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.ToString();
                     gameData.myItemCount[thisitem.GetComponent<Pickup>().item.itemName] = int.Parse(st);
+                    Debug.Log("Hi");
                 }
             }
         }
+        Debug.Log("?");
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData = JsonUtility.ToJson(gameData);
 
