@@ -20,19 +20,10 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(ShopManager.isAction)
-            PauseUI.gameObject.SetActive(!PauseUI.gameObject.activeSelf);
-
-            if (PauseUI.gameObject.activeSelf)
-            {
-                paused = true;
-            }
-            else
-            {
-                paused = false;
-            }
+                PauseUI.gameObject.SetActive(!PauseUI.gameObject.activeSelf); 
         }
 
-        if (paused)
+        if (PauseUI.gameObject.activeSelf)
         {
             Time.timeScale = 0f;
         }

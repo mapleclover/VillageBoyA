@@ -316,7 +316,7 @@ public class QuestManager : MonoBehaviour
     {
         for (int i = 0; i <mySlots.Length; i++)
         {
-            if (mySlots[i].transform.childCount>0)
+            if (mySlots[i].transform.childCount>0&&DataController.instance.gameData.savedInventory.ContainsKey(name)&&DataController.instance.gameData.myItemCount.ContainsKey(name))
             {
                 if (mySlots[i].transform.GetChild(0).GetComponent<Pickup>().item.itemName.Equals(name))
                 {

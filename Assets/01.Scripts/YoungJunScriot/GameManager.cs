@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public int talkIndex; // 대화순서
     public float textSpeed;
 
-    private bool isTalkAction = true;
+    public bool isTalkAction = true;
 
     [SerializeField]
     private Goal theGoal;
@@ -36,8 +36,11 @@ public class GameManager : MonoBehaviour
     {
         scanObject = scanObj;
         ObjData objData = scanObject.GetComponent<ObjData>();
-        Talk(objData.id, objData.isNpc);
-        NameText(scanObject, objData.isNpc);
+        if (isTalkAction)
+        {
+            Talk(objData.id, objData.isNpc);
+            NameText(scanObject, objData.isNpc);
+        }
         
 
         talkPanel.SetActive(isAction);
@@ -90,34 +93,63 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SaySomething(string text)
     {
+        textSpeed = PlayerPrefs.GetInt("TextSpeed");
         isTalkAction = false;
         talkText.text = "";
         bool t_monster = false, t_white = false, t_yellow = false, t_size = false, t_orgsize = false;
         bool t_ignore = false; // 특수문자를 생략하기위한 bool값.
-        for (int i = 0; i < text.Length; i++)
+        if (textSpeed == 10)
         {
-            switch (text[i])
+            for (int i = 0; i < text.Length; i++)
             {
-                case 'ⓦ': t_monster = false; t_white = true; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
-                case 'ⓜ': t_monster = true; t_white = false; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
-                case 'ⓨ': t_monster = true; t_white = false; t_yellow = true; t_size = false; t_orgsize = false; t_ignore = true; break;
-                case 'ⓢ': t_monster = false; t_white = false; t_yellow = false; t_size = true; t_orgsize = false; t_ignore = true; break;
-                case 'ⓞ': t_monster = false; t_white = false; t_yellow = false; t_size = false; t_orgsize = true; t_ignore = true; break;
+                switch (text[i])
+                {
+                    case 'ⓦ': t_monster = false; t_white = true; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
+                    case 'ⓜ': t_monster = true; t_white = false; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
+                    case 'ⓨ': t_monster = true; t_white = false; t_yellow = true; t_size = false; t_orgsize = false; t_ignore = true; break;
+                    case 'ⓢ': t_monster = false; t_white = false; t_yellow = false; t_size = true; t_orgsize = false; t_ignore = true; break;
+                    case 'ⓞ': t_monster = false; t_white = false; t_yellow = false; t_size = false; t_orgsize = true; t_ignore = true; break;
+                }
+                string t_letter = text[i].ToString();
+                if (!t_ignore)
+                {
+                    if (t_white) { t_letter = "<color=#ffffff>" + t_letter + "</color>"; }
+                    else if (t_monster) { t_letter = "<color=#42DEE3>" + t_letter + "</color>"; }
+                    else if (t_yellow) { t_letter = "<color=#FFFF00>" + t_letter + "</color>"; }
+                    else if (t_size) { t_letter = "<size=20>" + t_letter + "</size>"; }
+                    else if (t_orgsize) { t_letter = "<size=36>" + t_letter + "</size>"; }
+                    talkText.text += t_letter;
+                }
+                t_ignore = false;
             }
-            string t_letter = text[i].ToString();
-            if (!t_ignore)
-            {
-                if(t_white) { t_letter = "<color=#ffffff>" + t_letter + "</color>"; }
-                else if(t_monster) { t_letter = "<color=#42DEE3>" + t_letter + "</color>";}
-                else if (t_yellow) { t_letter = "<color=#FFFF00>" + t_letter + "</color>"; }
-                else if (t_size) { t_letter = "<size=20>" + t_letter + "</size>";}
-                else if (t_orgsize) { t_letter = "<size=36>" + t_letter + "</size>"; }
-                talkText.text += t_letter;
-            }
-            t_ignore = false;
-            
-            yield return new WaitForSeconds(textSpeed);
         }
+        else
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                switch (text[i])
+                {
+                    case 'ⓦ': t_monster = false; t_white = true; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
+                    case 'ⓜ': t_monster = true; t_white = false; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
+                    case 'ⓨ': t_monster = true; t_white = false; t_yellow = true; t_size = false; t_orgsize = false; t_ignore = true; break;
+                    case 'ⓢ': t_monster = false; t_white = false; t_yellow = false; t_size = true; t_orgsize = false; t_ignore = true; break;
+                    case 'ⓞ': t_monster = false; t_white = false; t_yellow = false; t_size = false; t_orgsize = true; t_ignore = true; break;
+                }
+                string t_letter = text[i].ToString();
+                if (!t_ignore)
+                {
+                    if (t_white) { t_letter = "<color=#ffffff>" + t_letter + "</color>"; }
+                    else if (t_monster) { t_letter = "<color=#42DEE3>" + t_letter + "</color>"; }
+                    else if (t_yellow) { t_letter = "<color=#FFFF00>" + t_letter + "</color>"; }
+                    else if (t_size) { t_letter = "<size=20>" + t_letter + "</size>"; }
+                    else if (t_orgsize) { t_letter = "<size=36>" + t_letter + "</size>"; }
+                    talkText.text += t_letter;
+                }
+                t_ignore = false;
+
+                yield return new WaitForSeconds(0.2f / textSpeed);
+            }
+        }        
         isTalkAction = true;
     }
     private void NameText(GameObject gameObject, bool isNpc)

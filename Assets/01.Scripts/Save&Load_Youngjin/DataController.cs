@@ -64,6 +64,8 @@ public struct SaveItemData
 [Serializable]
 public class GameData
 {
+    public int curSlot;
+
     //모든 배열은 0이 콩 1이 진 2가 앰버
     public int turnBattleTimeSpeed = 0; // 턴배틀게임속도
     public int myProgress = 0; //진행도
@@ -116,7 +118,7 @@ public class DataController : MonoBehaviour
     // static GameObject _container;
     public string gamedataFilename = "VillageBoyA.json"; //.json 앞에 게임 데이터 파일 이름 설정
     public string filePath;
-    public int nowSlot;
+    public int nowSlot; //0 1 2 
     public GameData gameData = new GameData();
     public static DataController instance;
     private GameObject thePlayer;
@@ -137,31 +139,9 @@ public class DataController : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        if (gameData.isFirstTime)
-        {
-            gameData.Kong.isLeader = true;
-            gameData.Kong.strength = 0;
-            gameData.Kong.defPower = 0;
-            gameData.Kong.HP = 150;
-            gameData.Kong.isAlive = true;
-            gameData.Kong.myUsedItems = new List<string>();
 
-            gameData.Jin.isLeader = false;
-            gameData.Jin.strength = 0;
-            gameData.Jin.defPower = 0;
-            gameData.Jin.HP = 100;
-            gameData.Jin.isAlive = true;
-            gameData.Jin.myUsedItems = new List<string>();
+            
 
-            gameData.Ember.isLeader = false;
-            gameData.Ember.strength = 0;
-            gameData.Ember.defPower = 0;
-            gameData.Ember.HP = 125;
-            gameData.Ember.isAlive = true;
-            gameData.Ember.myUsedItems = new List<string>();
-
-            gameData.isFirstTime = false;
-        }
 
         DontDestroyOnLoad(gameObject);
         //  gameData.myInventory = new List<GameData.myPartyItems>();
@@ -170,41 +150,38 @@ public class DataController : MonoBehaviour
 
     public void Save()
     {
-        if (gameData.isFirstTime)
-        {
-            gameData.Kong.isLeader = true;
-            gameData.Kong.strength = 0;
-            gameData.Kong.defPower = 0;
-            gameData.Kong.HP = 150;
-            gameData.Kong.isAlive = true;
-            gameData.Kong.myUsedItems = new List<string>();
+        gameData.Kong.isLeader = true;
+        gameData.Kong.strength = 0;
+        gameData.Kong.defPower = 0;
+        gameData.Kong.HP = 150;
+        gameData.Kong.isAlive = true;
+        gameData.Kong.myUsedItems = new List<string>();
 
-            gameData.Jin.isLeader = false;
-            gameData.Jin.strength = 0;
-            gameData.Jin.defPower = 0;
-            gameData.Jin.HP = 100;
-            gameData.Jin.isAlive = true;
-            gameData.Jin.myUsedItems = new List<string>();
+        gameData.Jin.isLeader = false;
+        gameData.Jin.strength = 0;
+        gameData.Jin.defPower = 0;
+        gameData.Jin.HP = 100;
+        gameData.Jin.isAlive = true;
+        gameData.Jin.myUsedItems = new List<string>();
 
-            gameData.Ember.isLeader = false;
-            gameData.Ember.strength = 0;
-            gameData.Ember.defPower = 0;
-            gameData.Ember.HP = 125;
-            gameData.Ember.isAlive = true;
-            gameData.Ember.myUsedItems = new List<string>();
+        gameData.Ember.isLeader = false;
+        gameData.Ember.strength = 0;
+        gameData.Ember.defPower = 0;
+        gameData.Ember.HP = 125;
+        gameData.Ember.isAlive = true;
+        gameData.Ember.myUsedItems = new List<string>();
 
-            gameData.isFirstTime = false;
-        }
+        gameData.curSlot=nowSlot;
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData = JsonUtility.ToJson(gameData);
 
-        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
+        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);   //nowSlot.ToString()
     }
    
     public void LoadGameData()
     {
 
-        if (File.Exists(filePath + nowSlot.ToString()))
+        if (File.Exists(filePath + nowSlot.ToString()))//File.Exists(filePath + nowSlot.ToString())
         {
             Debug.Log("불러오기");
             string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
@@ -244,7 +221,7 @@ public class DataController : MonoBehaviour
                 if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName))
                     gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
 
-                //DontDestroyOnLoad(thisitem);
+                
             }
         }
     }
@@ -256,6 +233,7 @@ public class DataController : MonoBehaviour
 
     public void SaveGameDataByESC(int curSlot)
     {
+        Debug.Log(curSlot);
         //if(SceneManager.GetActiveScene().name.Equals("06.Field"))
         thePlayer = GameObject.FindWithTag("Player");
         theQuestManager = FindObjectOfType<QuestManager>();
@@ -281,17 +259,18 @@ public class DataController : MonoBehaviour
                 if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item
                         .itemName))
                     gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
-                if (thisitem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient)&&this.transform.childCount>=2)
+                if (thisitem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient)&&thisitem.transform.childCount>=2)
                 {
                     string st = thisitem.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.ToString();
                     gameData.myItemCount[thisitem.GetComponent<Pickup>().item.itemName] = int.Parse(st);
+                    Debug.Log("Hi");
                 }
             }
         }
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData = JsonUtility.ToJson(gameData);
 
-        File.WriteAllText(filePath + curSlot.ToString(), ToJsonData);
+        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
         Debug.Log("저장");
     }
 

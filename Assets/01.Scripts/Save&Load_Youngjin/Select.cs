@@ -41,10 +41,11 @@ public class Select : MonoBehaviour
     public void Slot(int num)
     {
         DataController.instance.nowSlot = num;
+       // DataController.instance.gameData.curSlot = num;
+        ShowUI();
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
-            //ShowUI();
             
         }
 
@@ -55,9 +56,11 @@ public class Select : MonoBehaviour
         for(int i = num; i < 3; i++)
         {
             DataController.instance.nowSlot = i;
+           // DataController.instance.gameData.curSlot = i;
             if (!savefile[i])
             {
-               // DataController.instance.LoadGameData();
+                // DataController.instance.LoadGameData();
+               
                 Game();
                 return;
             }
@@ -68,18 +71,21 @@ public class Select : MonoBehaviour
 
     public void Game()
     {
-        if (!savefile[DataController.instance.nowSlot]) 
+        //Debug.Log(DataController.instance.gameData.curSlot);
+        if (!savefile[DataController.instance.nowSlot]) //instance.nowSlot
         {
             DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
 
-            savefile[DataController.instance.nowSlot] = true;
+            savefile[DataController.instance.nowSlot] = true;  //nowSlot
             DataController.instance.Save();
             SceneManager.LoadScene(2);
         }
         else
         {
             Debug.Log(DataController.instance.nowSlot);
+            Debug.Log("A");
             DataController.instance.LoadGameData();
+            Debug.Log("B");
             SceneLoad.Instance.ChangeScene("06.Field");
         }
 
@@ -179,6 +185,11 @@ public class Select : MonoBehaviour
         }
 
         DataController.instance.DataClear();
+    }
+    public void clickload()
+    {
+        mySaveLoad.SetActive(true);
+        ShowUI();
     }
 }
 //���: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json
