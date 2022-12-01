@@ -14,8 +14,7 @@ public class Sound
 
 public class SoundTest : MonoBehaviour
 {
-    static public SoundTest instance;
-    public Slider[] volumeSlider;
+    public static SoundTest instance;
     public AudioSource[] BGMSFXSource; //0번은 BGM 1번은 SFX
 
     // Start is called before the first frame update
@@ -25,18 +24,10 @@ public class SoundTest : MonoBehaviour
         {
             PlayerPrefs.SetFloat("BGMVolume", 0.0f);
         }
-        else
-        {
-            Load(0);
-        }
 
         if (!PlayerPrefs.HasKey("SFXVolume"))
         {
             PlayerPrefs.SetFloat("SFXVolume", 0.0f);
-        }
-        else
-        {
-            Load(1);
         }
     }
     void Awake()
@@ -48,7 +39,7 @@ public class SoundTest : MonoBehaviour
         }
 
         else
-            Destroy(gameObject);
+            Destroy(gameObject);      
     }
 
     public AudioSource[] audioSourceEffects;
@@ -137,38 +128,36 @@ public class SoundTest : MonoBehaviour
     }
 
 
-    public void ChangeVolume(int i)
+    public void ChangeVolume(float value, int type)
     {
-        if (i == 0)
+        if (type == 0)
         {
-            BGMSFXSource[i].volume = volumeSlider[i].value;
+            BGMSFXSource[type].volume = value;
         }
         else
         {
             for(int j = 1; j < BGMSFXSource.Length - 1; j++)
             {
-                BGMSFXSource[j].volume = volumeSlider[1].value;
+                BGMSFXSource[type].volume = value;
             }
         }
-        Save(i);
+        Save(value, type);
     }
 
-    private void Load(int i)
+    public void Load()
     {
-        if (i == 0)
-        {
-            volumeSlider[i].value = 1.0f - PlayerPrefs.GetFloat("BGMVolume");
-        }
-        else { volumeSlider[i].value = 1.0f - PlayerPrefs.GetFloat("SFXVolume"); }
+        Slider BGMSlider = GameObject.Find("BGM").GetComponent<Slider>();
+        Slider SFXSlider = GameObject.Find("SFX").GetComponent<Slider>();
 
-        BGMSFXSource[i].volume = volumeSlider[i].value;
+        BGMSlider.value = 1.0f - PlayerPrefs.GetFloat("BGMVolume");
+        SFXSlider.value = 1.0f - PlayerPrefs.GetFloat("SFXVolume");
     }
 
-    private void Save(int i)
+    private void Save(float value, int type)
     {
-        if(i == 0)
-          PlayerPrefs.SetFloat("BGMVolume", 1.0f - volumeSlider[i].value);
+        if(type == 0)
+          PlayerPrefs.SetFloat("BGMVolume", 1.0f - value);
         else
-          PlayerPrefs.SetFloat("SFXVolume", 1.0f - volumeSlider[i].value);
+          PlayerPrefs.SetFloat("SFXVolume", 1.0f - value);
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385538, g: 0.22906086, b: 0.30346623, a: 1}
+  m_IndirectSpecularColor: {r: 0.1838554, g: 0.22906086, b: 0.3034666, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19379,6 +19379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 703070052}
   - component: {fileID: 703070053}
+  - component: {fileID: 703070054}
   m_Layer: 5
   m_Name: SFX
   m_TagString: Untagged
@@ -19461,9 +19462,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1329575920}
-        m_TargetAssemblyTypeName: SoundTest, Assembly-CSharp
-        m_MethodName: ChangeVolume
+      - m_Target: {fileID: 703070054}
+        m_TargetAssemblyTypeName: VolumeSlider, Assembly-CSharp
+        m_MethodName: changeVolume
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19473,6 +19474,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &703070054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703070051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816216eb2c405bd4db158041763014fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &708297463
 GameObject:
   m_ObjectHideFlags: 0
@@ -26496,6 +26509,7 @@ MonoBehaviour:
   isAction: 0
   talkIndex: 0
   textSpeed: 0.001
+  isTalkAction: 1
   theGoal: {fileID: 1651944446}
 --- !u!4 &948012091
 Transform:
@@ -29526,6 +29540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1125988527}
   - component: {fileID: 1125988528}
+  - component: {fileID: 1125988529}
   m_Layer: 5
   m_Name: BGM
   m_TagString: Untagged
@@ -29608,9 +29623,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1329575920}
-        m_TargetAssemblyTypeName: SoundTest, Assembly-CSharp
-        m_MethodName: ChangeVolume
+      - m_Target: {fileID: 1125988529}
+        m_TargetAssemblyTypeName: VolumeSlider, Assembly-CSharp
+        m_MethodName: changeVolume
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29620,6 +29635,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1125988529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125988526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816216eb2c405bd4db158041763014fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1127389232
 GameObject:
   m_ObjectHideFlags: 0
@@ -36059,9 +36086,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46b9f3ac242d2e438f7db2c930246f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeSlider:
-  - {fileID: 1125988528}
-  - {fileID: 703070053}
   BGMSFXSource:
   - {fileID: 1329575919}
   - {fileID: 1329575918}
@@ -80657,6 +80681,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 3941301070883688382}
+        m_TargetAssemblyTypeName: SettingButtonLoad, Assembly-CSharp
+        m_MethodName: SliderLoad
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!224 &3941301070883688355
 RectTransform:
   m_ObjectHideFlags: 0
@@ -80691,6 +80727,7 @@ GameObject:
   - component: {fileID: 3941301070883688353}
   - component: {fileID: 3941301070883688354}
   - component: {fileID: 3941301070883688381}
+  - component: {fileID: 3941301070883688382}
   m_Layer: 5
   m_Name: Setting
   m_TagString: Untagged
@@ -80708,6 +80745,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dce93f03a40f061429314c79f029d03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3941301070883688382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3941301070883688380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167bf7b8bd6dbb04e9caf047fc786612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!222 &3941301070922367040
