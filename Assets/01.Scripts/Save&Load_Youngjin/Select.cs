@@ -184,7 +184,7 @@ public class Select : MonoBehaviour
             }
         }
 
-        DataController.instance.DataClear();
+      //  DataController.instance.DataClear();
     }
     public void clickload()
     {
