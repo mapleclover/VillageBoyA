@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385538, g: 0.22906086, b: 0.30346623, a: 1}
+  m_IndirectSpecularColor: {r: 0.18385577, g: 0.22906174, b: 0.30346733, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -28979,6 +28979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   talkManager: {fileID: 384855008}
+  theActionController: {fileID: 0}
   questManager: {fileID: 1638807067}
   talkPanel: {fileID: 443394200}
   portraitImg: {fileID: 814475362}
@@ -28989,6 +28990,7 @@ MonoBehaviour:
   isAction: 0
   talkIndex: 0
   textSpeed: 0
+  isTalkAction: 1
   theGoal: {fileID: 1651944446}
 --- !u!4 &948012091
 Transform:
@@ -32979,7 +32981,10 @@ MonoBehaviour:
   rectTransform: {fileID: 1276595758}
   myPanel: {fileID: 1276595755}
   myPlayerUI: {fileID: 0}
+  myInfo: {fileID: 0}
   myUI: {fileID: 1163097009}
+  myMap: {fileID: 0}
+  myQuest: {fileID: 0}
   myInventory: {fileID: 342795238363401307}
   setMyInventory: {fileID: 342795238363401308}
   isOpen: 0
@@ -33928,7 +33933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1163097010
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36866,16 +36871,11 @@ MonoBehaviour:
   alert: {fileID: 147076177}
   myMessage: {fileID: 1695268659}
   myItem: {fileID: 0}
-  curAmount:
-  - {fileID: 182964133}
-  - {fileID: 799276813}
-  required:
-  - {fileID: 888132302}
-  - {fileID: 218557731}
+  myPanel: {fileID: 1276595755}
+  Amount: []
   myNumbers:
   - {fileID: 613394834}
   - {fileID: 509227165}
-  myPanel: {fileID: 1276595755}
   EnchantDelay: 0
   result: 0
   mySlider: {fileID: 1245910295}
@@ -37025,7 +37025,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -39641,7 +39641,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 25, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -48279,7 +48279,10 @@ MonoBehaviour:
   rectTransform: {fileID: 0}
   myPanel: {fileID: 0}
   myPlayerUI: {fileID: 0}
+  myInfo: {fileID: 0}
   myUI: {fileID: 1131686819}
+  myMap: {fileID: 0}
+  myQuest: {fileID: 0}
   myInventory: {fileID: 1684219660}
   setMyInventory: {fileID: 1684219659}
   isOpen: 0
@@ -68532,6 +68535,7 @@ MonoBehaviour:
   - {fileID: 2122793611201237777}
   - {fileID: 2122793611653046707}
   mySaveLoad: {fileID: 2122793611689238398}
+  fullLoad: {fileID: 0}
 --- !u!224 &2122793611689238369
 RectTransform:
   m_ObjectHideFlags: 0
@@ -78601,6 +78605,7 @@ MonoBehaviour:
   - {fileID: 8327107598617175359}
   - {fileID: 8327107596924540899}
   mySaveLoad: {fileID: 8327107597345499811}
+  fullLoad: {fileID: 0}
 --- !u!224 &8327107597345499810
 RectTransform:
   m_ObjectHideFlags: 0
@@ -81037,9 +81042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9a1bddc1d04a248b6a97038fc62cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeSlider:
-  - {fileID: 0}
-  BGMSFXSource: []
+  instance: {fileID: 0}
 --- !u!224 &9170386698553441197
 RectTransform:
   m_ObjectHideFlags: 0
