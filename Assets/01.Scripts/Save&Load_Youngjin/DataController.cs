@@ -78,10 +78,12 @@ public class GameData
     public Vector3 currentPosition = new Vector3(-136, 0, -90); //현재 캐릭터 위치
     public Vector3 currentRotation;
 
-    public Dictionary<string, int> savedInventory = new Dictionary<string, int>(); //아이템과 몇번째 슬롯인지 저장
-  // public 
-    
-    public Dictionary<string, int> myItemCount = new Dictionary<string, int>(); // 아이템과 개수
+    //  public Dictionary<string, int> savedInventory = new Dictionary<string, int>(); //아이템과 몇번째 슬롯인지 저장
+    // public Dictionary<string, int> myItemCount = new Dictionary<string, int>(); // 아이템과 개수
+    public List<string> itemList = new List<string>();
+    public List<int> slotNum = new List<int>();
+    public List<int> itemCount = new List<int>();
+
     public int gold = 0;
 
     public bool isFirstTime = true;
@@ -248,9 +250,14 @@ public class DataController : MonoBehaviour
             if (obj.transform.childCount > 0)
             {
                 GameObject thisitem = obj.transform.GetChild(0).gameObject;
-                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item.itemName))
-                    gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
+                if (!gameData.itemList.Contains(thisitem.GetComponent<Pickup>().item.itemName))
+                {
+                    gameData.itemList.Add(thisitem.GetComponent<Pickup>().item.itemName);
 
+                }
+                    
+               
+                
                 
             }
         }
@@ -286,14 +293,16 @@ public class DataController : MonoBehaviour
             if (obj.transform.childCount > 0)
             {
                 GameObject thisitem = obj.transform.GetChild(0).gameObject;
-                if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item
-                        .itemName))
-                    gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
+                if (!gameData.itemList.Contains(thisitem.GetComponent<Pickup>().item.itemName))
+                {
+                    gameData.itemList.Add(thisitem.GetComponent<Pickup>().item.itemName);
+                    gameData.slotNum.Add(i);
+                }
                 if (thisitem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient)&&thisitem.transform.childCount>=2)
                 {
                     string st = thisitem.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.ToString();
-                    gameData.myItemCount[thisitem.GetComponent<Pickup>().item.itemName] = int.Parse(st);
-                    Debug.Log("Hi");
+                    gameData.itemCount.Add(int.Parse(st));
+
                 }
             }
         }

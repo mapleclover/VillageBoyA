@@ -38,12 +38,13 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public void OnPointerClick(PointerEventData eventData)          //아이템을 누른 후 어떤 캐릭터에게 적용 시킬 것인지
     {
         Transform itemTransform = PointerInfo.instance.transform;
-        if (itemTransform.gameObject.layer == 8)          //소모품을 캐릭터에게 사용
+        if (itemTransform.gameObject.layer.Equals(8))          //소모품을 캐릭터에게 사용
         {
 
             GameObject temp = PointerInfo.instance.transform.gameObject;
             int heal= temp.GetComponent<Pickup>().item.value;
             string name = temp.GetComponent<Pickup>().item.itemName;
+            int index = DataController.instance.gameData.itemList.IndexOf(name);
             if (gameObject.CompareTag("Kong"))  //150
             {
                 if (DataController.instance.gameData.Kong.HP <= 140)            //최대체력과 비교해 회복되는 양을 계산
@@ -51,7 +52,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     DataController.instance.gameData.Kong.HP += heal;
                     myText.text = $"{this.transform.name} has gained +{heal}hp!";      //회복됐다는 알림
                     StartCoroutine(UsedPotion(1.0f));
-                    CheckDestroy(name,temp);
+                    CheckDestroy(index,temp);
                     konghp.GetComponent<Slider>().value += heal / 150f;     //필드에 있는 슬라이더에 반영
                 }
                 else if (DataController.instance.gameData.Kong.HP < 150 && DataController.instance.gameData.Kong.HP > 140)
@@ -60,7 +61,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     DataController.instance.gameData.Kong.HP += heal;
                     myText.text = $"{this.transform.name} has gained +{heal}hp!";
                     StartCoroutine(UsedPotion(1.0f));
-                    CheckDestroy(name, temp);
+                    CheckDestroy(index, temp);
                     konghp.GetComponent<Slider>().value += heal / 150f;
                 }
                 else
@@ -76,7 +77,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     DataController.instance.gameData.Jin.HP += heal;             //Jin의 경우
                     myText.text = $"{this.transform.name} has gained +{heal}hp!"; 
                     StartCoroutine(UsedPotion(1.0f));
-                    CheckDestroy(name, temp);
+                    CheckDestroy(index, temp);
                     jinhp.GetComponent<Slider>().value += heal * 0.01f;
                 }
                 else if (DataController.instance.gameData.Jin.HP < 100 && DataController.instance.gameData.Jin.HP > 90)
@@ -85,7 +86,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     DataController.instance.gameData.Jin.HP += heal;
                     myText.text = $"{this.transform.name} has gained +{heal}hp!";
                     StartCoroutine(UsedPotion(1.0f));
-                    CheckDestroy(name, temp);
+                    CheckDestroy(index, temp);
                     jinhp.GetComponent<Slider>().value += heal * 0.01f;
                 }
                 else
@@ -101,7 +102,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     DataController.instance.gameData.Ember.HP += heal;
                     myText.text = $"{this.transform.name} has gained +{heal}hp!";       //Ember의 경우
                     StartCoroutine(UsedPotion(1.0f));
-                    CheckDestroy(name, temp);
+                    CheckDestroy(index, temp);
                     emberhp.GetComponent<Slider>().value += heal * 0.008f;
                 }
                 else if (DataController.instance.gameData.Ember.HP < 125 && DataController.instance.gameData.Ember.HP > 115)
@@ -110,7 +111,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                     DataController.instance.gameData.Ember.HP += heal;
                     myText.text = $"{this.transform.name} has gained +{heal}hp!";
                     StartCoroutine(UsedPotion(1.0f));
-                    CheckDestroy(name, temp);
+                    CheckDestroy(index, temp);
                     emberhp.GetComponent<Slider>().value += heal * 0.008f;
                 }
                 else
@@ -304,17 +305,19 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         obj.GetComponent<RawImage>().raycastTarget = false;
 
     }
-    public void CheckDestroy(string name, GameObject temp)
+    public void CheckDestroy(int index, GameObject temp)
     {
-        if (DataController.instance.gameData.myItemCount[name] > 1)
+        if (DataController.instance.gameData.itemCount[index] > 1)
         {
             //포션이 2개 이상이면 destroy 대신 -1
-            DataController.instance.gameData.myItemCount[name]--;
+            DataController.instance.gameData.itemCount[index]--;
             InventoryController.Instance.ShowNumbertoUI();
         }
         else
         {
-            DataController.instance.gameData.savedInventory.Remove(name);
+            DataController.instance.gameData.itemList.RemoveAt(index);
+            DataController.instance.gameData.itemCount.RemoveAt(index);
+            DataController.instance.gameData.slotNum.RemoveAt(index);
             Destroy(temp); //1개일 경우 destroy
         }
 

@@ -316,13 +316,14 @@ public class QuestManager : MonoBehaviour
     {
         for (int i = 0; i <mySlots.Length; i++)
         {
-            if (mySlots[i].transform.childCount>0&&DataController.instance.gameData.savedInventory.ContainsKey(name)&&DataController.instance.gameData.myItemCount.ContainsKey(name))
+            if (mySlots[i].transform.childCount>0&&DataController.instance.gameData.itemList.Contains(name))
             {
                 if (mySlots[i].transform.GetChild(0).GetComponent<Pickup>().item.itemName.Equals(name))
                 {
                     string thisItem =mySlots[i].transform.GetChild(0).GetComponent<Pickup>().item.itemName;
-                    DataController.instance.gameData.savedInventory.Remove(thisItem);
-                    DataController.instance.gameData.myItemCount.Remove(thisItem);
+                    DataController.instance.gameData.itemList.Remove(thisItem);
+                    DataController.instance.gameData.itemCount.Remove(DataController.instance.gameData.itemList.IndexOf(name));
+                    DataController.instance.gameData.slotNum.Remove(DataController.instance.gameData.itemList.IndexOf(name));
                     Destroy(mySlots[i].transform.GetChild(0).gameObject);
                     break;
                 }

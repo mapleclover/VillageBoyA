@@ -274,9 +274,12 @@ public class TurnBattle : MonoBehaviour
     }
 
     void Start()
-    {        
-        if (myData.gameData.myItemCount.ContainsKey("포션"))
-            HealingPotion = myData.gameData.myItemCount["포션"]; //포션
+    {
+        if (myData.gameData.itemList.Contains("포션"))
+        {
+            int index = myData.gameData.itemList.IndexOf("포션");
+            HealingPotion = myData.gameData.itemCount[index]; //포션
+        }
         else HealingPotion = 0;
 
         for (int i = 0; i < Player.Count; ++i) //플레이어갯수만큼 추가
