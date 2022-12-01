@@ -93,7 +93,8 @@ public class SceneLoad : MonoBehaviour
                 GameObject obj;
                 for (int i = 0; i < InventoryController.Instance.curItem.Count; i++)
                 {
-                    if (InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.itemName == items.Key)
+                    string name = InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.itemName;
+                    if (name.Equals(items.Key))
                     {
                         obj = Instantiate(InventoryController.Instance.curItem[i]);
                         obj.transform.SetParent(mySlots.transform.GetChild(items.Value));
@@ -106,9 +107,23 @@ public class SceneLoad : MonoBehaviour
                         //  }
                     }
                     else continue;
+                    if (InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.enhanceableItem.Equals(Item.EnhanceableItem.Possible))
+                    {
+                        switch (name)
+                        {
+                            case "장갑":
+                                obj.GetComponent<EnhanceableItems>().myData.Level = DataController.instance.gameData.gloves.Level;
+                                break;
+                            case "목걸이":
+                                obj.GetComponent<EnhanceableItems>().myData.Level = DataController.instance.gameData.necklace.Level;
+                                break;
+                            case "금반지":
+                                obj.GetComponent<EnhanceableItems>().myData.Level = DataController.instance.gameData.goldring.Level;
+                                break;
+                        }
+                    }
 
-
-                    if (InventoryController.Instance.curItem[i].layer == 7)
+                    if (InventoryController.Instance.curItem[i].layer.Equals(7))
                     {
                         if (DataController.instance.gameData.Kong.myUsedItems.Contains(items.Key))
                         {

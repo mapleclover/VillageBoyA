@@ -246,12 +246,15 @@ public class InventoryController : MonoBehaviour
                     break;
 
                 case "금반지":
+                    DataController.instance.gameData.goldring.Level = 1;
                     ItemAppears(theItem);
                     break;
                 case "장갑":
+                    DataController.instance.gameData.gloves.Level = 1;
                     ItemAppears(theItem);
                     break;
                 case "목걸이":
+                    DataController.instance.gameData.necklace.Level = 1;
                     ItemAppears(theItem);
                     break;
 

@@ -9,8 +9,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Newtonsoft.Json;
-
 
 [Serializable]
 public struct SaveItemData
@@ -62,6 +60,8 @@ public struct SaveItemData
 }
 
 
+
+
 [Serializable]
 public class GameData
 {
@@ -99,12 +99,16 @@ public class GameData
         public List<string> myUsedItems;
     }
 
+  
+
     //폴더 안 저장된 파일 확인
     public myPartyStats Kong;
     public myPartyStats Jin;
     public myPartyStats Ember;
     public SaveItemData apple;
     public SaveItemData gloves;
+    public SaveItemData goldring;
+    public SaveItemData necklace;
 
 
     //public int[] questProgress = Enumerable.Repeat(0, 2).ToArray();     //퀘스트 진행도

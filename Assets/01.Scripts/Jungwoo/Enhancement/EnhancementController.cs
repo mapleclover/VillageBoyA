@@ -12,8 +12,10 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
 
     public GameObject myPanel;
     public GameObject myPlayerUI; // 박영준 플레이어ui가 자꾸 가려서 껏다키기위함.
-
+    public GameObject myInfo;
     public GameObject myUI;
+    public GameObject myMap;
+    public GameObject myQuest;
     public RectTransform myInventory;
     public GameObject setMyInventory;
     public bool isOpen = false;
@@ -43,6 +45,8 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
         myInventory.localPosition = new Vector2(200f, 35f);
         myUI.SetActive(true);
         setMyInventory.SetActive(true);
+        myMap.SetActive(false);
+        myQuest.SetActive(false);
         myPlayerUI.SetActive(false);
         isOpen = true;
     }
@@ -53,6 +57,9 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
         myInventory.localPosition = new Vector2(0f, 35f);
         myUI.SetActive(false);
         setMyInventory.SetActive(false);
+        myInfo.SetActive(false);
+        myMap.SetActive(true);
+        myQuest.SetActive(true);
         myPlayerUI.SetActive(true);
         isOpen = false;
     }

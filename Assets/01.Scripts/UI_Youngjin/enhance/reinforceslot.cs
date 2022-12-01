@@ -274,6 +274,18 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 {
                     result = true;
                     myItem.GetComponent<EnhanceableItems>().myData.Level++;
+                    if (myItem.GetComponent<Pickup>().item.itemName.Equals("Àå°©"))
+                    {
+                        DataController.instance.gameData.gloves.Level++;
+                    }
+                    else if (myItem.GetComponent<Pickup>().item.itemName.Equals("¸ñ°ÉÀÌ"))
+                    {
+                        DataController.instance.gameData.necklace.Level++;
+                    }
+                   else  if (myItem.GetComponent<Pickup>().item.itemName.Equals("±Ý¹ÝÁö"))
+                    {
+                        DataController.instance.gameData.goldring.Level++;
+                    }
                     Debug.Log("¼º°ø");
                     Debug.Log($"°¡°Ý{myItem._EnchantCost}");
                     Debug.Log($"°ø°Ý·Â{myItem._AP}");
