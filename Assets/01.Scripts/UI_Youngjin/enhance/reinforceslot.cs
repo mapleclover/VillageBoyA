@@ -9,31 +9,38 @@ using static MirzaBeig.ParticleSystems.Demos.DemoManager;
 
 public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯ÇÏ¸é µ· 100¿ø¾¿ µé¾î¿É´Ï´Ù...-¿µÁø
 {
-    //public Transform myInven2;
-    public GameObject[] myIngSlots;
-    public GameObject[] myInven;
+    [Header("Leave Me Empty")]
+    public EnhanceableItems myItem;
+
+    [Header("Material")]
+    // ÇöÀç º¸À¯ Àç·á¼ö·®°ú ÇÊ¿ä ¼ö·®
+    public TMPro.TMP_Text[] Amount;
+    public GameObject[] myNumbers;
     public GameObject alert; // Àç·á°¡ ¾ø´Ù¸é ¹«½¼ Àç·á°¡ ÇÊ¿äÇÑÁö ¾Ë¸²
     public TMPro.TMP_Text myMessage;
-    public EnhanceableItems myItem;
-    public TMPro.TMP_Text[] curAmount;
-    public TMPro.TMP_Text[] required;
-    public GameObject[] myNumbers;
-    public GameObject myPanel;
 
-    public bool EnchantDelay = false;
-    public bool result = false;
+    [Header("Slots")]
+    public GameObject[] myIngSlots;
+    public GameObject[] myInven;
+
+    [Header("Animation")]
     public Slider mySlider;
     public Animator mySliderAnim;
     public GameObject SuccessPanel;
     public GameObject FailPanel;
 
+    [Header("Game Setting")]
+    public GameObject myPanel;
+    public bool EnchantDelay = false;
+    public bool result = false;
 
 
-    public void UpdateNumberUI(string name, int level,int index)            
-    {                                                                       
-        curAmount[index].text = $"{DataController.instance.gameData.myItemCount[name]}";        //°¡Áö°í ÀÖ´Â °³¼ö¿Í ¸î°³ ÇÊ¿äÇÑÁö Ç¥½Ã
-        required[index].text = $"{level}";
+    public void UpdateNumberUI(string name, int level, int index)
+    {
+        Amount[index].text = $"{DataController.instance.gameData.myItemCount[name]} " + "/" + $" {level}";        //°¡Áö°í ÀÖ´Â °³¼ö¿Í ¸î°³ ÇÊ¿äÇÑÁö Ç¥½Ã
+        
     }
+
 
 
     public void OnDrop(PointerEventData eventData)
@@ -137,8 +144,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         }
         ShowIngredients(itemname1, 0);      //ÀÖÀ» °æ¿ì
         ShowIngredients(itemname2, 1);      //ÇÊ¿äÇÑ Àç·á¸¦ °­È­Ã¢ ½½·ÔÀ¸·Î °¡Á®¿È
-        UpdateNumberUI(itemname1,level,0);
-        UpdateNumberUI(itemname2, level,1);     //ÇöÀç ¸î °³ ÀÖ´ÂÁö¿Í ¸î °³°¡ ÇÊ¿äÇÑÁö¸¦ ³ªÅ¸³¿
+        UpdateNumberUI(itemname1, level, 0);
+        UpdateNumberUI(itemname2, level, 1);     //ÇöÀç ¸î °³ ÀÖ´ÂÁö¿Í ¸î °³°¡ ÇÊ¿äÇÑÁö¸¦ ³ªÅ¸³¿
         myNumbers[0].SetActive(true);
         myNumbers[1].SetActive(true);       
         myPanel.SetActive(true);
