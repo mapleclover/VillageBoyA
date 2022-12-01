@@ -170,104 +170,8 @@ public class DataController : MonoBehaviour
 
     public void Save()
     {
-        gameData.Kong.isLeader = true;
-        gameData.Kong.strength = 0;
-        gameData.Kong.defPower = 0;
-        gameData.Kong.HP = 150;
-        gameData.Kong.isAlive = true;
-        gameData.Kong.myUsedItems = new List<string>();
-
-        gameData.Jin.isLeader = false;
-        gameData.Jin.strength = 0;
-        gameData.Jin.defPower = 0;
-        gameData.Jin.HP = 100;
-        gameData.Jin.isAlive = true;
-        gameData.Jin.myUsedItems = new List<string>();
-
-        gameData.Ember.isLeader = false;
-        gameData.Ember.strength = 0;
-        gameData.Ember.defPower = 0;
-        gameData.Ember.HP = 125;
-        gameData.Ember.isAlive = true;
-        gameData.Ember.myUsedItems = new List<string>();
-
-        gameData.isFirstTime = false;
-        gameData.savedTime = DateTime.Now.ToString();
-        string ToJsonData = JsonUtility.ToJson(gameData);
-
-        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
-    }
-    public void InGameLoad()
-    {
-        if (File.Exists(filePath + nowSlot.ToString()))
+        if (gameData.isFirstTime)
         {
-            Debug.Log("불러오기");
-            string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
-            gameData = JsonUtility.FromJson<GameData>(FromJsonData); //파일이 있으면 불러옴
-                                                                     //Json을 data클래스로 복구
-
-            thePlayer = GameObject.FindWithTag("Player");
-            theQuestManager = FindObjectOfType<QuestManager>();
-            theActionController = FindObjectOfType<ActionController>();
-            myInven = GameObject.FindWithTag("Inventory");
-
-            thePlayer.transform.position = gameData.currentPosition;
-            thePlayer.transform.eulerAngles = gameData.currentRotation;
-
-            theQuestManager.questId = gameData.questID;
-            theQuestManager.questActionIndex = gameData.questActionIndex;
-
-            // theActionController.isBackAttack = gameData.isBackAttack;
-
-            mySlots = myInven.transform.GetChild(0).gameObject;
-            foreach (KeyValuePair<string, int> items in DataController.instance.gameData.savedInventory)
-            {
-                GameObject obj;
-                for (int i = 0; i < InventoryController.Instance.curItem.Count; i++)
-                {
-                    if (InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.itemName.Equals(items.Key))
-                    {
-                        obj = Instantiate(InventoryController.Instance.curItem[i]);
-                        obj.transform.SetParent(mySlots.transform.GetChild(items.Value));
-                        obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                        obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
-                        obj.transform.localPosition = Vector2.zero;
-
-                    }
-                    else continue;
-
-
-                    if (InventoryController.Instance.curItem[i].layer.Equals(7))
-                    {
-                        if (DataController.instance.gameData.Kong.myUsedItems.Contains(items.Key))
-                        {
-                            //UI?? ???
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items.Value);
-                            break;
-                        }
-                        else if (DataController.instance.gameData.Jin.myUsedItems.Contains(items.Key))
-                        {
-                            //UI?? ???
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, items.Value);
-                            break;
-                        }
-                        else if (DataController.instance.gameData.Ember.myUsedItems.Contains(items.Key))
-                        {
-                            //UI?? ???
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i, items.Value);
-                            break;
-                        }
-                    }
-                }
-            }
-            StopAllCoroutines();
-            SceneLoad.Instance.ChangeScene("06.Field");
-
-        }
-        else
-        {
-            Debug.Log("새로운 파일 생성");
-            gameData = new GameData(); //저장된 파일이 없으면 새로 만듦
             gameData.Kong.isLeader = true;
             gameData.Kong.strength = 0;
             gameData.Kong.defPower = 0;
@@ -291,7 +195,12 @@ public class DataController : MonoBehaviour
 
             gameData.isFirstTime = false;
         }
+        gameData.savedTime = DateTime.Now.ToString();
+        string ToJsonData = JsonUtility.ToJson(gameData);
+
+        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
     }
+   
     public void LoadGameData()
     {
 
@@ -309,6 +218,7 @@ public class DataController : MonoBehaviour
            
         }
     }
+
 
 
     public void SaveData()
@@ -371,7 +281,7 @@ public class DataController : MonoBehaviour
                 if (!gameData.savedInventory.ContainsKey(thisitem.GetComponent<Pickup>().item
                         .itemName))
                     gameData.savedInventory[thisitem.GetComponent<Pickup>().item.itemName] = i;
-                if (thisitem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient))
+                if (thisitem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient)&&this.transform.childCount>=2)
                 {
                     string st = thisitem.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.ToString();
                     gameData.myItemCount[thisitem.GetComponent<Pickup>().item.itemName] = int.Parse(st);

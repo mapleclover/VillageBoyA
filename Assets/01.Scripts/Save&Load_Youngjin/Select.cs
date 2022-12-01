@@ -43,6 +43,7 @@ public class Select : MonoBehaviour
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
+            //ShowUI();
             
         }
 
@@ -62,8 +63,9 @@ public class Select : MonoBehaviour
         }
         else
         {
+            Debug.Log(DataController.instance.nowSlot);
+          //  DataController.instance.LoadGameData();
             SceneLoad.Instance.ChangeScene("06.Field");
-            //DataController.instance.LoadGameData();
         }
 
     }
@@ -72,92 +74,87 @@ public class Select : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            if (File.Exists(DataController.instance.filePath + $"{i}")) 
+            if (File.Exists(DataController.instance.filePath + $"{i}"))
             {
                 savefile[i] = true;
                 DataController.instance.nowSlot = i;
                 DataController.instance.LoadGameData();
                 Vector2 temp = new Vector2(-110, 0);
                 slotText[i].transform.localPosition = temp;
-                slotText[i].text = "Saved Date:" + DataController.instance.gameData.savedTime;     
+                slotText[i].text = "Saved Date:" + DataController.instance.gameData.savedTime;
                 slotText[i].text += $"\nMy Progress={DataController.instance.gameData.myProgress}%";
                 DataController.instance.gameData.Kong.isAlive = true;
                 DataController.instance.gameData.Jin.isAlive = true;
                 DataController.instance.gameData.Ember.isAlive = true;
-                if (DataController.instance.gameData.Kong.isAlive)
+
+                Vector3 position = myMember[0].transform.localPosition;
+                position.x = 140;
+                position.y = buttonList[i].transform.localPosition.y;
+                GameObject obj = Instantiate(myMember[0], position, Quaternion.identity);
+
+
+                if (partyPortrait[i][0] != null)
                 {
-                    Vector3 position = myMember[0].transform.localPosition;
-                    position.x = 140;
-                    position.y = buttonList[i].transform.localPosition.y;
-                    GameObject obj = Instantiate(myMember[0], position, Quaternion.identity);
-
-
-                    if (partyPortrait[i][0] != null)
-                    {
-                        Destroy(partyPortrait[i][0]);
-                    }
-
-                    partyPortrait[i][0] = obj;
-                    if (DataController.instance.gameData.Kong.isLeader)
-                    {
-                        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
-                    }
-
-                    obj.transform.SetParent(mySaveLoad.transform);
-                    obj.transform.localPosition = position;
-                    obj.SetActive(true);
-
+                    Destroy(partyPortrait[i][0]);
                 }
 
-                if (DataController.instance.gameData.Kong.isAlive)
+                partyPortrait[i][0] = obj;
+                if (DataController.instance.gameData.Kong.isLeader)
                 {
-                    Vector3 position = myMember[1].transform.localPosition;
-                    position.x = 220;
-                    position.y = buttonList[i].transform.localPosition.y;
-                    GameObject obj = Instantiate(myMember[1], position, Quaternion.identity);
-
-
-                    if (partyPortrait[i][1] != null)
-                    {
-                        Destroy(partyPortrait[i][1]);
-                    }
-
-                    partyPortrait[i][1] = obj;
-                    if (DataController.instance.gameData.Kong.isLeader)
-                    {
-                        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
-                    }
-
-                    obj.transform.SetParent(mySaveLoad.transform);
-                    obj.transform.localPosition = position;
-                    obj.SetActive(true);
-
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
                 }
 
-                if (DataController.instance.gameData.Kong.isAlive)
+                obj.transform.SetParent(mySaveLoad.transform);
+                obj.transform.localPosition = position;
+                obj.SetActive(true);
+
+
+
+                position = myMember[1].transform.localPosition;
+                position.x = 220;
+                position.y = buttonList[i].transform.localPosition.y;
+                obj = Instantiate(myMember[1], position, Quaternion.identity);
+
+
+                if (partyPortrait[i][1] != null)
                 {
-                    Vector3 position = myMember[2].transform.localPosition;
-                    position.x = 300;
-                    position.y = buttonList[i].transform.localPosition.y;
-                    GameObject obj = Instantiate(myMember[2], position, Quaternion.identity);
-
-
-                    if (partyPortrait[i][2] != null)
-                    {
-                        Destroy(partyPortrait[i][2]);
-                    }
-
-                    partyPortrait[i][2] = obj;
-                    if (DataController.instance.gameData.Kong.isLeader)
-                    {
-                        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
-                    }
-
-                    obj.transform.SetParent(mySaveLoad.transform);
-                    obj.transform.localPosition = position;
-                    obj.SetActive(true);
-
+                    Destroy(partyPortrait[i][1]);
                 }
+
+                partyPortrait[i][1] = obj;
+                if (DataController.instance.gameData.Jin.isLeader)
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
+                }
+
+                obj.transform.SetParent(mySaveLoad.transform);
+                obj.transform.localPosition = position;
+                obj.SetActive(true);
+
+
+
+                position = myMember[2].transform.localPosition;
+                position.x = 300;
+                position.y = buttonList[i].transform.localPosition.y;
+                obj = Instantiate(myMember[2], position, Quaternion.identity);
+
+
+                if (partyPortrait[i][2] != null)
+                {
+                    Destroy(partyPortrait[i][2]);
+                }
+
+                partyPortrait[i][2] = obj;
+                if (DataController.instance.gameData.Ember.isLeader)
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
+                }
+
+                obj.transform.SetParent(mySaveLoad.transform);
+                obj.transform.localPosition = position;
+                obj.SetActive(true);
+
+
             }
 
             else
@@ -166,7 +163,7 @@ public class Select : MonoBehaviour
             }
         }
 
-        DataController.instance.DataClear(); 
+        DataController.instance.DataClear();
     }
 }
 //���: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json
