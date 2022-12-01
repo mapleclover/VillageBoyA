@@ -19,7 +19,7 @@ public class BattleTimeScale : MonoBehaviour
     }
     public void SpeedChange()
     {
-        speed = (speed + 1) % 4; //�׽�Ʈ��(�׽�Ʈ�ƴҽ� 3���� ����)
+        speed = (speed + 1) % 3; //�׽�Ʈ��(�׽�Ʈ�ƴҽ� 3���� ����)
         switch (speed)
         {
             case 0:
@@ -33,11 +33,7 @@ public class BattleTimeScale : MonoBehaviour
             case 2:
                 Time.timeScale = 4.0f;
                 showspeed.text = ">>>";
-                break;
-            case 3: //�׽�Ʈ��
-                Time.timeScale = 30.0f;
-                showspeed.text = "Text";
-                break;
+                break;            
         }
     }
 }
