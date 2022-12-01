@@ -73,7 +73,7 @@ public class Goal : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                 {
-                    if (theManager.isTalkAction)
+                    if (theManager.isTalkAction && keyDownCount < 2)
                     {
                         theManager.Action(this.gameObject);
                         keyDownCount++;

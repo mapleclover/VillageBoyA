@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
                 }
                 t_ignore = false;
 
-                yield return new WaitForSeconds(0.2f / textSpeed);
+                yield return new WaitForSeconds(0.2f / (textSpeed * 2));
             }
         }        
         isTalkAction = true;
