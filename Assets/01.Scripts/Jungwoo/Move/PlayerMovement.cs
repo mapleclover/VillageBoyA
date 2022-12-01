@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public Slider mySlider;
     public GameObject myStaminaBar; // 스태미나 바의 사라짐과 재출현
 
+
     [Header("Camera")] public Transform myCamRot; // 카메라 회전값 
 
     new // 지우지마세용 에러 방지용 입니다.
@@ -60,22 +61,21 @@ public class PlayerMovement : MonoBehaviour
     private bool EmberTheSame = false;
 
     // 연속점프방지
-    private bool ground = false;
+   // private bool ground = false;
 
     // 캐릭터 교체 딜레이
     private bool giveDelay = false;
 
     void ChangeState(CHARACTER myCha)
     {
-        Vector3 summonPosition = new Vector3(0, 1.3f, 0); // 캐릭터 교체시 소환되는 높이값
-
+        //Vector3 summonPosition = new Vector3(0, 1.3f, 0); // 캐릭터 교체시 소환되는 높이값
         if (myCharacter == myCha) return;
         myCharacter = myCha;
         switch (myCharacter)
         {
             case CHARACTER.Kong:
-                this.transform.position = this.transform.transform.position + summonPosition;
-                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, Quaternion.identity);
+                this.transform.position = this.transform.transform.position;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position + Vector3.up * 0.5f, Quaternion.Euler(new Vector3(-90f,0f,0f)));
                 Kong.SetActive(true);
                 Ember.SetActive(false);
                 Jin.SetActive(false);
@@ -90,8 +90,8 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case CHARACTER.Jin:
-                this.transform.position = this.transform.transform.position + summonPosition;
-                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, Quaternion.identity);
+                this.transform.position = this.transform.transform.position;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position + Vector3.up * 0.5f, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
                 Kong.SetActive(false);
                 Ember.SetActive(false);
                 Jin.SetActive(true);
@@ -106,8 +106,8 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case CHARACTER.Ember:
-                this.transform.position = this.transform.transform.position + summonPosition;
-                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position, Quaternion.identity);
+                this.transform.position = this.transform.transform.position;
+                Instantiate(Resources.Load("Prefabs/Summon"), this.transform.position + Vector3.up * 0.5f, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
                 Kong.SetActive(false);
                 Ember.SetActive(true);
                 Jin.SetActive(false);
@@ -148,10 +148,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckGround(); // 연속점프 감지
+        //CheckGround(); // 연속점프 감지
         HideStaminaBar(); // 스태미나 바 숨기기
 
-        if (ground && !theManager.isAction && !ShopManager.isAction && !EnhancementController.inst.isOpen)
+        if (!theManager.isAction && !ShopManager.isAction && !EnhancementController.inst.isOpen)
         {
             //PlayerJump();
 
@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerRotation();
 
 
-        if (ground && !theManager.isAction && !ShopManager.isAction && !EnhancementController.inst.isOpen)
+        if (!theManager.isAction && !ShopManager.isAction && !EnhancementController.inst.isOpen)
         {
             Dash();
         }
@@ -178,20 +178,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /*   void PlayerJump()
-       {
-           // 점프
-           // 유니티 기본설정 Jump 키를 불러와서 스페이스바로 가능
-           if (Input.GetButtonDown("Jump") && ground) // 연속점프 방지 = && ground 그라운드가 참일 때
-           {
-               Vector3 jumpPower = Vector3.up * jumpHeight;
-               rigidbody.AddForce(jumpPower, ForceMode.VelocityChange);
-               //점프를 했을 때 위로 뛸 수 있도록
-               curAnimator.SetTrigger("Jump");
    
-           }
-       }*/
-
     /*void DashSkill()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -208,16 +195,17 @@ public class PlayerMovement : MonoBehaviour
         // 이동과 카메라
         dir.x = Input.GetAxis("Horizontal"); // Raw를 넣을지 말지 상의가 필요할 것 같아용
         // A 와 D 키를 눌렀을 때 이동방향
-            dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
+        dir.z = Input.GetAxis("Vertical"); // W 와 S 를 눌렀을 때 앞 뒤 이동방향 입력받음
         totalDist = dir.magnitude;
+
         // 카메라 회전이 트랜스폼의 회전에 영향을 줄 수 있도록
         dir = myCamRot.rotation * dir;
         dir.y = 0.0f;
         dir.Normalize();
 
-
         // 이동을 구현
         rigidbody.MovePosition(this.transform.position + dir * speed * Time.deltaTime);
+
         // 걷는 애니메이션
         if (totalDist > 0.0f)
         {
@@ -392,7 +380,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void CheckGround() // 연속점프 방지, 점프를 땅에 있을 때만
+   /* void CheckGround() // 연속점프 방지, 점프를 땅에 있을 때만
     {
         //레이캐스트를 사용
         RaycastHit hit;
@@ -404,7 +392,7 @@ public class PlayerMovement : MonoBehaviour
         // 이 길이 안에서 우리가 설정할 레이어가 검출이 되면 그 정보를 out hit 에 담아라
 
         // 이쪽 프로젝트로 옮기는 과정에서 원래 수치값(0.4f, 0.2f) 와 상이하게 해야하는 문제가 좀 있네요 
-        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.2f, layer))
+        if (Physics.Raycast(this.transform.position + (Vector3.up * 0.3f), Vector3.down, out hit, 0.4f, layer))
         {
             ground = true;
             curAnimator.SetBool("InAir", false);
@@ -414,7 +402,7 @@ public class PlayerMovement : MonoBehaviour
             ground = false;
             curAnimator.SetBool("InAir", true);
         }
-    }
+    }*/
 
     //쿨타임
     IEnumerator CoolTime(float cool)
