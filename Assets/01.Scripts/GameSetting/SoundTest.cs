@@ -44,11 +44,11 @@ public class SoundTest : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-           // DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
 
-       // else
-          //  Destroy(gameObject);
+        else
+            Destroy(gameObject);
     }
 
     public AudioSource[] audioSourceEffects;
