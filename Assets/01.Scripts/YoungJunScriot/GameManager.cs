@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public int talkIndex; // 대화순서
     public float textSpeed;
 
-    private bool isTalkAction = true;
+    public bool isTalkAction = true;
 
     [SerializeField]
     private Goal theGoal;
