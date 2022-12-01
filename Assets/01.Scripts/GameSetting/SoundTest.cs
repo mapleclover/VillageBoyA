@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//작성자 : 이현호시벌련
+//작성자 : 이현호
 
 [System.Serializable]
 public class Sound
@@ -44,11 +44,11 @@ public class SoundTest : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+           // DontDestroyOnLoad(gameObject);
         }
 
-        else
-            Destroy(gameObject);
+       // else
+          //  Destroy(gameObject);
     }
 
     public AudioSource[] audioSourceEffects;
