@@ -36,8 +36,11 @@ public class GameManager : MonoBehaviour
     {
         scanObject = scanObj;
         ObjData objData = scanObject.GetComponent<ObjData>();
-        Talk(objData.id, objData.isNpc);
-        NameText(scanObject, objData.isNpc);
+        if (isTalkAction)
+        {
+            Talk(objData.id, objData.isNpc);
+            NameText(scanObject, objData.isNpc);
+        }
         
 
         talkPanel.SetActive(isAction);
