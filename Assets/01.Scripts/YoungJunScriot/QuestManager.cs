@@ -194,8 +194,8 @@ public class QuestManager : MonoBehaviour
                 if (questActionIndex == 2 && scanObject == Hodu_2000)
                 {
                     questObject[2].SetActive(false); // 咯快部府 荤扼咙
-                    RemovingItem("咯快部府");
                     Destroy(questObject[6]);
+                    RemovingItem("咯快部府");                
                 }
 
                 if (questActionIndex == 3)
