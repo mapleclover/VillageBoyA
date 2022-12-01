@@ -73,13 +73,17 @@ public class Goal : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                 {
-                    theManager.Action(this.gameObject);
-                    keyDownCount++;
+                    if (theManager.isTalkAction)
+                    {
+                        theManager.Action(this.gameObject);
+                        keyDownCount++;
+                    }
                 }
 
                 if (keyDownCount == 2)
                 {
                     QuestManager thequest = FindObjectOfType<QuestManager>();
+                    
                     thequest.questActionIndex++;
                     thequest.ControlObject();
                     thequest.ControlPopup();
