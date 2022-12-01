@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static Cinemachine.DocumentationSortingAttribute;
 using Unity.VisualScripting;
+using static MirzaBeig.ParticleSystems.Demos.DemoManager;
 
 public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯ÇÏ¸é µ· 100¿ø¾¿ µé¾î¿É´Ï´Ù...-¿µÁø
 {
@@ -37,28 +38,40 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
 
     public void OnDrop(PointerEventData eventData)
     {
+
         PointerInfo icon = transform.GetComponentInChildren<PointerInfo>();
         Transform movingObject = eventData.pointerDrag.transform;
-        if (movingObject.GetComponent<Pickup>().item.enhanceableItem.Equals(Item.EnhanceableItem.Possible))
+        myItem = movingObject.GetComponent<EnhanceableItems>(); // µå·¡±× µÇÀÚ ¸¶ÀÚ ¹ÙÀÎµù µÇµµ·Ï ¹Ù²ã¾ßÇÔ
+        if (myItem._GetMaxLevel)
         {
-            if (icon != null&&movingObject.parent.TryGetComponent<ItemSlot>(out ItemSlot slot))
+            if (movingObject.GetComponent<Pickup>().item.enhanceableItem.Equals(Item.EnhanceableItem.Possible))
             {
-                slot.SetChildren(icon.transform);
-                OnClickCancel();
+                if (icon != null && movingObject.parent.TryGetComponent<ItemSlot>(out ItemSlot slot))
+                {
+                    slot.SetChildren(icon.transform);
+                    OnClickCancel();
+                }
+                else if (icon != null && movingObject.parent.TryGetComponent<reinforceslot>(out reinforceslot Slot))
+                {
+                    Slot.SetChild(icon.transform);
+                    OnClickCancel();
+                }
+                movingObject.SetParent(transform);
+                movingObject.localPosition = Vector3.zero;
+                EnhancementController.inst.rectTransform.SetAsLastSibling();
+                CheckIngredients(movingObject);                                  //°­È­ Àç·á È®ÀÎ
             }
-            else if (icon != null && movingObject.parent.TryGetComponent<reinforceslot>(out reinforceslot Slot))
-            {
-                Slot.SetChild(icon.transform);
-                OnClickCancel();
-            }
-            movingObject.SetParent(transform);
-            movingObject.localPosition = Vector3.zero;
-            //myPanel.transform.SetParent(myInven2);
-            //this.transform.SetAsLastSibling(); ¿Ö ¾ÈµÅ³Ä±¸!
-            EnhancementController.inst.rectTransform.SetAsLastSibling();
-            CheckIngredients(movingObject);                                  //°­È­ Àç·á È®ÀÎ
+            else return;
         }
-        else return;
+        else
+        {
+            alert.SetActive(true);
+            myMessage.text = $"°­È­ °¡´É ·¹º§À» \n ÃÊ°ú ÇÏ¿´½À´Ï´Ù.";
+            
+        }
+            
+        
+        
     }
 
     public void SetChild(Transform child)
