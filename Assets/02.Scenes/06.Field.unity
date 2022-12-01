@@ -26495,7 +26495,7 @@ MonoBehaviour:
   scanObject: {fileID: 0}
   isAction: 0
   talkIndex: 0
-  textSpeed: 0.05
+  textSpeed: 0.001
   theGoal: {fileID: 1651944446}
 --- !u!4 &948012091
 Transform:
@@ -26938,7 +26938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Minimap: {fileID: 2002546969}
-  canVas: {fileID: 0}
+  canVas: {fileID: 1592291410}
 --- !u!4 &974425773
 Transform:
   m_ObjectHideFlags: 0
@@ -44416,20 +44416,20 @@ MonoBehaviour:
   questComplete: 0
   questActionIndex: 0
   mySlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3383356670582225188}
+  - {fileID: 3383356671042150996}
+  - {fileID: 3383356670743918425}
+  - {fileID: 3383356670848412478}
+  - {fileID: 3383356670719118518}
+  - {fileID: 3383356670033874909}
+  - {fileID: 3383356669971170687}
+  - {fileID: 3383356670754570732}
+  - {fileID: 3383356670642705346}
+  - {fileID: 3383356669245210736}
+  - {fileID: 3383356669716442749}
+  - {fileID: 3383356671054215173}
+  - {fileID: 3383356670561014261}
+  - {fileID: 3383356670319945195}
   questObject:
   - {fileID: 0}
   - {fileID: 1275216987}
@@ -44444,7 +44444,7 @@ MonoBehaviour:
   Hangchu_4000: {fileID: 7339084507281334663}
   questPopupText: {fileID: 1468198156}
   theComplete: {fileID: 1757176257}
-  theInven: {fileID: 0}
+  theInven: {fileID: 3383356669261512945}
   theQuestPopupText: {fileID: 1291370361}
 --- !u!4 &1638807068
 Transform:
@@ -63791,6 +63791,26 @@ PrefabInstance:
       propertyPath: theActionController
       value: 
       objectReference: {fileID: 1315345266}
+    - target: {fileID: 7035227290245997788, guid: 560494a6211d42740a717a4e2dbcff46, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035227290245997788, guid: 560494a6211d42740a717a4e2dbcff46, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -1709277514330460371, guid: 6d3d3727b941bf549b06f8debf619548, type: 3}
+    - target: {fileID: 7035227290245997788, guid: 560494a6211d42740a717a4e2dbcff46, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 8668964879408942006, guid: 6d3d3727b941bf549b06f8debf619548, type: 3}
+    - target: {fileID: 7035227290245997788, guid: 560494a6211d42740a717a4e2dbcff46, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: -4053520464898690182, guid: 6d3d3727b941bf549b06f8debf619548, type: 3}
+    - target: {fileID: 7035227290245997788, guid: 560494a6211d42740a717a4e2dbcff46, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 44b015754713e954a9714c49f7d4b74e, type: 2}
     - target: {fileID: 7068073784261427422, guid: 560494a6211d42740a717a4e2dbcff46, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -83984,6 +84004,7 @@ MonoBehaviour:
   - {fileID: 4492128437417482675}
   - {fileID: 4492128436795550481}
   mySaveLoad: {fileID: 4492128436895733212}
+  fullLoad: {fileID: 0}
 --- !u!224 &4492128436895733187
 RectTransform:
   m_ObjectHideFlags: 0
@@ -87966,6 +87987,7 @@ MonoBehaviour:
   - {fileID: 5813380434333347741}
   - {fileID: 5813380433777892673}
   mySaveLoad: {fileID: 5813380433056980993}
+  fullLoad: {fileID: 0}
 --- !u!222 &5813380433118685672
 CanvasRenderer:
   m_ObjectHideFlags: 0

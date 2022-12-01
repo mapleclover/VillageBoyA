@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public int talkIndex; // 대화순서
     public float textSpeed;
 
-    private bool isTalkAction = true;
+    public bool isTalkAction = true;
 
     [SerializeField]
     private Goal theGoal;
@@ -36,8 +36,11 @@ public class GameManager : MonoBehaviour
     {
         scanObject = scanObj;
         ObjData objData = scanObject.GetComponent<ObjData>();
-        Talk(objData.id, objData.isNpc);
-        NameText(scanObject, objData.isNpc);
+        if (isTalkAction)
+        {
+            Talk(objData.id, objData.isNpc);
+            NameText(scanObject, objData.isNpc);
+        }
         
 
         talkPanel.SetActive(isAction);
