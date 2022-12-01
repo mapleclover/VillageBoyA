@@ -2079,9 +2079,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46b9f3ac242d2e438f7db2c930246f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeSlider:
-  - {fileID: 363577294}
-  - {fileID: 867139235}
   BGMSFXSource:
   - {fileID: 267660418}
   - {fileID: 267660417}
@@ -2175,6 +2172,7 @@ GameObject:
   - component: {fileID: 275188869}
   - component: {fileID: 275188868}
   - component: {fileID: 275188871}
+  - component: {fileID: 275188872}
   m_Layer: 5
   m_Name: Setting
   m_TagString: Untagged
@@ -2283,6 +2281,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 275188872}
+        m_TargetAssemblyTypeName: SettingButtonLoad, Assembly-CSharp
+        m_MethodName: SliderLoad
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &275188869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2334,6 +2344,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   i: 2
+--- !u!114 &275188872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275188865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167bf7b8bd6dbb04e9caf047fc786612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &357599549
 GameObject:
   m_ObjectHideFlags: 0
@@ -2381,6 +2403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 363577292}
   - component: {fileID: 363577294}
+  - component: {fileID: 363577295}
   m_Layer: 5
   m_Name: BGM
   m_TagString: Untagged
@@ -2463,9 +2486,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 267660419}
-        m_TargetAssemblyTypeName: SoundTest, Assembly-CSharp
-        m_MethodName: ChangeVolume
+      - m_Target: {fileID: 363577295}
+        m_TargetAssemblyTypeName: VolumeSlider, Assembly-CSharp
+        m_MethodName: changeVolume
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2475,6 +2498,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &363577295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363577291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816216eb2c405bd4db158041763014fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &391439065
 GameObject:
   m_ObjectHideFlags: 0
@@ -4429,6 +4464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 867139234}
   - component: {fileID: 867139235}
+  - component: {fileID: 867139236}
   m_Layer: 5
   m_Name: SFX
   m_TagString: Untagged
@@ -4511,9 +4547,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 267660419}
-        m_TargetAssemblyTypeName: SoundTest, Assembly-CSharp
-        m_MethodName: ChangeVolume
+      - m_Target: {fileID: 867139236}
+        m_TargetAssemblyTypeName: VolumeSlider, Assembly-CSharp
+        m_MethodName: changeVolume
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4523,6 +4559,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &867139236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867139233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816216eb2c405bd4db158041763014fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &885390129
 GameObject:
   m_ObjectHideFlags: 0
