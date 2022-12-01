@@ -75,7 +75,7 @@ public class SceneLoad : MonoBehaviour
             jinhp = GameObject.FindWithTag("JinHP");
             emberhp = GameObject.FindWithTag("EmberHP");
             mySlots = myInven.transform.GetChild(0);
-             theQuestManager = FindObjectOfType<QuestManager>();
+            theQuestManager = FindObjectOfType<QuestManager>();
 
             //플레이어 위치값
             player.transform.position = DataController.instance.gameData.currentPosition;
@@ -145,7 +145,6 @@ public class SceneLoad : MonoBehaviour
             jinhp.GetComponent<Slider>().value = DataController.instance.gameData.Jin.HP*0.01f;
             emberhp.GetComponent<Slider>().value = DataController.instance.gameData.Ember.HP*0.008f;
             
-
         }
         else if (scene.name == "H_H")
         {

@@ -17,6 +17,7 @@ public class Select : MonoBehaviour
     public GameObject[] myMember;
     public GameObject mySaveLoad;
     public GameObject[][] partyPortrait = new GameObject[3][];
+    public GameObject fullLoad;
 
     void Start()
     {
@@ -49,6 +50,20 @@ public class Select : MonoBehaviour
 
         Game();
     }
+    public void StartSlot(int num)
+    {
+        for(int i = num; i < 3; i++)
+        {
+            DataController.instance.nowSlot = i;
+            if (!savefile[i])
+            {
+               // DataController.instance.LoadGameData();
+                Game();
+                return;
+            }
+        }
+        fullLoad.SetActive(true);
+    }
 
 
     public void Game()
@@ -64,7 +79,7 @@ public class Select : MonoBehaviour
         else
         {
             Debug.Log(DataController.instance.nowSlot);
-          //  DataController.instance.LoadGameData();
+            DataController.instance.LoadGameData();
             SceneLoad.Instance.ChangeScene("06.Field");
         }
 
