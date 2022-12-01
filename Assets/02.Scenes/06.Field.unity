@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385538, g: 0.22906086, b: 0.30346623, a: 1}
+  m_IndirectSpecularColor: {r: 0.1838554, g: 0.22906086, b: 0.3034666, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23230,17 +23230,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abe4a3b52fe0bf04087b559900a1d035, type: 3}
---- !u!114 &840502066 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5223964255496096713, guid: abe4a3b52fe0bf04087b559900a1d035, type: 3}
-  m_PrefabInstance: {fileID: 840502065}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0ffb860ad6e10142a15596f8a6164b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &841413447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26496,6 +26485,7 @@ MonoBehaviour:
   isAction: 0
   talkIndex: 0
   textSpeed: 0.001
+  isTalkAction: 1
   theGoal: {fileID: 1651944446}
 --- !u!4 &948012091
 Transform:
@@ -84436,7 +84426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -398}
+  m_AnchoredPosition: {x: 0, y: -295}
   m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4492128437209408116
@@ -88850,14 +88840,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 840502066}
-        m_TargetAssemblyTypeName: DataController, Assembly-CSharp
-        m_MethodName: LoadGameData
+      - m_Target: {fileID: 5813380434079873883}
+        m_TargetAssemblyTypeName: BtnSound, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -88875,6 +88865,7 @@ GameObject:
   - component: {fileID: 5813380434079873862}
   - component: {fileID: 5813380434079873863}
   - component: {fileID: 5813380434079873883}
+  - component: {fileID: 5813380434079873884}
   m_Layer: 5
   m_Name: Button2
   m_TagString: Untagged
@@ -88894,6 +88885,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce93f03a40f061429314c79f029d03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5813380434079873884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813380434079873882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1062d3b2e7d3bed45951e5d1d714b2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySlotnum: 2
 --- !u!224 &5813380434095251058
 RectTransform:
   m_ObjectHideFlags: 0
@@ -88912,7 +88916,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -398}
+  m_AnchoredPosition: {x: 0, y: -301}
   m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5813380434095251059
@@ -89193,6 +89197,7 @@ GameObject:
   - component: {fileID: 5813380434107667731}
   - component: {fileID: 5813380434107667728}
   - component: {fileID: 5813380434107667736}
+  - component: {fileID: 5813380434107667737}
   m_Layer: 5
   m_Name: Button1
   m_TagString: Untagged
@@ -89212,6 +89217,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce93f03a40f061429314c79f029d03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5813380434107667737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813380434107667735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1062d3b2e7d3bed45951e5d1d714b2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySlotnum: 1
 --- !u!114 &5813380434152348580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89352,6 +89370,7 @@ GameObject:
   - component: {fileID: 5813380434152348583}
   - component: {fileID: 5813380434152348580}
   - component: {fileID: 5813380434152348604}
+  - component: {fileID: 5813380434152348605}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -89371,6 +89390,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce93f03a40f061429314c79f029d03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5813380434152348605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813380434152348603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1062d3b2e7d3bed45951e5d1d714b2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySlotnum: 0
 --- !u!114 &5813380434333347740
 MonoBehaviour:
   m_ObjectHideFlags: 0

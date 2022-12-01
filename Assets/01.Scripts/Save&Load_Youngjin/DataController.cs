@@ -64,6 +64,8 @@ public struct SaveItemData
 [Serializable]
 public class GameData
 {
+    public int curSlot;
+
     //모든 배열은 0이 콩 1이 진 2가 앰버
     public int turnBattleTimeSpeed = 0; // 턴배틀게임속도
     public int myProgress = 0; //진행도
@@ -116,7 +118,7 @@ public class DataController : MonoBehaviour
     // static GameObject _container;
     public string gamedataFilename = "VillageBoyA.json"; //.json 앞에 게임 데이터 파일 이름 설정
     public string filePath;
-    public int nowSlot;
+    public int nowSlot; //0 1 2 
     public GameData gameData = new GameData();
     public static DataController instance;
     private GameObject thePlayer;
@@ -169,17 +171,17 @@ public class DataController : MonoBehaviour
         gameData.Ember.isAlive = true;
         gameData.Ember.myUsedItems = new List<string>();
 
-
+        gameData.curSlot=nowSlot;
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData = JsonUtility.ToJson(gameData);
 
-        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
+        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);   //nowSlot.ToString()
     }
    
     public void LoadGameData()
     {
 
-        if (File.Exists(filePath + nowSlot.ToString()))
+        if (File.Exists(filePath + nowSlot.ToString()))//File.Exists(filePath + nowSlot.ToString())
         {
             Debug.Log("불러오기");
             string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
@@ -231,6 +233,7 @@ public class DataController : MonoBehaviour
 
     public void SaveGameDataByESC(int curSlot)
     {
+        Debug.Log(curSlot);
         //if(SceneManager.GetActiveScene().name.Equals("06.Field"))
         thePlayer = GameObject.FindWithTag("Player");
         theQuestManager = FindObjectOfType<QuestManager>();
@@ -264,11 +267,10 @@ public class DataController : MonoBehaviour
                 }
             }
         }
-        Debug.Log("?");
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData = JsonUtility.ToJson(gameData);
 
-        File.WriteAllText(filePath + curSlot.ToString(), ToJsonData);
+        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
         Debug.Log("저장");
     }
 
