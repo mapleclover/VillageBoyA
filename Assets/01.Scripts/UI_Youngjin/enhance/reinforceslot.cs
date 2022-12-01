@@ -37,7 +37,8 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
 
     public void UpdateNumberUI(string name, int level, int index)
     {
-        Amount[index].text = $"{DataController.instance.gameData.myItemCount[name]} " + "/" + $" {level}";        //°¡Áö°í ÀÖ´Â °³¼ö¿Í ¸î°³ ÇÊ¿äÇÑÁö Ç¥½Ã
+        int i=DataController.instance.gameData.itemList.IndexOf(name);  
+        Amount[index].text = $"{DataController.instance.gameData.itemCount[i]} " + "/" + $" {level}";        //°¡Áö°í ÀÖ´Â °³¼ö¿Í ¸î°³ ÇÊ¿äÇÑÁö Ç¥½Ã
         
     }
 
@@ -93,7 +94,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         switch (thisitem.GetComponent<Pickup>().item.itemName)    //±Ý¹ÝÁö: ´ÙÀÌ¾Æ&Ã¶, Àå°©: Ã¶&º°, ¹æÆÐ: »ç°ú&º°
         {
             case "±Ý¹ÝÁö":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("´ÙÀÌ¾Æ¸óµå") && DataController.instance.gameData.savedInventory.ContainsKey("±Ý")&&DataController.instance.gameData.gold>=cost)
+                if (DataController.instance.gameData.itemList.Contains("´ÙÀÌ¾Æ¸óµå") && DataController.instance.gameData.itemList.Contains("±Ý")&&DataController.instance.gameData.gold>=cost)
                 {
                     CompareRequirements(thisitem, "´ÙÀÌ¾Æ¸óµå", "±Ý", level);     //ÀÎº¥Åä¸®¿¡ ÀÖÀ» °æ¿ì °³¼ö È®ÀÎÇÏ´Â ÇÔ¼ö È£Ãâ
 
@@ -104,7 +105,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 }
                 break;
             case "Àå°©":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("´«¹°") && DataController.instance.gameData.savedInventory.ContainsKey("½ºÅ©·Ñ") && DataController.instance.gameData.gold >= cost)
+                if (DataController.instance.gameData.itemList.Contains("´«¹°") && DataController.instance.gameData.itemList.Contains("½ºÅ©·Ñ") && DataController.instance.gameData.gold >= cost)
                 {
                     CompareRequirements(thisitem, "´«¹°", "½ºÅ©·Ñ", level);
                 }
@@ -114,7 +115,7 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
                 }
                 break;
             case "¸ñ°ÉÀÌ":
-                if (DataController.instance.gameData.savedInventory.ContainsKey("º°") && DataController.instance.gameData.savedInventory.ContainsKey("Ã¶") && DataController.instance.gameData.gold >= cost)
+                if (DataController.instance.gameData.itemList.Contains("º°") && DataController.instance.gameData.itemList.Contains("Ã¶") && DataController.instance.gameData.gold >= cost)
                 {
                     CompareRequirements(thisitem, "º°", "Ã¶", level);
                 }
@@ -135,7 +136,9 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
     }
     public void CompareRequirements(Transform thisitem,string itemname1,string itemname2, int level)
     {
-        if(DataController.instance.gameData.myItemCount[itemname1] <level || DataController.instance.gameData.myItemCount[itemname2] <level)
+        int index=DataController.instance.gameData.itemList.IndexOf(itemname1);
+        int index2 = DataController.instance.gameData.itemList.IndexOf(itemname2);
+        if(DataController.instance.gameData.itemCount[index] <level || DataController.instance.gameData.itemCount[index2] <level)
         {
             myMessage.text = $"{itemname1} {level}°³\n\n {itemname2} {level}°³\n\n";
             alert.SetActive(true);
@@ -231,16 +234,19 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
     public void CheckDestroy(GameObject obj, GameObject enchantingObj)
     {
         int level = enchantingObj.GetComponent<EnhanceableItems>().myData.Level;
-        if (DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName]>level)
+        string st = obj.GetComponent<Pickup>().item.itemName;
+        int index = DataController.instance.gameData.itemList.IndexOf(st);
+        if (DataController.instance.gameData.itemCount[index]>level)
         {
-            DataController.instance.gameData.myItemCount[obj.GetComponent<Pickup>().item.itemName] -= level;
+            DataController.instance.gameData.itemCount[index] -= level;
             FindMySlot(obj);        
             InventoryController.Instance.ShowNumbertoUI();          //³»°¡ °®°í ÀÖ´Â °³¼ö°¡ ÇÊ¿ä °³¼öº¸´Ù ¸¹À» °æ¿ì ¼Ò¸ð ÈÄ ÀÎº¥À¸·Î ÀÌµ¿
         }
         else
         {
-            DataController.instance.gameData.savedInventory.Remove(obj.GetComponent<Pickup>().item.itemName);
-            DataController.instance.gameData.myItemCount.Remove(obj.GetComponent<Pickup>().item.itemName);
+            DataController.instance.gameData.itemList.Remove(st);
+            DataController.instance.gameData.itemCount.RemoveAt(index);
+            DataController.instance.gameData.slotNum.RemoveAt(index);
             Destroy(obj);       //°°À» °æ¿ì destroy
         }
     }
@@ -249,13 +255,15 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         if(!EnchantDelay)
         {
             //·¹º§°ú ¿¬µ¿ // ¿µÁø¾Æ ÀÌ°Å ·¹º§ ¹¹¾ß? //ÀÌ°Å ¾ÆÀÌÅÛ¸¶´Ù °¡Áö°íÀÖ´Â ·¹º§ÀÎµ­ // ±×·¸±¸¸¸
+            string st=obj.GetComponent<Pickup>().item.itemName;
+            int index=DataController.instance.gameData.itemList.IndexOf(st);
             for (int i = 0; i < myInven.Length; i++)
             {
                 if (myInven[i].transform.childCount == 0)
                 {
                     obj.transform.SetParent(myInven[i].transform);      //
                     obj.transform.localPosition = Vector3.zero;
-                    DataController.instance.gameData.savedInventory[obj.GetComponent<Pickup>().item.itemName] = i;
+                    DataController.instance.gameData.slotNum[index] = i;
                     break;
                 }
             }
@@ -317,37 +325,22 @@ public class reinforceslot : MonoBehaviour, IDropHandler        //¸¶¿ì½º ¿ìÅ¬¸¯Ç
         string name = obj.GetComponent<Pickup>().item.itemName;
         if (DataController.instance.gameData.Kong.myUsedItems.Contains(name))       //KongÀÏ °æ¿ì
         {
-            if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
-            {
+
                 DataController.instance.gameData.Kong.strength = obj.GetComponent<EnhanceableItems>().myData.AP;
-                Debug.Log(DataController.instance.gameData.Kong.strength);
-            }
-            else if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Armor))
-            {
-                DataController.instance.gameData.Kong.defPower = obj.GetComponent<EnhanceableItems>().myData.AP;
-            }
+                DataController.instance.gameData.Kong.defPower = obj.GetComponent<EnhanceableItems>().myData.DP;
+
         }
        else if (DataController.instance.gameData.Jin.myUsedItems.Contains(name))        //JinÀÏ °æ¿ì
         {
-            if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
-            {
+
                 DataController.instance.gameData.Jin.strength = obj.GetComponent<EnhanceableItems>().myData.AP;
-            }
-            else if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Armor))
-            {
-                DataController.instance.gameData.Jin.defPower = obj.GetComponent<EnhanceableItems>().myData.AP;
-            }
+                DataController.instance.gameData.Jin.defPower = obj.GetComponent<EnhanceableItems>().myData.DP;
+
         }
        else if (DataController.instance.gameData.Ember.myUsedItems.Contains(name))      //EmberÀÏ °æ¿ì
         {
-            if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Accessory))
-            {
                 DataController.instance.gameData.Ember.strength = obj.GetComponent<EnhanceableItems>().myData.AP;
-            }
-            else if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Armor))
-            {
-                DataController.instance.gameData.Ember.defPower = obj.GetComponent<EnhanceableItems>().myData.AP;
-            }
+                DataController.instance.gameData.Ember.defPower = obj.GetComponent<EnhanceableItems>().myData.DP;
         }
     }
     IEnumerator Delay(float cool, GameObject enchantingObj, float showTime)

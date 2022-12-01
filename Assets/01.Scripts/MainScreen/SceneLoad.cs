@@ -49,10 +49,10 @@ public class SceneLoad : MonoBehaviour
     private GameObject camera;
     private QuestManager theQuestManager;
     private GameObject myInven;
-    private Transform mySlots;
     private GameObject konghp;
     private GameObject jinhp;
     private GameObject emberhp;
+    private GameObject slots;
     
     private void OnEnable()
     {
@@ -74,7 +74,7 @@ public class SceneLoad : MonoBehaviour
             konghp = GameObject.FindWithTag("KongHP");
             jinhp = GameObject.FindWithTag("JinHP");
             emberhp = GameObject.FindWithTag("EmberHP");
-            mySlots = myInven.transform.GetChild(0);
+            slots = myInven.transform.Find("background").transform.Find("Slots").gameObject;
             theQuestManager = FindObjectOfType<QuestManager>();
 
             //플레이어 위치값
@@ -88,16 +88,17 @@ public class SceneLoad : MonoBehaviour
             theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
             theQuestManager.ControlObject();
             theQuestManager.ControlPopup();
-            foreach (KeyValuePair<string, int> items in DataController.instance.gameData.savedInventory)
+            for(int j=0;j<DataController.instance.gameData.itemList.Count;j++)
             {
                 GameObject obj;
                 for (int i = 0; i < InventoryController.Instance.curItem.Count; i++)
                 {
                     string name = InventoryController.Instance.curItem[i].GetComponent<Pickup>().item.itemName;
-                    if (name.Equals(items.Key))
+                    if (name.Equals(DataController.instance.gameData.itemList[j]))
                     {
+                        // int index = DataController.instance.gameData.itemList.IndexOf(name);
                         obj = Instantiate(InventoryController.Instance.curItem[i]);
-                        obj.transform.SetParent(mySlots.transform.GetChild(items.Value));
+                        obj.transform.SetParent(slots.transform.GetChild(DataController.instance.gameData.slotNum[j]).transform);
                         obj.transform.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
                         obj.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                         obj.transform.localPosition = Vector2.zero;
@@ -125,22 +126,24 @@ public class SceneLoad : MonoBehaviour
 
                     if (InventoryController.Instance.curItem[i].layer.Equals(7))
                     {
-                        if (DataController.instance.gameData.Kong.myUsedItems.Contains(items.Key))
+                        string str = DataController.instance.gameData.itemList[j];
+                       
+                        if (DataController.instance.gameData.Kong.myUsedItems.Contains(str))
                         {
                             //UI에 표시
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, items.Value);
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/MainCharacter")) as GameObject, i, j);
                             break;
                         }
-                        else if (DataController.instance.gameData.Jin.myUsedItems.Contains(items.Key))
+                        else if (DataController.instance.gameData.Jin.myUsedItems.Contains(str))
                         {
                             //UI에 표시
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, items.Value);
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Jin")) as GameObject, i, j);
                             break;
                         }
-                        else if (DataController.instance.gameData.Ember.myUsedItems.Contains(items.Key))
+                        else if (DataController.instance.gameData.Ember.myUsedItems.Contains(str))
                         {
                             //UI에 표시
-                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i, items.Value);
+                            ShowPortrait(Instantiate(Resources.Load("Prefabs/Ember")) as GameObject, i, j);
                             break;
                         }
                     }
@@ -161,7 +164,7 @@ public class SceneLoad : MonoBehaviour
             emberhp.GetComponent<Slider>().value = DataController.instance.gameData.Ember.HP*0.008f;
             
         }
-        else if (scene.name == "H_H")
+       /* else if (scene.name == "H_H")
         {
              player = GameObject.Find("Summons(Final)");
             camera = GameObject.Find("Camera");
@@ -182,12 +185,13 @@ public class SceneLoad : MonoBehaviour
             theQuestManager.ControlObject();
             theQuestManager.ControlPopup();
         }
+       */
     }
 
     void ShowPortrait(GameObject portrait, int i, int index)
     {
         portrait.GetComponent<RectTransform>().sizeDelta = new Vector2(25, 25);
-        portrait.transform.SetParent(mySlots.transform.GetChild(index).transform.GetChild(0));
+        portrait.transform.SetParent(slots.transform.GetChild(index).transform.GetChild(0));
         portrait.transform.localPosition =
             new Vector2(InventoryController.Instance.curItem[i].transform.localPosition.x + 20,
                 InventoryController.Instance.curItem[i].transform.localPosition.y - 20);

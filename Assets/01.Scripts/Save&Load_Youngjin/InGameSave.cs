@@ -1,6 +1,8 @@
 //작성자 : 이영진
 //설명 :
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class InGameSave : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class InGameSave : MonoBehaviour
     public GameObject mySave;
     public GameObject myESC;
     public static int mySn;
+    public Button saveBtn;
+    public Button loadBtn;
     bool v = true;
 
     // Update is called once per frame
@@ -41,6 +45,16 @@ public class InGameSave : MonoBehaviour
                 else v = true;
             }
         }
+        if (SceneManager.GetActiveScene().name.Equals("03.Tutorial"))
+        {
+            saveBtn.enabled = false;
+            loadBtn.enabled = false;
+        }
+        else
+        {
+            saveBtn.enabled = true;
+            loadBtn.enabled = true;
+        }
     }
 
     public void OnClickSave()
@@ -52,6 +66,7 @@ public class InGameSave : MonoBehaviour
 
     public void OnClickLoad()
     {
+        Select.instance.Show();
         myLoad.SetActive(true);
         myESC.SetActive(false);
     }
@@ -81,7 +96,7 @@ public class InGameSave : MonoBehaviour
     public void OnClickSaveOK()
     {
         DataController.instance.SaveGameDataByESC(mySn);
-        Select.instance.ShowUI();
+        Select.instance.Show();
         mySC.SetActive(false);
     }
 

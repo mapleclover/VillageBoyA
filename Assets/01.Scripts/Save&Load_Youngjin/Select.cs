@@ -11,14 +11,14 @@ using UnityEngine.SceneManagement;
 public class Select : MonoBehaviour
 {
     public static Select instance = null;
-    public TextMeshProUGUI[] slotText; 
-    public bool[] savefile = new bool[3]; 
+    public TextMeshProUGUI[] slotText;
+    public bool[] savefile = new bool[3];
     public GameObject[] buttonList;
     public GameObject[] myMember;
     public GameObject mySaveLoad;
     public GameObject[][] partyPortrait = new GameObject[3][];
     public GameObject fullLoad;
-
+    int orgslot;
     void Start()
     {
         for (int i = 0; i < 3; i++)
@@ -26,7 +26,7 @@ public class Select : MonoBehaviour
             partyPortrait[i] = new GameObject[3];
         }
 
-        ShowUI();
+        //ShowUI();
         instance = this;
     }
 
@@ -41,26 +41,26 @@ public class Select : MonoBehaviour
     public void Slot(int num)
     {
         DataController.instance.nowSlot = num;
-       // DataController.instance.gameData.curSlot = num;
+        // DataController.instance.gameData.curSlot = num;
         ShowUI();
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
-            
+
         }
 
         Game();
     }
     public void StartSlot(int num)
     {
-        for(int i = num; i < 3; i++)
+        for (int i = num; i < 3; i++)
         {
             DataController.instance.nowSlot = i;
-           // DataController.instance.gameData.curSlot = i;
+            // DataController.instance.gameData.curSlot = i;
             if (!savefile[i])
             {
                 // DataController.instance.LoadGameData();
-               
+
                 Game();
                 return;
             }
@@ -71,7 +71,7 @@ public class Select : MonoBehaviour
 
     public void Game()
     {
-        //Debug.Log(DataController.instance.gameData.curSlot);
+        ShowUI();
         if (!savefile[DataController.instance.nowSlot]) //instance.nowSlot
         {
             DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
@@ -83,9 +83,7 @@ public class Select : MonoBehaviour
         else
         {
             Debug.Log(DataController.instance.nowSlot);
-            Debug.Log("A");
             DataController.instance.LoadGameData();
-            Debug.Log("B");
             SceneLoad.Instance.ChangeScene("06.Field");
         }
 
@@ -93,6 +91,13 @@ public class Select : MonoBehaviour
 
     public void ShowUI()
     {
+        Show();
+        DataController.instance.DataClear();
+        DataController.instance.nowSlot = orgslot;
+    }
+    public void Show()
+    {
+        orgslot = DataController.instance.nowSlot;
         for (int i = 0; i < 3; i++)
         {
             if (File.Exists(DataController.instance.filePath + $"{i}"))
@@ -183,8 +188,6 @@ public class Select : MonoBehaviour
                 slotText[i].text = "<color=grey>No Saved Data</color> ";
             }
         }
-
-      //  DataController.instance.DataClear();
     }
     public void clickload()
     {

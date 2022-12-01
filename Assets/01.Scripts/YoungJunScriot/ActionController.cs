@@ -173,7 +173,7 @@ public class ActionController : MonoBehaviour
     {
         if (scanObject != null)
         {
-            if (scanObject.transform.tag == "Npc" || scanObject.transform.tag == "Item")
+            if (scanObject.transform.tag.Equals("Npc") || scanObject.transform.tag.Equals("Item"))
             {
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                 {
@@ -302,7 +302,7 @@ public class ActionController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "Enemy")
+        if (other.transform.tag.Equals("Enemy"))
         {
             isBattle = true;
         }

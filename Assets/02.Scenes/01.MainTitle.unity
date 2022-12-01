@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6146,7 +6146,7 @@ MonoBehaviour:
   myStart: {fileID: 2046471317}
   GameSetting: {fileID: 1486704544}
   creditButton: {fileID: 771728558}
-  EndingCredit: {fileID: 5844772546888721860}
+  EndingCredit: {fileID: 5844772546778693425}
 --- !u!4 &1314966742
 Transform:
   m_ObjectHideFlags: 0
@@ -6597,6 +6597,7 @@ MonoBehaviour:
   filePath: 
   nowSlot: 0
   gameData:
+    curSlot: 0
     turnBattleTimeSpeed: 0
     myProgress: 0
     savedTime: 
@@ -6604,12 +6605,21 @@ MonoBehaviour:
     victoryComplete: 000000000000
     currentPosition: {x: -136, y: 0, z: -90}
     currentRotation: {x: 0, y: 0, z: 0}
+    itemList: []
+    slotNum: 
+    itemCount: 
     gold: 0
     isFirstTime: 1
     apple:
       orgData: {fileID: 0}
       Level: 0
     gloves:
+      orgData: {fileID: 0}
+      Level: 0
+    goldring:
+      orgData: {fileID: 0}
+      Level: 0
+    necklace:
       orgData: {fileID: 0}
       Level: 0
     questID: 30
@@ -10333,7 +10343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &5844772546778693438
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10473,7 +10483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &5844772546888721871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10486,6 +10496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bfbd573347efc74aac05b80f6ff8f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  credit: {fileID: 0}
 --- !u!222 &5844772547421147666
 CanvasRenderer:
   m_ObjectHideFlags: 0

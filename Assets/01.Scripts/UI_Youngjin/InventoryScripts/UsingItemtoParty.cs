@@ -127,7 +127,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
 
         else
         {
-            if (itemTransform.gameObject.layer == 7)       //장비를 캐릭터에게 장착
+            if (itemTransform.gameObject.layer.Equals(7))       //장비를 캐릭터에게 장착
             {
                 GameObject thisEquipment = PointerInfo.instance.transform.gameObject ;
                 string thisname = thisEquipment.GetComponent<Pickup>().item.itemName;
@@ -152,14 +152,8 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                         {
                             SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Kong.myUsedItems.Add(thisname);               //장비를 장착한 멤버에 따라 스탯에 적용됨
-                            if (thisType.Equals(Item.ItemType.Accessory))
-                            {
                                 DataController.instance.gameData.Kong.strength += ap;   
-                            }
-                            else if (thisType.Equals(Item.ItemType.Armor))
-                            {
                                 DataController.instance.gameData.Kong.defPower += dp;       //Kong에게 아이템 값만큼 부여
-                            }
                             ShowtoUI(itemTransform);        //장착된 캐릭터의 초상화 표시
                             myPanel.SetActive(false);
                         }
@@ -183,14 +177,9 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                         {
                             SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Jin.myUsedItems.Add(thisname);
-                            if (thisType.Equals(Item.ItemType.Accessory))
-                            {
+
                                 DataController.instance.gameData.Jin.strength += ap;
-                            }
-                            else if (thisType.Equals(Item.ItemType.Armor))
-                            {
                                 DataController.instance.gameData.Jin.defPower += dp;
-                            }
                             ShowtoUI(itemTransform);
                             myPanel.SetActive(false);
                         }
@@ -214,14 +203,8 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
                         {
                             SoundTest.instance.PlaySE("SFX_Equip");
                             DataController.instance.gameData.Ember.myUsedItems.Add(thisname);
-                            if (thisType.Equals(Item.ItemType.Accessory))
-                            {
                                 DataController.instance.gameData.Ember.strength += ap;
-                            }
-                            else if (thisType.Equals(Item.ItemType.Armor))
-                            {
                                 DataController.instance.gameData.Ember.defPower += dp;
-                            }
                             ShowtoUI(itemTransform);
                             myPanel.SetActive(false);
                         }
@@ -249,42 +232,22 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
         {
             check = "Kong";
             DataController.instance.gameData.Kong.myUsedItems.Remove(thisname);
-
-            if (myType.Equals(Item.ItemType.Accessory))
-            {
-                DataController.instance.gameData.Kong.strength = 0;
-            }
-            else if (myType.Equals(Item.ItemType.Armor))               //더해진 스탯을 원래대로 되돌림
-            {
+                DataController.instance.gameData.Kong.strength = 0; //더해진 스탯을 원래대로 되돌림
                 DataController.instance.gameData.Kong.defPower = 0;
-            }
-
         }
         else if (DataController.instance.gameData.Jin.myUsedItems.Contains(thisname))        //진이 장착했었으면
         {
             check = "Jin";
             DataController.instance.gameData.Jin.myUsedItems.Remove(thisname);
-            if (myType.Equals(Item.ItemType.Accessory))
-            {
                 DataController.instance.gameData.Jin.strength = 0;
-            }
-            else if (myType.Equals(Item.ItemType.Armor))
-            {
                 DataController.instance.gameData.Jin.defPower = 0;
-            }
         }
         else if (DataController.instance.gameData.Ember.myUsedItems.Contains(thisname))        //앰버가 장착했었으면
         {
             check = "Ember";
             DataController.instance.gameData.Ember.myUsedItems.Remove(thisname);
-            if (myType.Equals(Item.ItemType.Accessory))
-            {
                 DataController.instance.gameData.Ember.strength = 0;
-            }
-            else if (myType.Equals(Item.ItemType.Armor))
-            {
-                DataController.instance.gameData.Ember.defPower = 0;
-            }
+                DataController.instance.gameData.Ember.defPower = 0;         
         }
         else check = "";
         if (thisEquipment.transform.childCount > 1)
@@ -297,7 +260,7 @@ public class UsingItemtoParty : MonoBehaviour,IPointerEnterHandler,IPointerExitH
     public void ShowtoUI(Transform itemTransform)
     {
         obj = Instantiate(this.gameObject);
-        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(20, 20);
+        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(30, 30);
         obj.transform.SetParent(PointerInfo.instance.transform);
         pos.x = itemTransform.localPosition.x + 20;
         pos.y = itemTransform.localPosition.y - 20;

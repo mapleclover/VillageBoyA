@@ -69,6 +69,7 @@ public class InventoryController : MonoBehaviour
                 myInventory.SetActive(v);
                 myPanel.SetActive(v);
             }
+            myPanel.SetActive(false);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -297,7 +298,7 @@ public class InventoryController : MonoBehaviour
 
                 obj.transform.SetParent(mySlots[i].transform);
                 rt.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                if (theItem.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient)
+                if (theItem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient))
                 {
                     rtforchild.sizeDelta = new Vector2(60, 60);
                 }
@@ -323,8 +324,7 @@ public class InventoryController : MonoBehaviour
             if (mySlots[i].transform.childCount > 0) //슬롯에 아이템이 있으면
             {
                 GameObject obj = mySlots[i].transform.GetChild(0).gameObject;
-                if (obj.GetComponent<Pickup>().item.itemType == Item.ItemType.Ingredient ||
-                    obj.layer == 8) // 소모품 혹은 재료일 경우만 실행
+                if (obj.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient) ||obj.layer.Equals(8)) // 소모품 혹은 재료일 경우만 실행
                 {
                     string st = obj.GetComponent<Pickup>().item.itemName;
                     int index = DataController.instance.gameData.itemList.IndexOf(st);
@@ -334,8 +334,8 @@ public class InventoryController : MonoBehaviour
                         itemCount.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
                         count.transform.SetParent(mySlots[i].transform.GetChild(0).transform);
                         count.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
-                        count.GetComponent<Image>().raycastTarget = false; 
-                        //    else Destroy(count);
+                        count.GetComponent<Image>().raycastTarget = false;
+                        Debug.Log(index);
                         if (DataController.instance.gameData.itemList.Contains(st))
                         {
                             count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.itemCount[index].ToString();

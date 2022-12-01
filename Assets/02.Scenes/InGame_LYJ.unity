@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -628,18 +628,29 @@ MonoBehaviour:
   filePath: 
   nowSlot: 0
   gameData:
+    curSlot: 0
+    turnBattleTimeSpeed: 0
     myProgress: 0
     savedTime: 
     mapName: FirstVillage
     victoryComplete: 000000000000
     currentPosition: {x: -136, y: 0, z: -90}
     currentRotation: {x: 0, y: 0, z: 0}
+    itemList: []
+    slotNum: 
+    itemCount: 
     gold: 0
     isFirstTime: 1
     apple:
       orgData: {fileID: 0}
       Level: 0
     gloves:
+      orgData: {fileID: 0}
+      Level: 0
+    goldring:
+      orgData: {fileID: 0}
+      Level: 0
+    necklace:
       orgData: {fileID: 0}
       Level: 0
     questID: 30
@@ -1331,7 +1342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1786622375
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5656,7 +5667,7 @@ MonoBehaviour:
   myInfoText: {fileID: 6149284104524682184}
   myParty: {fileID: 6149284104521226336}
   myPanel: {fileID: 6149284105372862036}
-  myEnhance: {fileID: 0}
+  myInven: {fileID: 0}
 --- !u!114 &6149284105779657290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5771,7 +5782,6 @@ MonoBehaviour:
   myInfoBox: {fileID: 6149284104369843689}
   itemCount: {fileID: 2786570965272288356}
   myGold: {fileID: 0}
-  myEnhance: {fileID: 0}
   myMenu: {fileID: 0}
   countUI: {fileID: 2786570963507132229}
   curItem:
@@ -8015,6 +8025,7 @@ MonoBehaviour:
   - {fileID: 9047473976820195046}
   - {fileID: 9047473975123897402}
   mySaveLoad: {fileID: 9047473975541698938}
+  fullLoad: {fileID: 0}
 --- !u!1 &9047473975541698938
 GameObject:
   m_ObjectHideFlags: 0
@@ -8837,6 +8848,7 @@ MonoBehaviour:
   - {fileID: 9047473976474394798}
   - {fileID: 9047473976020488716}
   mySaveLoad: {fileID: 9047473975922404545}
+  fullLoad: {fileID: 0}
 --- !u!114 &9047473975929654118
 MonoBehaviour:
   m_ObjectHideFlags: 0

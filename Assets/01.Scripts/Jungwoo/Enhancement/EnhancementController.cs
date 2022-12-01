@@ -44,6 +44,7 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
     {
         myInventory.localPosition = new Vector2(200f, 35f);
         myUI.SetActive(true);
+        InventoryController.Instance.ShowNumbertoUI();
         setMyInventory.SetActive(true);
         myMap.SetActive(false);
         myQuest.SetActive(false);

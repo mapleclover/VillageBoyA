@@ -131,6 +131,9 @@ public class DataController : MonoBehaviour
     public GameData gameData = new GameData();
     public static DataController instance;
     private GameObject thePlayer;
+    private GameObject konghp;
+    private GameObject jinhp;
+    private GameObject emberhp;
     private QuestManager theQuestManager;
     private ActionController theActionController;
     private GameObject myInven;
@@ -270,9 +273,11 @@ public class DataController : MonoBehaviour
 
     public void SaveGameDataByESC(int curSlot)
     {
-        Debug.Log(curSlot);
-        //if(SceneManager.GetActiveScene().name.Equals("06.Field"))
         thePlayer = GameObject.FindWithTag("Player");
+        konghp = GameObject.FindWithTag("KongHP");
+        jinhp = GameObject.FindWithTag("JinHP");
+        emberhp = GameObject.FindWithTag("EmberHP");
+
         theQuestManager = FindObjectOfType<QuestManager>();
         theActionController = FindObjectOfType<ActionController>();
 
@@ -282,10 +287,16 @@ public class DataController : MonoBehaviour
 
         //Quest ~ing
         gameData.questID = theQuestManager.questId;
+        gameData.questClear = theQuestManager.questComplete;
         gameData.questActionIndex = theQuestManager.questActionIndex;
 
         //BackAttack Battle ? true : false
         gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
+
+        gameData.Kong.HP = (int)konghp.GetComponent<Slider>().value * 150;
+        gameData.Jin.HP = (int)jinhp.GetComponent<Slider>().value * 100;
+        gameData.Ember.HP = (int)emberhp.GetComponent<Slider>().value * 125;
+
 
         for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++) //인벤토리 저장
         {
