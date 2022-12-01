@@ -83,6 +83,10 @@ public class BattleCharacter : CharacterProperty
             case STATE.Die:
                 myAnim.SetBool("Death", true);
                 if (gameObject.layer == LayerMask.NameToLayer("Enemy")) Invoke("SetActiveFalse", 2.0f);
+                else
+                {
+
+                }
                 break;
         }
     }

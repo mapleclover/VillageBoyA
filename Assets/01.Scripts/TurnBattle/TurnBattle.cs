@@ -100,7 +100,7 @@ public class TurnBattle : MonoBehaviour
                         }
                     }
                 }
-
+                OnTotalCost();
                 break;
             case State.ActiveCheck:
                 Victory();
@@ -331,6 +331,7 @@ public class TurnBattle : MonoBehaviour
         int a = 0;
         for (int i = 0; i < Player.Count; ++i)
         {
+            if(Player[i].GetComponent<BattleCharacter>().State!=STATE.Die)
             a += Player[i].GetComponent<BattleCharacter>().myStat.orgData.SkillCost[Player[i].GetComponent<BattleCharacter>().Skill];
         }
         myActionCost.TotalCost(a);
@@ -569,10 +570,10 @@ public class TurnBattle : MonoBehaviour
         {
             PlayList[i].GetComponent<BattleCharacter>().TurnActive = true; //모든캐릭터 행동값을 트루로 만든다                  
         }
-
+        OnTotalCost();
         if (!SelectedCharacterAttack.Inst.myAttack.activeSelf &&
             !SelectedCharacterAttack.Inst.mySelectAttack.activeSelf)
-        {
+        {            
             if (myActionCost.RemainingCost >= 0)
             {
                 ChangeState(State.ActiveCheck);
