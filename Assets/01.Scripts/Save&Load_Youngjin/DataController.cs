@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 
 
 [Serializable]
@@ -78,6 +79,8 @@ public class GameData
     public Vector3 currentRotation;
 
     public Dictionary<string, int> savedInventory = new Dictionary<string, int>(); //아이템과 몇번째 슬롯인지 저장
+  // public 
+    
     public Dictionary<string, int> myItemCount = new Dictionary<string, int>(); // 아이템과 개수
     public int gold = 0;
 
@@ -140,7 +143,30 @@ public class DataController : MonoBehaviour
             return;
         }
 
-            
+        if (gameData.isFirstTime)
+        {
+            gameData.Kong.isLeader = true;
+            gameData.Kong.strength = 0;
+            gameData.Kong.defPower = 0;
+            gameData.Kong.HP = 150;
+            gameData.Kong.isAlive = true;
+            gameData.Kong.myUsedItems = new List<string>();
+
+            gameData.Jin.isLeader = false;
+            gameData.Jin.strength = 0;
+            gameData.Jin.defPower = 0;
+            gameData.Jin.HP = 100;
+            gameData.Jin.isAlive = true;
+            gameData.Jin.myUsedItems = new List<string>();
+
+            gameData.Ember.isLeader = false;
+            gameData.Ember.strength = 0;
+            gameData.Ember.defPower = 0;
+            gameData.Ember.HP = 125;
+            gameData.Ember.isAlive = true;
+            gameData.Ember.myUsedItems = new List<string>();
+            gameData.isFirstTime = false;
+        }
 
 
         DontDestroyOnLoad(gameObject);
@@ -227,7 +253,7 @@ public class DataController : MonoBehaviour
     }
     public void DataClear()
     {
-        nowSlot = -1;
+       nowSlot = -1;
         gameData = new GameData();
     }
 
@@ -270,7 +296,7 @@ public class DataController : MonoBehaviour
         gameData.savedTime = DateTime.Now.ToString();
         string ToJsonData = JsonUtility.ToJson(gameData);
 
-        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);
+        File.WriteAllText(filePath + curSlot.ToString(), ToJsonData);
         Debug.Log("저장");
     }
 
