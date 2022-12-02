@@ -16,15 +16,15 @@ public class Select : MonoBehaviour
     public GameObject[] buttonList;
     public GameObject[] myMember;
     public GameObject mySaveLoad;
-    public GameObject[][] partyPortrait = new GameObject[3][];
+
     public GameObject fullLoad;
     int orgslot;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            partyPortrait[i] = new GameObject[3];
-        }
 
         //ShowUI();
         instance = this;
@@ -42,7 +42,7 @@ public class Select : MonoBehaviour
     {
         DataController.instance.nowSlot = num;
         // DataController.instance.gameData.curSlot = num;
-        ShowUI();
+       // ShowUI();
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
@@ -51,32 +51,21 @@ public class Select : MonoBehaviour
 
         Game();
     }
-    public void StartSlot(int num)
+    public void StartSlot()
     {
-        for (int i = num; i < 3; i++)
-        {
-            DataController.instance.nowSlot = i;
-
-            if (!savefile[i])
-            {
-                // DataController.instance.LoadGameData();
-
-                Game();
-                return;
-            }
-        }
-        fullLoad.SetActive(true);
+        DataController.instance.Save();
+        SceneManager.LoadScene(2);
     }
 
 
     public void Game()
     {
         ShowUI();
-        if (!savefile[DataController.instance.nowSlot]) //instance.nowSlot
+        if (!savefile[DataController.instance.nowSlot]) 
         {
             DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
 
-            savefile[DataController.instance.nowSlot] = true;  //nowSlot
+            savefile[DataController.instance.nowSlot] = true;  
             DataController.instance.Save();
             SceneManager.LoadScene(2);
         }
@@ -102,8 +91,10 @@ public class Select : MonoBehaviour
         {
             if (File.Exists(DataController.instance.filePath + $"{i}"))
             {
+
                 savefile[i] = true;
                 DataController.instance.nowSlot = i;
+                string name = DataController.instance.gamedataFilename;
                 DataController.instance.LoadGameData();
                 Vector2 temp = new Vector2(-110, 0);
                 slotText[i].transform.localPosition = temp;
@@ -118,13 +109,6 @@ public class Select : MonoBehaviour
                 position.y = buttonList[i].transform.localPosition.y;
                 GameObject obj = Instantiate(myMember[0], position, Quaternion.identity);
 
-
-                if (partyPortrait[i][0] != null)
-                {
-                    Destroy(partyPortrait[i][0]);
-                }
-
-                partyPortrait[i][0] = obj;
                 if (DataController.instance.gameData.Kong.isLeader)
                 {
                     obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
@@ -141,13 +125,6 @@ public class Select : MonoBehaviour
                 position.y = buttonList[i].transform.localPosition.y;
                 obj = Instantiate(myMember[1], position, Quaternion.identity);
 
-
-                if (partyPortrait[i][1] != null)
-                {
-                    Destroy(partyPortrait[i][1]);
-                }
-
-                partyPortrait[i][1] = obj;
                 if (DataController.instance.gameData.Jin.isLeader)
                 {
                     obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
@@ -165,12 +142,6 @@ public class Select : MonoBehaviour
                 obj = Instantiate(myMember[2], position, Quaternion.identity);
 
 
-                if (partyPortrait[i][2] != null)
-                {
-                    Destroy(partyPortrait[i][2]);
-                }
-
-                partyPortrait[i][2] = obj;
                 if (DataController.instance.gameData.Ember.isLeader)
                 {
                     obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);

@@ -53,6 +53,7 @@ public class InventoryController : MonoBehaviour
             {
                 v = false;
                 myInventory.SetActive(v);
+
                // myPanel.SetActive(false);
             }
             if (v) v = false;
@@ -191,15 +192,15 @@ public class InventoryController : MonoBehaviour
             if (theItem.GetComponent<Pickup>().item.itemType.Equals(Item.ItemType.Ingredient)||theItem.layer.Equals(8))
             {
                 GameObject temp= mySlots[DataController.instance.gameData.slotNum[index]].transform.GetChild(0).gameObject;
-                if (temp.transform.childCount >= 2)
+                /*if (temp.transform.childCount >= 2)
                 {
                     GameObject obj = temp.transform.GetChild(1).gameObject;
                     obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.itemCount[index].ToString();
                 }
                 else
-                {
+                {*/
                     ShowNumbertoUI();
-                }
+                
             }
         } //이미 내 인벤토리에 있으면 숫자만 더함
         else
@@ -335,7 +336,8 @@ public class InventoryController : MonoBehaviour
                         count.transform.SetParent(mySlots[i].transform.GetChild(0).transform);
                         count.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
                         count.GetComponent<Image>().raycastTarget = false;
-                        Debug.Log(index);
+                        Debug.Log($"index = {index}");
+                        Debug.Log($"{DataController.instance.gameData.itemCount.Count}");
                         if (DataController.instance.gameData.itemList.Contains(st))
                         {
                             count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.itemCount[index].ToString();
