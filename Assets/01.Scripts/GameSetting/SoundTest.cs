@@ -124,7 +124,7 @@ public class SoundTest : MonoBehaviour
     {
         audioSourceBgm.Stop();
         return;
-        Debug.Log("재생 중인" + _name + "사운드가 없습니다.");
+        Debug.Log("재생 중인" + _name + "사운드가 없습니다!");
     }
 
 
