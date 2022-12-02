@@ -59,16 +59,16 @@ public class InGameSave : MonoBehaviour
 
     public void OnClickSave()
     {
-        Select.instance.ShowUI();
         mySave.SetActive(true);
+        Select.instance.ShowUI();
         myESC.SetActive(false);
         //mySC.SetActive(true);
     }
 
     public void OnClickLoad()
     {
-        Select.instance.ShowUI();
         myLoad.SetActive(true);
+        Select.instance.ShowUI();
         myESC.SetActive(false);
     }
 

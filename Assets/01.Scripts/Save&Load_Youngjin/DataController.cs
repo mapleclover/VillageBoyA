@@ -70,11 +70,15 @@ public struct myPartyStats
 }
 
 [Serializable]
-public class GameData
+public class GameData               //모든 배열은 0이 콩 1이 진 2가 앰버
 {
-    public int curSlot;
+    public int[] HP = { 150,100,125};
+    public bool[] isLeader = { true, false, false };
+    public int[] strength = { 0, 0, 0 };
+    public int[] defPower = { 0, 0, 0 };
+    public bool[] isAlive = { true, true, true };
+    public string[] myUsedItems = { "","",""};
 
-    //모든 배열은 0이 콩 1이 진 2가 앰버
     public int turnBattleTimeSpeed = 0; // 턴배틀게임속도
     public int myProgress = 0; //진행도
     public string savedTime; //저장한 시간
@@ -120,10 +124,10 @@ public class GameData
 public class DataController : MonoBehaviour
 {
     // static GameObject _container;
-    public string gamedataFilename = "VillageBoyA.json"; //.json 앞에 게임 데이터 파일 이름 설정
     public string filePath;
     public int nowSlot; //0 1 2 
     public GameData gameData = new GameData();
+    public string gamedataFilename; //.json 앞에 게임 데이터 파일 이름 설정
     public static DataController instance;
     private GameObject thePlayer;
     private GameObject konghp;
@@ -150,6 +154,7 @@ public class DataController : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         //  gameData.myInventory = new List<GameData.myPartyItems>();
+        gamedataFilename = $"Saved Date : {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt")}_My Progress : {gameData.myProgress}_.json";
         filePath = Application.persistentDataPath + gamedataFilename;
     }
 
@@ -176,11 +181,10 @@ public class DataController : MonoBehaviour
         gameData.Ember.isAlive = true;
         gameData.Ember.myUsedItems = new List<string>();
 
-        gameData.curSlot=nowSlot;
         gameData.savedTime = DateTime.Now.ToString();
-        string ToJsonData = JsonUtility.ToJson(gameData);
+       // string ToJsonData = JsonUtility.ToJson(gameData);
 
-        File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);   //nowSlot.ToString()
+      //  File.WriteAllText(filePath + nowSlot.ToString(), ToJsonData);   //nowSlot.ToString()
     }
    
     public void LoadGameData()

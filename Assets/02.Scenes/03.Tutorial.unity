@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2003931976}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2153,7 +2153,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234481190}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 961a1757e44f85847b816a2c4252d2fe, type: 3}
   m_Name: 
@@ -2161,10 +2161,11 @@ MonoBehaviour:
   rectTransform: {fileID: 465561405}
   myPanel: {fileID: 465561402}
   myPlayerUI: {fileID: 1875267215911671875}
-  myInfo: {fileID: 0}
+  myInfo: {fileID: 6946546624599690994}
   myUI: {fileID: 1188573879}
   myMap: {fileID: 0}
   myQuest: {fileID: 0}
+  myAlert: {fileID: 0}
   myInventory: {fileID: 6946546624585743966}
   setMyInventory: {fileID: 6946546624585743961}
   isOpen: 0
@@ -37937,7 +37938,15 @@ MonoBehaviour:
   filePath: 
   nowSlot: 0
   gameData:
-    curSlot: 0
+    HP: 96000000640000007d000000
+    isLeader: 010000
+    strength: 000000000000000000000000
+    defPower: 000000000000000000000000
+    isAlive: 010101
+    myUsedItems:
+    - 
+    - 
+    - 
     turnBattleTimeSpeed: 0
     myProgress: 0
     savedTime: 
@@ -37950,9 +37959,27 @@ MonoBehaviour:
     itemCount: 
     gold: 0
     isFirstTime: 1
-    apple:
-      orgData: {fileID: 0}
-      Level: 0
+    Kong:
+      isLeader: 0
+      strength: 0
+      defPower: 0
+      HP: 0
+      isAlive: 0
+      myUsedItems: []
+    Jin:
+      isLeader: 0
+      strength: 0
+      defPower: 0
+      HP: 0
+      isAlive: 0
+      myUsedItems: []
+    Ember:
+      isLeader: 0
+      strength: 0
+      defPower: 0
+      HP: 0
+      isAlive: 0
+      myUsedItems: []
     gloves:
       orgData: {fileID: 0}
       Level: 0
