@@ -65,8 +65,13 @@ public class PlayerMovement : MonoBehaviour
 
     // 캐릭터 교체 딜레이
     private bool giveDelay = false;
+    public static PlayerMovement instance;
+    private void Awake()
+    {
+        instance = this;
+    }
 
-    void ChangeState(CHARACTER myCha)
+    public void ChangeState(CHARACTER myCha)
     {
         //Vector3 summonPosition = new Vector3(0, 1.3f, 0); // 캐릭터 교체시 소환되는 높이값
         if (myCharacter == myCha) return;
