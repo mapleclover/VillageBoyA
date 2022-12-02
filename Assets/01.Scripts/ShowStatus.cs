@@ -7,7 +7,7 @@ public class ShowStatus : MonoBehaviour
     [SerializeField] private PC[] PCs;
     [SerializeField] private int CharacterIndex;
     public TextMeshProUGUI[] Texts;
-    private GameData.myPartyStats character;
+    private myPartyStats character;
     public Image CharacterImage;
     [SerializeField]private Sprite[] images;
     [SerializeField]private GameObject StatusPanel;
@@ -60,7 +60,7 @@ public class ShowStatus : MonoBehaviour
 
     public void Show(string characterName)
     {
-        character = new GameData.myPartyStats();
+        character = new myPartyStats();
         switch (characterName)
         {
             case "Kong":

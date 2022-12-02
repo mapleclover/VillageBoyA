@@ -162,7 +162,19 @@ public class SceneLoad : MonoBehaviour
             konghp.GetComponent<Slider>().value= DataController.instance.gameData.Kong.HP /150f; 
             jinhp.GetComponent<Slider>().value = DataController.instance.gameData.Jin.HP*0.01f;
             emberhp.GetComponent<Slider>().value = DataController.instance.gameData.Ember.HP*0.008f;
-            
+            if (DataController.instance.gameData.Kong.isLeader)
+            {
+                PlayerMovement.instance.ChangeState(PlayerMovement.CHARACTER.Kong);
+            }
+           else if (DataController.instance.gameData.Jin.isLeader)
+            {
+                PlayerMovement.instance.ChangeState(PlayerMovement.CHARACTER.Jin);
+            }
+          else  if (DataController.instance.gameData.Ember.isLeader)
+            {
+                PlayerMovement.instance.ChangeState(PlayerMovement.CHARACTER.Ember);
+            }
+
         }
        /* else if (scene.name == "H_H")
         {

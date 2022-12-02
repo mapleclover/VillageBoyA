@@ -58,9 +58,16 @@ public struct SaveItemData
     // 왜냐면 아이템 전부가 이 스크립트 자식으로 만드는 것 보다 강화 가능 아이템에
     // EnhanceableItems.cs 를 추가하는게 저렴할 것 같음
 }
-
-
-
+[Serializable]
+public struct myPartyStats
+{
+    public bool isLeader; //리더 유무
+    public int strength; //공격력
+    public int defPower; //방어력
+    public int HP; //체력
+    public bool isAlive; //생존 여부
+    public List<string> myUsedItems;
+}
 
 [Serializable]
 public class GameData
@@ -91,23 +98,11 @@ public class GameData
 
     //포션 개수: DataController.instance.gameData.myItemCount["포션"]
 
-    public struct myPartyStats
-    {
-        public bool isLeader; //리더 유무
-        public int strength; //공격력
-        public int defPower; //방어력
-        public int HP; //체력
-        public bool isAlive; //생존 여부
-        public List<string> myUsedItems;
-    }
-
-  
-
     //폴더 안 저장된 파일 확인
     public myPartyStats Kong;
     public myPartyStats Jin;
     public myPartyStats Ember;
-    public SaveItemData apple;
+
     public SaveItemData gloves;
     public SaveItemData goldring;
     public SaveItemData necklace;
@@ -150,31 +145,6 @@ public class DataController : MonoBehaviour
         {
             Destroy(this.gameObject);
             return;
-        }
-
-        if (gameData.isFirstTime)
-        {
-            gameData.Kong.isLeader = true;
-            gameData.Kong.strength = 0;
-            gameData.Kong.defPower = 0;
-            gameData.Kong.HP = 150;
-            gameData.Kong.isAlive = true;
-            gameData.Kong.myUsedItems = new List<string>();
-
-            gameData.Jin.isLeader = false;
-            gameData.Jin.strength = 0;
-            gameData.Jin.defPower = 0;
-            gameData.Jin.HP = 100;
-            gameData.Jin.isAlive = true;
-            gameData.Jin.myUsedItems = new List<string>();
-
-            gameData.Ember.isLeader = false;
-            gameData.Ember.strength = 0;
-            gameData.Ember.defPower = 0;
-            gameData.Ember.HP = 125;
-            gameData.Ember.isAlive = true;
-            gameData.Ember.myUsedItems = new List<string>();
-            gameData.isFirstTime = false;
         }
 
 
