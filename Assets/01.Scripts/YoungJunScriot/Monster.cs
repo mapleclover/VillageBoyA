@@ -47,7 +47,7 @@ public class Monster : CharacterMoveMent
             case STATE.BATTLE:
                 break;
             case STATE.DEAD:
-                this.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);              
                 break;
         }
     }
@@ -68,8 +68,7 @@ public class Monster : CharacterMoveMent
                 myAnim.SetBool("IsWalking", true);
                 theEnemyAI.ChaseTarget(myTarget);
                 break;
-            case STATE.DEAD:
-
+            case STATE.DEAD:              
                 break;
         }
     }
