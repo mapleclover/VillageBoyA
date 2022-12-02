@@ -75,8 +75,8 @@ public class Goal : MonoBehaviour
                 {
                     if (theManager.isTalkAction && keyDownCount < 2)
                     {
-                        theManager.Action(this.gameObject);
                         keyDownCount++;
+                        theManager.Action(this.gameObject);
                     }
                 }
 

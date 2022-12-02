@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
 
     public bool isTalkAction = true;
-    private bool canSkip = false;
+    public bool canSkip = false;
 
     [SerializeField]
     private Goal theGoal;
