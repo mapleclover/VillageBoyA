@@ -404,6 +404,7 @@ public class TurnBattle : MonoBehaviour
             }
             for (int i = 0; i < Player.Count; ++i)
             {
+                if (Player[i].GetComponent<BattleCharacter>().myStat.curHP <= 0.0f) Player[i].GetComponent<BattleCharacter>().myStat.curHP = 1;
                 switch (i)
                 {
                     case 0:
