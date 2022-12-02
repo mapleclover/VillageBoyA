@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     MinimapIcon myIcon = null;
 
     private bool findTarget = false;
-
+    Color orgColor;
 
     // Start is called before the first frame update
     
@@ -27,15 +27,21 @@ public class EnemyAI : MonoBehaviour
         if (this.GetComponent<Pickup>().enemy.enemyType == EnemySC.EnemyType.Boss)
         {
             RedOrBlack(Color.black);
+            orgColor = Color.black;
         }
         else
         {
             RedOrBlack(Color.red);
+            orgColor = Color.red;
         }    
     }
     private void OnEnable()
     {
-        if(myIcon!=null) myIcon.gameObject.SetActive(true);
+        if(myIcon!=null) 
+        {
+            myIcon.gameObject.SetActive(true);
+            myIcon.Initialize(transform, orgColor);
+        }
     }
 
     void RedOrBlack(Color color)
