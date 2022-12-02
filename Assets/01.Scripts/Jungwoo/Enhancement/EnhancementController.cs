@@ -16,10 +16,12 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
     public GameObject myUI;
     public GameObject myMap;
     public GameObject myQuest;
+    public GameObject myAlert;
     public RectTransform myInventory;
     public GameObject setMyInventory;
     public bool isOpen = false;
     public static EnhancementController inst = null;
+
 
     private void Awake()
     {
@@ -57,6 +59,7 @@ public class EnhancementController : MonoBehaviour, IPointerEnterHandler
     {
         myInventory.localPosition = new Vector2(0f, 35f);
         myUI.SetActive(false);
+        myAlert.SetActive(false);
         setMyInventory.SetActive(false);
         myInfo.SetActive(false);
         myMap.SetActive(true);
