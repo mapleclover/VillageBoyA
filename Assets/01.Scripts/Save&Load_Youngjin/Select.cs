@@ -46,7 +46,6 @@ public class Select : MonoBehaviour
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
-
         }
 
         Game();
@@ -60,7 +59,7 @@ public class Select : MonoBehaviour
 
     public void Game()
     {
-        ShowUI();
+       // ShowUI();
         if (!savefile[DataController.instance.nowSlot]) 
         {
             DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
@@ -72,7 +71,7 @@ public class Select : MonoBehaviour
         else
         {
             Debug.Log(DataController.instance.nowSlot);
-            DataController.instance.LoadGameData();
+            //DataController.instance.LoadGameData();
             SceneLoad.Instance.ChangeScene("06.Field");
         }
 
@@ -81,7 +80,7 @@ public class Select : MonoBehaviour
     public void ShowUI()
     {
         Show();
-        DataController.instance.DataClear();
+
         DataController.instance.nowSlot = orgslot;
     }
     public void Show()
@@ -91,25 +90,20 @@ public class Select : MonoBehaviour
         {
             if (File.Exists(DataController.instance.filePath + $"{i}"))
             {
-
                 savefile[i] = true;
                 DataController.instance.nowSlot = i;
-                string name = DataController.instance.gamedataFilename;
-                DataController.instance.LoadGameData();
+                DataController.instance.LoadGameDataTemp();
                 Vector2 temp = new Vector2(-110, 0);
                 slotText[i].transform.localPosition = temp;
-                slotText[i].text = "Saved Date:" + DataController.instance.gameData.savedTime;
-                slotText[i].text += $"\nMy Progress={DataController.instance.gameData.myProgress}%";
-                DataController.instance.gameData.Kong.isAlive = true;
-                DataController.instance.gameData.Jin.isAlive = true;
-                DataController.instance.gameData.Ember.isAlive = true;
+                slotText[i].text = "Saved Date:" + DataController.instance.tempData.savedTime;
+                slotText[i].text += $"\nMy Progress={DataController.instance.tempData.myProgress}%";
 
                 Vector3 position = myMember[0].transform.localPosition;
                 position.x = 140;
                 position.y = buttonList[i].transform.localPosition.y;
                 GameObject obj = Instantiate(myMember[0], position, Quaternion.identity);
 
-                if (DataController.instance.gameData.Kong.isLeader)
+                if (DataController.instance.tempData.Kong.isLeader)
                 {
                     obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
                 }
@@ -158,7 +152,7 @@ public class Select : MonoBehaviour
             {
                 slotText[i].text = "<color=grey>No Saved Data</color> ";
             }
-            DataController.instance.DataClear();
+
         }
     }
     public void clickload()
