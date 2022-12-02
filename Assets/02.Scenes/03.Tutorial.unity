@@ -12458,6 +12458,7 @@ MonoBehaviour:
   talkIndex: 0
   textSpeed: 0
   isTalkAction: 1
+  canSkip: 0
   theGoal: {fileID: 2145330320}
 --- !u!4 &949683156
 Transform:
@@ -18063,7 +18064,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -38736,7 +38737,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ffb860ad6e10142a15596f8a6164b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamedataFilename: VillageBoyA.json
   filePath: 
   nowSlot: 0
   gameData:
@@ -38796,6 +38796,7 @@ MonoBehaviour:
     questClear: 1
     isBackAttack: 0
     partyMember: 010101
+  gamedataFilename: VillageBoyA.json
 --- !u!1 &4288750348328150234
 GameObject:
   m_ObjectHideFlags: 0
