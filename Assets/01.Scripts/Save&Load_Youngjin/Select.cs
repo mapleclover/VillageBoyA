@@ -56,7 +56,7 @@ public class Select : MonoBehaviour
         for (int i = num; i < 3; i++)
         {
             DataController.instance.nowSlot = i;
-            // DataController.instance.gameData.curSlot = i;
+
             if (!savefile[i])
             {
                 // DataController.instance.LoadGameData();
@@ -187,6 +187,7 @@ public class Select : MonoBehaviour
             {
                 slotText[i].text = "<color=grey>No Saved Data</color> ";
             }
+            DataController.instance.DataClear();
         }
     }
     public void clickload()

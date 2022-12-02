@@ -54,6 +54,7 @@ public class TurnBattle : MonoBehaviour
     public GameObject[] victoryItemSlots;
     public GameObject[] myVictoryItems;
     private DataController myData;
+    
 
     public enum State
     {
@@ -139,9 +140,10 @@ public class TurnBattle : MonoBehaviour
                             if (myData.gameData.questID.Equals(30) &&
                            myData.gameData.questActionIndex.Equals(1))
                             {
-                                ShowEarnedItem(0, 0);
+                                ShowEarnedItem(0, 0);                              
                             }
                             RewardGold.text = $"{5 * Enemy.Count}";
+                                                     
                             break;
                         case "BossFox":
                             if (myData.gameData.questID.Equals(30) &&
@@ -272,9 +274,9 @@ public class TurnBattle : MonoBehaviour
         InstantiateEnemy();
         InstantiatePlayerCharacter();
     }
-
+ 
     void Start()
-    {
+    {      
         if (myData.gameData.itemList.Contains("포션"))
         {
             int index = myData.gameData.itemList.IndexOf("포션");
@@ -343,7 +345,7 @@ public class TurnBattle : MonoBehaviour
     {
         myData.gameData.questClear = true;
         myData.gameData.questActionIndex += actionindex;
-        myData.gameData.victoryComplete[index] = true;
+        myData.gameData.victoryComplete[index] = true;       
     }
 
     public void VictoryOk() //보상창 확인버튼시 클릭시 나오는 함수
@@ -356,7 +358,7 @@ public class TurnBattle : MonoBehaviour
                     if (myData.gameData.questID == 30 &&
                         myData.gameData.questActionIndex == 1)
                     {
-                        CheckVictoryAndType(1, 0); // 중복 코드가 많아 함수로 대체했습니다 -영진
+                        CheckVictoryAndType(1, 0); // 중복 코드가 많아 함수로 대체했습니다 -영진                    
                     }
                     myData.gameData.gold += 5 * Enemy.Count;
                     break;
@@ -365,7 +367,7 @@ public class TurnBattle : MonoBehaviour
                     if (myData.gameData.questID == 30 &&
                         myData.gameData.questActionIndex == 2)
                     {
-                        CheckVictoryAndType(1, 1);// 대왕여우 와의 맞짱 후 이김 승리값전달
+                        CheckVictoryAndType(1, 1);// 대왕여우 와의 맞짱 후 이김 승리값전달                                              
                     }
                     myData.gameData.gold += 30 * Enemy.Count;
                     break;
@@ -382,7 +384,7 @@ public class TurnBattle : MonoBehaviour
                     if (myData.gameData.questID == 40 &&
                         myData.gameData.questActionIndex == 3)
                     {
-                        CheckVictoryAndType(1, 3); // 밀크카우 와의 맞짱 후 이김 승리값전달
+                        CheckVictoryAndType(1, 3); // 밀크카우 와의 맞짱 후 이김 승리값전달                       
                     }
                     myData.gameData.gold += 5 * Enemy.Count;
                     break;
@@ -506,6 +508,7 @@ public class TurnBattle : MonoBehaviour
                 return;
         VictoryCheck = true;
         SoundTest.instance.PlayBGM("BGM_Victory");
+        
         ChangeState(State.GameOver);
         Time.timeScale = 1.0f;
     }
