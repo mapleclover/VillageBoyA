@@ -127,7 +127,8 @@ public class DataController : MonoBehaviour
     public string filePath;
     public int nowSlot; //0 1 2 
     public GameData gameData = new GameData();
-    public string gamedataFilename; //.json 앞에 게임 데이터 파일 이름 설정
+    public GameData tempData = new GameData();
+    public string gamedataFilename = "VillageBoyA.json"; //.json 앞에 게임 데이터 파일 이름 설정
     public static DataController instance;
     private GameObject thePlayer;
     private GameObject konghp;
@@ -154,7 +155,6 @@ public class DataController : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         //  gameData.myInventory = new List<GameData.myPartyItems>();
-        gamedataFilename = $"Saved Date : {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt")}_My Progress : {gameData.myProgress}_.json";
         filePath = Application.persistentDataPath + gamedataFilename;
     }
 
@@ -201,10 +201,17 @@ public class DataController : MonoBehaviour
         {
             Debug.Log("새로운 파일 생성");
             gameData = new GameData(); //저장된 파일이 없으면 새로 만듦
-           
         }
     }
-
+    public void LoadGameDataTemp()
+    {
+        if (File.Exists(filePath + nowSlot.ToString()))//File.Exists(filePath + nowSlot.ToString())
+        {
+            Debug.Log("불러오기");
+            string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
+            tempData = JsonUtility.FromJson<GameData>(FromJsonData); //파일이 있으면 불러옴
+        }
+    }
 
 
     public void SaveData()
@@ -241,7 +248,7 @@ public class DataController : MonoBehaviour
     }
     public void DataClear()
     {
-       nowSlot = -1;
+        nowSlot = -1;
         gameData = new GameData();
     }
 
@@ -266,11 +273,6 @@ public class DataController : MonoBehaviour
 
         //BackAttack Battle ? true : false
         gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
-
-        gameData.Kong.HP = (int)konghp.GetComponent<Slider>().value * 150;
-        gameData.Jin.HP = (int)jinhp.GetComponent<Slider>().value * 100;
-        gameData.Ember.HP = (int)emberhp.GetComponent<Slider>().value * 125;
-
 
         for (int i = 0; i < InventoryController.Instance.mySlots.Length; i++) //인벤토리 저장
         {
