@@ -217,7 +217,7 @@ public class BattleCharacter : CharacterProperty
         pos.y += 1.0f;
         obj.transform.position = pos;
         Destroy(obj, 2.0f);
-        myStat.curHP += 30.0f;
+        myStat.curHP += 50.0f;
         ActiveHeal = false;
     }
     
