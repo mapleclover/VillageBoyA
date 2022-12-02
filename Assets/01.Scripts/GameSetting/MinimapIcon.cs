@@ -19,6 +19,14 @@ public class MinimapIcon : MonoBehaviour
         RectTransform rt = GetComponent<RectTransform>();
         while (target != null)
         {
+            if (target.gameObject.activeSelf)
+            {
+                this.gameObject.SetActive(true);
+            }
+            else if (!target.gameObject.activeSelf)
+            {
+                this.gameObject.SetActive(false);
+            }
             Vector3 pos = Camera.allCameras[1].WorldToViewportPoint(target.position);
             rt.anchoredPosition = pos * size;
             yield return null;

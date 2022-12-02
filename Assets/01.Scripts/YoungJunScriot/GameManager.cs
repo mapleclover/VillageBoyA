@@ -23,7 +23,9 @@ public class GameManager : MonoBehaviour
     public int talkIndex; // 대화순서
     public float textSpeed;
 
+
     public bool isTalkAction = true;
+    private bool canSkip = false;
 
     [SerializeField]
     private Goal theGoal;
@@ -98,6 +100,7 @@ public class GameManager : MonoBehaviour
     {
         textSpeed = PlayerPrefs.GetInt("TextSpeed");
         isTalkAction = false;
+        canSkip = true;
         talkText.text = "";
         bool t_monster = false, t_white = false, t_yellow = false, t_size = false, t_orgsize = false;
         bool t_ignore = false; // 특수문자를 생략하기위한 bool값.
@@ -130,10 +133,6 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < text.Length; i++)
             {
-                if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
-                {
-                    textSpeed = 10;
-                }
                 switch (text[i])
                 {
                     case 'ⓦ': t_monster = false; t_white = true; t_yellow = false; t_size = false; t_orgsize = false; t_ignore = true; break;
@@ -153,10 +152,14 @@ public class GameManager : MonoBehaviour
                     talkText.text += t_letter;
                 }
                 t_ignore = false;
-
-                yield return new WaitForSeconds(0.2f / (textSpeed * 2));
+                if(canSkip)
+                {
+                    yield return new WaitForSeconds(0.2f / (textSpeed * 2));
+                }
             }
-        }        
+
+        }
+        canSkip = false;
         isTalkAction = true;
     }
     private void NameText(GameObject gameObject, bool isNpc)
@@ -179,6 +182,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
+        {
+            canSkip = false;
+        }
     }
 }
