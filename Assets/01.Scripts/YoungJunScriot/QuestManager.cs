@@ -8,8 +8,8 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     public int questId;
-    public bool questComplete;
-    private bool tempCheck; // 퀘스트컴플리트 저장용 임시변수
+    public bool questComplete = true;
+    public bool tempCheck = true; // 퀘스트컴플리트 저장용 임시변수
     public int questActionIndex; // 퀘스트npc대화순서 변수
     public GameObject[] mySlots;
     private Animator myAnim;
@@ -182,7 +182,16 @@ public class QuestManager : MonoBehaviour
                     Destroy(questObject[5]);
                 }
 
-                if (questActionIndex == 2 && questComplete)
+                if (questActionIndex == 2 && tempCheck)
+                {
+                    questObject[2].SetActive(true); // 호두 위에 ? 아이콘                   
+                    questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
+                    questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
+
+                    questObject[6] = Instantiate(Resources.Load("Prefabs/Icons/QuestCompletIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[6].GetComponent<MinimapIcon>().Initialize(Hodu_2000.transform, Color.yellow);
+                }
+                if (questActionIndex == 2 && scanObject == null)
                 {
                     questObject[2].SetActive(true); // 호두 위에 ? 아이콘                   
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
@@ -233,6 +242,15 @@ public class QuestManager : MonoBehaviour
                     questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[5].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
                 }
+                if (questActionIndex == 1 && scanObject == null)
+                {
+                    Destroy(questObject[5]);
+
+                    questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
+                }
                 if (questActionIndex == 1 && scanObject == Zhongli_3000)
                 {
                     questObject[1].SetActive(false);
@@ -260,6 +278,18 @@ public class QuestManager : MonoBehaviour
                     questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
                     questObject[5].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
                 }
+                if (questActionIndex == 3 && scanObject == null)
+                {
+                    questObject[2].SetActive(false);
+
+                    Destroy(questObject[6]);
+                    RemovingItem("뿔");
+                    questObject[1].SetActive(true);
+                    questObject[1].transform.position = Klee_1000.transform.position + Vector3.up * 2.0f;
+
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
+                }
                 if (questActionIndex == 3 && scanObject == Klee_1000)
                 {
                     questObject[1].SetActive(false);
@@ -276,6 +306,18 @@ public class QuestManager : MonoBehaviour
                     questObject[6].GetComponent<MinimapIcon>().Initialize(Klee_1000.transform, Color.yellow);
                 }
                 if (questActionIndex == 5 && tempCheck)
+                {
+                    questObject[2].SetActive(false);
+                    RemovingItem("우유");
+                    Destroy(questObject[6]);
+
+                    questObject[1].SetActive(true);
+                    questObject[1].transform.position = Zhongli_3000.transform.position + Vector3.up * 2.7f;
+
+                    questObject[5] = Instantiate(Resources.Load("Prefabs/Icons/QuestIcon"), SceneData.Inst.Minimap) as GameObject;
+                    questObject[5].GetComponent<MinimapIcon>().Initialize(Zhongli_3000.transform, Color.yellow);
+                }
+                if (questActionIndex == 5 && scanObject == null)
                 {
                     questObject[2].SetActive(false);
                     RemovingItem("우유");
@@ -336,6 +378,7 @@ public class QuestManager : MonoBehaviour
 
     public void ControlPopup(GameObject scanObject = null)
     {
+
         // myAnim => 퀘스트완료깜빡이.
         switch (questId)
         {
@@ -383,7 +426,7 @@ public class QuestManager : MonoBehaviour
                     theQuestPopupText.text = "마을에 처음 방문했습니다.\n클레와 대화하세요.";
                 }
 
-                if (questActionIndex.Equals(1) && tempCheck)
+                if (questActionIndex.Equals(1) && questComplete)
                 {
                     questPopupText.text = "호두와 대화하기";
                     theQuestPopupText.text = "호두가 고민이 있어보입니다.\n호두와 대화하세요.";
@@ -427,7 +470,7 @@ public class QuestManager : MonoBehaviour
                     questPopupText.text = "클레와 대화하기";
                     theQuestPopupText.text = "클레와 대화하세요.";
                 }
-                if (questActionIndex.Equals(1) && tempCheck)
+                if (questActionIndex.Equals(1) && questComplete)
                 {
                     questPopupText.text = "종려와 대화하기";
                     theQuestPopupText.text = "종려가 할 얘기가 있어보입니다.\n종려를 찾아가 보세요.";
@@ -446,7 +489,7 @@ public class QuestManager : MonoBehaviour
                     questPopupText.text = "종려와 대화하기";
                     theQuestPopupText.text = "리드런을 물리쳤습니다.\n종려를 찾아가보세요.";
                 }
-                if (questActionIndex.Equals(3) && tempCheck)
+                if (questActionIndex.Equals(3) && questComplete)
                 {
                     questPopupText.text = "조사시간동안\n클레와 대화하기";
                     theQuestPopupText.text = "종려가 리드런의 뿔을 이용해 조사를 시작하겠다고 합니다.\n조사시간동안 클레를 찾아가보세요.";
@@ -464,7 +507,7 @@ public class QuestManager : MonoBehaviour
                     questPopupText.text = "클레에게\n우유전달하기";
                     theQuestPopupText.text = "우유를 구했습니다.\n클레를 찾아가세요.";
                 }
-                if (questActionIndex.Equals(5) && tempCheck)
+                if (questActionIndex.Equals(5) && questComplete)
                 {
                     questPopupText.text = "종려한테 대화걸기";
                     theQuestPopupText.text = "종려가 조사를 끝맞춘거같습니다. 종려를 찾아가보세요.";

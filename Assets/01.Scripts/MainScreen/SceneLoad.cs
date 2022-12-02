@@ -84,6 +84,8 @@ public class SceneLoad : MonoBehaviour
             camera.transform.position = DataController.instance.gameData.currentPosition;
             //퀘스트 진행도
             theQuestManager.questId = DataController.instance.gameData.questID;
+            
+            theQuestManager.tempCheck = DataController.instance.gameData.questClear;
             theQuestManager.questComplete = DataController.instance.gameData.questClear;
             theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
             theQuestManager.ControlObject();

@@ -72,12 +72,7 @@ public struct myPartyStats
 [Serializable]
 public class GameData               //모든 배열은 0이 콩 1이 진 2가 앰버
 {
-    public int[] HP = { 150,100,125};
-    public bool[] isLeader = { true, false, false };
-    public int[] strength = { 0, 0, 0 };
-    public int[] defPower = { 0, 0, 0 };
-    public bool[] isAlive = { true, true, true };
-    public string[] myUsedItems = { "","",""};
+
 
     public int turnBattleTimeSpeed = 0; // 턴배틀게임속도
     public int myProgress = 0; //진행도
@@ -131,9 +126,7 @@ public class DataController : MonoBehaviour
     public string gamedataFilename = "VillageBoyA.json"; //.json 앞에 게임 데이터 파일 이름 설정
     public static DataController instance;
     private GameObject thePlayer;
-    private GameObject konghp;
-    private GameObject jinhp;
-    private GameObject emberhp;
+
     private QuestManager theQuestManager;
     private ActionController theActionController;
     private GameObject myInven;
@@ -224,7 +217,7 @@ public class DataController : MonoBehaviour
         gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
         //Quest ~ing
         gameData.questID = theQuestManager.questId;
-        gameData.questClear = theQuestManager.questComplete;
+        gameData.questClear = theQuestManager.tempCheck;
         gameData.questActionIndex = theQuestManager.questActionIndex;
         //BackAttack Battle ? true : false
         gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
@@ -255,9 +248,7 @@ public class DataController : MonoBehaviour
     public void SaveGameDataByESC(int curSlot)
     {
         thePlayer = GameObject.FindWithTag("Player");
-        konghp = GameObject.FindWithTag("KongHP");
-        jinhp = GameObject.FindWithTag("JinHP");
-        emberhp = GameObject.FindWithTag("EmberHP");
+
 
         theQuestManager = FindObjectOfType<QuestManager>();
         theActionController = FindObjectOfType<ActionController>();
@@ -268,7 +259,7 @@ public class DataController : MonoBehaviour
 
         //Quest ~ing
         gameData.questID = theQuestManager.questId;
-        gameData.questClear = theQuestManager.questComplete;
+        gameData.questClear = theQuestManager.tempCheck;
         gameData.questActionIndex = theQuestManager.questActionIndex;
 
         //BackAttack Battle ? true : false
