@@ -111,6 +111,7 @@ public class GameData               //모든 배열은 0이 콩 1이 진 2가 앰버
     public int questID = 30; // 퀘스트순서
     public int questActionIndex = 0; // 퀘스트대화순서.
     public bool questClear = true; // 퀘스트클리어 유무
+    public bool tempCheck = true;
     public bool isBackAttack; // 빽어택으로 전투돌입인지 아닌지
 
     public bool[] partyMember = Enumerable.Repeat(true, 3).ToArray(); //게임 중에 파티원이 추가되면 TRUE로 바꿔줘야함, 죽으면 false?
@@ -217,7 +218,7 @@ public class DataController : MonoBehaviour
         gameData.currentRotation = thePlayer.transform.eulerAngles; // 플레이어 rot값.
         //Quest ~ing
         gameData.questID = theQuestManager.questId;
-        gameData.questClear = theQuestManager.tempCheck;
+        gameData.questClear = theQuestManager.questComplete;
         gameData.questActionIndex = theQuestManager.questActionIndex;
         //BackAttack Battle ? true : false
         gameData.isBackAttack = theActionController.isBackAttack; // 빽어택으로 전투돌입인가?
@@ -259,7 +260,8 @@ public class DataController : MonoBehaviour
 
         //Quest ~ing
         gameData.questID = theQuestManager.questId;
-        gameData.questClear = theQuestManager.tempCheck;
+        gameData.questClear = theQuestManager.questComplete;
+        gameData.tempCheck = theQuestManager.tempCheck;
         gameData.questActionIndex = theQuestManager.questActionIndex;
 
         //BackAttack Battle ? true : false

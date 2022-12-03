@@ -87,6 +87,8 @@ public class SceneLoad : MonoBehaviour
             
             theQuestManager.tempCheck = DataController.instance.gameData.questClear;
             theQuestManager.questComplete = DataController.instance.gameData.questClear;
+            theQuestManager.tempCheck = DataController.instance.gameData.tempCheck;
+
             theQuestManager.questActionIndex = DataController.instance.gameData.questActionIndex;
             theQuestManager.ControlObject();
             theQuestManager.ControlPopup();

@@ -344,6 +344,7 @@ public class TurnBattle : MonoBehaviour
     void CheckVictoryAndType(int actionindex, int index)
     {
         myData.gameData.questClear = true;
+        myData.gameData.tempCheck = true;
         myData.gameData.questActionIndex += actionindex;
         myData.gameData.victoryComplete[index] = true;       
     }

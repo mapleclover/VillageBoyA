@@ -31,7 +31,7 @@ public class TalkManager : MonoBehaviour
         talkData.Add(1000, new string[] { "안녕! 오빠 나는 클레야:0", "이곳에 처음 왔구나?:1" }); //대화뒤의숫자는 portratiIndex ":" 은구분자.
         talkData.Add(2000, new string[] { "안녕 ~ 난 호두야 ~:0", "누구 좀 도와줄 사람 없으려나~:1" });
         talkData.Add(3000, new string[] { "흠.. 날씨가 좋군 ..:0" });
-        talkData.Add(4000, new string[] { "안녕 ? 강화 해볼래 ? \n합성대를 빌려줄께:0" });
+        talkData.Add(4000, new string[] { "안녕? 물건좀 보고가 ~:0" });
         talkData.Add(100, new string[] { "새빨갛게 잘 익은 사과다." });
         talkData.Add(200, new string[] { "강화 하시겠습니까 ? ⓜ(E)ⓦ"});
 
@@ -76,7 +76,7 @@ public class TalkManager : MonoBehaviour
         {
             "뭐야 ? ! ? !\n여우꼬리 가죽아니야 ? !:0",
             ". . . . . . 아까는 무시해서 미안해 . .\n다친데는 없어 ?:2",
-            "고마워 ! 답례라고 하긴 그렇고 \n무기날이 많이상한거같은데 건너편 NPC한테 가봐 !:1",
+            "고마워 ! 답례라고 하긴 그렇고 무기날이\n많이상한거같은데 마을입구의 행추한테 가봐 !:1",
             "무기강화도 할 수 있고 필요한 아이템도 판매하고 있대 \n . . . 그리고 혹시 한가지만 더 도와 줄 수 있을까 ?:0",
             "사실 ⓜ여우들을 통솔하는 왕ⓦ이 있어\n그 녀석을 좀 처리해줄 수 있어 ?:0",
             "..너라면 믿을 수 있을 것 같아:1",
