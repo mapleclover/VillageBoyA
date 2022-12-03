@@ -70,8 +70,6 @@ public class Select : MonoBehaviour
         }
         else
         {
-            Debug.Log(DataController.instance.nowSlot);
-            //DataController.instance.LoadGameData();
             SceneLoad.Instance.ChangeScene("06.Field");
         }
 

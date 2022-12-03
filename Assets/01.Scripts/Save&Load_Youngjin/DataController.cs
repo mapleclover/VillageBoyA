@@ -186,14 +186,12 @@ public class DataController : MonoBehaviour
 
         if (File.Exists(filePath + nowSlot.ToString()))//File.Exists(filePath + nowSlot.ToString())
         {
-            Debug.Log("불러오기");
             string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
             gameData = JsonUtility.FromJson<GameData>(FromJsonData); //파일이 있으면 불러옴
                                                                      //Json을 data클래스로 복구
         }
         else
         {
-            Debug.Log("새로운 파일 생성");
             gameData = new GameData(); //저장된 파일이 없으면 새로 만듦
         }
     }
@@ -201,7 +199,6 @@ public class DataController : MonoBehaviour
     {
         if (File.Exists(filePath + nowSlot.ToString()))//File.Exists(filePath + nowSlot.ToString())
         {
-            Debug.Log("불러오기");
             string FromJsonData = File.ReadAllText(filePath + nowSlot.ToString());
             tempData = JsonUtility.FromJson<GameData>(FromJsonData); //파일이 있으면 불러옴
         }
@@ -290,7 +287,6 @@ public class DataController : MonoBehaviour
         string ToJsonData = JsonUtility.ToJson(gameData);
 
         File.WriteAllText(filePath + curSlot.ToString(), ToJsonData);
-        Debug.Log("저장");
     }
 
 

@@ -336,8 +336,6 @@ public class InventoryController : MonoBehaviour
                         count.transform.SetParent(mySlots[i].transform.GetChild(0).transform);
                         count.GetComponent<RectTransform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
                         count.GetComponent<Image>().raycastTarget = false;
-                        Debug.Log($"index = {index}");
-                        Debug.Log($"{DataController.instance.gameData.itemCount.Count}");
                         if (DataController.instance.gameData.itemList.Contains(st))
                         {
                             count.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataController.instance.gameData.itemCount[index].ToString();
