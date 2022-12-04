@@ -7,6 +7,6 @@ public class GameStart : MonoBehaviour
 {
     public void OnCilck()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("01.MainTitle");
     }
 }

@@ -3,7 +3,6 @@
 
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.PlayerSettings;
 
 public class EnhancementController : MonoBehaviour, IPointerEnterHandler
 {

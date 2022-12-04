@@ -13,7 +13,9 @@ public class Dialogue : MonoBehaviour
     {
         dialogue = DialogueManager.instance;
 
-        s = File.ReadAllLines("Assets/10.Resources/TextScript/Text1.txt");
+        //s = File.ReadAllLines("Assets/10.Resources/TextScript/Text1.txt");
+        TextAsset a = Resources.Load<TextAsset>("Text/Text1");
+        s = a.text.Split("\n");
 
         Say(s[index]);
         index++;
@@ -52,9 +54,10 @@ public class Dialogue : MonoBehaviour
         string[] parts = s.Split(':');
         if (parts[0].Contains("END"))
         {
-            Debug.Log("이동화면으로 이동한다");
             dialogue.CloseChatAnim();
-            SceneLoad.Instance.ChangeScene(int.Parse(parts[1]));
+            SceneLoad.Instance.ToBattleScene("Rock", false,
+                "Rock", Random.Range(2, 4)
+                , 0, 1);
             return;
         }
         string speech = parts[0];

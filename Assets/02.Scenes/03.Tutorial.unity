@@ -1339,9 +1339,9 @@ MonoBehaviour:
   mySlider: {fileID: 1875267215150034049}
   myStaminaBar: {fileID: 1875267215150034303}
   myCamRot: {fileID: 927279252}
-  speed: 7
-  dash: 13
-  rotSpeed: 30
+  speed: 20
+  dash: 40
+  rotSpeed: 180
   layer:
     serializedVersion: 2
     m_Bits: 2147483648
@@ -9767,7 +9767,7 @@ MonoBehaviour:
   - name: SFX_Miss
     clip: {fileID: 8300000, guid: 6bd5b6ae9958d36409967b0bb2d0e122, type: 3}
   - name: SFX_KongAttack3
-    clip: {fileID: 8300000, guid: 1fd31868d68903d4f9e2c4a3b7ef98f3, type: 3}
+    clip: {fileID: 8300000, guid: a4c488fda37121f41908682b9be499c8, type: 3}
   - name: SFX_JinAttack2
     clip: {fileID: 8300000, guid: 21c4a490b24ba2045bc815f7626a40ef, type: 3}
   - name: SFX_EmberAttack2
@@ -12030,7 +12030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToFollow: {fileID: 1599737372}
-  followSpeed: 10
+  followSpeed: 1000
   sensitivity: 30
   clampAngle: 40
   smoothness: 10

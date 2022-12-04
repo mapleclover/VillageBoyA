@@ -136,9 +136,9 @@ public class SoundTest : MonoBehaviour
         }
         else
         {
-            for(int j = 1; j < BGMSFXSource.Length - 1; j++)
+            for(int j = 1; j < BGMSFXSource.Length; j++)
             {
-                BGMSFXSource[type].volume = value;
+                BGMSFXSource[j].volume = value;
             }
         }
         Save(value, type);

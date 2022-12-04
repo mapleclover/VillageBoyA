@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 [Serializable]
