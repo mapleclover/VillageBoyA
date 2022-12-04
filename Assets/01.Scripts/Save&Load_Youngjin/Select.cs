@@ -1,6 +1,7 @@
 //작성자 : 이영진
 //설명 :
 using System;
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class Select : MonoBehaviour
     public GameObject[] buttonList;
     public GameObject[] myMember;
     public GameObject mySaveLoad;
-
+    private List<GameObject>list=new List<GameObject> ();
     public GameObject fullLoad;
     int orgslot;
     private void Awake()
@@ -77,13 +78,27 @@ public class Select : MonoBehaviour
 
     public void ShowUI()
     {
+        DestroyPortrait();
         Show();
 
         DataController.instance.nowSlot = orgslot;
     }
+    public void DestroyPortrait()
+    {
+        Transform[] childList=mySaveLoad.transform.GetComponentsInChildren<Transform>();
+        if (childList != null&&childList.Length>3)
+        {
+            for(int i = 1; i < childList.Length; i++)
+            {
+                if (childList[i].name.Contains("Clone"))
+                Destroy(childList[i].gameObject);
+            }
+        }
+    }
     public void Show()
     {
         orgslot = DataController.instance.nowSlot;
+        list.Clear();
         for (int i = 0; i < 3; i++)
         {
             if (File.Exists(DataController.instance.filePath + $"{i}"))
@@ -100,10 +115,14 @@ public class Select : MonoBehaviour
                 position.x = 140;
                 position.y = buttonList[i].transform.localPosition.y;
                 GameObject obj = Instantiate(myMember[0], position, Quaternion.identity);
-
+                list.Add(obj);
                 if (DataController.instance.tempData.Kong.isLeader)
                 {
                     obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
+                }
+                else
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(35.0f,35.0f);
                 }
 
                 obj.transform.SetParent(mySaveLoad.transform);
@@ -117,11 +136,14 @@ public class Select : MonoBehaviour
                 position.y = buttonList[i].transform.localPosition.y;
                 obj = Instantiate(myMember[1], position, Quaternion.identity);
 
-                if (DataController.instance.gameData.Jin.isLeader)
+                if (DataController.instance.tempData.Jin.isLeader)
                 {
                     obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
                 }
-
+                else
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(35.0f, 35.0f);
+                }
                 obj.transform.SetParent(mySaveLoad.transform);
                 obj.transform.localPosition = position;
                 obj.SetActive(true);
@@ -134,11 +156,14 @@ public class Select : MonoBehaviour
                 obj = Instantiate(myMember[2], position, Quaternion.identity);
 
 
-                if (DataController.instance.gameData.Ember.isLeader)
+                if (DataController.instance.tempData.Ember.isLeader)
                 {
                     obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
                 }
-
+                else
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(35.0f, 35.0f);
+                }
                 obj.transform.SetParent(mySaveLoad.transform);
                 obj.transform.localPosition = position;
                 obj.SetActive(true);

@@ -97,7 +97,7 @@ public class InGameSave : MonoBehaviour
     public void OnClickSaveOK()
     {
         DataController.instance.SaveGameDataByESC(mySn);
-        Select.instance.Show();
+        Select.instance.ShowUI();
         mySC.SetActive(false);
     }
 
