@@ -164,8 +164,7 @@ public class PlayerMovement : MonoBehaviour
             SwitchingCharacter();
             StateProcess(); //캐릭터 교체
         }
-      
-
+   
         PlayerRotation();
 
 
