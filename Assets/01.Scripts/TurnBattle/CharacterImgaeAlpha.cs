@@ -1,31 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 박진 
+//설명 :
 using UnityEngine;
 using UnityEngine.UI;
+
 public class CharacterImgaeAlpha : MonoBehaviour
 {
     Color color;
+    public bool DieCheck = false;
+
     void Start()
     {
         color = this.GetComponent<Image>().color;
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (TurnBattle.Inst.myState != TurnBattle.State.Choice)
+        if (TurnBattle.Inst.myState != TurnBattle.State.Choice || DieCheck)
         {
-            color.a = 0.5f;
-            this.gameObject.GetComponent<Image>().color = color;
+            Alpha05();
         }
         else
         {
-            color.a = 1.0f;
-            this.gameObject.GetComponent<Image>().color = color;
-
+            Alpha10();
         }
+    }
+
+    public void Alpha05()
+    {
+        color.a = 0.5f;
+        this.gameObject.GetComponent<Image>().color = color;
+    }
+
+    void Alpha10()
+    {
+        color.a = 1.0f;
+        this.gameObject.GetComponent<Image>().color = color;
     }
 }

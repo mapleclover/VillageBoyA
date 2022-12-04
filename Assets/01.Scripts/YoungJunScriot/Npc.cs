@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+//ì‘ì„±ì : ë°•ì˜ì¤€
+//ì„¤ëª… : NPC
+
 using UnityEngine;
 
-// ¹Ú¿µÁØ Npc ½ºÅ©¸³ÅÍºí.
-
-[CreateAssetMenu(fileName = "new Npc",menuName = "new Npc/npc")]
+[CreateAssetMenu(fileName = "new Npc", menuName = "ScriptableObject/NPC")]
 public class Npc : ScriptableObject
 {
-
     public string npcName;
     public NpcType npcType;
+    public Sprite npcImage;
     public GameObject npcPrefab;
 
     public enum NpcType
     {
         Npc
     }
-
 }

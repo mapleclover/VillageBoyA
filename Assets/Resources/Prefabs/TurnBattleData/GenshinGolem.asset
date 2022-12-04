@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c169d81dcc72c4b8f64ce15c12b483, type: 3}
+  m_Name: GenshinGolem
+  m_EditorClassIdentifier: 
+  _name: GenshinGolem
+  _baseAttackDamage: 10
+  _speed: 15
+  _health: 300
+  _battleType: 2
+  _skillName:
+  - "\uC2F8\uB300\uAE30"
+  - "\uD68C\uC804\uC2F8\uB300\uAE30"
+  - "\uC774\uC911\uC2F8\uB300\uAE30"
+  _skillDescription: []
+  _skillCost: 
+  _damageMultiplier:
+  - 3
+  - 4.5
+  - 6
+  _criticalPercentage:
+  - 50
+  - 50
+  - 50
+  _criticalRatio:
+  - 2
+  - 2
+  - 2
+  _isAOE: 000000
+  _isRangeAttack: 000000

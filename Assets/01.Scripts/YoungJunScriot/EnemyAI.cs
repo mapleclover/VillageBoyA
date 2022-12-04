@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 박영준
+//설명 : 플레이어 확인 체크 및 쫒아가기. 일정범위안 도착시 배틀씬전환
+
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.AI;
 
-//박영준 플레이어 확인 체크 및 쫒아가기. 일정범위안 도착시 배틀씬전환,
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private float viewAngle; // 시야각
@@ -12,32 +11,54 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private LayerMask layerMask; // 타겟마스크 (플레이어)
     [SerializeField] private float notChaseDist; // 일정거리이상도망치면 더이상 몬스터가 쫒아오지않게끔.
 
-    [SerializeField]
-    private Monster theMonster;
-    [SerializeField]
-    private NavMeshAgent theNav;
-    [SerializeField]
-    private ActionController theActionController;
+    [SerializeField] private Monster theMonster;
+    [SerializeField] private NavMeshAgent theNav;
+    [SerializeField] private ActionController theActionController;
+
+    MinimapIcon myIcon = null;
 
     private bool findTarget = false;
-    
+    Color orgColor;
 
     // Start is called before the first frame update
+    
     void Start()
     {
-        
+        if (this.GetComponent<Pickup>().enemy.enemyType == EnemySC.EnemyType.Boss)
+        {
+            RedOrBlack(Color.black);
+            orgColor = Color.black;
+        }
+        else
+        {
+            RedOrBlack(Color.red);
+            orgColor = Color.red;
+        }    
+    }
+    private void OnEnable()
+    {
+        if(myIcon!=null) 
+        {
+            myIcon.gameObject.SetActive(true);
+            myIcon.Initialize(transform, orgColor);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void RedOrBlack(Color color)
     {
-        
+        GameObject obj = Instantiate(Resources.Load("Prefabs/Icons/MinimapIcon"), SceneData.Inst.Minimap) as GameObject;
+        myIcon = obj.GetComponent<MinimapIcon>();
+        myIcon.Initialize(transform,color);
     }
+    
+
+
     private Vector3 BoundaryAngle(float _angle)
     {
         _angle += transform.eulerAngles.y; // rot값변경의따른 _angle값 유동성을위해
         return new Vector3(Mathf.Sin(_angle * Mathf.Deg2Rad), 0f, Mathf.Cos(_angle * Mathf.Deg2Rad));
     }
+
     public void View()
     {
         Vector3 _leftBoundary = BoundaryAngle(-viewAngle * 0.5f); // 좌측시야각
@@ -63,7 +84,8 @@ public class EnemyAI : MonoBehaviour
                         if (_angle < viewAngle * 0.5f)
                         {
                             RaycastHit _hitinfo;
-                            if (Physics.Raycast(transform.position + transform.up, _direction, out _hitinfo, viewDistance, layerMask))
+                            if (Physics.Raycast(transform.position + transform.up, _direction, out _hitinfo,
+                                    viewDistance, layerMask))
                             {
                                 if (_hitinfo.transform.tag == "Player")
                                 {
@@ -78,14 +100,20 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
+
     public void ChaseTarget(Transform target)
     {
         if (theActionController.isBattle) // 일정거리안으로 들어오면 배틀씬으로넘아가게.
         {
-           theNav.SetDestination(transform.position);
-           theNav.ResetPath();
-           SceneLoad.Instance.ChangeScene(4);
-           // ================배틀씬으로넘어감. ===================
+            theNav.SetDestination(transform.position);
+            theNav.ResetPath();
+
+            DataController.instance.SaveData();
+            SceneLoad.Instance.ToBattleScene(transform.name, theActionController.isBackAttack,
+                this.transform.GetComponent<Pickup>().enemy.enemyName, Random.Range(2, 4)
+                , this.transform.GetComponent<Pickup>().enemy.Speed);
+            //EnemyBackAttackInfoDisappear();
+            // ================배틀씬으로넘어감. ===================
         }
         else // 플레이어를 쫒아가게끔.
         {
@@ -98,9 +126,9 @@ public class EnemyAI : MonoBehaviour
             }
             else // 플레이어거리가 일정거리밖으로나가면 다시 Roaming - Idle 반복.
             {
-               findTarget = false;
-               theNav.ResetPath();
-               theMonster.LostTarget();
+                findTarget = false;
+                theNav.ResetPath();
+                theMonster.LostTarget();
             }
         }
     }

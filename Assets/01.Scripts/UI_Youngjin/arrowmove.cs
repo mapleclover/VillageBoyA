@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 이영진
+//설명 : 
 using UnityEngine;
 
 public class arrowmove : MonoBehaviour
@@ -10,17 +10,26 @@ public class arrowmove : MonoBehaviour
     float currentrightPosition;
     float rightend = -225.0f;
     float leftend = -200.0f;
-    public float dir= 70.0f;
+    public float dir = 70.0f;
 
     void Start()
     {
         currentleftPosition = left.transform.localPosition.x;
         currentrightPosition = right.transform.localPosition.x;
     }
-    void Update()       //-200~-250
+
+    void Update() //-200~-250
     {
+        if (currentleftPosition.Equals(null))
+        {
+            currentleftPosition = right.transform.localPosition.x;
+        }
+        if (currentrightPosition.Equals(null))
+        {
+            currentrightPosition = right.transform.localPosition.x;
+        }
         currentleftPosition += Time.deltaTime * dir;
-        currentrightPosition-=Time.deltaTime*dir;
+        currentrightPosition -= Time.deltaTime * dir;
         if (dir > 0)
         {
             if (currentleftPosition > leftend)
@@ -30,12 +39,13 @@ public class arrowmove : MonoBehaviour
         }
         else
         {
-            if(currentleftPosition < rightend)
+            if (currentleftPosition < rightend)
             {
                 dir *= -1;
             }
         }
-        left.transform.localPosition = new Vector3(currentleftPosition,0,0);
-       right.transform.localPosition = new Vector3(currentrightPosition, 0, 0);
+
+        left.transform.localPosition = new Vector3(currentleftPosition, 0, 0);
+        right.transform.localPosition = new Vector3(currentrightPosition, 0, 0);
     }
 }

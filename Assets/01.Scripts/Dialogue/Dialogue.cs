@@ -1,8 +1,6 @@
-///작성자 : 유은호
-///대사 스크립트 TXT 파일부터 불러와 내용을 저장하고 누를때마다 대화매니져로 함수호출하는 스크립트
-
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 유은호
+//설명 : 대사 스크립트 TXT 파일부터 불러와 내용을 저장하고 누를때마다 대화매니져로 함수호출하는 스크립트
+using System.IO;
 using UnityEngine;
 
 public class Dialogue : MonoBehaviour
@@ -14,6 +12,8 @@ public class Dialogue : MonoBehaviour
     private void Start()
     {
         dialogue = DialogueManager.instance;
+
+        //s = File.ReadAllLines("Assets/10.Resources/TextScript/Text1.txt");
         TextAsset a = Resources.Load<TextAsset>("Text/Text1");
         s = a.text.Split("\n");
 
@@ -25,7 +25,7 @@ public class Dialogue : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E))
         {
             if(dialogue.isSpeaking)
             {
@@ -54,9 +54,10 @@ public class Dialogue : MonoBehaviour
         string[] parts = s.Split(':');
         if (parts[0].Contains("END"))
         {
-            Debug.Log("이동화면으로 이동한다");
             dialogue.CloseChatAnim();
-            SceneLoad.Instance.ChangeScene(int.Parse(parts[1]));
+            SceneLoad.Instance.ToBattleScene("Rock", false,
+                "Rock", Random.Range(2, 4)
+                , 0, 1);
             return;
         }
         string speech = parts[0];

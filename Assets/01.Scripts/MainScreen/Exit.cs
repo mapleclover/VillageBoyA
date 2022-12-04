@@ -1,5 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 이현호
+//설명 : 
+using UnityEditor;
 using UnityEngine;
 
 public class Exit : MonoBehaviour
@@ -7,21 +8,9 @@ public class Exit : MonoBehaviour
     public void ClickEnd()
     {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+        EditorApplication.isPlaying = false;
 #else
         UnityEngine.Application.Quit();
 #endif
-
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

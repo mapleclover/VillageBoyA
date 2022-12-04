@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c169d81dcc72c4b8f64ce15c12b483, type: 3}
+  m_Name: Jin
+  m_EditorClassIdentifier: 
+  _name: Jin
+  _baseAttackDamage: 10
+  _speed: 7
+  _health: 100
+  _battleType: 0
+  _skillName:
+  - "\uD65C\uACF5\uACA9"
+  - "\uC560\uB85C\uC6B0\uC2A4\uD1B0"
+  - "\uD2B8\uB9AC\uD50C\uC5B4\uD0DD"
+  _skillDescription:
+  - "\uD65C \uC2DC\uC704\uB97C \uB561\uACA8 \uC801\uC744 \uACF5\uACA9\uD55C\uB2E4"
+  - "\uB2E4\uC218\uC758 \uD65C\uC744 \uC3D8\uC544\uC62C\uB824 \uC801 \uC804\uCCB4\uB97C
+    \uACF5\uACA9\uD55C\uB2E4"
+  - "\uBE60\uB974\uAC8C \uC138\uBC88\uC758 \uD654\uC0B4\uC744 \uC3D8\uC544 \uC801\uC744
+    \uACF5\uACA9\uD55C\uB2E4"
+  _skillCost: 010000000200000004000000
+  _damageMultiplier:
+  - 1
+  - 1
+  - 2
+  _criticalPercentage:
+  - 75
+  - 75
+  - 75
+  _criticalRatio:
+  - 2
+  - 2
+  - 2
+  _isAOE: 000100
+  _isRangeAttack: 010101

@@ -1,17 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+//ìž‘ì„±ìž : ìœ ì€í˜¸
+//ì„¤ëª… : ë°°í‹€ ì†ë„ ì¡°ì • ìŠ¤í¬ë¦½íŠ¸
 using TMPro;
 using UnityEngine;
-
 
 public class BattleTimeScale : MonoBehaviour
 {
     private int speed = 0;
     public TextMeshProUGUI showspeed;
+
+    private void Start()
+    {
+        speed=DataController.instance.gameData.turnBattleTimeSpeed-1;
+        SpeedChange();
+    }
+    public void TurnBattleSpeedSave()
+    {
+        DataController.instance.gameData.turnBattleTimeSpeed=speed;
+    }
     public void SpeedChange()
     {
-        speed = (speed+1)%4;//Å×½ºÆ®¿ë(Å×½ºÆ®¾Æ´Ò½Ã 3À¸·Î º¯°æ)
-        switch(speed)
+        speed = (speed + 1) % 3; //ï¿½×½ï¿½Æ®ï¿½ï¿½(ï¿½×½ï¿½Æ®ï¿½Æ´Ò½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        switch (speed)
         {
             case 0:
                 Time.timeScale = 1.0f;
@@ -24,11 +33,7 @@ public class BattleTimeScale : MonoBehaviour
             case 2:
                 Time.timeScale = 4.0f;
                 showspeed.text = ">>>";
-                break;
-            case 3://Å×½ºÆ®¿ë
-                Time.timeScale = 30.0f;
-                showspeed.text = "Text";
-                break;
+                break;            
         }
     }
 }

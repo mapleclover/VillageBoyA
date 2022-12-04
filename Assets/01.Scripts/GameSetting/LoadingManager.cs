@@ -1,10 +1,10 @@
+//작성자 : 이현호
+//설명 : 
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
-// 작성자 : 이현호
 
 public class LoadingManager : MonoBehaviour
 {
@@ -16,6 +16,7 @@ public class LoadingManager : MonoBehaviour
         Inst = this;
         DontDestroyOnLoad(gameObject);
     }
+
     public void ChangeScene(int i)
     {
         if (!isChange)
@@ -24,11 +25,8 @@ public class LoadingManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    Image progressBar;
+    [SerializeField] Image progressBar;
 
-
-  
 
     IEnumerator Loading(int i)
     {
@@ -37,9 +35,9 @@ public class LoadingManager : MonoBehaviour
         isChange = false;
     }
 
-    IEnumerator LoadScene(Image image,int i)
+    IEnumerator LoadScene(Image image, int i)
     {
-       // yield return null;
+        // yield return null;
         AsyncOperation op = SceneManager.LoadSceneAsync(i);
         op.allowSceneActivation = false;
         float timer = 0.0f;
@@ -67,6 +65,4 @@ public class LoadingManager : MonoBehaviour
             }
         }
     }
-   
-
 }

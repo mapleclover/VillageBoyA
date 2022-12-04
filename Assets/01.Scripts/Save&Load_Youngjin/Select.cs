@@ -1,114 +1,187 @@
-using System.Collections;
+//ÏûëÏÑ±Ïûê : Ïù¥ÏòÅÏßÑ
+//ÏÑ§Î™Ö :
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.IO;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 //using static UnityEngine.UIElements.UxmlAttributeDescription;
-using System.Data;
-using System.Runtime.ConstrainedExecution;
 
-[System.Serializable]
-
+[Serializable]
 public class Select : MonoBehaviour
 {
-    public static Select instance=null;
-    public TextMeshProUGUI[] slotText;// ΩΩ∑‘ πˆ∆∞ æ∆∑° ≈ÿΩ∫∆Æ
-    public bool[] savefile = new bool[3];//ºº¿Ã∫Í∆ƒ¿œ ¡∏¿Á ¿Øπ´
+    public static Select instance = null;
+    public TextMeshProUGUI[] slotText;
+    public bool[] savefile = new bool[3];
     public GameObject[] buttonList;
     public GameObject[] myMember;
-    void Start()        
+    public GameObject mySaveLoad;
+    private List<GameObject>list=new List<GameObject> ();
+    public GameObject fullLoad;
+    int orgslot;
+    private void Awake()
     {
-       
-        for(int i = 0; i < 3; i++)
-        {
-            if (File.Exists(DataController.instance.filePath + $"{i}")) //µ•¿Ã≈Õ ¿÷¿Ω
-            {
-                savefile[i] = true;
-                DataController.instance.nowSlot = i;
-                DataController.instance.LoadGameData();
-                Vector2 temp = new Vector2(-110, 0);
-                slotText[i].transform.localPosition = temp;
-                slotText[i].text="Saved Date:"+DataController.instance.gameData.savedTime;   //¿˙¿Â«— Ω√∞£ «•Ω√      
-              //  slotText[i].text+="\n"+ $"<color=blue>{DataController.instance.gameData.currentVillage}</color>";//«ˆ¿Á ¿÷¥¬ ∏∂¿ª «•Ω√
-                slotText[i].text += $"\nMy Progress={DataController.instance.gameData.myProgress}%";
-                DataController.instance.gameData.partyMember[0] = true;
-                DataController.instance.gameData.partyMember[1] = true;
-                DataController.instance.gameData.partyMember[2] = true;
-                for (int j=0;j< DataController.instance.gameData.partyMember.Length;j++)
-                {
-                    if (DataController.instance.gameData.partyMember[j])
-                    {
-                        Vector3 position = myMember[j].transform.localPosition;
-                        switch (j)
-                        {
-                            case 0:
-                                position.x = 140;
-                                break;
-                            case 1:
-                                position.x = 220;
-                                break;
-                            case 2:
-                                position.x = 300;
-                                break;
-                        }
-                        position.y = buttonList[i].transform.localPosition.y;
-                       
-                        GameObject obj = Instantiate(myMember[j],position,Quaternion.identity);
-                        if (DataController.instance.gameData.isLeader[j] == true)
-                        {
-                            obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
-                        }
-                        obj.transform.parent = GameObject.Find("SaveLoad").transform;
-                        obj.transform.localPosition = position;
-                        obj.SetActive(true);
-                        //∆ƒ∆ºø¯¿Ã ¿÷¿∏∏È ªÁ¡¯¿Ã ∂‰
-                    }
-                }
-            }
-            else
-            {
-                slotText[i].text = "<color=grey>No Saved Data</color> ";
-               
-            }
-        }
-        DataController.instance.DataClear();//∫“∑Øø¬ µ•¿Ã≈Õ √ ±‚»≠(Ω√∞£∏∏ «•±‚∏∏ «‘)
+        instance = this;
     }
+    void Start()
+    {
+
+        //ShowUI();
+        instance = this;
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
             Slot(Button_New.cur);
-
         }
-
     }
+
     public void Slot(int num)
     {
         DataController.instance.nowSlot = num;
+        // DataController.instance.gameData.curSlot = num;
+       // ShowUI();
         if (savefile[num])
         {
             DataController.instance.LoadGameData();
-     //«ÿ¥Á ΩΩ∑‘ø° µ•¿Ã≈Õ∞° ¡∏¿Á«œ∏È ∞‘¿”æ¿¿∏∑Œ ¿Ãµø
         }
-        Game();
 
+        Game();
+    }
+    public void StartSlot()
+    {
+        DataController.instance.Save();
+        SceneManager.LoadScene(2);
     }
 
-    public void Game()      
+
+    public void Game()
     {
-        if (!savefile[DataController.instance.nowSlot])     //«ˆ¿Á ΩΩ∑‘ø° µ•¿Ã≈Õ æ¯¿∏∏È 
+       // ShowUI();
+        if (!savefile[DataController.instance.nowSlot]) 
         {
             DataController.instance.gameData.savedTime = DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss tt"));
-            DataController.instance.gameData.isLeader[0] = true;    //∏« √≥¿Ωø° √≥¿Ω ≥™ø¿¥¬ ∆ƒ∆ºø¯¿Ã ∏Æ¥ı
-            DataController.instance.gameData.partyMember[1] = true;
-            DataController.instance.gameData.partyMember[2] = true;
-            savefile[DataController.instance.nowSlot] = true;
-            DataController.instance.SaveGameData(); //¿‘∑¬«— ¿Ã∏ß ∫πªÁ »ƒ «ˆ¿Á ¡§∫∏ ¿˙¿Â
+
+            savefile[DataController.instance.nowSlot] = true;  
+            DataController.instance.Save();
+            SceneManager.LoadScene(2);
         }
-        SceneManager.LoadScene(2);  //∞‘¿”æ¿¿∏∑Œ ¿Ãµø
+        else
+        {
+            SceneLoad.Instance.ChangeScene("06.Field");
+        }
+
+    }
+
+    public void ShowUI()
+    {
+        DestroyPortrait();
+        Show();
+
+        DataController.instance.nowSlot = orgslot;
+    }
+    public void DestroyPortrait()
+    {
+        Transform[] childList=mySaveLoad.transform.GetComponentsInChildren<Transform>();
+        if (childList != null&&childList.Length>3)
+        {
+            for(int i = 1; i < childList.Length; i++)
+            {
+                if (childList[i].name.Contains("Clone"))
+                Destroy(childList[i].gameObject);
+            }
+        }
+    }
+    public void Show()
+    {
+        orgslot = DataController.instance.nowSlot;
+        list.Clear();
+        for (int i = 0; i < 3; i++)
+        {
+            if (File.Exists(DataController.instance.filePath + $"{i}"))
+            {
+                savefile[i] = true;
+                DataController.instance.nowSlot = i;
+                DataController.instance.LoadGameDataTemp();
+                Vector2 temp = new Vector2(-110, 0);
+                slotText[i].transform.localPosition = temp;
+                slotText[i].text = "Saved Date:" + DataController.instance.tempData.savedTime;
+                slotText[i].text += $"\nMy Progress={DataController.instance.tempData.myProgress}%";
+
+                Vector3 position = myMember[0].transform.localPosition;
+                position.x = 140;
+                position.y = buttonList[i].transform.localPosition.y;
+                GameObject obj = Instantiate(myMember[0], position, Quaternion.identity);
+                list.Add(obj);
+                if (DataController.instance.tempData.Kong.isLeader)
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
+                }
+                else
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(35.0f,35.0f);
+                }
+
+                obj.transform.SetParent(mySaveLoad.transform);
+                obj.transform.localPosition = position;
+                obj.SetActive(true);
+
+
+
+                position = myMember[1].transform.localPosition;
+                position.x = 220;
+                position.y = buttonList[i].transform.localPosition.y;
+                obj = Instantiate(myMember[1], position, Quaternion.identity);
+
+                if (DataController.instance.tempData.Jin.isLeader)
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
+                }
+                else
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(35.0f, 35.0f);
+                }
+                obj.transform.SetParent(mySaveLoad.transform);
+                obj.transform.localPosition = position;
+                obj.SetActive(true);
+
+
+
+                position = myMember[2].transform.localPosition;
+                position.x = 300;
+                position.y = buttonList[i].transform.localPosition.y;
+                obj = Instantiate(myMember[2], position, Quaternion.identity);
+
+
+                if (DataController.instance.tempData.Ember.isLeader)
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(70.0f, 70.0f);
+                }
+                else
+                {
+                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(35.0f, 35.0f);
+                }
+                obj.transform.SetParent(mySaveLoad.transform);
+                obj.transform.localPosition = position;
+                obj.SetActive(true);
+
+
+            }
+
+            else
+            {
+                slotText[i].text = "<color=grey>No Saved Data</color> ";
+            }
+
+        }
+    }
+    public void clickload()
+    {
+        mySaveLoad.SetActive(true);
+        ShowUI();
     }
 }
-//∞Ê∑Œ: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json
+//ÔøΩÔøΩÔøΩ: C:/Users/user/AppData/LocalLow/DefaultCompany/New Unity ProjectVillageBoyA.json

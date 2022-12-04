@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+//작성자 : 박영준
+//설명 : 퀘스트팝업창 타이틀부분 드래그시 이동
+
 using UnityEngine;
 using UnityEngine.EventSystems;
-// 박영준 ,, 퀘스트팝업창 타이틀부분 드래그시 이동.
+
 public class QuestPopupHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
     private RectTransform _parentRect; // 팝업창 전체의 rect값
@@ -14,15 +15,14 @@ public class QuestPopupHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
     private void Awake()
     {
         _parentRect = transform.parent.GetComponent<RectTransform>();
-        halfSize = _parentRect.sizeDelta * 0.5f;
+        halfSize = _parentRect.sizeDelta * 0.25f;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         _moveOffset = (Vector2)_parentRect.position - eventData.position;
     }
-
-
+    
     public void OnDrag(PointerEventData eventData)
     {
         Vector2 pos = eventData.position + _moveOffset;
@@ -30,5 +30,4 @@ public class QuestPopupHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
         pos.y = Mathf.Clamp(pos.y, halfSize.y, Screen.height - halfSize.y);
         _parentRect.position = pos;
     }
-
 }
