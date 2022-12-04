@@ -164,11 +164,7 @@ public class PlayerMovement : MonoBehaviour
             SwitchingCharacter();
             StateProcess(); //캐릭터 교체
         }
-        /*
-        if (myCharacter == CHARACTER.Kong)
-        {
-            DashSkill();
-        }*/
+      
 
         PlayerRotation();
 
@@ -284,7 +280,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
             curAnimator.SetBool("IsRunning", false);
-
             run = false;
         }
         else

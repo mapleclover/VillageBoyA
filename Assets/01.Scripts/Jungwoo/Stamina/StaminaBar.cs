@@ -31,7 +31,7 @@ public class StaminaBar : MonoBehaviour
 
         if (Player.GetComponent<PlayerMovement>().run) // PlayerMovement 스크립트 안에 bool 값을 가져옴
         {
-            curST -= 10 * Time.deltaTime;
+            curST -= 15 * Time.deltaTime;
         }
         else if (!Player.GetComponent<PlayerMovement>().run)
         {

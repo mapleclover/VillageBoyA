@@ -28965,7 +28965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &948012090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28991,6 +28991,7 @@ MonoBehaviour:
   talkIndex: 0
   textSpeed: 0
   isTalkAction: 1
+  canSkip: 0
   theGoal: {fileID: 1651944446}
 --- !u!4 &948012091
 Transform:
@@ -32985,6 +32986,7 @@ MonoBehaviour:
   myUI: {fileID: 1163097009}
   myMap: {fileID: 0}
   myQuest: {fileID: 0}
+  myAlert: {fileID: 0}
   myInventory: {fileID: 342795238363401307}
   setMyInventory: {fileID: 342795238363401308}
   isOpen: 0
@@ -33933,7 +33935,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1163097010
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36850,6 +36852,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67652ec1e7006d94a8ed4a5dc00ba85a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myItem: {fileID: 0}
+  Amount: []
+  myNumbers:
+  - {fileID: 613394834}
+  - {fileID: 509227165}
+  alert: {fileID: 147076177}
+  myMessage: {fileID: 1695268659}
   myIngSlots:
   - {fileID: 1706703545}
   - {fileID: 1996641492}
@@ -36868,20 +36877,13 @@ MonoBehaviour:
   - {fileID: 342795237048851824}
   - {fileID: 342795236551996544}
   - {fileID: 342795236302520478}
-  alert: {fileID: 147076177}
-  myMessage: {fileID: 1695268659}
-  myItem: {fileID: 0}
-  myPanel: {fileID: 1276595755}
-  Amount: []
-  myNumbers:
-  - {fileID: 613394834}
-  - {fileID: 509227165}
-  EnchantDelay: 0
-  result: 0
   mySlider: {fileID: 1245910295}
   mySliderAnim: {fileID: 0}
   SuccessPanel: {fileID: 1689806868}
   FailPanel: {fileID: 1432305433}
+  myPanel: {fileID: 1276595755}
+  EnchantDelay: 0
+  result: 0
 --- !u!1 &1231949389
 GameObject:
   m_ObjectHideFlags: 0
@@ -37025,7 +37027,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -38803,9 +38805,9 @@ MonoBehaviour:
   mySlider: {fileID: 1541253105}
   myStaminaBar: {fileID: 1541253103}
   myCamRot: {fileID: 6059563165524560314}
-  speed: 3
-  dash: 6
-  rotSpeed: 5
+  speed: 4
+  dash: 8
+  rotSpeed: 30
   layer:
     serializedVersion: 2
     m_Bits: 2147483648
@@ -39641,7 +39643,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 25, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -48045,6 +48047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questId: 30
   questComplete: 0
+  tempCheck: 1
   questActionIndex: 0
   mySlots: []
   questObject:
@@ -48053,6 +48056,7 @@ MonoBehaviour:
   - {fileID: 1972026911}
   - {fileID: 0}
   - {fileID: 0}
+  credit: {fileID: 0}
   Klee_1000: {fileID: 1656858681}
   Hodu_2000: {fileID: 840526018}
   Zhongli_3000: {fileID: 0}
@@ -48283,6 +48287,7 @@ MonoBehaviour:
   myUI: {fileID: 1131686819}
   myMap: {fileID: 0}
   myQuest: {fileID: 0}
+  myAlert: {fileID: 0}
   myInventory: {fileID: 1684219660}
   setMyInventory: {fileID: 1684219659}
   isOpen: 0
@@ -48380,18 +48385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9a6761eef8a8a42b823acdcdaa6ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myParty: {fileID: 1635578005}
-  myInventory: {fileID: 1684219659}
-  myPanel: {fileID: 818095748}
-  mySlots:
-  - {fileID: 1022985336}
-  - {fileID: 1180629839}
-  myInfoBox: {fileID: 1686640544}
-  itemCount: {fileID: 53337661}
-  countUI: {fileID: 969797988}
-  defaultCount: 1
-  curItem:
-  - {fileID: 1733928706349601869, guid: 45ed7f3ebca77854092aa3de8581e410, type: 3}
 --- !u!114 &1648050553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73072,6 +73065,8 @@ MonoBehaviour:
   myLoad: {fileID: 8327107597345499811}
   mySave: {fileID: 2122793611689238398}
   myESC: {fileID: 1553956245624271979}
+  saveBtn: {fileID: 0}
+  loadBtn: {fileID: 0}
 --- !u!114 &2531747061876210418
 MonoBehaviour:
   m_ObjectHideFlags: 0
