@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6184,9 +6184,9 @@ MonoBehaviour:
   - {fileID: 1275028444693769211}
   - {fileID: 1275028443283491721}
   myMember:
-  - {fileID: 1275028442828284341}
-  - {fileID: 1275028444709375150}
   - {fileID: 1275028443310561283}
+  - {fileID: 1275028444709375150}
+  - {fileID: 1275028442828284341}
   mySaveLoad: {fileID: 1275028444697435601}
   fullLoad: {fileID: 1571861164}
 --- !u!1 &1335442936
@@ -6593,19 +6593,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ffb860ad6e10142a15596f8a6164b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamedataFilename: VillageBoyA.json
   filePath: 
   nowSlot: 0
   gameData:
-    HP: 96000000640000007d000000
-    isLeader: 010000
-    strength: 000000000000000000000000
-    defPower: 000000000000000000000000
-    isAlive: 010101
-    myUsedItems:
-    - 
-    - 
-    - 
     turnBattleTimeSpeed: 0
     myProgress: 0
     savedTime: 
@@ -6651,8 +6641,59 @@ MonoBehaviour:
     questID: 30
     questActionIndex: 0
     questClear: 1
+    tempCheck: 1
     isBackAttack: 0
     partyMember: 010101
+  tempData:
+    turnBattleTimeSpeed: 0
+    myProgress: 0
+    savedTime: 
+    mapName: FirstVillage
+    victoryComplete: 000000000000
+    currentPosition: {x: -136, y: 0, z: -90}
+    currentRotation: {x: 0, y: 0, z: 0}
+    itemList: []
+    slotNum: 
+    itemCount: 
+    gold: 0
+    isFirstTime: 1
+    Kong:
+      isLeader: 0
+      strength: 0
+      defPower: 0
+      HP: 0
+      isAlive: 0
+      myUsedItems: []
+    Jin:
+      isLeader: 0
+      strength: 0
+      defPower: 0
+      HP: 0
+      isAlive: 0
+      myUsedItems: []
+    Ember:
+      isLeader: 0
+      strength: 0
+      defPower: 0
+      HP: 0
+      isAlive: 0
+      myUsedItems: []
+    gloves:
+      orgData: {fileID: 0}
+      Level: 0
+    goldring:
+      orgData: {fileID: 0}
+      Level: 0
+    necklace:
+      orgData: {fileID: 0}
+      Level: 0
+    questID: 30
+    questActionIndex: 0
+    questClear: 1
+    tempCheck: 1
+    isBackAttack: 0
+    partyMember: 010101
+  gamedataFilename: VillageBoyA.json
 --- !u!4 &1438487527
 Transform:
   m_ObjectHideFlags: 0

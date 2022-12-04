@@ -203,12 +203,12 @@ public class QuestManager : MonoBehaviour
                 if (questActionIndex == 2 && scanObject == Hodu_2000)
                 {
                     questObject[2].SetActive(false);
-                    Destroy(questObject[6]);               
+                    Destroy(questObject[6]);
+                    RemovingItem("咯快部府");
                 }
 
                 if (questActionIndex == 3)
                 {
-                    RemovingItem("咯快部府");
                     questObject[2].SetActive(true);
                     questObject[2].transform.position = Hodu_2000.transform.position + Vector3.up * 2.3f;
                     questObject[2].transform.rotation = Quaternion.Euler(90, 0, 0);
