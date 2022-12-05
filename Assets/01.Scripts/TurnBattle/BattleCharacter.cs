@@ -1,5 +1,5 @@
-//작성자 : 박진
-//설명 : 캐릭터상태
+//????? : ????
+//???? : ĳ???????
 
 using System;
 using System.Collections;
@@ -74,8 +74,8 @@ public class BattleCharacter : CharacterProperty
             case STATE.Stunned:
                 if (Stun == null) Stun = Instantiate(Resources.Load<GameObject>("Prefabs/TurnBattle/Stun"));
                 else if(Stun!=null) Stun.SetActive(true);
-                Vector3 pos = transform.position; //타겟위치
-                pos.y += 1.0f; // 위치에서 2만큼 y위로이동                
+                Vector3 pos = transform.position; //??????
+                pos.y += 1.0f; // ??????? 2??? y???????                
                 Stun.transform.position = pos;
                 Stun.transform.SetParent(transform);
                 break;
@@ -133,13 +133,28 @@ public class BattleCharacter : CharacterProperty
 
     void callData()
     {
+        Debug.Log(gameObject.layer);
         if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             myStat.curHP = myStat.orgData.Health;
             myStat.AdditionalAttack = 0;
+            Debug.Log(myStat.orgData.Name);
             if (myStat.orgData.BattleType == PC.Type.Boss)
             {
-                myStat.AdditionalDefence = 10;
+                switch(myStat.orgData.Name)
+                {
+                    case("Rock"):
+                        myStat.AdditionalDefence = 0;
+                        break;
+                    case("BossFox"):
+                        Debug.Log("a");
+                        myStat.AdditionalDefence = 10;
+                        break;
+                    case("GenshinGolem"):
+                        Debug.Log("b");
+                        myStat.AdditionalDefence = 20;
+                        break;
+                }
             }
             else
             {
@@ -298,10 +313,10 @@ public class BattleCharacter : CharacterProperty
         myHpBar.transform.position = pos;
     }
 
-    IEnumerator OnDmg(float dmg,int a,GameObject myTarget) //플로팅데미지
+    IEnumerator OnDmg(float dmg,int a,GameObject myTarget) //?÷????????
     {
         if (myTarget.GetComponent<BattleCharacter>().State == STATE.Die) yield break;
-        GameObject hudText = Instantiate(hudDmgText, Canvas.transform); // 플로팅데미지 생성
+        GameObject hudText = Instantiate(hudDmgText, Canvas.transform); // ?÷???????? ????
         hudText.GetComponent<DmageText>().color = Color.white;
         if (myStat.orgData.IsCritical(a))
         {
@@ -309,12 +324,16 @@ public class BattleCharacter : CharacterProperty
             dmg *= myStat.orgData.CriticalRatio[a];
         }
         dmg = (int)dmg;
-        myTarget.GetComponent<BattleCharacter>().myStat.curHP -= dmg; // 크리미스 일반데미지 확인이후 체력에 -
+        if (dmg < 0)
+        {
+            dmg = 0;
+        }
+        myTarget.GetComponent<BattleCharacter>().myStat.curHP -= dmg; // ?????? ???????? ??????? ??¿? -
         myTarget.GetComponent<Animator>().SetTrigger("Hit");
-        Vector3 pos = myTarget.transform.position; //타겟위치
-        pos.y += 2.0f; // 위치에서 2만큼 y위로이동
-        Vector3 pos2 = Camera.main.WorldToScreenPoint(pos); // pos2는 메인카메라에서 pos 위치값
-        hudText.transform.position = pos2; // 플로팅데미지를 po2로이동
+        Vector3 pos = myTarget.transform.position; //??????
+        pos.y += 2.0f; // ??????? 2??? y???????
+        Vector3 pos2 = Camera.main.WorldToScreenPoint(pos); // pos2?? ????????? pos ?????
+        hudText.transform.position = pos2; // ?÷?????????? po2?????
         hudText.GetComponent<DmageText>().dmg = dmg;
         yield return null;
     }
