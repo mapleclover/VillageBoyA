@@ -267,12 +267,12 @@ public class ActionController : MonoBehaviour
             CheckText.alignment = TextAlignmentOptions.Center;
             if (hitInfo.transform.GetComponent<Pickup>().item.itemType == Item.ItemType.Enchant)
             {
-                CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" +
+                CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemTrueName + "</color>" +
                                               "<color=yellow>" + " (E) " + "</color>";
             }
             else
             {
-                CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemName + "</color>" +
+                CheckText.text = "<color=red>" + hitInfo.transform.GetComponent<Pickup>().item.itemTrueName + "</color>" +
                                  "È¹µæ" + "<color=yellow>" + " (E) " + "</color>";
             }
         }

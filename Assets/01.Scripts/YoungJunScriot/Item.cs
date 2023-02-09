@@ -13,6 +13,7 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public string itemName;
+    public string itemTrueName;
     public ItemType itemType;
     public GameObject itemPrefab;
     public string itemInfo;
